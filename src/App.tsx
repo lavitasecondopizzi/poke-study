@@ -68,6 +68,8 @@ export default function App() {
   const [unlockedIds, setUnlockedIds] = useState<number[]>([]);
   const [progress, setProgress] = useState<SavedProgress>(loadProgress);
   const [selected, setSelected] = useState<number | null>(null);
+  const [slotPage, setSlotPage] = useState(0);
+  const [pokemonPage, setPokemonPage] = useState(0);
   const [message, setMessage] = useState('Trascina ogni Pokémon sul suo numero Nazionale. Tutte le specie sono disponibili fin da subito.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -129,6 +131,14 @@ export default function App() {
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
   const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1).filter(id => unlockedIds.includes(id)), [unlockedIds]);
   const remaining = useMemo(() => order.filter(pokemon => unlockedIds.includes(pokemon.id) && !completedSet.has(pokemon.id)), [order, unlockedIds, completedSet]);
+  const slotsPerPage = 15;
+  const pokemonPerPage = 15;
+  const slotPageCount = Math.max(1, Math.ceil(slots.length / slotsPerPage));
+  const pokemonPageCount = Math.max(1, Math.ceil(remaining.length / pokemonPerPage));
+  const safeSlotPage = Math.min(slotPage, slotPageCount - 1);
+  const safePokemonPage = Math.min(pokemonPage, pokemonPageCount - 1);
+  const visibleSlots = slots.slice(safeSlotPage * slotsPerPage, (safeSlotPage + 1) * slotsPerPage);
+  const visiblePokemon = remaining.slice(safePokemonPage * pokemonPerPage, (safePokemonPage + 1) * pokemonPerPage);
 
   const placePokemon = useCallback((pokemon: PokemonSpecies, slotId: number) => {
     if (completedSet.has(pokemon.id)) return;
@@ -343,9 +353,9 @@ export default function App() {
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board">
               <section className="game-zone game-slots-zone" aria-label="Numeri del Pokédex">
-                <div className="game-zone-heading"><strong>NUMERI</strong><span>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</span></div>
+                <div className="game-zone-heading"><strong>NUMERI</strong><span>{progress.completedIds.length} catalogati</span></div>
                 <div className="slots-grid">
-                  {slots.map(slotId => {
+                  {visibleSlots.map(slotId => {
                     const isFilled = completedSet.has(slotId);
                     const pokemon = speciesById.get(slotId);
                     return <div key={slotId} role="button" tabIndex={0} aria-label={`Slot numero ${slotId}${isFilled ? ', catalogato' : ', vuoto'}`} className={`dex-slot ${isFilled ? 'slot-filled' : ''} ${wrongId === slotId ? 'slot-wrong' : ''}`} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = Number(event.dataTransfer.getData('text/plain')); const dragged = speciesById.get(id); if (dragged) placePokemon(dragged, slotId); }} onClick={() => { if (selected !== null) { const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }} onKeyDown={event => { if ((event.key === 'Enter' || event.key === ' ') && selected !== null) { const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }}>
@@ -356,15 +366,25 @@ export default function App() {
                     </div>;
                   })}
                 </div>
+                <div className="game-pagination" aria-label="Paginazione numeri">
+                  <button type="button" disabled={safeSlotPage <= 0} onClick={() => setSlotPage(page => Math.max(0, page - 1))}>‹ Indietro</button>
+                  <span>Pagina {safeSlotPage + 1} / {slotPageCount}</span>
+                  <button type="button" disabled={safeSlotPage >= slotPageCount - 1} onClick={() => setSlotPage(page => Math.min(slotPageCount - 1, page + 1))}>Avanti ›</button>
+                </div>
               </section>
               <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Pokémon selezionabili">
                 <div className="game-zone-heading"><strong>POKÉMON</strong><span>{remaining.length} disponibili</span></div>
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento…</h3></div> : remaining.length > 0 ? <div className="pokemon-cards">
-                  {remaining.map(pokemon => <button key={pokemon.id} aria-label="Seleziona Pokémon" title="Seleziona Pokémon" className={`pokemon-card ${selected === pokemon.id ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', String(pokemon.id))} onClick={() => { setSelected(pokemon.id); setMessage('Pokémon selezionato. Tocca il numero corretto.'); }}>
+                  {visiblePokemon.map(pokemon => <button key={pokemon.id} aria-label="Seleziona Pokémon" title="Seleziona Pokémon" className={`pokemon-card ${selected === pokemon.id ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', String(pokemon.id))} onClick={() => { setSelected(pokemon.id); setMessage('Pokémon selezionato. Tocca il numero corretto.'); }}>
                     <img src={spriteUrl(pokemon.id)} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                   </button>)}
                 </div> : <div className="round-complete"><h3>Pokédex completato!</h3></div>}
+                {!loading && remaining.length > 0 && <div className="game-pagination" aria-label="Paginazione Pokémon">
+                  <button type="button" disabled={safePokemonPage <= 0} onClick={() => setPokemonPage(page => Math.max(0, page - 1))}>‹ Indietro</button>
+                  <span>Pagina {safePokemonPage + 1} / {pokemonPageCount}</span>
+                  <button type="button" disabled={safePokemonPage >= pokemonPageCount - 1} onClick={() => setPokemonPage(page => Math.min(pokemonPageCount - 1, page + 1))}>Avanti ›</button>
+                </div>}
               </section>
             </section>
           </>}
