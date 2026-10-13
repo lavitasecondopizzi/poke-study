@@ -26,6 +26,11 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install
+      - name: Restore cached Pokédex sprites
+        uses: actions/cache@v4
+        with:
+          path: public/pokemon
+          key: pokedex-sprites-v1
       - name: Build
         run: npm run build
       - name: Upload artifact
