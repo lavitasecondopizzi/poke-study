@@ -1,6 +1,6 @@
 # Poké Study
 
-Gioco fan-made di allenamento e scoperta del Pokédex Nazionale, ambientato in un portale scolastico digitale.
+Portale scolastico fan-made per studiare e catalogare il mondo Pokémon: specie, strumenti, bacche e materiali, MT e tecniche, fossili e reperti.
 
 ## Stack
 - React + TypeScript
@@ -22,15 +22,15 @@ npm run preview
 ## Pubblicazione su GitHub Pages
 Il workflow GitHub Actions in `.github/workflows/deploy.yml` pubblica automaticamente il progetto su GitHub Pages quando viene aggiornato il branch `main`. In **Settings → Pages**, seleziona **GitHub Actions** come source.
 
-## Dati Pokémon
-La prima versione carica l'elenco delle specie dal servizio pubblico PokéAPI. È richiesta una connessione Internet al primo caricamento. Le illustrazioni sono recuperate dal repository pubblico degli sprite Pokémon.
+## Catalogo e lezioni
+- Archivio consultabile con ricerca, categorie e paginazione indipendente da 15 elementi per pagina.
+- Tutti i 1.025 Pokémon disponibili fin dall'inizio.
+- Lezioni di classificazione con un massimo di 15 carte miste per sessione.
+- Entità suddivise in Pokémon, strumenti e oggetti, bacche/ingredienti/materiali, MT e tecniche, reperti e oggetti speciali.
+- Tentativi errati senza penalità e +1 Punto Poké per ogni classificazione corretta.
+- Salvataggio locale di punteggio, progressi e acquisti.
+- Interfaccia scolastica responsive e supporto PWA/offline per le risorse già scaricate.
 
-## Progetto
-- Tutti i 1.025 Pokémon e tutti gli slot del Pokédex Nazionale sono disponibili fin dall'inizio, senza lezioni, turni o sblocchi.
-- Le schede Pokémon vengono mostrate in ordine casuale e si possono trascinare negli slot numerati.
-- Tentativi errati illimitati, senza penalità.
-- +1 Punto Poké per ogni assegnazione corretta.
-- Salvataggio locale di punteggio e progressi.
-- Interfaccia ispirata ai portali scolastici e ai siti del 2007, adattata anche ai dispositivi mobili.
+Le specie e gli oggetti vengono caricati da risorse pubbliche; il primo caricamento del catalogo completo degli oggetti richiede una connessione Internet. Le illustrazioni sono recuperate dal repository pubblico degli sprite Pokémon.
 
 Questo è un progetto fan-made non ufficiale e non è affiliato a Nintendo, Game Freak o The Pokémon Company.
