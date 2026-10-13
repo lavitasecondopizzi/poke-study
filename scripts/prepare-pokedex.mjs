@@ -25,7 +25,7 @@ console.log('Aggiorno il catalogo Nazionale da PokéAPI...');
 const response = await fetchWithRetry(API_URL);
 const payload = await response.json();
 const pokemon = payload.results
-  .map(item => ({ id: Number(item.url.match(/pokemon-species\\/(\\d+)/)?.[1] ?? 0), name: item.name }))
+  .map(item => ({ id: Number(item.url.split('/').filter(Boolean).at(-1) ?? 0), name: item.name }))
   .filter(item => item.id > 0 && item.id <= MAX_ID)
   .sort((a, b) => a.id - b.id);
 
