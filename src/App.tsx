@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BookOpen, CircleHelp, GraduationCap, Menu, Search, ShoppingBag, Trophy, X } from 'lucide-react';
+import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, Search, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { PokemonSpecies, SavedProgress } from './types';
 
 const API = 'https://pokeapi.co/api/v2/pokemon-species?limit=1025';
@@ -51,7 +51,7 @@ export default function App() {
   const [message, setMessage] = useState('Trascina ogni Pokémon sul suo numero Nazionale. Tutte le specie sono disponibili fin da subito.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
-  const [view, setView] = useState('pokedex');
+  const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [search, setSearch] = useState('');
   const [wrongId, setWrongId] = useState<number | null>(null);
@@ -142,15 +142,16 @@ export default function App() {
       </div>
       <header className="masthead">
         <button className="mobile-toggle" aria-label="Apri menu" onClick={() => setMobileMenu(!mobileMenu)}>{mobileMenu ? <X /> : <Menu />}</button>
-        <div className="crest"><GraduationCap size={30} /><span>PS</span></div>
+        <div className="pokeball-mark" aria-label="Poké Ball"><span /></div>
         <div className="brand">
-          <div className="brand-kicker">ISTITUTO INTERREGIONALE DI STUDI POKÉMON</div>
-          <div className="brand-name">Poké Study <span>✦</span></div>
-          <div className="brand-subtitle">Conosci. Cataloga. Diventa Allenatore.</div>
+          <div className="brand-kicker">ACCADEMIA POKÉMON</div>
+          <div className="brand-name">Accademia Pokémon <span>✦</span></div>
+          <div className="brand-subtitle">Portale dello studente</div>
         </div>
         <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>Allenatore in formazione</strong><span>Matricola n. 000001</span></div></div>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
+        <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Pokédex Nazionale</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria</button>
@@ -178,9 +179,33 @@ export default function App() {
         </aside>
 
         <section className="content">
+          {view === 'home' && <>
+            <div className="breadcrumb">Portale dello studente / <b>Pagina iniziale</b></div>
+            <section className="welcome-panel">
+              <div className="welcome-copy">
+                <div className="welcome-ribbon"><span>✦</span> BENVENUTO IN ACCADEMIA</div>
+                <h1>Il tuo viaggio nel mondo Pokémon comincia qui!</h1>
+                <p>Cataloga le specie del Pokédex Nazionale, tieni traccia dei tuoi progressi e scopri nuove curiosità dal nostro archivio scientifico.</p>
+                <button className="enter-pokedex" onClick={() => navTo('pokedex')}><BookOpen size={18} /> ENTRA NEL POKÉDEX <ChevronRight size={19} /></button>
+              </div>
+              <div className="welcome-art"><div className="art-sun" /><div className="art-book"><BookOpen size={68} strokeWidth={1.3}/></div><div className="art-caption">IL SAPERE È LA TUA<br/>PRIMA POKÉ BALL!</div></div>
+            </section>
+            <div className="currency-row">
+              <div className="currency-card poke-currency"><div className="currency-icon">₱</div><div><small>PORTAFOGLIO ALLIEVO</small><strong>{progress.points.toLocaleString('it-IT')} <span>Punti Poké</span></strong><p>Per strumenti e oggetti utili</p></div><div className="currency-gloss" /></div>
+              <div className="currency-card exam-currency"><div className="currency-icon">★</div><div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')} <span>Punti esame</span></strong><p>Per sbloccare e potenziare super-aiuti</p></div><div className="currency-gloss" /></div>
+            </div>
+            <section className="portal-menu-panel">
+              <div className="portal-panel-heading"><div><span>AREA PERSONALE</span><h2>Che cosa vuoi fare oggi?</h2></div><span className="panel-badge">MENU ALLIEVO</span></div>
+              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon blue-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Pokédex Nazionale</strong><small>Cataloga tutte le 1.025 specie disponibili</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => { setSearch(''); navTo('pokedex'); }}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('forum')}><span className="menu-item-icon orange-icon"><CircleHelp size={22}/></span><span className="menu-item-copy"><strong>Forum studenti</strong><small>Avvisi, guide e comunicazioni dell'Accademia</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('shop')}><span className="menu-item-icon purple-icon"><ShoppingBag size={22}/></span><span className="menu-item-copy"><strong>Negozio strumenti</strong><small>Usa i tuoi punti per prepararti alle ricerche</small></span><ChevronRight className="menu-chevron"/></button>
+            </section>
+            <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
+          </>}
           {view === 'pokedex' && <>
             <div className="breadcrumb">Home / Archivio nazionale / <b>Pokédex</b></div>
-            <div className="page-heading"><div><div className="eyebrow">ARCHIVIO COMPLETO · TUTTE LE SPECIE DISPONIBILI</div><h1>Riordina il Pokédex Nazionale</h1><p>Le schede sono mescolate; gli slot numerati restano sempre nell'ordine nazionale. Completa il catalogo senza lezioni o turni.</p></div><div className="heading-stamp">POKÉDEX<br /><b>001–1025</b></div></div>
+            <div className="page-heading"><div><div className="eyebrow">ARCHIVIO COMPLETO · TUTTE LE SPECIE DISPONIBILI</div><h1>Pokédex Nazionale</h1><p>Le schede sono mescolate; gli slot numerati restano sempre nell'ordine nazionale. Completa il catalogo senza lezioni o turni.</p></div><div className="heading-stamp">POKÉDEX<br /><b>001–1025</b></div></div>
             <div className="dashboard-strip">
               <div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length.toLocaleString('it-IT')} <small>/ {NATIONAL_DEX_SIZE.toLocaleString('it-IT')}</small></strong></div>
               <div><span>PUNTI POKÉ</span><strong>{progress.points.toLocaleString('it-IT')}</strong></div>
