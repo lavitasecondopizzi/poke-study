@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
-import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, Search, ShoppingBag, Trophy, X } from 'lucide-react';
+import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { PokemonSpecies, SavedProgress } from './types';
 
 const API = 'https://pokeapi.co/api/v2/pokemon-species?limit=1025';
@@ -77,7 +77,6 @@ export default function App() {
   const [nickname, setNickname] = useState('');
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [search, setSearch] = useState('');
   const [wrongId, setWrongId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -115,13 +114,7 @@ export default function App() {
   const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
   const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1), []);
-  const remaining = useMemo(() => {
-    const term = search.trim().toLowerCase();
-    return order.filter(pokemon =>
-      !completedSet.has(pokemon.id) &&
-      (!term || pokemon.name.toLowerCase().includes(term) || String(pokemon.id).includes(term)),
-    );
-  }, [order, completedSet, search]);
+  const remaining = useMemo(() => order.filter(pokemon => !completedSet.has(pokemon.id)), [order, completedSet]);
 
   const placePokemon = useCallback((pokemon: PokemonSpecies, slotId: number) => {
     if (completedSet.has(pokemon.id)) return;
@@ -282,7 +275,7 @@ export default function App() {
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
 
-      <main className="page-layout">
+      <main className={view === 'pokedex' ? "page-layout game-layout" : "page-layout"}>
         <aside className="sidebar">
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
@@ -320,43 +313,39 @@ export default function App() {
             <section className="portal-menu-panel">
               <div className="portal-panel-heading"><div><span>AREA PERSONALE</span><h2>Che cosa vuoi fare oggi?</h2></div><span className="panel-badge">MENU ALLIEVO</span></div>
               <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon blue-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Pokédex Nazionale</strong><small>Cataloga tutte le 1.025 specie disponibili</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => { setSearch(''); navTo('pokedex'); }}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('forum')}><span className="menu-item-icon orange-icon"><CircleHelp size={22}/></span><span className="menu-item-copy"><strong>Forum studenti</strong><small>Avvisi, guide e comunicazioni dell'Accademia</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('shop')}><span className="menu-item-icon purple-icon"><ShoppingBag size={22}/></span><span className="menu-item-copy"><strong>Negozio strumenti</strong><small>Usa i tuoi punti per prepararti alle ricerche</small></span><ChevronRight className="menu-chevron"/></button>
             </section>
             <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
           </>}
           {view === 'pokedex' && <>
-            <div className="breadcrumb">Home / Archivio nazionale / <b>Pokédex</b></div>
-            <div className="page-heading"><div><div className="eyebrow">ARCHIVIO COMPLETO · TUTTE LE SPECIE DISPONIBILI</div><h1>Pokédex Nazionale</h1><p>Le schede sono mescolate; gli slot numerati restano sempre nell'ordine nazionale. Completa il catalogo senza lezioni o turni.</p></div><div className="heading-stamp">POKÉDEX<br /><b>001–1025</b></div></div>
-            <div className="dashboard-strip">
-              <div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length.toLocaleString('it-IT')} <small>/ {NATIONAL_DEX_SIZE.toLocaleString('it-IT')}</small></strong></div>
-              <div><span>PUNTI POKÉ</span><strong>{progress.points.toLocaleString('it-IT')}</strong></div>
-              <div><span>PUNTI ESAME</span><strong>{progress.examPoints.toLocaleString('it-IT')}</strong></div>
-            </div>
-            <div className="instructions"><span className="info-icon">i</span><p><b>Come si gioca</b><br />Trascina una scheda sul numero corretto. Su telefono o tablet, tocca prima il Pokémon e poi il suo slot. Tutti i 1.025 slot sono già presenti: gli errori sono illimitati e senza penalità.</p></div>
-            {loadError && <div className="error-panel"><h3>Archivio non raggiungibile</h3><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
-            <section className="challenge-board">
-              <div className="board-header"><div><span className="section-label">SCHEDE DISPONIBILI</span><h2>Tutti i Pokémon, in ordine misto</h2></div><div className="round-count">{remaining.length.toLocaleString('it-IT')} <span>da catalogare</span></div></div>
-              <div className="search-wrap card-search"><Search size={17} /><input value={search} onChange={event => setSearch(event.target.value)} placeholder="Filtra le schede per nome o numero, senza sblocchi…" aria-label="Filtra Pokémon disponibili" />{search && <button className="clear-search" onClick={() => setSearch('')} aria-label="Cancella ricerca">×</button>}</div>
-              {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento dell'archivio completo…</h3><p>Gli slot numerati sono già disponibili qui sotto.</p></div> : remaining.length > 0 ? <div className="pokemon-cards">
-                {remaining.map(pokemon => <button key={pokemon.id} className={`pokemon-card ${selected === pokemon.id ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', String(pokemon.id))} onClick={() => { setSelected(pokemon.id); setMessage(`Selezionato ${titleCase(pokemon.name)}: tocca lo slot n. ${pokemon.id} per collocarlo.`); }}>
-                  <img src={spriteUrl(pokemon.id)} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
-                  <span className="pokemon-name">{titleCase(pokemon.name)}</span><span className="pokemon-prompt">N. {String(pokemon.id).padStart(4, '0')} · TRASCINA</span>
-                </button>)}
-              </div> : <div className="round-complete"><div className="success-seal">✓</div><h3>Pokédex completato!</h3><p>Hai catalogato tutte le specie disponibili nell'archivio Nazionale.</p></div>}
-              <div className={`feedback-bar ${message.startsWith('Corretto') ? 'feedback-success' : wrongId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
-              <div className="slots-heading"><div><span className="section-label">SLOT NAZIONALI</span><h2>Tutti i numeri da 0001 a 1025</h2></div><span>{progress.completedIds.length} catalogati</span></div>
-              <div className="slots-grid">
-                {slots.map(slotId => {
-                  const isFilled = completedSet.has(slotId);
-                  const pokemon = speciesById.get(slotId);
-                  return <div key={slotId} role="button" tabIndex={0} aria-label={`Slot numero ${slotId}${isFilled ? ', catalogato' : ', vuoto'}`} className={`dex-slot ${isFilled ? 'slot-filled' : ''} ${wrongId === slotId ? 'slot-wrong' : ''}`} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = Number(event.dataTransfer.getData('text/plain')); const dragged = speciesById.get(id); if (dragged) placePokemon(dragged, slotId); }} onClick={() => { if (selected !== null) { const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }} onKeyDown={event => { if ((event.key === 'Enter' || event.key === ' ') && selected !== null) { event.preventDefault(); const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }}>
-                    <span className="slot-number">N. {String(slotId).padStart(4, '0')}</span>
-                    {isFilled ? <><img src={spriteUrl(slotId)} alt="" loading="lazy" /><strong>{pokemon ? titleCase(pokemon.name) : 'Catalogato'}</strong><span className="slot-check">CATALOGATO ✓</span></> : <><div className="slot-placeholder">?</div><strong>{selected !== null ? 'Tocca per collocare' : 'Slot disponibile'}</strong><span className="slot-check">RILASCIA QUI</span></>}
-                  </div>;
-                })}
-              </div>
+            {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
+            <section className="challenge-board game-board">
+              <section className="game-zone game-slots-zone" aria-label="Numeri del Pokédex">
+                <div className="game-zone-heading"><strong>NUMERI</strong><span>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</span></div>
+                <div className="slots-grid">
+                  {slots.map(slotId => {
+                    const isFilled = completedSet.has(slotId);
+                    const pokemon = speciesById.get(slotId);
+                    return <div key={slotId} role="button" tabIndex={0} aria-label={`Slot numero ${slotId}${isFilled ? ', catalogato' : ', vuoto'}`} className={`dex-slot ${isFilled ? 'slot-filled' : ''} ${wrongId === slotId ? 'slot-wrong' : ''}`} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = Number(event.dataTransfer.getData('text/plain')); const dragged = speciesById.get(id); if (dragged) placePokemon(dragged, slotId); }} onClick={() => { if (selected !== null) { const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }} onKeyDown={event => { if ((event.key === 'Enter' || event.key === ' ') && selected !== null) { const chosen = speciesById.get(selected); if (chosen) placePokemon(chosen, slotId); } }}>
+                      <span className="slot-number">{String(slotId).padStart(4, '0')}</span>
+                      {isFilled && pokemon ? <img src={spriteUrl(pokemon.id)} alt="" loading="lazy" /> : <span className="slot-empty">?</span>}
+                      {isFilled && pokemon && <strong>{titleCase(pokemon.name)}</strong>}
+                      {isFilled && <span className="slot-check">✓</span>}
+                    </div>;
+                  })}
+                </div>
+              </section>
+              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
+              <section className="game-zone game-pokemon-zone" aria-label="Pokémon selezionabili">
+                <div className="game-zone-heading"><strong>POKÉMON</strong><span>{remaining.length} disponibili</span></div>
+                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento…</h3></div> : remaining.length > 0 ? <div className="pokemon-cards">
+                  {remaining.map(pokemon => <button key={pokemon.id} aria-label="Seleziona Pokémon" title="Seleziona Pokémon" className={`pokemon-card ${selected === pokemon.id ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', String(pokemon.id))} onClick={() => { setSelected(pokemon.id); setMessage('Pokémon selezionato. Tocca il numero corretto.'); }}>
+                    <img src={spriteUrl(pokemon.id)} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                  </button>)}
+                </div> : <div className="round-complete"><h3>Pokédex completato!</h3></div>}
+              </section>
             </section>
           </>}
           {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0 }); setSelected(null); setMessage('Progressi azzerati. Tutti i Pokémon sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
