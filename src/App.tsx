@@ -185,10 +185,9 @@ export default function App() {
         });
       }
     }
-    const macroOrder = new Map(MACRO_CATEGORIES.map((category, index) => [category.id, index]));
+    const macroOrder: Record<string, number> = Object.fromEntries(MACRO_CATEGORIES.map((category, index) => [category.id, index]));
     return [...targets.values()].sort((a, b) =>
-      (macroOrder.get(a.macroId as typeof MACRO_CATEGORIES[number]['id']) ?? 99) -
-      (macroOrder.get(b.macroId as typeof MACRO_CATEGORIES[number]['id']) ?? 99) ||
+      (macroOrder[a.macroId] ?? 99) - (macroOrder[b.macroId] ?? 99) ||
       a.name.localeCompare(b.name, 'it'),
     );
   }, [lessonDeck, lessonSolved]);
