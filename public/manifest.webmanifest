@@ -1,0 +1,16 @@
+{
+  "id": "/poke-study/",
+  "name": "Poké Study — Portale Allievi",
+  "short_name": "Poké Study",
+  "description": "Portale scolastico Pokémon con Pokédex, esami e cartoleria.",
+  "lang": "it-IT",
+  "start_url": "/poke-study/",
+  "scope": "/poke-study/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f8ff",
+  "theme_color": "#193c62",
+  "icons": [
+    { "src": "/poke-study/poke-study.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
