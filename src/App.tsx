@@ -8,7 +8,6 @@ const NATIONAL_DEX_SIZE = 1025;
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
 const STUDENT_KEY = 'poke-study-student-v1';
-const UNLOCK_KEY = 'poke-study-unlocked-v1';
 
 type StudentProfile = { nickname: string; matricola: string };
 
@@ -65,7 +64,6 @@ function shuffled<T>(items: T[]): T[] {
 export default function App() {
   const [species, setSpecies] = useState<PokemonSpecies[]>([]);
   const [order, setOrder] = useState<PokemonSpecies[]>([]);
-  const [unlockedIds, setUnlockedIds] = useState<number[]>([]);
   const [progress, setProgress] = useState<SavedProgress>(loadProgress);
   const [selected, setSelected] = useState<number | null>(null);
   const [slotPage, setSlotPage] = useState(0);
@@ -102,17 +100,6 @@ export default function App() {
         const mixed = shuffled(list);
         setSpecies(list);
         setOrder(mixed);
-        try {
-          const savedUnlocked = localStorage.getItem(UNLOCK_KEY);
-          if (savedUnlocked) setUnlockedIds(JSON.parse(savedUnlocked) as number[]);
-          else {
-            const initialUnlocked = mixed.slice(0, 10).map(pokemon => pokemon.id);
-            setUnlockedIds(initialUnlocked);
-            localStorage.setItem(UNLOCK_KEY, JSON.stringify(initialUnlocked));
-          }
-        } catch {
-          setUnlockedIds(mixed.slice(0, 10).map(pokemon => pokemon.id));
-        }
         setLoading(false);
       })
       .catch(() => {
@@ -129,8 +116,8 @@ export default function App() {
 
   const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
-  const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1).filter(id => unlockedIds.includes(id)), [unlockedIds]);
-  const remaining = useMemo(() => order.filter(pokemon => unlockedIds.includes(pokemon.id) && !completedSet.has(pokemon.id)), [order, unlockedIds, completedSet]);
+  const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1), []);
+  const remaining = useMemo(() => order.filter(pokemon => !completedSet.has(pokemon.id)), [order, completedSet]);
   const slotsPerPage = 15;
   const pokemonPerPage = 15;
   const slotPageCount = Math.max(1, Math.ceil(slots.length / slotsPerPage));
@@ -165,16 +152,10 @@ export default function App() {
         examPoints: old.examPoints + Math.max(0, examsAfter - examsBefore),
       };
     });
-    const nextPokemon = order.find(candidate => !unlockedIds.includes(candidate.id) && !completedSet.has(candidate.id) && candidate.id !== pokemon.id);
-    if (nextPokemon) {
-      const nextUnlocked = [...unlockedIds, nextPokemon.id];
-      setUnlockedIds(nextUnlocked);
-      try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(nextUnlocked)); } catch { /* storage may be unavailable */ }
-    }
     setSelected(null);
     setWrongId(null);
-    setMessage(`Corretto! ${titleCase(pokemon.name)} è il Pokémon n. ${pokemon.id}. +1 Punto Poké${nextPokemon ? ' · Nuovo Pokémon sbloccato!' : ''}.`);
-  }, [completedSet, order, unlockedIds]);
+    setMessage(`Corretto! ${titleCase(pokemon.name)} è il Pokémon n. ${pokemon.id}. +1 Punto Poké.`);
+  }, [completedSet]);
 
   function chooseAcademy(next: string) {
     setAcademy(next);
