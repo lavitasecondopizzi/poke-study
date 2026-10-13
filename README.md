@@ -26,7 +26,8 @@ Il workflow GitHub Actions in `.github/workflows/deploy.yml` pubblica automatica
 La prima versione carica l'elenco delle specie dal servizio pubblico PokéAPI. È richiesta una connessione Internet al primo caricamento. Le illustrazioni sono recuperate dal repository pubblico degli sprite Pokémon.
 
 ## Progetto
-- Drag & drop dei Pokémon negli slot del Pokédex Nazionale.
+- Tutti i 1.025 Pokémon e tutti gli slot del Pokédex Nazionale sono disponibili fin dall'inizio, senza lezioni, turni o sblocchi.
+- Le schede Pokémon vengono mostrate in ordine casuale e si possono trascinare negli slot numerati.
 - Tentativi errati illimitati, senza penalità.
 - +1 Punto Poké per ogni assegnazione corretta.
 - Salvataggio locale di punteggio e progressi.
