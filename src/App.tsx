@@ -56,7 +56,8 @@ function itemSpriteUrl(name: string) {
 }
 
 function resourceId(url: string) {
-  return Number(url.match(/\\/(\\d+)\\/?$/)?.[1] ?? 0);
+  const parts = url.split('/').filter(Boolean);
+  return Number(parts[parts.length - 1] ?? 0);
 }
 
 function shuffled<T>(items: T[]): T[] {
@@ -153,7 +154,7 @@ export default function App() {
   }, [view, itemCatalog.length, online]);
 
   useEffect(() => {
-    if (view !== 'esami' || typeCatalog.length || typeLoading) return;
+    if (view !== 'esami' || typeCatalog.length) return;
     let active = true;
     const cacheKey = 'poke-study-api-types-v1';
     try { const cached = localStorage.getItem(cacheKey); if (cached) { setTypeCatalog(JSON.parse(cached) as PokemonTypeIndex[]); return; } } catch { /* ignore broken cache */ }
