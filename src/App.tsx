@@ -184,8 +184,6 @@ export default function App() {
   const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
   const [itemCatalogLoading, setItemCatalogLoading] = useState(false);
-  const [itemPage, setItemPage] = useState(0);
-  const [itemSearch, setItemSearch] = useState('');
   const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
   const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
   const [typeLoading, setTypeLoading] = useState(false);
@@ -311,9 +309,6 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
     [lessonDeck, lessonSolved],
   );
-  const filteredItems = itemCatalog.filter(item => item.name.toLowerCase().includes(itemSearch.trim().toLowerCase()));
-  const itemPageCount = Math.max(1, Math.ceil(filteredItems.length / 15));
-  const visibleItems = filteredItems.slice(itemPage * 15, itemPage * 15 + 15);
   const filteredAvatars = species.filter(pokemon => pokemon.name.toLowerCase().includes(avatarSearch.trim().toLowerCase()) || String(pokemon.id).includes(avatarSearch.trim()));
   const avatarPageCount = Math.max(1, Math.ceil(filteredAvatars.length / 15));
   const visibleAvatars = filteredAvatars.slice(avatarPage * 15, avatarPage * 15 + 15);
