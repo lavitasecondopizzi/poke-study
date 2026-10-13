@@ -9,6 +9,7 @@ export interface SavedProgress {
   examPoints: number;
   completedExams?: string[];
   inventory?: string[];
+  completedEntries?: string[];
 }
 
 export interface ApiNamedResource {
