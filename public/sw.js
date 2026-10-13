@@ -1,7 +1,7 @@
 const BASE = '/poke-study/';
-const SHELL_CACHE = 'poke-study-shell-v1';
-const DATA_CACHE = 'poke-study-data-v1';
-const IMAGE_CACHE = 'poke-study-images-v1';
+const SHELL_CACHE = 'poke-study-shell-v2';
+const DATA_CACHE = 'poke-study-data-v2';
+const IMAGE_CACHE = 'poke-study-images-v2';
 const CORE = [BASE, BASE + 'index.html', BASE + 'data/pokemon.json', BASE + 'manifest.webmanifest', BASE + 'poke-study.svg'];
 
 self.addEventListener('install', event => {
@@ -36,12 +36,23 @@ self.addEventListener('fetch', event => {
       return;
     }
     if (url.pathname.startsWith(BASE)) {
-      event.respondWith(
-        caches.match(request).then(cached => cached || fetch(request).then(response => {
-          if (response.ok) caches.open(SHELL_CACHE).then(cache => cache.put(request, response.clone()));
-          return response;
-        }).catch(() => caches.match(BASE + 'index.html')))
-      );
+      // Navigations use network-first so a deployment cannot leave the app
+      // stuck on an older HTML shell that references removed JS bundles.
+      if (request.mode === 'navigate') {
+        event.respondWith(
+          fetch(request).then(response => {
+            if (response.ok) caches.open(SHELL_CACHE).then(cache => cache.put(request, response.clone()));
+            return response;
+          }).catch(() => caches.match(request).then(cached => cached || caches.match(BASE + 'index.html')))
+        );
+      } else {
+        event.respondWith(
+          caches.match(request).then(cached => cached || fetch(request).then(response => {
+            if (response.ok) caches.open(SHELL_CACHE).then(cache => cache.put(request, response.clone()));
+            return response;
+          }).catch(() => caches.match(BASE + 'index.html')))
+        );
+      }
       return;
     }
   }
