@@ -570,6 +570,7 @@ export default function App() {
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
+        <button className={view === 'game' ? 'active' : ''} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
         <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
@@ -580,7 +581,7 @@ export default function App() {
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
 
-      <main className={view === 'pokedex' ? "page-layout game-layout" : "page-layout"}>
+      <main className={view === 'game' ? "page-layout game-layout" : "page-layout"}>
         <aside className="sidebar">
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
@@ -607,7 +608,7 @@ export default function App() {
                 <div className="welcome-ribbon"><span>✦</span> BENVENUTO IN ACCADEMIA</div>
                 <h1>Il tuo archivio del mondo Pokémon comincia qui!</h1>
                 <p>Cataloga le specie del Archivio Nazionale, tieni traccia dei tuoi progressi e scopri nuove curiosità dal nostro archivio scientifico.</p>
-                <button className="enter-pokedex" onClick={() => navTo('pokedex')}><BookOpen size={18} /> ENTRA NELL’ARCHIVIO <ChevronRight size={19} /></button>
+                <button className="enter-pokedex" onClick={() => navTo('game')}><FlaskConical size={18} /> INIZIA UNA LEZIONE <ChevronRight size={19} /></button>
               </div>
               <div className="welcome-art"><div className="art-sun" /><div className="art-book"><BookOpen size={68} strokeWidth={1.3}/></div><div className="art-caption">IL SAPERE È LA TUA<br/>PRIMA POKÉ BALL!</div></div>
             </section>
@@ -617,7 +618,8 @@ export default function App() {
             </div>
             <section className="portal-menu-panel">
               <div className="portal-panel-heading"><div><span>AREA PERSONALE</span><h2>Che cosa vuoi fare oggi?</h2></div><span className="panel-badge">MENU ALLIEVO</span></div>
-              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon blue-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Archivio Nazionale</strong><small>Cataloga tutte le 1.025 specie disponibili</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('game')}><span className="menu-item-icon blue-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Gioco di classificazione</strong><small>Classifica le carte per sottocategoria e guadagna Punti Poké</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Archivio Nazionale</strong><small>Consulta e cerca Pokémon e oggetti, senza avviare una lezione</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('forum')}><span className="menu-item-icon orange-icon"><CircleHelp size={22}/></span><span className="menu-item-copy"><strong>Forum studenti</strong><small>Avvisi, guide e comunicazioni dell'Accademia</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('shop')}><span className="menu-item-icon purple-icon"><ShoppingBag size={22}/></span><span className="menu-item-copy"><strong>Negozio strumenti</strong><small>Usa i tuoi punti per prepararti alle ricerche</small></span><ChevronRight className="menu-chevron"/></button>
@@ -634,7 +636,7 @@ export default function App() {
             completedPokemon={progress.completedIds}
             completedEntries={progress.completedEntries ?? []}
           />}
-          {view === 'pokedex' && <>
+          {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board mixed-lesson-board">
               <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Sottocategorie della lezione">
