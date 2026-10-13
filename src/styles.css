@@ -238,3 +238,85 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .academy-enroll{grid-column:1/-1;grid-row:4;margin-top:11px;font-size:9px}
  .academy-choice-footnote{font-size:10px;margin-top:18px}
 }
+
+
+/* Mobile app mode: full-screen shell, compact app bar and fixed bottom tabs */
+.mobile-app-nav{display:none}
+@media(max-width:650px){
+ html{min-height:100%;background:#eaf5ff}
+ body{margin:0;min-height:100%;background:#eaf5ff;padding:0}
+ #root{min-height:100dvh}
+ .site-shell{width:100%;max-width:none;min-height:100dvh;margin:0;padding:0 0 calc(78px + env(safe-area-inset-bottom));border:0;border-radius:0;box-shadow:none;background:#f2f8ff;overflow:clip}
+ .utility-bar{display:none}
+ .masthead{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;min-height:66px;padding:10px 15px;background:#fff;border:0;border-bottom:1px solid #e0eaf3;box-shadow:0 3px 12px #174e7510}
+ .mobile-toggle{display:none!important}
+ .pokeball-mark{width:38px;height:38px;flex:0 0 38px}
+ .brand{min-width:0;display:flex;flex-direction:column;gap:1px}
+ .brand-kicker{font-size:7px;line-height:1.2;letter-spacing:.12em;color:#7a92a8}
+ .brand-name{font:800 17px/1.25 'Nunito Sans',Arial,sans-serif;letter-spacing:-.03em;color:#174d7b;text-shadow:none;white-space:nowrap}
+ .brand-name span{display:none}
+ .brand-subtitle{font-size:10px;line-height:1.2;color:#7892a9;font-weight:600}
+ .student-card{display:flex;margin-left:auto;flex:0 0 auto;gap:0;padding:0;border:0;background:transparent;box-shadow:none}
+ .student-card>div:last-child{display:none}
+ .student-avatar{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;font-size:15px}
+ .main-nav{display:none!important}
+ .page-layout{display:block;padding:14px 12px 20px;background:#f2f8ff}
+ .content{width:100%;min-width:0}
+ .content>.breadcrumb{display:none}
+ .welcome-panel,.portal-menu-panel,.home-progress-panel,.challenge-board,.archive-search,.empty-service,.forum-post{border-radius:16px;box-shadow:0 3px 12px #235d8610;border-color:#e0eaf3}
+ .welcome-panel{padding:20px 17px 17px;background:linear-gradient(150deg,#fff 0%,#f8fcff 72%,#e4f3ff 100%)}
+ .welcome-ribbon{border-radius:20px;padding:6px 10px;font-size:8px}
+ .welcome-panel h1{font-size:25px;line-height:1.2;letter-spacing:-.04em}
+ .welcome-panel p{font-size:13px;line-height:1.65;color:#637f98}
+ .enter-pokedex{min-height:48px;border-radius:12px;font-size:11px;box-shadow:inset 0 1px #ffffffa6,0 3px 0 #a7d0ed}
+ .currency-card{border-radius:14px;box-shadow:0 2px 9px #235d860b;border-color:#e0eaf3}
+ .portal-menu-panel{margin-top:14px}
+ .portal-panel-heading{padding:16px;background:#fff;border-bottom:1px solid #edf2f7}
+ .portal-panel-heading h2{font-size:16px}
+ .portal-menu-item{padding:14px 13px;background:#fff;border-bottom:1px solid #edf2f7}
+ .portal-menu-item:first-of-type{padding-top:16px}
+ .portal-menu-item:last-child{padding-bottom:16px}
+ .menu-item-icon{border-radius:12px;width:42px;height:42px;flex-basis:42px}
+ .home-progress-panel{margin-top:14px;background:#fff}
+ .home-progress-panel .secondary-button{min-height:42px;border-radius:10px}
+ .page-heading{padding:5px 3px 0}
+ .page-heading h1{font-size:25px;letter-spacing:-.04em}
+ .page-heading p{font-size:12px;line-height:1.6}
+ .heading-stamp{border-radius:12px}
+ .dashboard-strip{border-radius:13px;box-shadow:0 2px 8px #235d8609}
+ .dashboard-strip>div{background:#fff}
+ .instructions{padding:12px;border-radius:12px}
+ .challenge-board{overflow:hidden}
+ .board-header{background:#fff;padding:15px 13px}
+ .search-wrap{border-radius:12px}
+ .card-search{padding:10px 12px}
+ .card-search input{font-size:12px}
+ .pokemon-cards{padding:10px;gap:8px;background:#f8fbff}
+ .pokemon-card{min-height:124px;border-radius:12px;border:1px solid #e0eaf3;background:#fff;box-shadow:0 2px 7px #235d8608}
+ .pokemon-card img{max-width:78px}
+ .pokemon-card.chosen{border-color:#5ba4dc;box-shadow:0 0 0 2px #5ba4dc20}
+ .slots-heading{background:#fff;padding:15px 12px}
+ .slots-grid{padding:10px;background:#f8fbff;gap:7px}
+ .dex-slot{border:1px solid #e1eaf2;border-radius:10px;background:#fff;box-shadow:0 1px 4px #235d8608}
+ .dex-slot.slot-filled{border-color:#b8e1c2;background:#f4fff6}
+ .feedback-bar{margin:10px;border-radius:11px}
+ .archive-search{background:#fff;padding:16px}
+ .forum-post{background:#fff}
+ .empty-service{background:#fff}
+ .site-footer{padding:15px 3px 0;line-height:1.7}
+ .mobile-app-nav{position:fixed;z-index:50;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;padding:7px 5px calc(7px + env(safe-area-inset-bottom));background:#ffffffed;border-top:1px solid #dce8f2;box-shadow:0 -5px 18px #194e7114;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+ .mobile-app-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:48px;padding:4px 1px;border:0;border-radius:12px;background:transparent;color:#8095a8;font:600 9px/1.1 'Nunito Sans',Arial,sans-serif}
+ .mobile-app-nav button svg{stroke-width:2}
+ .mobile-app-nav button.active{color:#1769a6;background:#eaf5ff}
+ .mobile-app-nav button.active span{font-weight:800}
+ .academy-theme-arancia .mobile-app-nav button.active{color:#b95b2b;background:#fff0e7}
+ .academy-theme-uva .mobile-app-nav button.active{color:#7655b2;background:#f2edff}
+ .academy-theme-arancia .brand-kicker{color:#bd6b40}
+ .academy-theme-uva .brand-kicker{color:#8064b4}
+ .academy-theme-arancia .enter-pokedex,.academy-theme-arancia .primary-button{background:linear-gradient(#f7b07d,#df743b);border-color:#ce6732}
+ .academy-theme-uva .enter-pokedex,.academy-theme-uva .primary-button{background:linear-gradient(#b9a2eb,#8060c2);border-color:#7655b2}
+ .academy-choice-shell{min-height:100dvh;padding:0 16px calc(24px + env(safe-area-inset-bottom));background:#f2f8ff}
+ .academy-choice-topline{margin:0 -16px;padding:9px 16px}
+ .academy-choice-brand{position:sticky;top:0;z-index:20;background:#f2f8ff}
+ .academy-choice-intro{margin-top:22px}
+}
