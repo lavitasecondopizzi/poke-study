@@ -150,7 +150,7 @@ export default function App() {
       })
       .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo API non raggiungibile: riprova quando torni online.'); });
     return () => { active = false; };
-  }, [view, itemCatalog.length]);
+  }, [view, itemCatalog.length, online]);
 
   useEffect(() => {
     if (view !== 'esami' || typeCatalog.length || typeLoading) return;
@@ -172,7 +172,7 @@ export default function App() {
       .catch(() => { if (active) setNotice('Non è stato possibile caricare i tipi dalla PokéAPI.'); })
       .finally(() => { if (active) setTypeLoading(false); });
     return () => { active = false; };
-  }, [view, typeCatalog.length, typeLoading]);
+  }, [view, typeCatalog.length, online]);
 
   const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
@@ -258,11 +258,14 @@ export default function App() {
   }
 
   function buyItem(id: string, name: string, cost: number, currency: 'poke' | 'exam') {
-    setProgress(old => {
-      const balance = currency === 'poke' ? old.points : old.examPoints;
-      if (balance < cost) { setNotice('Punti insufficienti per questo acquisto.'); return old; }
-      return { ...old, points: currency === 'poke' ? old.points - cost : old.points, examPoints: currency === 'exam' ? old.examPoints - cost : old.examPoints, inventory: [...(old.inventory ?? []), id] };
-    });
+    const balance = currency === 'poke' ? progress.points : progress.examPoints;
+    if (balance < cost) { setNotice('Punti insufficienti per questo acquisto.'); return; }
+    setProgress(old => ({
+      ...old,
+      points: currency === 'poke' ? old.points - cost : old.points,
+      examPoints: currency === 'exam' ? old.examPoints - cost : old.examPoints,
+      inventory: [...(old.inventory ?? []), id],
+    }));
     setNotice(`Acquisto registrato: ${name}.`);
   }
 
