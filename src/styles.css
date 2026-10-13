@@ -531,3 +531,22 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .category-targets-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .mixed-card-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 }
+
+
+/* Shop progression, live affordability badge and active research tools */
+.shop-notification-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:5px;padding:0 5px;border-radius:999px;background:#c93636;color:#fff;font-size:10px;font-weight:900;line-height:1;vertical-align:middle;box-shadow:0 1px 3px #172b3b25}
+.main-nav .shop-notification-badge{margin-left:auto}
+.mobile-shop-icon{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.mobile-shop-icon .shop-notification-badge{position:absolute;top:-8px;right:-11px;margin:0;min-width:17px;height:17px;font-size:9px}
+.shop-card-locked{opacity:.78;background:#f8fafc}
+.shop-card>.shop-symbol{display:grid;place-items:center;align-self:flex-start}
+.shop-product-content{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.shop-requirement{color:#7a8fa2;font-size:10px;line-height:1.45}
+.shop-product-status{display:inline-flex;padding:4px 7px;border-radius:6px;background:#f0f4f7;color:#62788a;font-size:10px;font-weight:800}
+.shop-product-ready{background:#e9f8ed;color:#237a42}
+.shop-product-owned{background:#eaf2fb;color:#315f86}
+.ability-toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 8px;background:#f8fbfe;border-bottom:1px solid #e0eaf3}
+.ability-toolbar button{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:31px;padding:5px 9px;border:1px solid #b9d2e5;border-radius:8px;background:#fff;color:#245d83;font:700 10px 'Nunito Sans',Arial,sans-serif}
+.ability-toolbar button small{color:#6f879a;font:700 9px 'DM Mono',monospace}
+.ability-toolbar button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:650px){.shop-notification-badge{min-width:16px;height:16px;font-size:9px}.ability-toolbar{padding:4px 5px;gap:4px}.ability-toolbar button{min-height:27px;padding:4px 6px;font-size:9px}.ability-toolbar button small{font-size:8px}}
