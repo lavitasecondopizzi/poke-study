@@ -487,3 +487,47 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .profile-hero h2{font-size:20px}
  .ranking-preview .dashboard-strip{grid-template-columns:1fr}
 }
+
+
+/* Mixed classification lessons */
+.mixed-lesson-board{grid-template-rows:minmax(0,1fr) auto minmax(0,1fr)}
+.lesson-target-zone{position:relative}
+.category-targets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));align-content:start;gap:7px;flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:9px;background:#edf5fc}
+.category-target{display:flex;min-width:0;min-height:70px;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:8px 9px;border:1px solid #d7e5f1;border-radius:9px;background:#fff;color:#234a68;text-align:left;box-shadow:0 2px 5px #1d4f7008;transition:border-color .15s,background .15s,transform .15s}
+.category-target:hover{border-color:#82b6d8;background:#f5fbff}
+.category-target:active{transform:scale(.985)}
+.category-target-macro{max-width:100%;color:#7690a6;font:800 8px/1.25 'DM Mono',monospace;letter-spacing:.035em;text-transform:uppercase}
+.category-target strong{font-size:11px;line-height:1.25;overflow-wrap:anywhere}
+.category-target small{margin-top:1px;color:#7b92a6;font:700 9px 'DM Mono',monospace}
+.category-target-complete{border-color:#8ecaa0;background:#effbf2}
+.category-target-complete small{color:#27804a}
+.category-target-wrong{border-color:#d96c6c!important;background:#fff0f0!important}
+.mixed-card-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.mixed-card{min-height:64px!important}
+.mixed-card img{max-width:64px!important;max-height:64px!important}
+.lesson-macro-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:5px 7px;background:#fff;border-top:1px solid #e0eaf3}
+.lesson-macro-legend span{padding:3px 6px;border:1px solid #e0eaf3;border-radius:20px;color:#6d879d;font-size:8px;line-height:1.2}
+.lesson-complete-banner{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:8px 10px;background:#effbf2;border-top:1px solid #cce8d2;color:#286943;font-size:11px}
+.lesson-complete-banner strong{font-size:12px}
+.lesson-complete-banner span{flex:1}
+.lesson-complete-banner .primary-button{min-height:30px;padding:5px 9px;font-size:10px}
+.lesson-empty{grid-column:1/-1}
+@media(max-width:650px){
+ .mixed-lesson-board{grid-template-rows:minmax(0,1fr) 25px minmax(0,1fr)}
+ .category-targets-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:6px}
+ .category-target{min-height:60px;padding:6px;border-radius:7px;gap:3px}
+ .category-target-macro{font-size:7px}
+ .category-target strong{font-size:9px}
+ .category-target small{font-size:8px}
+ .mixed-card-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important}
+ .mixed-card{min-height:53px!important}
+ .mixed-card img{max-width:49px!important;max-height:49px!important}
+ .lesson-macro-legend{gap:3px;padding:4px}
+ .lesson-macro-legend span{font-size:7px;padding:3px 5px}
+ .lesson-complete-banner{padding:6px 8px;font-size:9px}
+ .lesson-complete-banner strong{font-size:10px}
+}
+@media(max-width:380px){
+ .category-targets-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mixed-card-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
