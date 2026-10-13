@@ -579,6 +579,36 @@ export default function App() {
             </section>
             <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
           </>}
+          {view === 'pokedex' && <section className="archive-browser">
+            <div className="archive-browser-heading">
+              <div><div className="eyebrow">ARCHIVIO DIDATTICO</div><h2>Catalogo completo</h2><p>Sfoglia tutte le entità disponibili. La lezione di classificazione sopra resta separata da questo archivio.</p></div>
+              <strong>{archiveEntries.length.toLocaleString('it-IT')} elementi</strong>
+            </div>
+            <label className="item-search-label">Cerca nel catalogo
+              <input value={archiveSearch} onChange={event => { setArchiveSearch(event.target.value); setArchivePage(0); }} placeholder="Nome o numero Pokémon…" />
+            </label>
+            <div className="archive-category-tabs">
+              {MACRO_CATEGORIES.map(category => <button key={category.id} className={archiveCategory === category.id ? 'active' : ''} onClick={() => { setArchiveCategory(category.id); setArchivePage(0); }}>{category.name}</button>)}
+            </div>
+            {loading || (archiveCategory !== 'pokemon' && itemCatalog.length === 0)
+              ? <div className="loading-panel"><p>Caricamento degli elementi dell'archivio…</p></div>
+              : archiveEntries.length === 0
+                ? <div className="empty-service"><h3>Nessun risultato</h3><p>Prova un altro termine di ricerca.</p></div>
+                : <div className="archive-entity-grid">{visibleArchiveEntries.map(entry => {
+                    const done = entry.kind === 'pokemon'
+                      ? progress.completedIds.includes(entry.pokemonId ?? -1)
+                      : (progress.completedEntries ?? []).includes(entry.id);
+                    return <article className="archive-entity-card" key={entry.id}>
+                      <img src={entry.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                      <div><strong>{displayName(entry.name)}</strong><small>{entry.subcategoryName}</small><span className={done ? 'archive-entity-done' : 'archive-entity-pending'}>{done ? 'Catalogato' : 'Da catalogare'}</span></div>
+                    </article>;
+                  })}</div>}
+            <div className="game-pagination">
+              <button disabled={archivePage === 0} onClick={() => setArchivePage(Math.max(0, archivePage - 1))}>‹ Indietro</button>
+              <span>Pagina {Math.min(archivePage + 1, archivePageCount)} / {archivePageCount} · {archiveEntries.length} elementi</span>
+              <button disabled={archivePage >= archivePageCount - 1} onClick={() => setArchivePage(Math.min(archivePageCount - 1, archivePage + 1))}>Avanti ›</button>
+            </div>
+          </section>}
           {view === 'pokedex' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board mixed-lesson-board">
@@ -628,36 +658,6 @@ export default function App() {
               </section>
             </section>
           </>}
-          {view === 'pokedex' && <section className="archive-browser">
-            <div className="archive-browser-heading">
-              <div><div className="eyebrow">ARCHIVIO DIDATTICO</div><h2>Catalogo completo</h2><p>Sfoglia tutte le entità disponibili. La lezione di classificazione sopra resta separata da questo archivio.</p></div>
-              <strong>{archiveEntries.length.toLocaleString('it-IT')} elementi</strong>
-            </div>
-            <label className="item-search-label">Cerca nel catalogo
-              <input value={archiveSearch} onChange={event => { setArchiveSearch(event.target.value); setArchivePage(0); }} placeholder="Nome o numero Pokémon…" />
-            </label>
-            <div className="archive-category-tabs">
-              {MACRO_CATEGORIES.map(category => <button key={category.id} className={archiveCategory === category.id ? 'active' : ''} onClick={() => { setArchiveCategory(category.id); setArchivePage(0); }}>{category.name}</button>)}
-            </div>
-            {loading || (archiveCategory !== 'pokemon' && itemCatalog.length === 0)
-              ? <div className="loading-panel"><p>Caricamento degli elementi dell'archivio…</p></div>
-              : archiveEntries.length === 0
-                ? <div className="empty-service"><h3>Nessun risultato</h3><p>Prova un altro termine di ricerca.</p></div>
-                : <div className="archive-entity-grid">{visibleArchiveEntries.map(entry => {
-                    const done = entry.kind === 'pokemon'
-                      ? progress.completedIds.includes(entry.pokemonId ?? -1)
-                      : (progress.completedEntries ?? []).includes(entry.id);
-                    return <article className="archive-entity-card" key={entry.id}>
-                      <img src={entry.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
-                      <div><strong>{displayName(entry.name)}</strong><small>{entry.subcategoryName}</small><span className={done ? 'archive-entity-done' : 'archive-entity-pending'}>{done ? 'Catalogato' : 'Da catalogare'}</span></div>
-                    </article>;
-                  })}</div>}
-            <div className="game-pagination">
-              <button disabled={archivePage === 0} onClick={() => setArchivePage(Math.max(0, archivePage - 1))}>‹ Indietro</button>
-              <span>Pagina {Math.min(archivePage + 1, archivePageCount)} / {archivePageCount} · {archiveEntries.length} elementi</span>
-              <button disabled={archivePage >= archivePageCount - 1} onClick={() => setArchivePage(Math.min(archivePageCount - 1, archivePage + 1))}>Avanti ›</button>
-            </div>
-          </section>}
           {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
           {view === 'shop' && <><div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div><div className="page-heading"><div><div className="eyebrow">SERVIZI STUDENTI</div><h1>Cartoleria punti</h1><p>Gli articoli si sbloccano progressivamente. I vantaggi attivi hanno cooldown individuali; i potenziamenti si acquistano separatamente.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>ACQUISTI DISPONIBILI</span><strong>{availableShopCount}</strong></div></div><div className="shop-tabs"><button className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>Oggetti · Punti Poké</button><button className={shopTab === 'super-aiuti' ? 'active' : ''} onClick={() => setShopTab('super-aiuti')}>Passivi, archivi e modalità · Punti esame</button></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<div className="shop-grid">{SHOP_PRODUCTS.filter(product => product.category === shopTab).map(product => {const owned=inventory.includes(product.id);const unlocked=productUnlocked(product,inventory,progress.completedIds.length);const balance=product.currency==='poke'?progress.points:progress.examPoints;const canBuy=!owned&&unlocked&&balance>=product.cost;const requirement=product.requirementLabel ?? (product.requires?.length ? `Richiede: ${product.requires.map(id=>SHOP_PRODUCTS.find(entry=>entry.id===id)?.name ?? id).join(', ')}` : 'Nessun requisito aggiuntivo');const status=owned?'Acquistato':!unlocked?'Bloccato':balance<product.cost?'Punti insufficienti':'Disponibile';return <article className={`shop-card ${!unlocked&&!owned?'shop-card-locked':''}`} key={product.id}><div className="shop-symbol">{product.kind==='active'?'⌁':product.kind==='upgrade'?'↗':product.kind==='archive'?'▤':product.kind==='cosmetic'?'✦':product.kind==='mode'?'◈':'★'}</div><div className="shop-product-content"><h3>{product.name}</h3><p>{product.description}</p><small className="shop-requirement">{requirement}</small><strong>{product.cost} {product.currency==='poke'?'Punti Poké':'Punti esame'}</strong><span className={`shop-product-status ${canBuy?'shop-product-ready':owned?'shop-product-owned':''}`}>{status}</span><button className="primary-button" disabled={!canBuy} onClick={()=>buyItem(product)}>{owned?'Acquistato':!unlocked?'Requisiti mancanti':balance<product.cost?'Punti insufficienti':'Acquista'}</button></div></article>})}</div><section className="archive-search item-archive"><h2>Archivio oggetti PokéAPI</h2><p>Catalogo consultabile degli oggetti disponibili nel Pokédex. La classificazione degli oggetti non richiede acquisti.</p><label className="item-search-label">Cerca un oggetto<input value={itemSearch} onChange={event=>{setItemSearch(event.target.value);setItemPage(0);}} placeholder="Nome oggetto…"/></label>{itemCatalog.length===0?<div className="loading-panel"><p>{online?'Caricamento catalogo dalla PokéAPI…':'Catalogo non ancora presente in cache. Riconnettiti per scaricarlo.'}</p></div>:<><div className="item-grid">{visibleItems.map(item=><article className="item-card" key={item.name}><img src={itemSpriteUrl(item.name)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/><span>{titleCase(item.name.replace(/-/g,' '))}</span></article>)}</div><div className="game-pagination"><button disabled={itemPage===0} onClick={()=>setItemPage(Math.max(0,itemPage-1))}>‹ Indietro</button><span>Pagina {Math.min(itemPage+1,itemPageCount)} / {itemPageCount} · {filteredItems.length} oggetti</span><button disabled={itemPage>=itemPageCount-1} onClick={()=>setItemPage(Math.min(itemPageCount-1,itemPage+1))}>Avanti ›</button></div></>}</section></>}
 
