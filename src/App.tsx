@@ -127,7 +127,7 @@ export default function App() {
 
   const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
-  const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1), []);
+  const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1).filter(id => unlockedIds.includes(id)), [unlockedIds]);
   const remaining = useMemo(() => order.filter(pokemon => unlockedIds.includes(pokemon.id) && !completedSet.has(pokemon.id)), [order, unlockedIds, completedSet]);
 
   const placePokemon = useCallback((pokemon: PokemonSpecies, slotId: number) => {
