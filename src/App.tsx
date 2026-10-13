@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
-import type { PokemonSpecies, SavedProgress } from './types';
+import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 
 const NATIONAL_DEX_SIZE = 1025;
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
 const STUDENT_KEY = 'poke-study-student-v1';
 
-type StudentProfile = { nickname: string; matricola: string };
+
 
 function loadStudent(): StudentProfile | null {
   try {
@@ -38,9 +38,9 @@ const regions = [
 function loadProgress(): SavedProgress {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) return JSON.parse(raw) as SavedProgress;
+    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? saved.completedIds : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? saved.completedExams : [], inventory: Array.isArray(saved.inventory) ? saved.inventory : [] }; }
   } catch { /* storage may be unavailable */ }
-  return { points: 0, completedIds: [], examPoints: 0 };
+  return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [] };
 }
 
 function titleCase(name: string) {
@@ -48,7 +48,15 @@ function titleCase(name: string) {
 }
 
 function spriteUrl(id: number) {
-  return `${import.meta.env.BASE_URL}pokemon/${id}.png`;
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+}
+
+function itemSpriteUrl(name: string) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`;
+}
+
+function resourceId(url: string) {
+  return Number(url.match(/\\/(\\d+)\\/?$/)?.[1] ?? 0);
 }
 
 function shuffled<T>(items: T[]): T[] {
@@ -79,6 +87,16 @@ export default function App() {
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [wrongId, setWrongId] = useState<number | null>(null);
+  const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
+  const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
+  const [itemPage, setItemPage] = useState(0);
+  const [itemSearch, setItemSearch] = useState('');
+  const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
+  const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
+  const [typeLoading, setTypeLoading] = useState(false);
+  const [avatarPage, setAvatarPage] = useState(0);
+  const [avatarSearch, setAvatarSearch] = useState('');
+  const [notice, setNotice] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -109,6 +127,53 @@ export default function App() {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch { /* storage may be unavailable */ }
   }, [progress]);
 
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); };
+  }, []);
+
+  useEffect(() => {
+    if (view !== 'shop' || itemCatalog.length) return;
+    let active = true;
+    const cacheKey = 'poke-study-api-items-v1';
+    try { const cached = localStorage.getItem(cacheKey); if (cached) setItemCatalog(JSON.parse(cached) as ApiNamedResource[]); } catch { /* ignore broken cache */ }
+    if (!navigator.onLine) return;
+    fetch('https://pokeapi.co/api/v2/item?limit=2000')
+      .then(response => { if (!response.ok) throw new Error('API oggetti non disponibile'); return response.json(); })
+      .then(payload => {
+        if (!active) return;
+        const items = (payload.results as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name));
+        setItemCatalog(items);
+        try { localStorage.setItem(cacheKey, JSON.stringify(items)); } catch { /* quota storage */ }
+      })
+      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo API non raggiungibile: riprova quando torni online.'); });
+    return () => { active = false; };
+  }, [view, itemCatalog.length]);
+
+  useEffect(() => {
+    if (view !== 'esami' || typeCatalog.length || typeLoading) return;
+    let active = true;
+    const cacheKey = 'poke-study-api-types-v1';
+    try { const cached = localStorage.getItem(cacheKey); if (cached) { setTypeCatalog(JSON.parse(cached) as PokemonTypeIndex[]); return; } } catch { /* ignore broken cache */ }
+    if (!navigator.onLine) { setNotice('Gli esami per tipo richiedono il primo caricamento online.'); return; }
+    setTypeLoading(true);
+    fetch('https://pokeapi.co/api/v2/type?limit=30')
+      .then(response => { if (!response.ok) throw new Error('API tipi non disponibile'); return response.json(); })
+      .then(payload => (payload.results as ApiNamedResource[]).filter(type => { const id = resourceId(type.url); return id >= 1 && id <= 18; }))
+      .then(async types => Promise.all(types.map(async type => {
+        const response = await fetch(type.url);
+        if (!response.ok) throw new Error('Dettaglio tipo non disponibile');
+        const detail = await response.json();
+        return { name: detail.name as string, ids: (detail.pokemon as { pokemon: ApiNamedResource }[]).map(entry => resourceId(entry.pokemon.url)).filter((id: number) => id >= 1 && id <= NATIONAL_DEX_SIZE) };
+      })))
+      .then(types => { if (!active) return; const sorted = types.sort((a, b) => a.name.localeCompare(b.name)); setTypeCatalog(sorted); try { localStorage.setItem(cacheKey, JSON.stringify(sorted)); } catch { /* quota storage */ } })
+      .catch(() => { if (active) setNotice('Non è stato possibile caricare i tipi dalla PokéAPI.'); })
+      .finally(() => { if (active) setTypeLoading(false); });
+    return () => { active = false; };
+  }, [view, typeCatalog.length, typeLoading]);
+
   const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const speciesById = useMemo(() => new Map(species.map(pokemon => [pokemon.id, pokemon])), [species]);
   const slots = useMemo(() => Array.from({ length: NATIONAL_DEX_SIZE }, (_, index) => index + 1), []);
@@ -121,6 +186,14 @@ export default function App() {
   const safePokemonPage = Math.min(pokemonPage, pokemonPageCount - 1);
   const visibleSlots = slots.slice(safeSlotPage * slotsPerPage, (safeSlotPage + 1) * slotsPerPage);
   const visiblePokemon = remaining.slice(safePokemonPage * pokemonPerPage, (safePokemonPage + 1) * pokemonPerPage);
+  const filteredItems = itemCatalog.filter(item => item.name.toLowerCase().includes(itemSearch.trim().toLowerCase()));
+  const itemPageCount = Math.max(1, Math.ceil(filteredItems.length / 15));
+  const visibleItems = filteredItems.slice(itemPage * 15, itemPage * 15 + 15);
+  const filteredAvatars = species.filter(pokemon => pokemon.name.toLowerCase().includes(avatarSearch.trim().toLowerCase()) || String(pokemon.id).includes(avatarSearch.trim()));
+  const avatarPageCount = Math.max(1, Math.ceil(filteredAvatars.length / 15));
+  const visibleAvatars = filteredAvatars.slice(avatarPage * 15, avatarPage * 15 + 15);
+  const inventory = progress.inventory ?? [];
+  const completedExams = progress.completedExams ?? [];
 
   const placePokemon = useCallback((pokemon: PokemonSpecies, slotId: number) => {
     if (completedSet.has(pokemon.id)) return;
@@ -172,6 +245,33 @@ export default function App() {
   function navTo(next: string) {
     setView(next);
     setMobileMenu(false);
+    setNotice('');
+  }
+
+  function claimExam(id: string, reward = 1) {
+    setProgress(old => {
+      const completed = old.completedExams ?? [];
+      if (completed.includes(id)) return old;
+      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id] };
+    });
+    setNotice('Prova completata: ricompensa aggiunta al Registro personale.');
+  }
+
+  function buyItem(id: string, name: string, cost: number, currency: 'poke' | 'exam') {
+    setProgress(old => {
+      const balance = currency === 'poke' ? old.points : old.examPoints;
+      if (balance < cost) { setNotice('Punti insufficienti per questo acquisto.'); return old; }
+      return { ...old, points: currency === 'poke' ? old.points - cost : old.points, examPoints: currency === 'exam' ? old.examPoints - cost : old.examPoints, inventory: [...(old.inventory ?? []), id] };
+    });
+    setNotice(`Acquisto registrato: ${name}.`);
+  }
+
+  function saveAvatar(id: number) {
+    if (!student) return;
+    const updated = { ...student, avatarId: id };
+    try { localStorage.setItem(STUDENT_KEY, JSON.stringify(updated)); } catch { /* storage unavailable */ }
+    setStudent(updated);
+    setNotice('Immagine profilo aggiornata.');
   }
 
   if (!academy || !student) {
@@ -260,7 +360,7 @@ export default function App() {
     <div className={"site-shell academy-theme-" + academy}>
       <div className="utility-bar">
         <span>PORTALE ALLIEVI · DIPARTIMENTO DI RICERCA POKÉMON</span>
-        <span className="utility-right">AREA DIDATTICA <b>● ONLINE</b></span>
+        <span className="utility-right">AREA DIDATTICA <b className={online ? 'connection-online' : 'connection-offline'}>● {online ? 'ONLINE' : 'OFFLINE'}</b></span>
       </div>
       <header className="masthead">
         <button className="mobile-toggle" aria-label="Apri menu" onClick={() => setMobileMenu(!mobileMenu)}>{mobileMenu ? <X /> : <Menu />}</button>
@@ -270,14 +370,17 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
+        <div className="student-card"><div className="student-avatar">{student.avatarId ? <img src={spriteUrl(student.avatarId)} alt="Avatar" /> : '★'}</div><div><small>PROFILO ALLIEVO</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Pokédex Nazionale</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria</button>
-        <button className={view === 'forum' ? 'active' : ''} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca studenti</button>
+        <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
+        <button className={view === 'classifica' ? 'active' : ''} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
+        <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={16} /> Profilo</button>
+        <button className={view === 'forum' ? 'active' : ''} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca</button>
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
 
