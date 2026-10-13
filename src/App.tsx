@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { PokemonSpecies, SavedProgress } from './types';
 
-const API = 'https://pokeapi.co/api/v2/pokemon-species?limit=1025';
 const NATIONAL_DEX_SIZE = 1025;
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
@@ -49,7 +48,7 @@ function titleCase(name: string) {
 }
 
 function spriteUrl(id: number) {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  return `${import.meta.env.BASE_URL}pokemon/${id}.png`;
 }
 
 function shuffled<T>(items: T[]): T[] {
@@ -83,18 +82,14 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
-    fetch(API)
+    fetch(`${import.meta.env.BASE_URL}data/pokemon.json`)
       .then(response => {
         if (!response.ok) throw new Error('Il servizio dati non risponde.');
         return response.json();
       })
       .then(data => {
         if (!active) return;
-        const list = (data.results as { name: string; url: string }[])
-          .map(item => ({
-            id: Number(item.url.match(/pokemon-species\/(\d+)/)?.[1] ?? 0),
-            name: item.name,
-          }))
+        const list = (data as PokemonSpecies[])
           .filter(item => item.id > 0 && item.id <= NATIONAL_DEX_SIZE)
           .sort((a, b) => a.id - b.id);
         const mixed = shuffled(list);
