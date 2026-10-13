@@ -399,3 +399,18 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 @media(max-width:380px){
  .game-slots-zone .slots-grid,.game-pokemon-zone .pokemon-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+
+
+/* Game pagination: each half advances by discrete pages, never by scrolling */
+.game-slots-zone .slots-grid,.game-pokemon-zone .pokemon-cards{overflow:hidden;overscroll-behavior:none}
+.game-pagination{display:grid;grid-template-columns:minmax(70px,1fr) auto minmax(70px,1fr);align-items:center;gap:8px;flex:0 0 39px;padding:4px 8px;background:#fff;border-top:1px solid #e0eaf3}
+.game-pagination button{min-width:0;min-height:30px;padding:5px 9px;border:1px solid #cbddea;border-radius:7px;background:linear-gradient(#fff,#edf6fd);color:#285f86;font:700 10px 'Nunito Sans',Arial,sans-serif}
+.game-pagination button:last-child{justify-self:end}
+.game-pagination button:first-child{justify-self:start}
+.game-pagination button:disabled{opacity:.35;cursor:default}
+.game-pagination span{white-space:nowrap;text-align:center;color:#728aa0;font:700 9px 'DM Mono',monospace}
+@media(max-width:650px){
+ .game-pagination{flex-basis:35px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:4px;padding:3px 5px}
+ .game-pagination button{min-height:28px;padding:4px 6px;font-size:9px}
+ .game-pagination span{font-size:8px}
+}
