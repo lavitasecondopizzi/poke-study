@@ -73,6 +73,7 @@ export default function App() {
     try { return localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { return ''; }
   });
   const [student, setStudent] = useState<StudentProfile | null>(loadStudent);
+  const [showEnrollmentCard, setShowEnrollmentCard] = useState(false);
   const [nickname, setNickname] = useState('');
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -166,7 +167,7 @@ export default function App() {
       localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
     } catch { /* storage may be unavailable */ }
     setStudent(profile);
-    setView('home');
+    setShowEnrollmentCard(true);
   }
 
   function navTo(next: string) {
@@ -228,6 +229,30 @@ export default function App() {
           </button>
         </div>
         <p className="academy-choice-footnote">La scelta dell'accademia non modifica il Pokédex: tutte le 1.025 specie restano disponibili fin dall'inizio.</p>
+      </main>
+    );
+  }
+
+  if (showEnrollmentCard && student) {
+    return (
+      <main className="academy-choice-shell enrollment-shell enrollment-success">
+        <div className="academy-choice-topline">POKÉ STUDY · IMMATRICOLAZIONE COMPLETATA</div>
+        <header className="academy-choice-brand">
+          <div className="pokeball-mark" aria-hidden="true"><span /></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Benvenuto, {student.nickname}!</h1><p>La tua iscrizione è stata registrata.</p></div>
+        </header>
+        <section className="academy-choice-intro">
+          <span className="academy-choice-label">PROFILO ALLIEVO CREATO</span>
+          <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
+          <p>Conserva il tuo codice matricola: identifica il tuo profilo su questo dispositivo.</p>
+        </section>
+        <section className="matricola-card" aria-label="Codice matricola assegnato">
+          <span>CODICE MATRICOLA</span>
+          <strong>{student.matricola}</strong>
+          <button type="button" onClick={() => { void navigator.clipboard?.writeText(student.matricola); }}>Copia codice</button>
+        </section>
+        <button className="enrollment-submit enrollment-enter" type="button" onClick={() => { setShowEnrollmentCard(false); setView('home'); }}>Entra nel portale <ChevronRight size={18} /></button>
+        <p className="academy-choice-footnote">Nickname e matricola sono salvati nel browser insieme ai tuoi progressi.</p>
       </main>
     );
   }
