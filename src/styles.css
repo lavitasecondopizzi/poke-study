@@ -182,3 +182,59 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .board-header h2,.archive-search h2{font-size:15px}
  .site-footer{padding:14px 3px;font-size:7px}
 }
+
+
+/* First-run academy selection inspired by Pokémon Scarlet and Violet */
+.academy-choice-shell{max-width:980px;min-height:100vh;margin:0 auto;padding:0 28px 34px;color:#234d70;background:linear-gradient(180deg,#c9eaff 0,#edf8ff 270px,#f7fbff 100%);border-left:1px solid #afd2eb;border-right:1px solid #afd2eb;box-shadow:0 0 35px #255c8214}
+.academy-choice-topline{margin:0 -28px;padding:9px 28px;background:linear-gradient(#438fc7,#17629e);color:#eff9ff;font:700 10px 'DM Mono',monospace;letter-spacing:.08em}
+.academy-choice-brand{display:flex;align-items:center;gap:15px;padding:25px 0 22px;border-bottom:1px solid #b8d9ef}
+.academy-choice-brand h1{font:700 clamp(25px,4vw,36px) 'Libre Baskerville',Georgia,serif;color:#15548c;margin:5px 0}
+.academy-choice-brand p{margin:0;color:#6487a4;font-size:13px}
+.academy-choice-kicker{font:700 9px 'DM Mono',monospace;letter-spacing:.1em;color:#3879a9}
+.academy-choice-intro{text-align:center;max-width:650px;margin:32px auto 25px}
+.academy-choice-label{display:inline-block;padding:6px 9px;border:1px solid #b8d9ef;border-radius:5px;background:linear-gradient(#fff,#eaf6ff);font:700 9px 'DM Mono',monospace;letter-spacing:.07em;color:#4f7d9f}
+.academy-choice-intro h2{font:700 clamp(25px,4vw,34px) 'Libre Baskerville',Georgia,serif;line-height:1.25;color:#15548c;margin:15px 0 10px}
+.academy-choice-intro p{font-size:14px;line-height:1.7;color:#64829c;margin:0}
+.academy-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:800px;margin:0 auto}
+.academy-choice-card{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;padding:24px 22px 20px;border:2px solid #c5ddec;border-radius:16px;background:linear-gradient(155deg,#fff 0%,#f8fcff 60%,#e8f5ff 100%);box-shadow:inset 0 2px #fff,0 5px 0 #d3e8f7,0 10px 20px #285b7e13;color:#285a80;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.academy-choice-card:hover{transform:translateY(-3px);box-shadow:inset 0 2px #fff,0 7px 0 #d3e8f7,0 14px 24px #285b7e1c}
+.academy-orange{border-color:#f0c1a6}
+.academy-orange:hover{border-color:#e9844b}
+.academy-purple{border-color:#cbb9e7}
+.academy-purple:hover{border-color:#8660c4}
+.academy-crest{width:108px;height:108px;display:grid;place-items:center;margin:0 auto 15px;border:5px solid #fff;border-radius:50% 50% 43% 43%;box-shadow:0 0 0 2px #ffffff,0 4px 0 #d3e4f1,0 7px 13px #234e6b20;position:relative}
+.academy-crest:before{content:'';position:absolute;inset:7px;border:2px solid #ffffffb8;border-radius:50% 50% 42% 42%}
+.academy-crest span{position:relative;z-index:1;width:57px;height:57px;display:grid;place-items:center;border-radius:50%;background:#ffffffc9;font:700 30px 'Libre Baskerville',Georgia,serif}
+.crest-orange{background:radial-gradient(circle at 35% 25%,#ffdf9b,#f08b4d 63%,#c65b2d);color:#b24f24}
+.crest-purple{background:radial-gradient(circle at 35% 25%,#e3d1ff,#9a79d4 63%,#6244a4);color:#60449d}
+.academy-game-tag{padding:5px 8px;border-radius:4px;font:700 9px 'DM Mono',monospace;letter-spacing:.08em;background:#fff2e9;color:#b65e2c;border:1px solid #f2d2bd}
+.academy-purple .academy-game-tag{background:#f2edff;color:#7152ae;border-color:#d9ccef}
+.academy-choice-card h3{font:700 24px 'Libre Baskerville',Georgia,serif;margin:14px 0 8px;color:#a9512b}
+.academy-purple h3{color:#6548a2}
+.academy-choice-card p{max-width:280px;min-height:46px;font-size:12px;line-height:1.65;color:#6c879e;margin:0 0 17px}
+.academy-enroll{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 10px;border:1px solid #d47a46;border-radius:8px;background:linear-gradient(#ffbd86,#ee8b4d 48%,#d76b36 52%,#e57d43);box-shadow:inset 0 1px #ffffffb5,0 2px 0 #efc7ad;color:#fff;font:800 10px 'DM Mono',monospace;text-shadow:0 -1px #b85d2f;letter-spacing:.02em}
+.academy-purple .academy-enroll{border-color:#8061bd;background:linear-gradient(#c8b4f3,#a185df 48%,#8061bd 52%,#9374cf);box-shadow:inset 0 1px #ffffffb5,0 2px 0 #d3c7ea;text-shadow:0 -1px #62469c}
+.academy-choice-footnote{max-width:700px;margin:26px auto 0;padding:12px 15px;border:1px solid #c2dff1;border-radius:8px;background:linear-gradient(#fff,#eef8ff);font-size:11px;line-height:1.6;color:#6c8aa2;text-align:center}
+@media(max-width:600px){
+ .academy-choice-shell{padding:0 14px 24px;border:0;box-shadow:none}
+ .academy-choice-topline{margin:0 -14px;padding:8px 14px;font-size:8px}
+ .academy-choice-brand{gap:11px;padding:19px 0}
+ .academy-choice-brand .pokeball-mark{width:43px;height:43px;flex-basis:43px}
+ .academy-choice-brand h1{font-size:22px}
+ .academy-choice-brand p{font-size:10px}
+ .academy-choice-kicker{font-size:7px;letter-spacing:.04em}
+ .academy-choice-intro{margin:24px auto 18px}
+ .academy-choice-label{font-size:7px}
+ .academy-choice-intro h2{font-size:25px}
+ .academy-choice-intro p{font-size:12px}
+ .academy-choice-grid{grid-template-columns:1fr;gap:13px}
+ .academy-choice-card{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:13px;align-items:center;text-align:left;padding:15px;border-radius:13px}
+ .academy-crest{grid-column:1;grid-row:1/4;width:68px;height:68px;border-width:3px;margin:0}
+ .academy-crest:before{inset:4px;border-width:1px}
+ .academy-crest span{width:39px;height:39px;font-size:22px}
+ .academy-game-tag{grid-column:2;grid-row:1;justify-self:start;font-size:7px}
+ .academy-choice-card h3{grid-column:2;grid-row:2;font-size:18px;margin:6px 0 3px}
+ .academy-choice-card p{grid-column:2;grid-row:3;min-height:0;font-size:10px;margin:0 0 10px}
+ .academy-enroll{grid-column:1/-1;grid-row:4;margin-top:11px;font-size:9px}
+ .academy-choice-footnote{font-size:10px;margin-top:18px}
+}
