@@ -10,6 +10,8 @@ export interface SavedProgress {
   completedExams?: string[];
   inventory?: string[];
   completedEntries?: string[];
+  /** Unix timestamps in milliseconds; one cooldown per active ability. */
+  abilityCooldowns?: Record<string, number>;
 }
 
 export interface ApiNamedResource {
