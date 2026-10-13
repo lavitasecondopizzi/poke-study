@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createMixedLesson, displayName, MACRO_CATEGORIES } from './catalog';
+import { createMixedLesson, displayName, itemCard, pokemonCard, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
@@ -133,6 +133,9 @@ export default function App() {
   const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
   const [itemPage, setItemPage] = useState(0);
   const [itemSearch, setItemSearch] = useState('');
+  const [archiveCategory, setArchiveCategory] = useState<string>('pokemon');
+  const [archivePage, setArchivePage] = useState(0);
+  const [archiveSearch, setArchiveSearch] = useState('');
   const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
   const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
   const [typeLoading, setTypeLoading] = useState(false);
@@ -158,7 +161,7 @@ export default function App() {
       })
       .catch(() => {
         if (!active) return;
-        setLoadError('Non è stato possibile caricare il Pokédex. Controlla la connessione e riprova.');
+        setLoadError('Non è stato possibile caricare il catalogo Pokémon. Controlla la connessione e riprova.');
         setLoading(false);
       });
     return () => { active = false; };
@@ -249,6 +252,20 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
     [lessonDeck, lessonSolved],
   );
+  const archiveEntries = useMemo(() => {
+    const allEntries: CatalogCard[] = [
+      ...species.map(pokemonCard),
+      ...itemCatalog.map(itemCard),
+    ];
+    const normalizedSearch = archiveSearch.trim().toLowerCase();
+    return allEntries.filter(entry =>
+      entry.macroId === archiveCategory &&
+      (!normalizedSearch || entry.name.toLowerCase().includes(normalizedSearch) ||
+        (entry.pokemonId !== undefined && String(entry.pokemonId).includes(normalizedSearch)))
+    ).sort((a, b) => a.name.localeCompare(b.name, 'it'));
+  }, [species, itemCatalog, archiveCategory, archiveSearch]);
+  const archivePageCount = Math.max(1, Math.ceil(archiveEntries.length / 15));
+  const visibleArchiveEntries = archiveEntries.slice(archivePage * 15, archivePage * 15 + 15);
   const filteredItems = itemCatalog.filter(item => item.name.toLowerCase().includes(itemSearch.trim().toLowerCase()));
   const itemPageCount = Math.max(1, Math.ceil(filteredItems.length / 15));
   const visibleItems = filteredItems.slice(itemPage * 15, itemPage * 15 + 15);
@@ -507,7 +524,7 @@ export default function App() {
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
-        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Pokédex Nazionale</button>
+        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
@@ -521,7 +538,7 @@ export default function App() {
         <aside className="sidebar">
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
-            <button className={view === 'pokedex' ? 'side-active' : ''} onClick={() => navTo('pokedex')}>▸ Pokédex Nazionale</button>
+            <button className={view === 'pokedex' ? 'side-active' : ''} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
             <button className={view === 'registro' ? 'side-active' : ''} onClick={() => navTo('registro')}>▸ Registro personale</button>
             <button className={view === 'shop' ? 'side-active' : ''} onClick={() => navTo('shop')}>▸ Cartoleria punti {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
           </section>
@@ -542,9 +559,9 @@ export default function App() {
             <section className="welcome-panel">
               <div className="welcome-copy">
                 <div className="welcome-ribbon"><span>✦</span> BENVENUTO IN ACCADEMIA</div>
-                <h1>Il tuo viaggio nel mondo Pokémon comincia qui!</h1>
-                <p>Cataloga le specie del Pokédex Nazionale, tieni traccia dei tuoi progressi e scopri nuove curiosità dal nostro archivio scientifico.</p>
-                <button className="enter-pokedex" onClick={() => navTo('pokedex')}><BookOpen size={18} /> ENTRA NEL POKÉDEX <ChevronRight size={19} /></button>
+                <h1>Il tuo archivio del mondo Pokémon comincia qui!</h1>
+                <p>Cataloga le specie del Archivio Nazionale, tieni traccia dei tuoi progressi e scopri nuove curiosità dal nostro archivio scientifico.</p>
+                <button className="enter-pokedex" onClick={() => navTo('pokedex')}><BookOpen size={18} /> ENTRA NELL’ARCHIVIO <ChevronRight size={19} /></button>
               </div>
               <div className="welcome-art"><div className="art-sun" /><div className="art-book"><BookOpen size={68} strokeWidth={1.3}/></div><div className="art-caption">IL SAPERE È LA TUA<br/>PRIMA POKÉ BALL!</div></div>
             </section>
@@ -554,7 +571,7 @@ export default function App() {
             </div>
             <section className="portal-menu-panel">
               <div className="portal-panel-heading"><div><span>AREA PERSONALE</span><h2>Che cosa vuoi fare oggi?</h2></div><span className="panel-badge">MENU ALLIEVO</span></div>
-              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon blue-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Pokédex Nazionale</strong><small>Cataloga tutte le 1.025 specie disponibili</small></span><ChevronRight className="menu-chevron"/></button>
+              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon blue-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Archivio Nazionale</strong><small>Cataloga tutte le 1.025 specie disponibili</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('forum')}><span className="menu-item-icon orange-icon"><CircleHelp size={22}/></span><span className="menu-item-copy"><strong>Forum studenti</strong><small>Avvisi, guide e comunicazioni dell'Accademia</small></span><ChevronRight className="menu-chevron"/></button>
               <button className="portal-menu-item" onClick={() => navTo('shop')}><span className="menu-item-icon purple-icon"><ShoppingBag size={22}/></span><span className="menu-item-copy"><strong>Negozio strumenti</strong><small>Usa i tuoi punti per prepararti alle ricerche</small></span><ChevronRight className="menu-chevron"/></button>
@@ -588,7 +605,7 @@ export default function App() {
               <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Carte selezionabili">
                 <div className="game-zone-heading"><strong>CARTE MISTE</strong><span>{remainingLessonCards.length} da classificare</span></div><div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
-                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento catalogo Pokémon…</h3></div>
+                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento archivio Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo misto non ancora pronto</h3><p>{online ? 'Caricamento del catalogo degli oggetti…' : 'Serve una prima connessione per scaricare gli oggetti. Dopo il caricamento saranno disponibili anche offline.'}</p></div>
                   : remainingLessonCards.length > 0 ? <div className="pokemon-cards mixed-card-grid">
                     {remainingLessonCards.map(card => <button
@@ -611,6 +628,36 @@ export default function App() {
               </section>
             </section>
           </>}
+          {view === 'pokedex' && <section className="archive-browser">
+            <div className="archive-browser-heading">
+              <div><div className="eyebrow">ARCHIVIO DIDATTICO</div><h2>Catalogo completo</h2><p>Sfoglia tutte le entità disponibili. La lezione di classificazione sopra resta separata da questo archivio.</p></div>
+              <strong>{archiveEntries.length.toLocaleString('it-IT')} elementi</strong>
+            </div>
+            <label className="item-search-label">Cerca nel catalogo
+              <input value={archiveSearch} onChange={event => { setArchiveSearch(event.target.value); setArchivePage(0); }} placeholder="Nome o numero Pokémon…" />
+            </label>
+            <div className="archive-category-tabs">
+              {MACRO_CATEGORIES.map(category => <button key={category.id} className={archiveCategory === category.id ? 'active' : ''} onClick={() => { setArchiveCategory(category.id); setArchivePage(0); }}>{category.name}</button>)}
+            </div>
+            {loading || (archiveCategory !== 'pokemon' && itemCatalog.length === 0)
+              ? <div className="loading-panel"><p>Caricamento degli elementi dell'archivio…</p></div>
+              : archiveEntries.length === 0
+                ? <div className="empty-service"><h3>Nessun risultato</h3><p>Prova un altro termine di ricerca.</p></div>
+                : <div className="archive-entity-grid">{visibleArchiveEntries.map(entry => {
+                    const done = entry.kind === 'pokemon'
+                      ? progress.completedIds.includes(entry.pokemonId ?? -1)
+                      : (progress.completedEntries ?? []).includes(entry.id);
+                    return <article className="archive-entity-card" key={entry.id}>
+                      <img src={entry.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                      <div><strong>{displayName(entry.name)}</strong><small>{entry.subcategoryName}</small><span className={done ? 'archive-entity-done' : 'archive-entity-pending'}>{done ? 'Catalogato' : 'Da catalogare'}</span></div>
+                    </article>;
+                  })}</div>}
+            <div className="game-pagination">
+              <button disabled={archivePage === 0} onClick={() => setArchivePage(Math.max(0, archivePage - 1))}>‹ Indietro</button>
+              <span>Pagina {Math.min(archivePage + 1, archivePageCount)} / {archivePageCount} · {archiveEntries.length} elementi</span>
+              <button disabled={archivePage >= archivePageCount - 1} onClick={() => setArchivePage(Math.min(archivePageCount - 1, archivePage + 1))}>Avanti ›</button>
+            </div>
+          </section>}
           {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
           {view === 'shop' && <><div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div><div className="page-heading"><div><div className="eyebrow">SERVIZI STUDENTI</div><h1>Cartoleria punti</h1><p>Gli articoli si sbloccano progressivamente. I vantaggi attivi hanno cooldown individuali; i potenziamenti si acquistano separatamente.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>ACQUISTI DISPONIBILI</span><strong>{availableShopCount}</strong></div></div><div className="shop-tabs"><button className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>Oggetti · Punti Poké</button><button className={shopTab === 'super-aiuti' ? 'active' : ''} onClick={() => setShopTab('super-aiuti')}>Passivi, archivi e modalità · Punti esame</button></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<div className="shop-grid">{SHOP_PRODUCTS.filter(product => product.category === shopTab).map(product => {const owned=inventory.includes(product.id);const unlocked=productUnlocked(product,inventory,progress.completedIds.length);const balance=product.currency==='poke'?progress.points:progress.examPoints;const canBuy=!owned&&unlocked&&balance>=product.cost;const requirement=product.requirementLabel ?? (product.requires?.length ? `Richiede: ${product.requires.map(id=>SHOP_PRODUCTS.find(entry=>entry.id===id)?.name ?? id).join(', ')}` : 'Nessun requisito aggiuntivo');const status=owned?'Acquistato':!unlocked?'Bloccato':balance<product.cost?'Punti insufficienti':'Disponibile';return <article className={`shop-card ${!unlocked&&!owned?'shop-card-locked':''}`} key={product.id}><div className="shop-symbol">{product.kind==='active'?'⌁':product.kind==='upgrade'?'↗':product.kind==='archive'?'▤':product.kind==='cosmetic'?'✦':product.kind==='mode'?'◈':'★'}</div><div className="shop-product-content"><h3>{product.name}</h3><p>{product.description}</p><small className="shop-requirement">{requirement}</small><strong>{product.cost} {product.currency==='poke'?'Punti Poké':'Punti esame'}</strong><span className={`shop-product-status ${canBuy?'shop-product-ready':owned?'shop-product-owned':''}`}>{status}</span><button className="primary-button" disabled={!canBuy} onClick={()=>buyItem(product)}>{owned?'Acquistato':!unlocked?'Requisiti mancanti':balance<product.cost?'Punti insufficienti':'Acquista'}</button></div></article>})}</div><section className="archive-search item-archive"><h2>Archivio oggetti PokéAPI</h2><p>Catalogo consultabile degli oggetti disponibili nel Pokédex. La classificazione degli oggetti non richiede acquisti.</p><label className="item-search-label">Cerca un oggetto<input value={itemSearch} onChange={event=>{setItemSearch(event.target.value);setItemPage(0);}} placeholder="Nome oggetto…"/></label>{itemCatalog.length===0?<div className="loading-panel"><p>{online?'Caricamento catalogo dalla PokéAPI…':'Catalogo non ancora presente in cache. Riconnettiti per scaricarlo.'}</p></div>:<><div className="item-grid">{visibleItems.map(item=><article className="item-card" key={item.name}><img src={itemSpriteUrl(item.name)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/><span>{titleCase(item.name.replace(/-/g,' '))}</span></article>)}</div><div className="game-pagination"><button disabled={itemPage===0} onClick={()=>setItemPage(Math.max(0,itemPage-1))}>‹ Indietro</button><span>Pagina {Math.min(itemPage+1,itemPageCount)} / {itemPageCount} · {filteredItems.length} oggetti</span><button disabled={itemPage>=itemPageCount-1} onClick={()=>setItemPage(Math.min(itemPageCount-1,itemPage+1))}>Avanti ›</button></div></>}</section></>}
 
@@ -620,13 +667,13 @@ export default function App() {
 
           {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Personalizza l’immagine profilo scegliendo tra i 1.025 Pokémon. Le immagini vengono caricate dalla CDN solo quando servono.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{student.avatarId?<img src={spriteUrl(student.avatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><label className="item-search-label">Cerca un Pokémon per nome o numero<input value={avatarSearch} onChange={event=>{setAvatarSearch(event.target.value);setAvatarPage(0);}} placeholder="Es. Pikachu oppure 0025"/></label><div className="avatar-grid">{visibleAvatars.map(pokemon=><button className={student.avatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><img src={spriteUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/><span>{titleCase(pokemon.name)}</span></button>)}</div><div className="game-pagination"><button disabled={avatarPage===0} onClick={()=>setAvatarPage(Math.max(0,avatarPage-1))}>‹ Indietro</button><span>Pagina {Math.min(avatarPage+1,avatarPageCount)} / {avatarPageCount}</span><button disabled={avatarPage>=avatarPageCount-1} onClick={()=>setAvatarPage(Math.min(avatarPageCount-1,avatarPage+1))}>Avanti ›</button></div></section></>}
 
-          {view === 'forum' && <><div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div><div className="page-heading"><div><div className="eyebrow">COMUNITÀ SCOLASTICA</div><h1>Bacheca studenti</h1><p>Avvisi e appunti dell'archivio Pokémon.</p></div></div><section className="forum-post"><div className="post-icon">📌</div><div><span className="section-label">AVVISO DEL PRESIDE</span><h2>Benvenuto nel Pokédex Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall'inizio. Catalogare è un'attività continua: ogni collocazione corretta aggiunge un Punto Poké e gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p><small>SEGRETERIA DIDATTICA</small></div></section><section className="forum-post"><div className="post-icon">📚</div><div><span className="section-label">GUIDA RAPIDA</span><h2>Come funziona la catalogazione</h2><p>Ogni lezione combina carte di macrocategorie diverse. Trascina una carta nella sottocategoria corretta oppure, su mobile, seleziona la carta e tocca la destinazione. Il nome viene rivelato dopo la risposta; gli errori non sottraggono punti.</p><small>MANUALE DELLO STUDENTE</small></div></section></>}
+          {view === 'forum' && <><div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div><div className="page-heading"><div><div className="eyebrow">COMUNITÀ SCOLASTICA</div><h1>Bacheca studenti</h1><p>Avvisi e appunti dell'archivio Pokémon.</p></div></div><section className="forum-post"><div className="post-icon">📌</div><div><span className="section-label">AVVISO DEL PRESIDE</span><h2>Benvenuto nel Archivio Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall'inizio. Catalogare è un'attività continua: ogni collocazione corretta aggiunge un Punto Poké e gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p><small>SEGRETERIA DIDATTICA</small></div></section><section className="forum-post"><div className="post-icon">📚</div><div><span className="section-label">GUIDA RAPIDA</span><h2>Come funziona la catalogazione</h2><p>Ogni lezione combina carte di macrocategorie diverse. Trascina una carta nella sottocategoria corretta oppure, su mobile, seleziona la carta e tocca la destinazione. Il nome viene rivelato dopo la risposta; gli errori non sottraggono punti.</p><small>MANUALE DELLO STUDENTE</small></div></section></>}
           <footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
       <nav className="mobile-app-nav" aria-label="Navigazione principale">
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
-        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Pokédex</span></button>
+        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio</span></button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={20}/><span>Esami</span></button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><span className="mobile-shop-icon"><ShoppingBag size={20}/>{availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</span><span>Negozio</span></button>
         <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo</span></button>
