@@ -80,9 +80,9 @@ export function itemCard(item: ApiNamedResource): CatalogCard {
     macroId = 'special';
     subcategoryId = 'fossils';
     subcategoryName = 'Fossili e reperti';
-  } else if (/mega-stone|z-crystal|z-crystal|memory$|plate$|relic|nugget|pearl|star-piece|comet-shard|rare-bone|stardust|bottle-cap|treasure|strange-souvenir|gold-leaf|gold-teeth/.test(name)) {
+  } else if (/mega-stone|z-crystal|-z$|ite(?:-x|-y)?$|memory$|plate$|relic|nugget|pearl|star-piece|comet-shard|rare-bone|stardust|bottle-cap|treasure|strange-souvenir|gold-leaf|gold-teeth/.test(name)) {
     macroId = 'special';
-    subcategoryId = /mega-stone|z-crystal|memory$|plate$/.test(name) ? 'special-mechanics' : 'treasures';
+    subcategoryId = /mega-stone|z-crystal|-z$|ite(?:-x|-y)?$|memory$|plate$/.test(name) ? 'special-mechanics' : 'treasures';
     subcategoryName = subcategoryId === 'special-mechanics' ? 'Pietre e oggetti speciali' : 'Tesori e reperti';
   } else if (/ingredient|herba|salt|spice|mushroom|root|fresh-cream|sweet-heart|honey|berry-juice|big-root/.test(name)) {
     macroId = 'berries';
