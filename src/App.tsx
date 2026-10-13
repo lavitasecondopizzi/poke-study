@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { FormEvent } from 'react';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, Search, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { PokemonSpecies, SavedProgress } from './types';
 
@@ -155,7 +156,7 @@ export default function App() {
     setAcademy(next);
   }
 
-  function completeEnrollment(event: React.FormEvent<HTMLFormElement>) {
+  function completeEnrollment(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const cleanNickname = nickname.trim();
     if (!academy || !cleanNickname) return;
