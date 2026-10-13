@@ -72,7 +72,7 @@ export function itemCard(item: ApiNamedResource): CatalogCard {
     macroId = 'berries';
     subcategoryId = 'berries';
     subcategoryName = 'Bacche';
-  } else if (/^(tm|tr|hm)\d{1,3}$/.test(name) || /technical-machine|technical-record|hidden-machine/.test(name)) {
+  } else if (/^(tm|tr|hm)-?\d{1,3}$/.test(name) || /technical-machine|technical-record|hidden-machine/.test(name)) {
     macroId = 'machines';
     subcategoryId = 'technical-machines';
     subcategoryName = 'MT, DT e macchine';
