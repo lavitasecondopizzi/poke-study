@@ -414,3 +414,76 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .game-pagination button{min-height:28px;padding:4px 6px;font-size:9px}
  .game-pagination span{font-size:8px}
 }
+
+
+/* Poké Study functional areas: API archive, exams, store and profile */
+.connection-online{color:#238553!important}
+.connection-offline{color:#b34a3e!important}
+.student-avatar{overflow:hidden}
+.student-avatar img{width:100%;height:100%;object-fit:contain}
+.shop-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.shop-tabs button{min-height:42px;padding:10px 16px;border:1px solid #cbddea;border-radius:10px;background:#fff;color:#365775;font-weight:800}
+.shop-tabs button.active{background:#193c62;color:#fff;border-color:#193c62}
+.shop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0 22px}
+.shop-card{display:flex;align-items:center;gap:14px;min-width:0;padding:16px;background:#fff;border:1px solid #dce8f2;border-radius:14px;box-shadow:0 3px 12px #235d860b}
+.shop-card>img{width:62px;height:62px;flex:0 0 62px;object-fit:contain}
+.shop-card>div{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.shop-card h3{margin:0;color:#214b6e;font-size:16px}
+.shop-card p{margin:0;color:#6e8295;font-size:12px;line-height:1.5}
+.shop-card strong{font-size:12px;color:#245e88}
+.shop-card .primary-button{margin-top:5px;min-height:36px}
+.shop-symbol{display:grid;place-items:center;width:62px;height:62px;flex:0 0 62px;border-radius:15px;background:#f5efff;color:#7957b3;font-size:32px}
+.item-archive{margin-top:22px}
+.item-search-label{display:flex;flex-direction:column;gap:8px;margin:16px 0;color:#48677f;font-size:12px;font-weight:800}
+.item-search-label input{width:100%;min-height:44px;padding:10px 13px;border:1px solid #cbddea;border-radius:10px;background:#fff;color:#213c52;font:500 14px 'Nunito Sans',Arial,sans-serif}
+.item-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0}
+.item-card{display:flex;min-width:0;min-height:110px;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px 5px;background:#fff;border:1px solid #e0eaf3;border-radius:10px;text-align:center}
+.item-card img{width:44px;height:44px;object-fit:contain}
+.item-card span{font-size:11px;color:#3e5e78;overflow-wrap:anywhere}
+.exam-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.exam-card{display:flex;gap:13px;align-items:flex-start;min-width:0;padding:16px;background:#fff;border:1px solid #dce8f2;border-radius:13px;box-shadow:0 3px 10px #235d8608}
+.exam-card>div:last-child{flex:1;min-width:0}
+.exam-card h3{margin:0 0 5px;color:#214b6e;font-size:16px}
+.exam-card p{margin:0 0 10px;color:#6e8295;font-size:12px;line-height:1.5}
+.exam-card strong{display:block;margin-top:8px;color:#4f6d83;font-size:11px}
+.exam-card .secondary-button{margin-top:10px;min-height:36px}
+.exam-card-mark{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:#e9f5ff;color:#2875a8;font-weight:900}
+.type-mark{background:#f0edff;color:#7755b5;font-size:11px;text-transform:uppercase}
+.special-mark{background:#fff1df;color:#ad6c1d}
+.notice-inline{margin:12px 0;padding:12px 14px;border:1px solid #b9d9c5;border-radius:10px;background:#f1fff5;color:#286443;font-size:13px}
+.profile-hero{display:flex;align-items:center;gap:18px;padding:4px 0 22px;margin-bottom:18px;border-bottom:1px solid #e1eaf2}
+.profile-avatar-large{display:grid;place-items:center;width:100px;height:100px;flex:0 0 100px;border:1px solid #d4e3ef;border-radius:22px;background:#f1f8ff;color:#7b9ab3;font-size:42px;overflow:hidden}
+.profile-avatar-large img{width:100%;height:100%;object-fit:contain}
+.profile-hero h2{margin:5px 0;color:#214b6e;font-size:23px}
+.profile-hero p{margin:3px 0;color:#71869a;font-size:12px}
+.profile-hero small{display:block;margin-top:8px;color:#8396a6;font-size:11px}
+.avatar-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0}
+.avatar-option{display:flex;min-width:0;flex-direction:column;align-items:center;gap:5px;padding:9px 4px;border:1px solid #dce8f2;border-radius:11px;background:#fff;color:#496982;font-size:10px;font-weight:700}
+.avatar-option img{width:62px;height:62px;object-fit:contain}
+.avatar-option span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.avatar-option.selected{border:2px solid #3385bd;background:#eef8ff;box-shadow:0 0 0 2px #3385bd20}
+.ranking-preview{gap:15px}
+.ranking-preview .dashboard-strip{width:100%;margin-top:8px}
+@media(max-width:850px){
+ .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .item-grid,.avatar-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:650px){
+ .shop-tabs{display:grid;grid-template-columns:1fr 1fr}
+ .shop-tabs button{padding:9px 7px;font-size:11px}
+ .shop-grid{grid-template-columns:1fr;gap:9px}
+ .shop-card{padding:13px;border-radius:12px}
+ .shop-card>img,.shop-symbol{width:52px;height:52px;flex-basis:52px}
+ .shop-card h3{font-size:14px}
+ .item-grid,.avatar-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .item-card{min-height:95px}
+ .item-card img{width:38px;height:38px}
+ .item-card span{font-size:10px}
+ .exam-grid{grid-template-columns:1fr;gap:9px}
+ .exam-card{padding:13px;gap:10px}
+ .exam-card h3{font-size:14px}
+ .profile-hero{align-items:flex-start;gap:12px}
+ .profile-avatar-large{width:78px;height:78px;flex-basis:78px;border-radius:17px}
+ .profile-hero h2{font-size:20px}
+ .ranking-preview .dashboard-strip{grid-template-columns:1fr}
+}
