@@ -53,7 +53,11 @@ self.addEventListener('fetch', event => {
         if (cached) return cached;
         try {
           const response = await fetch(request);
-          if (response.ok || response.type === 'opaque') {\n            await cache.put(request, response.clone());\n            const keys = await cache.keys();\n            if (keys.length > 250) await cache.delete(keys[0]);\n          }
+          if (response.ok || response.type === 'opaque') {
+            await cache.put(request, response.clone());
+            const keys = await cache.keys();
+            if (keys.length > 250) await cache.delete(keys[0]);
+          }
           return response;
         } catch (error) {
           const fallback = await cache.match(request);
