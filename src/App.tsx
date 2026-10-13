@@ -117,7 +117,7 @@ export default function App() {
     setProgress(old => {
       const alreadyCompleted = old.completedIds.includes(pokemon.id);
       const completedIds = alreadyCompleted ? old.completedIds : [...old.completedIds, pokemon.id];
-      const points = old.points + (alreadyCompleted ? 0 : 1);
+      const points = old.points + 1;
       const examsBefore = regions.filter(region => Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => old.completedIds.includes(id))).length;
       const examsAfter = regions.filter(region => Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => completedIds.includes(id))).length;
       return { points, completedIds, examPoints: old.examPoints + Math.max(0, examsAfter - examsBefore) };
