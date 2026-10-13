@@ -105,6 +105,31 @@ function itemSpriteUrl(name: string) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`;
 }
 
+const IMAGE_CHECK_CONCURRENCY = 32;
+const ITEM_IMAGE_CACHE_KEY = 'poke-study-api-items-with-images-v2';
+
+function imageExists(url: string): Promise<boolean> {
+  return new Promise(resolve => {
+    const image = new Image();
+    image.onload = () => resolve(image.naturalWidth > 0 && image.naturalHeight > 0);
+    image.onerror = () => resolve(false);
+    image.src = url;
+  });
+}
+
+async function keepItemsWithImages(items: ApiNamedResource[]): Promise<ApiNamedResource[]> {
+  const valid: ApiNamedResource[] = [];
+  for (let start = 0; start < items.length; start += IMAGE_CHECK_CONCURRENCY) {
+    const batch = items.slice(start, start + IMAGE_CHECK_CONCURRENCY);
+    const results = await Promise.all(batch.map(async item => ({
+      item,
+      available: await imageExists(itemSpriteUrl(item.name)),
+    })));
+    valid.push(...results.filter(result => result.available).map(result => result.item));
+  }
+  return valid;
+}
+
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
   return Number(parts[parts.length - 1] ?? 0);
@@ -186,18 +211,22 @@ export default function App() {
   useEffect(() => {
     if ((view !== 'shop' && view !== 'pokedex') || itemCatalog.length) return;
     let active = true;
-    const cacheKey = 'poke-study-api-items-v1';
-    try { const cached = localStorage.getItem(cacheKey); if (cached) setItemCatalog(JSON.parse(cached) as ApiNamedResource[]); } catch { /* ignore broken cache */ }
+    const cacheKey = ITEM_IMAGE_CACHE_KEY;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) setItemCatalog(JSON.parse(cached) as ApiNamedResource[]);
+    } catch { /* ignore broken cache */ }
     if (!navigator.onLine) return;
     fetch('https://pokeapi.co/api/v2/item?limit=2000')
       .then(response => { if (!response.ok) throw new Error('API oggetti non disponibile'); return response.json(); })
-      .then(payload => {
+      .then(payload => (payload.results as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name)))
+      .then(items => keepItemsWithImages(items))
+      .then(itemsWithImages => {
         if (!active) return;
-        const items = (payload.results as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name));
-        setItemCatalog(items);
-        try { localStorage.setItem(cacheKey, JSON.stringify(items)); } catch { /* quota storage */ }
+        setItemCatalog(itemsWithImages);
+        try { localStorage.setItem(cacheKey, JSON.stringify(itemsWithImages)); } catch { /* quota storage */ }
       })
-      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo API non raggiungibile: riprova quando torni online.'); });
+      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo oggetti non raggiungibile: riprova quando torni online.'); });
     return () => { active = false; };
   }, [view, itemCatalog.length, online]);
 
