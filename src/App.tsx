@@ -6,6 +6,54 @@ import { createMixedLesson, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
+
+type ShopCurrency = 'poke' | 'exam';
+type ShopTab = 'oggetti' | 'super-aiuti';
+type ShopProduct = {
+  id: string;
+  name: string;
+  description: string;
+  cost: number;
+  currency: ShopCurrency;
+  category: ShopTab;
+  requires?: string[];
+  requiredPokemon?: number;
+  requirementLabel?: string;
+  kind: 'active' | 'upgrade' | 'passive' | 'archive' | 'cosmetic' | 'mode';
+};
+
+const SHOP_PRODUCTS: ShopProduct[] = [
+  { id: 'notebook', name: 'Quaderno di ricerca', description: 'Sblocca il registro personale degli strumenti e degli archivi acquistati.', cost: 250, currency: 'poke', category: 'oggetti', kind: 'passive' },
+  { id: 'scanner', name: 'Scanner', description: 'Usalo su una carta selezionata per rivelarne la macro categoria. Cooldown iniziale: 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'scanner-upgrade-2', name: 'Scanner · Livello 2', description: 'Riduce il cooldown dello Scanner da 5 a 3 minuti.', cost: 250, currency: 'poke', category: 'oggetti', requires: ['scanner'], requirementLabel: 'Acquista prima lo Scanner', kind: 'upgrade' },
+  { id: 'profile-background', name: 'Sfondo profilo', description: 'Sblocca un elemento cosmetico per il profilo.', cost: 600, currency: 'poke', category: 'oggetti', kind: 'cosmetic' },
+  { id: 'research', name: 'Ricerca', description: 'Fornisce un indizio sulla sottocategoria della carta. Cooldown iniziale: 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
+  { id: 'research-upgrade-2', name: 'Ricerca · Livello 2', description: 'Riduce il cooldown della Ricerca da 10 a 7 minuti.', cost: 600, currency: 'poke', category: 'oggetti', requires: ['research'], requirementLabel: 'Acquista prima Ricerca', kind: 'upgrade' },
+  { id: 'research-upgrade-3', name: 'Ricerca · Livello 3', description: 'Riduce il cooldown della Ricerca da 7 a 5 minuti. Livello massimo.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['research-upgrade-2'], requirementLabel: 'Acquista prima Ricerca · Livello 2', kind: 'upgrade' },
+  { id: 'digital-assistant', name: 'Assistente digitale', description: 'Sblocca un supporto passivo permanente per lo studio.', cost: 2, currency: 'exam', category: 'super-aiuti', kind: 'passive' },
+  { id: 'evolution-archive', name: 'Archivio delle evoluzioni', description: 'Sblocca l’accesso permanente alle informazioni sulle evoluzioni.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'evolution-tools-archive', name: 'Archivio degli strumenti evolutivi', description: 'Sblocca una raccolta dedicata agli strumenti evolutivi.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'machines-archive', name: 'Archivio MT e tecniche', description: 'Sblocca una raccolta dedicata alle macchine e alle tecniche.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'fossils-archive', name: 'Archivio fossili e reperti', description: 'Sblocca una raccolta dedicata a fossili e reperti.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca una raccolta dedicata agli strumenti tenuti.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'academy-theme', name: 'Tema Accademia', description: 'Sblocca un tema grafico alternativo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
+  { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca un titolo personale da mostrare nel profilo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
+  { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
+  { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
+];
+
+function productUnlocked(product: ShopProduct, inventory: string[], completedPokemon: number) {
+  return (product.requires ?? []).every(requiredId => inventory.includes(requiredId))
+    && completedPokemon >= (product.requiredPokemon ?? 0);
+}
+
+function cooldownLabel(until: number, now: number) {
+  const remaining = Math.max(0, Math.ceil((until - now) / 1000));
+  if (remaining <= 0) return 'Pronto';
+  const minutes = Math.floor(remaining / 60);
+  const seconds = remaining % 60;
+  return minutes > 0 ? `${minutes}m ${String(seconds).padStart(2, '0')}s` : `${seconds}s`;
+}
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
 const STUDENT_KEY = 'poke-study-student-v1';
@@ -40,9 +88,9 @@ const regions = [
 function loadProgress(): SavedProgress {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? saved.completedIds : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? saved.completedExams : [], inventory: Array.isArray(saved.inventory) ? saved.inventory : [], completedEntries: Array.isArray(saved.completedEntries) ? saved.completedEntries : [] }; }
+    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? saved.completedIds : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? saved.completedExams : [], inventory: Array.isArray(saved.inventory) ? saved.inventory : [], completedEntries: Array.isArray(saved.completedEntries) ? saved.completedEntries : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {} }; }
   } catch { /* storage may be unavailable */ }
-  return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [] };
+  return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} };
 }
 
 function titleCase(name: string) {
@@ -91,6 +139,7 @@ export default function App() {
   const [avatarPage, setAvatarPage] = useState(0);
   const [avatarSearch, setAvatarSearch] = useState('');
   const [notice, setNotice] = useState('');
+  const [clockNow, setClockNow] = useState(() => Date.now());
 
   useEffect(() => {
     let active = true;
@@ -118,6 +167,11 @@ export default function App() {
   useEffect(() => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch { /* storage may be unavailable */ }
   }, [progress]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const update = () => setOnline(navigator.onLine);
@@ -203,6 +257,9 @@ export default function App() {
   const visibleAvatars = filteredAvatars.slice(avatarPage * 15, avatarPage * 15 + 15);
   const inventory = progress.inventory ?? [];
   const completedExams = progress.completedExams ?? [];
+  const availableShopCount = SHOP_PRODUCTS.filter(product => !inventory.includes(product.id)
+    && productUnlocked(product, inventory, progress.completedIds.length)
+    && (product.currency === 'poke' ? progress.points : progress.examPoints) >= product.cost).length;
 
   useEffect(() => {
     if (lessonReady || species.length === 0 || itemCatalog.length === 0) return;
@@ -293,16 +350,53 @@ export default function App() {
     setNotice('Prova completata: ricompensa aggiunta al Registro personale.');
   }
 
-  function buyItem(id: string, name: string, cost: number, currency: 'poke' | 'exam') {
-    const balance = currency === 'poke' ? progress.points : progress.examPoints;
-    if (balance < cost) { setNotice('Punti insufficienti per questo acquisto.'); return; }
+  function buyItem(product: ShopProduct) {
+    const currentInventory = progress.inventory ?? [];
+    if (currentInventory.includes(product.id)) { setNotice('Questo articolo è già stato acquistato.'); return; }
+    if (!productUnlocked(product, currentInventory, progress.completedIds.length)) {
+      setNotice(product.requirementLabel ? `Requisito non soddisfatto: ${product.requirementLabel}.` : 'Questo articolo non è ancora sbloccato.');
+      return;
+    }
+    const balance = product.currency === 'poke' ? progress.points : progress.examPoints;
+    if (balance < product.cost) { setNotice('Punti insufficienti per questo acquisto.'); return; }
+    setProgress(old => {
+      const oldInventory = old.inventory ?? [];
+      const oldBalance = product.currency === 'poke' ? old.points : old.examPoints;
+      if (oldInventory.includes(product.id) || oldBalance < product.cost
+        || !productUnlocked(product, oldInventory, old.completedIds.length)) return old;
+      return {
+        ...old,
+        points: product.currency === 'poke' ? old.points - product.cost : old.points,
+        examPoints: product.currency === 'exam' ? old.examPoints - product.cost : old.examPoints,
+        inventory: [...oldInventory, product.id],
+      };
+    });
+    setNotice(`Acquisto registrato: ${product.name}.`);
+  }
+
+  function useAbility(abilityId: 'scanner' | 'research') {
+    if (!selectedCardId) { setNotice('Seleziona prima una carta da analizzare.'); return; }
+    const card = lessonDeck.find(entry => entry.id === selectedCardId);
+    if (!card || lessonSolved.includes(card.id)) { setNotice('Seleziona una carta ancora da classificare.'); return; }
+    if (!(progress.inventory ?? []).includes(abilityId)) return;
+    const until = progress.abilityCooldowns?.[abilityId] ?? 0;
+    if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
+    const currentInventory = progress.inventory ?? [];
+    const scannerUpgraded = currentInventory.includes('scanner-upgrade-2');
+    const researchLevel = currentInventory.includes('research-upgrade-3') ? 3
+      : currentInventory.includes('research-upgrade-2') ? 2 : 1;
+    const cooldownMs = abilityId === 'scanner'
+      ? (scannerUpgraded ? 3 : 5) * 60_000
+      : (researchLevel === 3 ? 5 : researchLevel === 2 ? 7 : 10) * 60_000;
+    const hint = abilityId === 'scanner'
+      ? `Scanner: questa carta appartiene alla macro categoria “${card.macroName}”.`
+      : `Ricerca: la sottocategoria corretta inizia con “${card.subcategoryName.charAt(0).toUpperCase()}”.`;
     setProgress(old => ({
       ...old,
-      points: currency === 'poke' ? old.points - cost : old.points,
-      examPoints: currency === 'exam' ? old.examPoints - cost : old.examPoints,
-      inventory: [...(old.inventory ?? []), id],
+      abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: Date.now() + cooldownMs },
     }));
-    setNotice(`Acquisto registrato: ${name}.`);
+    setMessage(hint);
+    setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
   }
 
   function saveAvatar(id: number) {
@@ -415,7 +509,7 @@ export default function App() {
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Pokédex Nazionale</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
-        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria</button>
+        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
         <button className={view === 'classifica' ? 'active' : ''} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
         <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={16} /> Profilo</button>
@@ -429,7 +523,7 @@ export default function App() {
             <h2>AREA ALLIEVO</h2>
             <button className={view === 'pokedex' ? 'side-active' : ''} onClick={() => navTo('pokedex')}>▸ Pokédex Nazionale</button>
             <button className={view === 'registro' ? 'side-active' : ''} onClick={() => navTo('registro')}>▸ Registro personale</button>
-            <button className={view === 'shop' ? 'side-active' : ''} onClick={() => navTo('shop')}>▸ Cartoleria punti</button>
+            <button className={view === 'shop' ? 'side-active' : ''} onClick={() => navTo('shop')}>▸ Cartoleria punti {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
           </section>
           <section className="side-box">
             <h2>LIBRETTO PERSONALE</h2>
@@ -493,7 +587,7 @@ export default function App() {
               </section>
               <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Carte selezionabili">
-                <div className="game-zone-heading"><strong>CARTE MISTE</strong><span>{remainingLessonCards.length} da classificare</span></div>
+                <div className="game-zone-heading"><strong>CARTE MISTE</strong><span>{remainingLessonCards.length} da classificare</span></div><div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento catalogo Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo misto non ancora pronto</h3><p>{online ? 'Caricamento del catalogo degli oggetti…' : 'Serve una prima connessione per scaricare gli oggetti. Dopo il caricamento saranno disponibili anche offline.'}</p></div>
                   : remainingLessonCards.length > 0 ? <div className="pokemon-cards mixed-card-grid">
@@ -517,8 +611,8 @@ export default function App() {
               </section>
             </section>
           </>}
-          {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [] }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
-          {view === 'shop' && <><div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div><div className="page-heading"><div><div className="eyebrow">SERVIZI STUDENTI</div><h1>Cartoleria punti</h1><p>Oggetti acquistabili con Punti Poké e super-aiuti con Punti esame. Gli acquisti sono locali fino all’attivazione del database.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>OGGETTI POSSEDUTI</span><strong>{inventory.length}</strong></div></div><div className="shop-tabs"><button className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>Oggetti · Punti Poké</button><button className={shopTab === 'super-aiuti' ? 'active' : ''} onClick={() => setShopTab('super-aiuti')}>Super-aiuti · Punti esame</button></div>{notice && <div className="notice-inline" role="status">{notice}</div>}{shopTab === 'oggetti' ? <div className="shop-grid">{[{id:'potion',name:'Pozione',description:'Un oggetto di recupero per l’inventario.',cost:20},{id:'poke-ball',name:'Poké Ball',description:'Un classico strumento da allenatore.',cost:30},{id:'super-potion',name:'Superpozione',description:'Un oggetto di recupero avanzato.',cost:50},{id:'revive',name:'Revitalizzante',description:'Uno strumento speciale per l’inventario.',cost:80},{id:'repel',name:'Repellente',description:'Uno strumento utile durante le esplorazioni.',cost:15},{id:'rare-candy',name:'Caramella rara',description:'Un oggetto speciale da collezione.',cost:100}].map(item => <article className="shop-card" key={item.id}><img src={itemSpriteUrl(item.id)} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility='hidden'; }} /><div><h3>{item.name}</h3><p>{item.description}</p><strong>{item.cost} Punti Poké</strong><button className="primary-button" disabled={progress.points < item.cost} onClick={() => buyItem(item.id,item.name,item.cost,'poke')}>Acquista</button></div></article>)}</div> : <div className="shop-grid">{[{id:'hint-pass',name:'Permesso di ripasso',description:'Oggetto simbolico per il percorso di studio.',cost:1},{id:'exam-seal',name:'Sigillo d’esame',description:'Un elemento collezionabile accademico.',cost:2},{id:'golden-notebook',name:'Quaderno d’oro',description:'Un accessorio speciale per il profilo.',cost:3}].map(item => <article className="shop-card" key={item.id}><div className="shop-symbol">★</div><div><h3>{item.name}</h3><p>{item.description}</p><strong>{item.cost} Punti esame</strong><button className="primary-button" disabled={progress.examPoints < item.cost} onClick={() => buyItem(item.id,item.name,item.cost,'exam')}>Acquista</button></div></article>)}</div>}<section className="archive-search item-archive"><h2>Archivio oggetti PokéAPI</h2><p>Catalogo degli oggetti esposti dall’API. Le immagini vengono caricate soltanto per gli elementi visibili e messe in cache dal browser.</p><label className="item-search-label">Cerca un oggetto<input value={itemSearch} onChange={event => {setItemSearch(event.target.value);setItemPage(0);}} placeholder="Nome oggetto…" /></label>{itemCatalog.length === 0 ? <div className="loading-panel"><p>{online ? 'Caricamento catalogo dalla PokéAPI…' : 'Catalogo non ancora presente in cache. Riconnettiti per scaricarlo.'}</p></div> : <><div className="item-grid">{visibleItems.map(item => <article className="item-card" key={item.name}><img src={itemSpriteUrl(item.name)} alt="" loading="lazy" onError={event => {event.currentTarget.style.visibility='hidden';}} /><span>{titleCase(item.name.replace(/-/g, ' '))}</span></article>)}</div><div className="game-pagination"><button disabled={itemPage===0} onClick={() => setItemPage(Math.max(0,itemPage-1))}>‹ Indietro</button><span>Pagina {Math.min(itemPage+1,itemPageCount)} / {itemPageCount} · {filteredItems.length} oggetti</span><button disabled={itemPage>=itemPageCount-1} onClick={() => setItemPage(Math.min(itemPageCount-1,itemPage+1))}>Avanti ›</button></div></>}</section></>}
+          {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
+          {view === 'shop' && <><div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div><div className="page-heading"><div><div className="eyebrow">SERVIZI STUDENTI</div><h1>Cartoleria punti</h1><p>Gli articoli si sbloccano progressivamente. I vantaggi attivi hanno cooldown individuali; i potenziamenti si acquistano separatamente.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>ACQUISTI DISPONIBILI</span><strong>{availableShopCount}</strong></div></div><div className="shop-tabs"><button className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>Oggetti · Punti Poké</button><button className={shopTab === 'super-aiuti' ? 'active' : ''} onClick={() => setShopTab('super-aiuti')}>Passivi, archivi e modalità · Punti esame</button></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<div className="shop-grid">{SHOP_PRODUCTS.filter(product => product.category === shopTab).map(product => {const owned=inventory.includes(product.id);const unlocked=productUnlocked(product,inventory,progress.completedIds.length);const balance=product.currency==='poke'?progress.points:progress.examPoints;const canBuy=!owned&&unlocked&&balance>=product.cost;const requirement=product.requirementLabel ?? (product.requires?.length ? `Richiede: ${product.requires.map(id=>SHOP_PRODUCTS.find(entry=>entry.id===id)?.name ?? id).join(', ')}` : 'Nessun requisito aggiuntivo');const status=owned?'Acquistato':!unlocked?'Bloccato':balance<product.cost?'Punti insufficienti':'Disponibile';return <article className={`shop-card ${!unlocked&&!owned?'shop-card-locked':''}`} key={product.id}><div className="shop-symbol">{product.kind==='active'?'⌁':product.kind==='upgrade'?'↗':product.kind==='archive'?'▤':product.kind==='cosmetic'?'✦':product.kind==='mode'?'◈':'★'}</div><div className="shop-product-content"><h3>{product.name}</h3><p>{product.description}</p><small className="shop-requirement">{requirement}</small><strong>{product.cost} {product.currency==='poke'?'Punti Poké':'Punti esame'}</strong><span className={`shop-product-status ${canBuy?'shop-product-ready':owned?'shop-product-owned':''}`}>{status}</span><button className="primary-button" disabled={!canBuy} onClick={()=>buyItem(product)}>{owned?'Acquistato':!unlocked?'Requisiti mancanti':balance<product.cost?'Punti insufficienti':'Acquista'}</button></div></article>})}</div><section className="archive-search item-archive"><h2>Archivio oggetti PokéAPI</h2><p>Catalogo consultabile degli oggetti disponibili nel Pokédex. La classificazione degli oggetti non richiede acquisti.</p><label className="item-search-label">Cerca un oggetto<input value={itemSearch} onChange={event=>{setItemSearch(event.target.value);setItemPage(0);}} placeholder="Nome oggetto…"/></label>{itemCatalog.length===0?<div className="loading-panel"><p>{online?'Caricamento catalogo dalla PokéAPI…':'Catalogo non ancora presente in cache. Riconnettiti per scaricarlo.'}</p></div>:<><div className="item-grid">{visibleItems.map(item=><article className="item-card" key={item.name}><img src={itemSpriteUrl(item.name)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/><span>{titleCase(item.name.replace(/-/g,' '))}</span></article>)}</div><div className="game-pagination"><button disabled={itemPage===0} onClick={()=>setItemPage(Math.max(0,itemPage-1))}>‹ Indietro</button><span>Pagina {Math.min(itemPage+1,itemPageCount)} / {itemPageCount} · {filteredItems.length} oggetti</span><button disabled={itemPage>=itemPageCount-1} onClick={()=>setItemPage(Math.min(itemPageCount-1,itemPage+1))}>Avanti ›</button></div></>}</section></>}
 
           {view === 'esami' && <><div className="breadcrumb">Home / Area didattica / <b>Esami</b></div><div className="page-heading"><div><div className="eyebrow">DIPARTIMENTO DIDATTICO</div><h1>Esami e prove speciali</h1><p>Completa le regioni, approfondisci i tipi Pokémon e affronta obiettivi speciali. I risultati vengono salvati localmente.</p></div></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<section className="archive-search"><h2>Esami regionali</h2><p>Completare una regione assegna automaticamente 1 Punto esame.</p><div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata · Punto esame ottenuto':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div></section><section className="archive-search"><h2>Esami per tipo</h2><p>I dati dei tipi provengono dalla PokéAPI e vengono messi in cache dopo il primo caricamento.</p>{typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}{typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}<div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;const key=`type-${type.name}`;const claimed=completedExams.includes(key);return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div>{done?<button className="secondary-button" disabled={claimed} onClick={()=>claimExam(key)}>{claimed?'Ricompensa riscossa':'Completa prova · +1 Punto esame'}</button>:<strong>{ids.length?Math.round(count/ids.length*100):0}% completato</strong>}</div></article>})}</div></section><section className="archive-search"><h2>Prove speciali</h2><p>Obiettivi progressivi di catalogazione. Ogni ricompensa può essere riscossa una sola volta.</p><div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10,reward:1},{id:'special-50',title:'Ricercatore in erba',target:50,reward:1},{id:'special-150',title:'Archivista Pokémon',target:150,reward:2},{id:'special-500',title:'Esperto Nazionale',target:500,reward:3},{id:'special-1025',title:'Maestro del Pokédex',target:1025,reward:10}].map(exam=>{const done=progress.completedIds.length>=exam.target;const claimed=completedExams.includes(exam.id);return <article className="exam-card" key={exam.id}><div className="exam-card-mark special-mark">★</div><div><h3>{exam.title}</h3><p>Cataloga {exam.target} Pokémon · {Math.min(progress.completedIds.length,exam.target)} / {exam.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/exam.target*100)}%`}}/></div><strong>{exam.reward} {exam.reward===1?'Punto esame':'Punti esame'}</strong><button className="secondary-button" disabled={!done||claimed} onClick={()=>claimExam(exam.id,exam.reward)}>{claimed?'Ricompensa riscossa':done?'Riscatta ricompensa':'Prova in corso'}</button></div></article>})}</div></section></>}
 
@@ -534,7 +628,7 @@ export default function App() {
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
         <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Pokédex</span></button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={20}/><span>Esami</span></button>
-        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Negozio</span></button>
+        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><span className="mobile-shop-icon"><ShoppingBag size={20}/>{availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</span><span>Negozio</span></button>
         <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo</span></button>
       </nav>
     </div>
