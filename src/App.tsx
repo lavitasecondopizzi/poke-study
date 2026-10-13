@@ -179,7 +179,7 @@ export default function App() {
   }
 
   return (
-    <div className="site-shell">
+    <div className={"site-shell academy-theme-" + academy}>
       <div className="utility-bar">
         <span>PORTALE ALLIEVI · DIPARTIMENTO DI RICERCA POKÉMON</span>
         <span className="utility-right">AREA DIDATTICA <b>● ONLINE</b></span>
@@ -286,6 +286,13 @@ export default function App() {
           <footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
+      <nav className="mobile-app-nav" aria-label="Navigazione principale">
+        <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
+        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Pokédex</span></button>
+        <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={20}/><span>Registro</span></button>
+        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Negozio</span></button>
+        <button className={view === 'forum' ? 'active' : ''} onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
+      </nav>
     </div>
   );
 }
