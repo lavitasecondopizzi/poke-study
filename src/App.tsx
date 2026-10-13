@@ -367,9 +367,9 @@ export default function App() {
                   })}
                 </div>
                 <div className="game-pagination" aria-label="Paginazione numeri">
-                  <button type="button" disabled={safeSlotPage <= 0} onClick={() => setSlotPage(page => Math.max(0, page - 1))}>‹ Indietro</button>
+                  <button type="button" disabled={safeSlotPage <= 0} onClick={() => setSlotPage(Math.max(0, safeSlotPage - 1))}>‹ Indietro</button>
                   <span>Pagina {safeSlotPage + 1} / {slotPageCount}</span>
-                  <button type="button" disabled={safeSlotPage >= slotPageCount - 1} onClick={() => setSlotPage(page => Math.min(slotPageCount - 1, page + 1))}>Avanti ›</button>
+                  <button type="button" disabled={safeSlotPage >= slotPageCount - 1} onClick={() => setSlotPage(Math.min(slotPageCount - 1, safeSlotPage + 1))}>Avanti ›</button>
                 </div>
               </section>
               <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
@@ -381,9 +381,9 @@ export default function App() {
                   </button>)}
                 </div> : <div className="round-complete"><h3>Pokédex completato!</h3></div>}
                 {!loading && remaining.length > 0 && <div className="game-pagination" aria-label="Paginazione Pokémon">
-                  <button type="button" disabled={safePokemonPage <= 0} onClick={() => setPokemonPage(page => Math.max(0, page - 1))}>‹ Indietro</button>
+                  <button type="button" disabled={safePokemonPage <= 0} onClick={() => setPokemonPage(Math.max(0, safePokemonPage - 1))}>‹ Indietro</button>
                   <span>Pagina {safePokemonPage + 1} / {pokemonPageCount}</span>
-                  <button type="button" disabled={safePokemonPage >= pokemonPageCount - 1} onClick={() => setPokemonPage(page => Math.min(pokemonPageCount - 1, page + 1))}>Avanti ›</button>
+                  <button type="button" disabled={safePokemonPage >= pokemonPageCount - 1} onClick={() => setPokemonPage(Math.min(pokemonPageCount - 1, safePokemonPage + 1))}>Avanti ›</button>
                 </div>}
               </section>
             </section>
