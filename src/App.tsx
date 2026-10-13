@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
+import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createMixedLesson, displayName, itemCard, pokemonCard, MACRO_CATEGORIES } from './catalog';
+import { createMixedLesson, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
@@ -182,11 +183,9 @@ export default function App() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
+  const [itemCatalogLoading, setItemCatalogLoading] = useState(false);
   const [itemPage, setItemPage] = useState(0);
   const [itemSearch, setItemSearch] = useState('');
-  const [archiveCategory, setArchiveCategory] = useState<string>('pokemon');
-  const [archivePage, setArchivePage] = useState(0);
-  const [archiveSearch, setArchiveSearch] = useState('');
   const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
   const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
   const [typeLoading, setTypeLoading] = useState(false);
@@ -238,11 +237,15 @@ export default function App() {
     if ((view !== 'shop' && view !== 'pokedex') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
+    setItemCatalogLoading(true);
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) setItemCatalog(JSON.parse(cached) as ApiNamedResource[]);
     } catch { /* ignore broken cache */ }
-    if (!navigator.onLine) return;
+    if (!navigator.onLine) {
+      setItemCatalogLoading(false);
+      return () => { active = false; };
+    }
     fetch('https://pokeapi.co/api/v2/item?limit=2000')
       .then(response => { if (!response.ok) throw new Error('API oggetti non disponibile'); return response.json(); })
       .then(payload => (payload.results as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name)))
@@ -252,9 +255,10 @@ export default function App() {
         setItemCatalog(itemsWithImages);
         try { localStorage.setItem(cacheKey, JSON.stringify(itemsWithImages)); } catch { /* quota storage */ }
       })
-      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo oggetti non raggiungibile: riprova quando torni online.'); });
+      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo oggetti non raggiungibile: riprova quando torni online.'); })
+      .finally(() => { if (active) setItemCatalogLoading(false); });
     return () => { active = false; };
-  }, [view, itemCatalog.length, online]);
+  }, [view, online]);
 
   useEffect(() => {
     if (view !== 'esami' || typeCatalog.length) return;
@@ -307,20 +311,6 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
     [lessonDeck, lessonSolved],
   );
-  const archiveEntries = useMemo(() => {
-    const allEntries: CatalogCard[] = [
-      ...species.map(pokemonCard),
-      ...itemCatalog.map(itemCard),
-    ];
-    const normalizedSearch = archiveSearch.trim().toLowerCase();
-    return allEntries.filter(entry =>
-      entry.macroId === archiveCategory &&
-      (!normalizedSearch || entry.name.toLowerCase().includes(normalizedSearch) ||
-        (entry.pokemonId !== undefined && String(entry.pokemonId).includes(normalizedSearch)))
-    ).sort((a, b) => a.name.localeCompare(b.name, 'it'));
-  }, [species, itemCatalog, archiveCategory, archiveSearch]);
-  const archivePageCount = Math.max(1, Math.ceil(archiveEntries.length / 15));
-  const visibleArchiveEntries = archiveEntries.slice(archivePage * 15, archivePage * 15 + 15);
   const filteredItems = itemCatalog.filter(item => item.name.toLowerCase().includes(itemSearch.trim().toLowerCase()));
   const itemPageCount = Math.max(1, Math.ceil(filteredItems.length / 15));
   const visibleItems = filteredItems.slice(itemPage * 15, itemPage * 15 + 15);
@@ -640,41 +630,15 @@ export default function App() {
             </section>
             <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
           </>}
-          {view === 'pokedex' && <section className="archive-browser">
-            <div className="archive-browser-heading">
-              <div><div className="eyebrow">ARCHIVIO DIDATTICO</div><h2>Catalogo completo</h2><p>Sfoglia tutte le entità disponibili. La lezione di classificazione sopra resta separata da questo archivio.</p></div>
-              <strong>{archiveEntries.length.toLocaleString('it-IT')} elementi</strong>
-            </div>
-            <label className="item-search-label">Cerca nel catalogo
-              <input value={archiveSearch} onChange={event => { setArchiveSearch(event.target.value); setArchivePage(0); }} placeholder="Nome o numero Pokémon…" />
-            </label>
-            <div className="archive-category-tabs">
-              {MACRO_CATEGORIES.map(category => <button key={category.id} className={archiveCategory === category.id ? 'active' : ''} onClick={() => { setArchiveCategory(category.id); setArchivePage(0); }}>{category.name}</button>)}
-            </div>
-            {!loading && (archiveCategory === 'pokemon' || itemCatalog.length > 0) && archiveEntries.length > 0 && <div className="game-pagination archive-pagination-top">
-              <button disabled={archivePage === 0} onClick={() => setArchivePage(Math.max(0, archivePage - 1))}>‹ Indietro</button>
-              <span>Pagina {Math.min(archivePage + 1, archivePageCount)} / {archivePageCount} · {archiveEntries.length.toLocaleString('it-IT')} elementi</span>
-              <button disabled={archivePage >= archivePageCount - 1} onClick={() => setArchivePage(Math.min(archivePageCount - 1, archivePage + 1))}>Avanti ›</button>
-            </div>}
-            {loading || (archiveCategory !== 'pokemon' && itemCatalog.length === 0)
-              ? <div className="loading-panel"><p>Caricamento degli elementi dell'archivio…</p></div>
-              : archiveEntries.length === 0
-                ? <div className="empty-service"><h3>Nessun risultato</h3><p>Prova un altro termine di ricerca.</p></div>
-                : <div className="archive-entity-grid">{visibleArchiveEntries.map(entry => {
-                    const done = entry.kind === 'pokemon'
-                      ? progress.completedIds.includes(entry.pokemonId ?? -1)
-                      : (progress.completedEntries ?? []).includes(entry.id);
-                    return <article className="archive-entity-card" key={entry.id}>
-                      <img src={entry.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
-                      <div><strong>{displayName(entry.name)}</strong><small>{entry.subcategoryName}</small><span className={done ? 'archive-entity-done' : 'archive-entity-pending'}>{done ? 'Catalogato' : 'Da catalogare'}</span></div>
-                    </article>;
-                  })}</div>}
-            <div className="game-pagination">
-              <button disabled={archivePage === 0} onClick={() => setArchivePage(Math.max(0, archivePage - 1))}>‹ Indietro</button>
-              <span>Pagina {Math.min(archivePage + 1, archivePageCount)} / {archivePageCount} · {archiveEntries.length} elementi</span>
-              <button disabled={archivePage >= archivePageCount - 1} onClick={() => setArchivePage(Math.min(archivePageCount - 1, archivePage + 1))}>Avanti ›</button>
-            </div>
-          </section>}
+          {view === 'pokedex' && <Archive
+            species={species}
+            items={itemCatalog}
+            loadingSpecies={loading}
+            loadingItems={itemCatalogLoading}
+            online={online}
+            completedPokemon={progress.completedIds}
+            completedEntries={progress.completedEntries ?? []}
+          />}
           {view === 'pokedex' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board mixed-lesson-board">
