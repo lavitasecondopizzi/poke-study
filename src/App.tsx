@@ -6,6 +6,22 @@ const API = 'https://pokeapi.co/api/v2/pokemon-species?limit=1025';
 const NATIONAL_DEX_SIZE = 1025;
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
+const STUDENT_KEY = 'poke-study-student-v1';
+
+type StudentProfile = { nickname: string; matricola: string };
+
+function loadStudent(): StudentProfile | null {
+  try {
+    const raw = localStorage.getItem(STUDENT_KEY);
+    if (!raw) return null;
+    const profile = JSON.parse(raw) as StudentProfile;
+    return profile.nickname && profile.matricola ? profile : null;
+  } catch { return null; }
+}
+
+function createMatricola() {
+  return `PS-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+}
 
 const regions = [
   { name: 'Kanto', start: 1, end: 151 },
@@ -55,6 +71,8 @@ export default function App() {
   const [academy, setAcademy] = useState<string>(() => {
     try { return localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { return ''; }
   });
+  const [student, setStudent] = useState<StudentProfile | null>(loadStudent);
+  const [nickname, setNickname] = useState('');
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [search, setSearch] = useState('');
@@ -134,8 +152,19 @@ export default function App() {
   }, [completedSet]);
 
   function chooseAcademy(next: string) {
-    try { localStorage.setItem(ACADEMY_KEY, next); } catch { /* storage may be unavailable */ }
     setAcademy(next);
+  }
+
+  function completeEnrollment(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const cleanNickname = nickname.trim();
+    if (!academy || !cleanNickname) return;
+    const profile = { nickname: cleanNickname, matricola: createMatricola() };
+    try {
+      localStorage.setItem(ACADEMY_KEY, academy);
+      localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
+    } catch { /* storage may be unavailable */ }
+    setStudent(profile);
     setView('home');
   }
 
@@ -144,7 +173,31 @@ export default function App() {
     setMobileMenu(false);
   }
 
-  if (!academy) {
+  if (!academy || !student) {
+    if (academy && !student) {
+      return (
+        <main className="academy-choice-shell enrollment-shell">
+          <div className="academy-choice-topline">POKÉ STUDY · PROCEDURA DI IMMATRICOLAZIONE</div>
+          <header className="academy-choice-brand">
+            <div className="pokeball-mark" aria-hidden="true"><span /></div>
+            <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Completa l'iscrizione</h1><p>Portale dello studente · Nuovo allievo</p></div>
+          </header>
+          <section className="academy-choice-intro">
+            <span className="academy-choice-label">ACCADEMIA SELEZIONATA</span>
+            <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
+            <p>Inserisci il nickname che userai nel portale. Ti verrà assegnato un codice matricola personale, salvato su questo dispositivo.</p>
+          </section>
+          <form className="enrollment-form" onSubmit={completeEnrollment}>
+            <label htmlFor="student-nickname">Nickname allievo</label>
+            <input id="student-nickname" name="nickname" type="text" value={nickname} onChange={event => setNickname(event.target.value)} placeholder="Es. AllenatorePikachu" maxLength={24} autoComplete="nickname" required />
+            <p className="enrollment-note">Da 1 a 24 caratteri. Potrai usare il nickname per riconoscere il tuo profilo.</p>
+            <button className="enrollment-submit" type="submit">Completa l'iscrizione <ChevronRight size={18} /></button>
+            <button className="enrollment-back" type="button" onClick={() => setAcademy('')}>← Cambia accademia</button>
+          </form>
+          <p className="academy-choice-footnote">Il codice matricola viene generato al completamento dell'iscrizione. Il profilo e i progressi restano salvati nel browser.</p>
+        </main>
+      );
+    }
     return (
       <main className="academy-choice-shell">
         <div className="academy-choice-topline">POKÉ STUDY · PORTALE DI AMMISSIONE</div>
@@ -192,7 +245,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>Allenatore in formazione</strong><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
+        <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
