@@ -5,6 +5,7 @@ import type { PokemonSpecies, SavedProgress } from './types';
 const API = 'https://pokeapi.co/api/v2/pokemon-species?limit=1025';
 const NATIONAL_DEX_SIZE = 1025;
 const SAVE_KEY = 'poke-study-progress-v1';
+const ACADEMY_KEY = 'poke-study-academy-v1';
 
 const regions = [
   { name: 'Kanto', start: 1, end: 151 },
@@ -51,6 +52,9 @@ export default function App() {
   const [message, setMessage] = useState('Trascina ogni Pokémon sul suo numero Nazionale. Tutte le specie sono disponibili fin da subito.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
+  const [academy, setAcademy] = useState<string>(() => {
+    try { return localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { return ''; }
+  });
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [search, setSearch] = useState('');
@@ -129,9 +133,49 @@ export default function App() {
     setMessage(`Corretto! ${titleCase(pokemon.name)} è il Pokémon n. ${pokemon.id}. +1 Punto Poké.`);
   }, [completedSet]);
 
+  function chooseAcademy(next: string) {
+    try { localStorage.setItem(ACADEMY_KEY, next); } catch { /* storage may be unavailable */ }
+    setAcademy(next);
+    setView('home');
+  }
+
   function navTo(next: string) {
     setView(next);
     setMobileMenu(false);
+  }
+
+  if (!academy) {
+    return (
+      <main className="academy-choice-shell">
+        <div className="academy-choice-topline">POKÉ STUDY · PORTALE DI AMMISSIONE</div>
+        <header className="academy-choice-brand">
+          <div className="pokeball-mark" aria-hidden="true"><span /></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Accademia Pokémon</h1><p>Portale dello studente · Iscrizione</p></div>
+        </header>
+        <section className="academy-choice-intro">
+          <span className="academy-choice-label">NUOVO ALLIEVO · ANNO ACCADEMICO 2026</span>
+          <h2>In quale accademia vuoi studiare?</h2>
+          <p>Scegli la tua accademia di Paldea. La scelta verrà salvata sul dispositivo insieme al tuo profilo di gioco.</p>
+        </section>
+        <div className="academy-choice-grid">
+          <button className="academy-choice-card academy-orange" onClick={() => chooseAcademy('arancia')}>
+            <div className="academy-crest crest-orange"><span>A</span></div>
+            <span className="academy-game-tag">POKÉMON SCARLATTO</span>
+            <h3>Accademia Arancia</h3>
+            <p>La scuola di Scarlatto, con i colori e il simbolo dell'arancia.</p>
+            <span className="academy-enroll">ISCRIVITI ALL'ACCADEMIA <ChevronRight size={17}/></span>
+          </button>
+          <button className="academy-choice-card academy-purple" onClick={() => chooseAcademy('uva')}>
+            <div className="academy-crest crest-purple"><span>U</span></div>
+            <span className="academy-game-tag">POKÉMON VIOLETTO</span>
+            <h3>Accademia Uva</h3>
+            <p>La scuola di Violetto, con i colori e il simbolo dell'uva.</p>
+            <span className="academy-enroll">ISCRIVITI ALL'ACCADEMIA <ChevronRight size={17}/></span>
+          </button>
+        </div>
+        <p className="academy-choice-footnote">La scelta dell'accademia non modifica il Pokédex: tutte le 1.025 specie restano disponibili fin dall'inizio.</p>
+      </main>
+    );
   }
 
   return (
@@ -148,7 +192,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>Allenatore in formazione</strong><span>Matricola n. 000001</span></div></div>
+        <div className="student-card"><div className="student-avatar">★</div><div><small>PROFILO ALLIEVO</small><strong>Allenatore in formazione</strong><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
