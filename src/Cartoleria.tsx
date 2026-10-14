@@ -174,7 +174,7 @@ export default function Cartoleria({
           return Boolean(nextUpgrade && productUnlocked(nextUpgrade, inventory, progress.completedIds.length)
             && progress.points >= nextUpgrade.cost && shopPricingReady);
         }
-        if (filter === 'locked') return !owned && !unlocked;
+        if (filter === 'locked') return !owned && (!unlocked || progress.points < product.cost || !shopPricingReady);
         return true;
       })
       .sort((left, right) => left.cost - right.cost || left.name.localeCompare(right.name, 'it'));
@@ -216,7 +216,7 @@ export default function Cartoleria({
       </header>
 
       <section className="shop-refactor-toolbar" aria-label="Cerca e filtra il catalogo">
-        <label className="shop-refactor-search"><Search size={18}/><span className="sr-only">Cerca nel catalogo</span><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca uno strumento, un aiuto o un archivio…" /></label>
+        <label className="shop-refactor-search"><Search size={18}/><input aria-label="Cerca nel catalogo" value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca uno strumento, un aiuto o un archivio…" /></label>
         <label className="shop-refactor-filter"><span>Mostra</span><select value={filter} onChange={event => setFilter(event.target.value as ShopFilter)}><option value="all">Tutto il catalogo</option><option value="available">Acquistabili ora</option><option value="owned">Già sbloccati</option><option value="locked">Da sbloccare</option></select></label>
         <div className="shop-refactor-summary"><strong>{visibleProducts.length}</strong><span>di {shopProducts.filter(product => product.kind !== 'upgrade').length} articoli</span></div>
       </section>
