@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import {
   Award, BookOpen, Check, CheckCircle2, Crown, Eye, EyeOff, FileText,
-  GraduationCap, LockKeyhole, MessageSquare, Palette, Save, ShieldCheck,
+  GraduationCap, LockKeyhole, MessageSquare, Palette, ShieldCheck,
   Sparkles, Trophy, Users, X,
 } from 'lucide-react';
 import { loadAcademyCurriculum } from './academy';
@@ -173,7 +173,7 @@ export default function StudentProfilePage({
     return result;
   }, [pokemonCount, completedEntries, completedRegions, ownThreads, ownReplies]);
 
-  const unlockedFrames = FRAME_OPTIONS.filter(frame => pokemonCount >= frame.unlock);
+  const unlockedFrames = useMemo(() => FRAME_OPTIONS.filter(frame => pokemonCount >= frame.unlock), [pokemonCount]);
   const visibleAvatars = species.filter(pokemon => STARTER_IDS.includes(pokemon.id));
   const currentAvatar = STARTER_IDS.includes(student.avatarId ?? -1) ? student.avatarId! : STARTER_IDS[0];
   const activeTitle = titles.find(title => title.id === draft.activeTitle);
