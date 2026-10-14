@@ -665,7 +665,7 @@ export default function App() {
             <section className="challenge-board game-board mixed-lesson-board">
               <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
                 <div className="game-zone-heading">
-                  <strong>{currentMacro ? \`CARTELLA · \${currentMacro.name.toLocaleUpperCase('it')}\` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
+                  <strong>{currentMacro ? `CARTELLA · ${currentMacro.name.toLocaleUpperCase('it')}` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
                   <span>{lessonSolved.length} / {lessonDeck.length} classificate</span>
                 </div>
                 {openMacroId === null ? (
@@ -692,8 +692,8 @@ export default function App() {
                       {currentMacroTargets.map(target => <button
                         type="button"
                         key={target.id}
-                        className={\`category-target subfolder-target \${target.solved === target.total ? 'category-target-complete' : ''} \${wrongTargetId === target.id ? 'category-target-wrong' : ''}\`}
-                        aria-label={\`Classifica in \${target.name}\`}
+                        className={`category-target subfolder-target ${target.solved === target.total ? 'category-target-complete' : ''} ${wrongTargetId === target.id ? 'category-target-wrong' : ''}`}
+                        aria-label={`Classifica in ${target.name}`}
                         onDragOver={event => event.preventDefault()}
                         onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, target.id); }}
                         onClick={() => { if (selectedCardId) placeCard(selectedCardId, target.id); else setMessage('Seleziona prima una carta da classificare.'); }}
@@ -707,7 +707,7 @@ export default function App() {
                 )}
                 {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
               </section>
-              <div className={\`feedback-bar game-feedback \${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}\`} role="status">{message}</div>
+              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
                 <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
@@ -725,7 +725,7 @@ export default function App() {
                         type="button"
                         aria-label={selectedCardId === card.id ? 'Carta selezionata' : 'Seleziona carta da classificare'}
                         title="Seleziona carta"
-                        className={\`pokemon-card mixed-card \${selectedCardId === card.id ? 'chosen' : ''}\`}
+                        className={`pokemon-card mixed-card ${selectedCardId === card.id ? 'chosen' : ''}`}
                         draggable
                         onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
                         onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.'); }}
