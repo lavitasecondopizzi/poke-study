@@ -40,6 +40,45 @@ function makeAttemptKey(): string {
   });
 }
 
+ 
+function asStringRecord(value: unknown): Record<string, string> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === "string"));
+}
+
+function isQuestionAnswered(question: AcademyQuestion, answer: unknown): boolean {
+  if (question.type === "matching") {
+    const mapping = asStringRecord(answer);
+    const left = question.options.filter(option => option.side === "left");
+    const rightIds = new Set(question.options.filter(option => option.side === "right").map(option => option.id));
+    return left.length > 0 && left.every(option => Boolean(mapping[option.id]) && rightIds.has(mapping[option.id]));
+  }
+  if (question.type === "ordering") {
+    return Array.isArray(answer)
+      && answer.length === question.options.length
+      && new Set(answer).size === question.options.length
+      && answer.every(id => typeof id === "string" && question.options.some(option => option.id === id));
+  }
+  return typeof answer === "string" && question.options.some(option => option.id === answer);
+}
+
+function moveOption(items: string[], from: number, to: number): string[] {
+  if (to < 0 || to >= items.length || from < 0 || from >= items.length) return items;
+  const next = [...items];
+  const [item] = next.splice(from, 1);
+  next.splice(to, 0, item);
+  return next;
+}
+
+function formatAnswer(options: Array<{ id: string; label: string; side?: string }>, value: unknown): string {
+  const label = (id: unknown) => options.find(option => option.id === String(id))?.label ?? String(id);
+  if (Array.isArray(value)) return value.map(label).join(" → ");
+  if (value && typeof value === "object") {
+    return Object.entries(value as Record<string, unknown>).map(([left, right]) => label(left) + " → " + label(right)).join(" · ");
+  }
+  return label(value);
+}
+
 export default function Academy({ configured, identityReady, onOpenProfile }: Props) {
   const [lessons, setLessons] = useState<AcademyLesson[]>([]);
   const [attempts, setAttempts] = useState<AcademyAttemptSummary[]>([]);
@@ -52,7 +91,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const [questions, setQuestions] = useState<AcademyQuestion[]>([]);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [attemptKind, setAttemptKind] = useState<"lesson" | "grade_exam" | null>(null);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [result, setResult] = useState<AcademyAttemptResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -70,7 +109,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const selectedIsUnlocked = selectedIndex <= 0 || lessons
     .slice(0, selectedIndex)
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
-  const answeredCount = questions.filter(question => answers[question.questionId] !== undefined).length;
+  const answeredCount = questions.filter(question => isQuestionAnswered(question, answers[question.questionId])).length;
   const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam");
   const gradeExamAttemptCount = progressSummary?.gradeExamAttemptCount ?? gradeExamAttempts.length;
   const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount;
@@ -302,7 +341,16 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               <div className="academy-test-progress"><span>{attemptKind === "grade_exam" ? "ESAME FINALE DEL GRADO" : "TEST DELLA LEZIONE"}</span><strong>{answeredCount} / {questions.length} risposte</strong></div>
               {questions.map((question, index) => <fieldset className="academy-question" key={question.questionId}>
                 <legend><span>DOMANDA {index + 1} · {question.difficulty.toLocaleUpperCase("it-IT")}</span>{question.prompt}</legend>
-                <div className="academy-options">{question.options.map(option => <label key={option.id} className={answers[question.questionId] === option.id ? "selected" : ""}><input type="radio" name={question.questionId} value={option.id} checked={answers[question.questionId] === option.id} onChange={() => setAnswers(current => ({ ...current, [question.questionId]: option.id }))} /><span>{option.label}</span></label>)}</div>
+                {question.mediaUrl && <img className="academy-question-image" src={question.mediaUrl} alt="Immagine da identificare" loading="lazy" />}
+                {question.type === "matching" ? <div className="academy-matching-list">{question.options.filter(option => option.side === "left").map(option => <label key={option.id}><span>{option.label}</span><select aria-label={"Abbinamento per " + option.label} value={asStringRecord(answers[question.questionId])[option.id] ?? ""} onChange={event => setAnswers(current => ({ ...current, [question.questionId]: { ...asStringRecord(current[question.questionId]), [option.id]: event.target.value } }))}><option value="">Scegli un abbinamento</option>{question.options.filter(target => target.side === "right").map(target => <option key={target.id} value={target.id}>{target.label}</option>)}</select></label>)}</div>
+                  : question.type === "ordering" ? <div className="academy-ordering-list">
+                    {(Array.isArray(answers[question.questionId]) ? answers[question.questionId] as string[] : question.options.map(option => option.id)).map((optionId, orderIndex, currentOrder) => {
+                      const option = question.options.find(item => item.id === optionId);
+                      return <div key={optionId}><span className="academy-order-index">{orderIndex + 1}</span><strong>{option?.label ?? optionId}</strong><div><button type="button" aria-label={"Sposta " + (option?.label ?? optionId) + " in alto"} disabled={orderIndex === 0} onClick={() => setAnswers(current => ({ ...current, [question.questionId]: moveOption(currentOrder, orderIndex, orderIndex - 1) }))}>↑</button><button type="button" aria-label={"Sposta " + (option?.label ?? optionId) + " in basso"} disabled={orderIndex === currentOrder.length - 1} onClick={() => setAnswers(current => ({ ...current, [question.questionId]: moveOption(currentOrder, orderIndex, orderIndex + 1) }))}>↓</button></div></div>;
+                    })}
+                    <button type="button" className="academy-secondary-button academy-confirm-order" onClick={() => setAnswers(current => ({ ...current, [question.questionId]: Array.isArray(current[question.questionId]) ? current[question.questionId] : question.options.map(option => option.id) }))}>Conferma ordine</button>
+                  </div>
+                  : <div className="academy-options">{question.options.map(option => <label key={option.id} className={answers[question.questionId] === option.id ? "selected" : ""}><input type="radio" name={question.questionId} value={option.id} checked={answers[question.questionId] === option.id} onChange={() => setAnswers(current => ({ ...current, [question.questionId]: option.id }))} /><span>{option.label}</span></label>)}</div>}
               </fieldset>)}
               <div className="academy-test-actions"><button type="button" className="academy-secondary-button" onClick={resetAttempt}>Annulla test</button><button type="button" className="academy-primary-button" disabled={loading || answeredCount !== questions.length} onClick={() => void submitAttempt()}>{loading ? "Correzione…" : "Consegna e registra"}</button></div>
             </section>}
@@ -310,7 +358,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               <div className={"academy-result-mark " + (result.passed ? "passed" : "failed")}>{result.passed ? <CheckCircle2 size={28} /> : <CircleHelp size={28} />}</div>
               <span className="academy-eyebrow">RISULTATO DEL TENTATIVO</span><h3>{result.score}/30</h3><p>{result.correctCount} risposte corrette su {result.questionCount}. {attemptKind === "grade_exam" ? (result.passed ? "Questo tentativo raggiunge almeno 26/30." : "Questo tentativo è inferiore a 26/30 e verrà conteggiato nella media.") : (result.passed ? "Il voto di questo tentativo raggiunge almeno 18/30; la media di tutti i tentativi determina il superamento." : "Tentativo insufficiente: verrà comunque conteggiato nella media.")}</p>
               {attemptKind === "grade_exam" && <p>Media del grado: <strong>{formatAverage(gradeAverage)}</strong> · Media di tutti i tentativi d’esame: <strong>{formatAverage(gradeExamAverage)}</strong>. {gradePassed ? "Grado I superato." : "Il grado risulta superato solo quando entrambe le medie raggiungono 26/30."}</p>}
-              <div className="academy-review-list">{result.review.map((item, index) => <article key={item.questionId} className={item.isCorrect ? "correct" : "incorrect"}><h4>{index + 1}. {item.prompt}</h4><p><strong>{item.isCorrect ? "Risposta corretta" : "Risposta corretta attesa"}:</strong> {item.options.find(option => option.id === String(item.correctAnswer))?.label ?? String(item.correctAnswer)}</p><p>{item.explanation}</p><a href={item.sourceUrl} target="_blank" rel="noreferrer">Fonte: {item.sourceTitle} · verificata il {item.sourceCheckedAt}</a></article>)}</div>
+              <div className="academy-review-list">{result.review.map((item, index) => <article key={item.questionId} className={item.isCorrect ? "correct" : "incorrect"}><h4>{index + 1}. {item.prompt}</h4>{item.mediaUrl && <img className="academy-question-image academy-review-image" src={item.mediaUrl} alt="Immagine della domanda" loading="lazy" />}<p><strong>{item.isCorrect ? "Risposta corretta" : "Risposta corretta attesa"}:</strong> {formatAnswer(item.options, item.correctAnswer)}</p><p>{item.explanation}</p><a href={item.sourceUrl} target="_blank" rel="noreferrer">Fonte: {item.sourceTitle} · verificata il {item.sourceCheckedAt}</a></article>)}</div>
               <button type="button" className="academy-primary-button" onClick={() => { resetAttempt(); setSelectedCode(null); }}>Torna al programma</button>
             </section>}
           </>}
