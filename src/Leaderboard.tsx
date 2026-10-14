@@ -115,7 +115,7 @@ function LocalProgressPanel({ progress, onConnect }: { progress: SavedProgress; 
       <div className="leaderboard-connect-content">
         <span className="leaderboard-section-label">CLASSIFICA CONDIVISA</span>
         <h2>Collega la tua identità community</h2>
-        <p>La graduatoria globale usa identità verificate. I progressi locali non vengono pubblicati né associati a un nickname senza collegare un account community.</p>
+        <p>Collega l’identità online per entrare in classifica.</p>
         <div className="leaderboard-local-stats">
           <div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points.toLocaleString('it-IT')}</strong></div>
           <div><span>PUNTI ESAME</span><strong>{progress.examPoints.toLocaleString('it-IT')}</strong></div>
@@ -183,7 +183,7 @@ export default function Leaderboard({
         <div className="leaderboard-hero-copy">
           <span className="leaderboard-eyebrow"><Trophy size={14} aria-hidden="true" /> PORTALE UFFICIALE · CLASSIFICHE</span>
           <h1>Classifica globale</h1>
-          <p>Confronta i progressi degli allievi e scopri chi guida il Pokédex Nazionale.</p>
+          <p>I progressi degli allievi, in un’unica classifica.</p>
           <div className="leaderboard-hero-tags">
             <span><ShieldCheck size={14} aria-hidden="true" /> Identità verificate</span>
             <span><Users size={14} aria-hidden="true" /> Graduatoria online</span>
@@ -214,7 +214,7 @@ export default function Leaderboard({
 
           <section className="leaderboard-content-panel">
             <div className="leaderboard-section-heading">
-              <div><span className="leaderboard-section-label">GRADUATORIA UFFICIALE</span><h2>Allievi in classifica</h2><p>Ordinamento per Punti Poké, punti esame e Pokémon catalogati.</p></div>
+              <div><span className="leaderboard-section-label">GRADUATORIA UFFICIALE</span><h2>Allievi in classifica</h2></div>
               <button type="button" className="leaderboard-refresh-button" onClick={() => setRefreshKey(value => value + 1)} disabled={loading} aria-label="Aggiorna classifica">
                 <RefreshCw size={15} className={loading ? 'leaderboard-spinning' : ''} aria-hidden="true" /> <span>Aggiorna</span>
               </button>
@@ -230,9 +230,9 @@ export default function Leaderboard({
 
             {!loading && !error && podium.length > 0 && <div className="leaderboard-podium" aria-label="Podio dei primi classificati">{podium.map((entry, index) => <PodiumCard key={entry.id} entry={entry} position={index + 1} isCurrent={entry.id === communityIdentity.id} />)}</div>}
             {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} />}
-            {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Modifica la ricerca o seleziona un'altra accademia.</p></div>}
+            {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Prova un’altra ricerca.</p></div>}
 
-            <p className="leaderboard-footnote">La graduatoria mostra nickname, accademia e progressi di gioco. Matricole e credenziali restano riservate.</p>
+            
           </section>
 
           <section className="leaderboard-total-progress"><div><strong>{completedPokemonTotal.toLocaleString('it-IT')}</strong><span>Pokémon catalogati complessivamente</span></div><span className="leaderboard-total-progress-mark">POKÉDEX NAZIONALE · 1025</span></section>
