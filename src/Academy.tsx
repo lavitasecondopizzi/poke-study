@@ -189,13 +189,17 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
       setQuestions([]);
       setAnswers({});
       setNotice("Tentativo registrato nello storico accademico.");
-      await refreshCurriculum();
-      if (selectedCode && selectedCode !== "__grade_exam__") {
-        const detail = await loadAcademyLesson(selectedCode);
-        setLesson(detail.lesson);
-        setLessonAttempts(detail.attempts);
-        setLessonAverage(detail.lessonAverage);
-        setLessonAttemptCount(detail.attemptCount);
+      try {
+        await refreshCurriculum();
+        if (selectedCode && selectedCode !== "__grade_exam__") {
+          const detail = await loadAcademyLesson(selectedCode);
+          setLesson(detail.lesson);
+          setLessonAttempts(detail.attempts);
+          setLessonAverage(detail.lessonAverage);
+          setLessonAttemptCount(detail.attemptCount);
+        }
+      } catch {
+        setError("Tentativo registrato, ma non è stato possibile aggiornare subito la pagella. Usa Aggiorna per ricaricare i dati.");
       }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Non è stato possibile consegnare il test.");
