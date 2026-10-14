@@ -72,8 +72,8 @@ export default function PublicStudentProfile({ identityId, species, onClose }: P
           : <div className={'public-student-profile-content profile-frame-' + profile.frame}>
             <div className="public-student-profile-hero">
               <img className="public-student-profile-crest" src={import.meta.env.BASE_URL + 'images/academies/' + crestFile(profile.academy)} alt=""/>
-              <img className="public-student-profile-avatar" src={avatarUrl(profile.avatarId)} alt={'Avatar di ' + profile.nickname}/>
-              <div><span className="public-student-profile-academy">{academyName(profile.academy)}</span><h3>{profile.nickname}</h3>{profile.matricola && <small>Matricola {profile.matricola}</small>}{profile.activeTitle && <span className="student-profile-title-pill"><Crown size={13}/>{titleLabel(profile.activeTitle)}</span>}</div>
+              <img className="public-student-profile-avatar" src={avatarUrl(profile.avatarId)} alt={'Avatar dello studente ' + profile.matricola}/>
+              <div><span className="public-student-profile-academy">{academyName(profile.academy)}</span><h3>{profile.matricola}</h3>{profile.activeTitle && <span className="student-profile-title-pill"><Crown size={13}/>{titleLabel(profile.activeTitle)}</span>}</div>
             </div>
             {profile.bio && <section className="public-student-profile-section"><h4><ShieldCheck size={15}/> Presentazione</h4><p>{profile.bio}</p></section>}
             {favorite && <section className="public-student-profile-section"><h4><Sparkles size={15}/> Pokémon preferito</h4><p>#{String(favorite.id).padStart(4,'0')} · {favorite.name.split('-').map(part => part.charAt(0).toLocaleUpperCase('it-IT') + part.slice(1)).join(' ')}</p></section>}
