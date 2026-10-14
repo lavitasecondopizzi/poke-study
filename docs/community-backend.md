@@ -22,7 +22,7 @@ The existing game currently stores nickname, academy and a generated matricola l
 3. Deploy the Edge Function from the repository root with the Supabase CLI: `supabase functions deploy community --no-verify-jwt`. The matching `supabase/config.toml` setting documents why the gateway JWT check is disabled: the function validates the private Poké Study token for protected actions itself.
 4. Confirm the project runtime has `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. These are Supabase-managed Edge Function secrets; do not add their values to the repository.
 5. Copy `.env.example` to a local `.env.local` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (or publishable key). These are public client settings, not service secrets.
-6. Configure the same two Vite variables in the build environment when deploying to GitHub Pages. Do not configure the service-role key as a `VITE_*` variable.
+6. In GitHub, open **Settings → Secrets and variables → Actions → Variables** and create `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. The Pages workflow passes these public client settings to Vite at build time. Do not configure the service-role key as a `VITE_*` variable.
 
 ## API actions in this increment
 
