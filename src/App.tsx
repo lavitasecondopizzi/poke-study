@@ -223,6 +223,7 @@ export default function App() {
   const [forumSort, setForumSort] = useState<'recenti' | 'attive'>('recenti');
   const [showThreadComposer, setShowThreadComposer] = useState(false);
   const communityConfigured = isCommunityConfigured();
+  const displayNickname = communityIdentity?.nickname ?? student?.nickname ?? 'Allenatore in formazione';
 
   const visibleCommunityThreads = useMemo(() => {
     const query = forumSearch.trim().toLocaleLowerCase('it-IT');
@@ -239,13 +240,10 @@ export default function App() {
     if (hasCommunityToken()) {
       getCommunityIdentity()
         .then(identity => { if (active) setCommunityIdentity(identity); })
-        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
-    } else if (student && (academy === 'arancia' || academy === 'uva') && communityConfigured) {
-      // Migra i profili locali creati prima dell'introduzione dell'identità online.
-      createCommunityIdentity(student.nickname, academy as CommunityAcademy)
-        .then(identity => { if (active) setCommunityIdentity(identity); })
-        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Non è stato possibile creare l’identità online. Controlla la connessione e ricarica la pagina per riprovare.'); });
+        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità online non verificabile. Importa i metadati esportati in precedenza per recuperare l’account.'); });
     }
+    // Non creare automaticamente una nuova identità se il token manca o non è più valido:
+    // senza i metadati esportati, la vecchia identità non è recuperabile.
     return () => { active = false; };
   }, []);
 
@@ -633,7 +631,8 @@ export default function App() {
     try {
       const identity = await importCommunityMetadata(await file.text());
       setCommunityIdentity(identity);
-      setCommunityNotice('Identità importata e verificata dal server.');
+      setCommunityError('');
+      setCommunityNotice('Identità ufficiale importata e verificata dal server. Il nickname ufficiale verrà usato nel portale quando sei connesso.');
     } catch (error) {
       setCommunityError(error instanceof Error ? error.message : 'Importazione account non riuscita.');
     } finally {
@@ -750,12 +749,12 @@ export default function App() {
         <div className="academy-choice-topline">POKÉ STUDY · IMMATRICOLAZIONE COMPLETATA</div>
         <header className="academy-choice-brand">
           <div className="pokeball-mark" aria-hidden="true"><span /></div>
-          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Benvenuto, {student.nickname}!</h1><p>La tua iscrizione è stata registrata.</p></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Benvenuto, {displayNickname}!</h1><p>La tua iscrizione è stata registrata.</p></div>
         </header>
         <section className="academy-choice-intro">
           <span className="academy-choice-label">PROFILO ALLIEVO CREATO</span>
           <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
-          <p>Conserva il tuo codice matricola: identifica il tuo profilo su questo dispositivo.</p>
+          <p>Conserva il codice matricola del profilo locale e, dalla pagina Profilo, esporta anche i metadati dell’identità online per poterla recuperare.</p>
         </section>
         <section className="matricola-card" aria-label="Codice matricola assegnato">
           <span>CODICE MATRICOLA</span>
@@ -763,7 +762,7 @@ export default function App() {
           <button type="button" onClick={() => { void navigator.clipboard?.writeText(student.matricola); }}>Copia codice</button>
         </section>
         <button className="enrollment-submit enrollment-enter" type="button" onClick={() => { setShowEnrollmentCard(false); setView('home'); }}>Entra nel portale <ChevronRight size={18} /></button>
-        <p className="academy-choice-footnote">Nickname e matricola sono salvati nel browser insieme ai tuoi progressi.</p>
+        <p className="academy-choice-footnote">Nickname locale, matricola e progressi sono salvati nel browser. L’identità online va recuperata tramite il file dei metadati esportato.</p>
       </main>
     );
   }
@@ -782,7 +781,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></span></button>
+        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{displayNickname}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></span></button>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
@@ -823,7 +822,7 @@ export default function App() {
               <section className="portal-hero">
                 <div className="portal-hero-copy">
                   <span className="portal-eyebrow"><GraduationCap size={14}/> AREA PERSONALE · ACCADEMIA POKÉMON</span>
-                  <h1>Benvenuto{student?.nickname ? `, ${student.nickname}` : ''}.</h1>
+                  <h1>Benvenuto{displayNickname ? `, ${displayNickname}` : ''}.</h1>
                   <p>Il tuo percorso di ricerca è pronto. Classifica nuove carte, accumula Punti Poké e completa le prove regionali per ottenere Punti esame.</p>
                   <div className="portal-hero-actions">
                     <button className="portal-primary-action" onClick={() => navTo('game')}><FlaskConical size={17}/> Continua a giocare <ChevronRight size={17}/></button>
@@ -1122,9 +1121,9 @@ export default function App() {
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
+          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">{communityIdentity ? 'NICKNAME UFFICIALE' : 'NICKNAME LOCALE'}</span><h2>{displayNickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>{communityIdentity ? 'Nickname ufficiale verificato online.' : online ? 'Identità online non verificata: importa i metadati dell’account per recuperarla.' : 'Modalità offline: viene usato il nickname salvato su questo dispositivo.'}</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
               <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
-              <p className="community-account-description">L’identità online viene creata durante l’iscrizione, subito dopo la scelta del nickname e dell’Accademia. Da qui puoi verificarla o trasferire l’account su un altro dispositivo.</p>
+              <p className="community-account-description">Il nickname dell’identità online verificata viene usato in tutto il portale quando sei connesso. Offline viene mostrato il nickname locale. Esporta e conserva i metadati: se perdi la sessione, solo quel file permette di recuperare la stessa identità.</p>
               {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
