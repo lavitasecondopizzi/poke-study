@@ -451,11 +451,14 @@ Deno.serve(async request => {
       }
 
       const { data: existing } = await supabase.from("academy_attempts")
-        .select("id,status,question_snapshot")
+        .select("id,status,question_snapshot,attempt_kind,subject_code")
         .eq("identity_id", identity.id)
         .eq("client_attempt_key", clientAttemptKey)
         .maybeSingle();
       if (existing) {
+        if (existing.attempt_kind !== "subject_exam" || existing.subject_code !== subjectCode) {
+          return response(409, { error: "La chiave è già associata a un altro tipo di tentativo." });
+        }
         if (existing.status !== "started") return response(409, { error: "Questo tentativo è già stato consegnato." });
         const snapshot = existing.question_snapshot as QuestionSnapshot[];
         return response(200, { attemptId: existing.id, questions: snapshot.map(publicQuestion), questionCount: snapshot.length });
@@ -556,7 +559,7 @@ Deno.serve(async request => {
           .eq("identity_id", identity.id)
           .eq("client_attempt_key", clientAttemptKey)
           .maybeSingle();
-        if (raced?.status === "started") {
+        if (raced?.status === "started" && raced.attempt_kind === "subject_exam" && raced.subject_code === subjectCode) {
           const racedSnapshot = raced.question_snapshot as QuestionSnapshot[];
           return response(200, { attemptId: raced.id, questions: racedSnapshot.map(publicQuestion), questionCount: racedSnapshot.length });
         }
