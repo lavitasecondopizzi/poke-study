@@ -66,6 +66,7 @@ function publicQuestion(question: QuestionSnapshot) {
     type: question.type,
     prompt: question.prompt,
     options: question.options,
+    mediaUrl: question.mediaUrl ?? null,
     difficulty: question.difficulty,
   };
 }
@@ -473,6 +474,7 @@ Deno.serve(async request => {
         type: question.type,
         prompt: question.prompt,
         options: question.options,
+        mediaUrl: question.mediaUrl ?? null,
         difficulty: question.difficulty,
         selectedAnswer: answerMap.get(question.questionId) ?? null,
         correctAnswer: question.correctAnswer,
