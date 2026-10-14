@@ -32,6 +32,20 @@ Questa è una specifica progettuale: non modifica ancora schermate o regole del 
 
 Le cinque macrocategorie dell'archivio continuano a funzionare come categorie per catalogare elementi, ma non sono più il limite del programma scolastico. Una lezione può collegare più materie, mantenendo un obiettivo didattico chiaro e una materia principale per la valutazione.
 
+## Struttura indipendente per grado, materia e lezione
+
+Le **materie** sono aree di studio permanenti; i **gradi** stabiliscono quali materie sono attive e quali lezioni appartengono a ciascuna materia in quel grado. Una materia può essere presente in più gradi, con lezioni differenti per contenuto, difficoltà e competenze richieste.
+
+Non deve esistere una sola sequenza globale di lezioni. Lo studente sceglie quale materia seguire e può alternare liberamente le materie. Le lezioni di materie diverse non hanno prerequisiti reciproci. Se una materia prevede una progressione interna, il test superato sblocca la lezione successiva di quella stessa materia; lo studente può comunque proseguire nel frattempo con un'altra materia.
+
+Per ogni grado la specifica deve elencare:
+- le materie previste;
+- le lezioni obbligatorie assegnate a ciascuna materia;
+- gli eventuali prerequisiti interni alla stessa materia;
+- gli obiettivi e le competenze attese per ogni lezione.
+
+Il grado si completa superando tutte le lezioni obbligatorie previste per quel grado, a prescindere dall'ordine in cui lo studente le ha affrontate.
+
 ## Progressione per gradi
 
 ### Grado I — Fondamenti
