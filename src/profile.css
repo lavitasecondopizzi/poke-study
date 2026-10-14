@@ -232,3 +232,8 @@
 
 .student-profile-public-grade{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:9px;padding:6px 9px;border:1px solid var(--sp-border);border-radius:999px;background:rgba(255,255,255,.82);color:var(--sp-dark);font-size:10px;font-weight:800}
 .student-profile-public-grade svg{flex:0 0 auto}
+
+.student-profile-identity-meta .student-profile-grade{display:inline-flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--sp-border);border-radius:10px;background:rgba(255,255,255,.9);color:var(--sp-dark)}
+.student-profile-identity-meta .student-profile-grade>span{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.student-profile-identity-meta .student-profile-grade small{font-size:8px;line-height:1.2;letter-spacing:.06em;color:var(--sp-dark);font-weight:850}
+.student-profile-identity-meta .student-profile-grade strong{font-size:11px;line-height:1.25;color:#26364e}
