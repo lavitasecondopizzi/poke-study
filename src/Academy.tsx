@@ -124,11 +124,22 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         : null;
       const gradeExamAverage = averageScore(attempts.filter(attempt => attempt.attempt_kind === "grade_exam" && attempt.grade_number === gradeNumber));
       const lessonsPassed = gradeLessons.length > 0 && lessonScores.every(score => score !== null && score >= 18);
+      const subjectCodes = Array.from(new Set(gradeLessons.map(item => item.subject_code)));
+      const subjectAverages = subjectCodes.map(subjectCode => averageScore(attempts.filter(attempt =>
+        attempt.attempt_kind === "subject_exam" && attempt.grade_number === gradeNumber && attempt.subject_code === subjectCode
+      )));
+      const subjectExamAverage = subjectAverages.length > 0 && subjectAverages.every(score => score !== null)
+        ? subjectAverages.reduce((sum, score) => sum + (score ?? 0), 0) / subjectAverages.length
+        : null;
       return [gradeNumber, {
         lessonsPassed,
         gradeAverage,
         gradeExamAverage,
-        passed: lessonsPassed && gradeAverage !== null && gradeAverage >= 26 && gradeExamAverage !== null && gradeExamAverage >= 26,
+        subjectExamAverage,
+        passed: lessonsPassed
+          && gradeAverage !== null && gradeAverage >= 26
+          && subjectExamAverage !== null && subjectExamAverage >= 18
+          && gradeExamAverage !== null && gradeExamAverage >= 26,
       }] as const;
     }));
   }, [lessons, attempts]);
