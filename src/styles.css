@@ -322,6 +322,28 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 }
 
 
+/* Numbered regional slots for Pokémon placement */
+.pokemon-number-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-content:start;gap:7px;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px;background:#f7fbff}
+.pokemon-number-slot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:62px;padding:7px 3px;border:1px solid #cfe1ef;border-radius:9px;background:linear-gradient(180deg,#fff,#f2f9ff);color:#225d87;box-shadow:0 2px 0 #e0edf6;transition:border-color .12s,background .12s,transform .12s}
+.pokemon-number-slot strong{font:800 13px 'DM Mono',monospace;line-height:1.1}
+.pokemon-number-slot small{color:#7894a9;font:700 8px 'DM Mono',monospace;line-height:1.1}
+.pokemon-number-slot:not(:disabled):hover{border-color:#62a4d1;background:#e9f6ff;transform:translateY(-1px)}
+.pokemon-number-slot:focus-visible{outline:3px solid #75b8e5;outline-offset:1px}
+.pokemon-number-slot.pokemon-number-complete{border-color:#b9dfc5;background:#eaf8ee;color:#378352;box-shadow:none;cursor:default}
+.pokemon-number-slot.pokemon-number-complete small{color:#609572}
+.pokemon-number-slot.pokemon-number-complete>span{position:absolute;top:3px;right:5px;font-size:10px;font-weight:900}
+.pokemon-number-slot.pokemon-number-wrong{border-color:#d96565;background:#fff0f0;color:#b33b3b;animation:slot-shake .18s linear 2}
+@keyframes slot-shake{0%,100%{transform:translateX(0)}35%{transform:translateX(-2px)}70%{transform:translateX(2px)}}
+@media(max-width:650px){
+  .pokemon-number-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;padding:7px}
+  .pokemon-number-slot{min-height:53px;gap:4px;padding:6px 2px;border-radius:8px}
+  .pokemon-number-slot strong{font-size:12px}
+  .pokemon-number-slot small{font-size:7px}
+}
+@media(max-width:370px){
+  .pokemon-number-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px}
+  .pokemon-number-slot{min-height:48px}
+}
 /* Mobile navigation overflow menu */
 .mobile-more-backdrop{display:none}
 @media(max-width:650px){
