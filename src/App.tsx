@@ -221,10 +221,16 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
-    if (!hasCommunityToken()) return () => { active = false; };
-    getCommunityIdentity()
-      .then(identity => { if (active) setCommunityIdentity(identity); })
-      .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
+    if (hasCommunityToken()) {
+      getCommunityIdentity()
+        .then(identity => { if (active) setCommunityIdentity(identity); })
+        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
+    } else if (student && (academy === 'arancia' || academy === 'uva') && communityConfigured) {
+      // Migra i profili locali creati prima dell'introduzione dell'identità online.
+      createCommunityIdentity(student.nickname, academy as CommunityAcademy)
+        .then(identity => { if (active) setCommunityIdentity(identity); })
+        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Non è stato possibile creare l’identità online. Controlla la connessione e ricarica la pagina per riprovare.'); });
+    }
     return () => { active = false; };
   }, []);
 
