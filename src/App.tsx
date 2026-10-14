@@ -528,6 +528,36 @@ export default function App() {
     }
   }
 
+  async function recoverEnrollmentAccount(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    if (!file || enrollmentBusy || communityBusy) return;
+    setEnrollmentBusy(true);
+    setEnrollmentError('');
+    setCommunityError('');
+    try {
+      const identity = await importCommunityMetadata(await file.text());
+      const profile = { nickname: identity.nickname, matricola: createMatricola() };
+      try {
+        localStorage.setItem(ACADEMY_KEY, identity.academy);
+        localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
+      } catch {
+        throw new Error('Identità verificata, ma non è stato possibile salvare il profilo locale. Verifica le impostazioni di archiviazione del browser e riprova.');
+      }
+      setAcademy(identity.academy);
+      setNickname(identity.nickname);
+      setCommunityIdentity(identity);
+      setStudent(profile);
+      setCommunityNotice('Account esistente recuperato. È stata mantenuta la stessa identità online.');
+      setShowEnrollmentCard(true);
+    } catch (error) {
+      setEnrollmentError(error instanceof Error ? error.message : 'Recupero account non riuscito. Verifica di aver selezionato il file JSON esportato da Poké Study.');
+    } finally {
+      input.value = '';
+      setEnrollmentBusy(false);
+    }
+  }
+
   function navTo(next: string) {
     if (next === 'pokedex' && !(progress.inventory ?? []).includes('national-catalog')) {
       setNotice('Archivio Nazionale bloccato: cataloga tutti i 1.025 Pokémon e acquista tutti i potenziamenti informativi usando i Punti Poké, poi sbloccalo con i Punti esame.');
@@ -685,60 +715,84 @@ export default function App() {
   }
 
   if (!academy || !student) {
+    const selectedAcademy = academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva';
     if (academy && !student) {
       return (
         <main className="academy-choice-shell enrollment-shell">
-          <div className="academy-choice-topline">POKÉ STUDY · PROCEDURA DI IMMATRICOLAZIONE</div>
+          <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>SEGRETERIA DIGITALE · IMMATRICOLAZIONE</span></div>
           <header className="academy-choice-brand">
             <div className="pokeball-mark" aria-hidden="true"><span /></div>
-            <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Completa l'iscrizione</h1><p>Portale dello studente · Nuovo allievo</p></div>
+            <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Completa l'immatricolazione</h1><p>Nuovo allievo · Anno accademico 2026/27</p></div>
           </header>
-          <section className="academy-choice-intro">
+          <div className="enrollment-stepper" aria-label="Fase 2 di 3">
+            <div className="enrollment-step is-complete"><span>✓</span><small>Accademia</small></div><i />
+            <div className="enrollment-step is-current"><span>2</span><small>Identità</small></div><i />
+            <div className="enrollment-step"><span>3</span><small>Conferma</small></div>
+          </div>
+          <section className="academy-choice-intro enrollment-intro">
             <span className="academy-choice-label">ACCADEMIA SELEZIONATA</span>
-            <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
-            <p>Inserisci il nickname che userai nel portale. Dopo questa scelta verrà creata la tua identità online e ti verrà assegnato un codice matricola personale.</p>
+            <h2>{selectedAcademy}</h2>
+            <p>Scegli il nickname ufficiale che userai nel portale. La prima immatricolazione crea un'identità online; i progressi del gioco continueranno a essere salvati localmente su questo dispositivo.</p>
           </section>
           <form className="enrollment-form" onSubmit={completeEnrollment}>
-            <label htmlFor="student-nickname">Nickname allievo</label>
+            <div className="enrollment-field-heading"><span>01</span><div><label htmlFor="student-nickname">Nickname allievo</label><small>Sarà il nome mostrato nella Bacheca e nel portale quando l'identità è verificata.</small></div></div>
             <input id="student-nickname" name="nickname" type="text" value={nickname} onChange={event => setNickname(event.target.value)} placeholder="Es. AllenatorePikachu" maxLength={24} autoComplete="nickname" required />
-            <p className="enrollment-note">Da 1 a 24 caratteri. Serve una connessione Internet per creare l’account la prima volta.</p>
+            <div className="enrollment-guidelines"><span>✓</span><p>Da 1 a 24 caratteri. Non serve una password né un indirizzo email; per creare l'identità la prima volta è necessaria una connessione Internet.</p></div>
             {enrollmentError && <p className="community-account-error" role="alert">{enrollmentError}</p>}
-            <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Creazione account online…' : 'Completa l’iscrizione'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
-            <button className="enrollment-back" type="button" disabled={enrollmentBusy} onClick={() => { setAcademy(''); setEnrollmentError(''); }}>← Cambia accademia</button>
+            {communityError && hasCommunityToken() && <div className="enrollment-recovery-alert"><strong>Identità online da verificare</strong><p>Il token presente nel browser non è stato verificato. Importa il file di recupero dell'account corretto per evitare di creare un'identità diversa.</p></div>}
+            <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Verifica e registrazione…' : 'Crea identità e immatricolati'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
+            <button className="enrollment-back" type="button" disabled={enrollmentBusy} onClick={() => { setAcademy(''); setNickname(''); setEnrollmentError(''); }}>← Torna alla scelta dell'accademia</button>
           </form>
-          <p className="academy-choice-footnote">L’identità online viene creata dopo la scelta del nickname. I progressi di gioco restano salvati localmente su questo dispositivo.</p>
+          <section className="enrollment-recovery-panel">
+            <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
+            <div className="enrollment-recovery-copy"><strong>Hai già un account Poké Study?</strong><p>Recupera la stessa identità importando il file JSON esportato in precedenza. Il nickname e l'accademia saranno ripresi dall'account verificato.</p></div>
+            <label className="community-import-button enrollment-import-button">Importa account esistente<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
+          </section>
+          <p className="academy-choice-footnote">Il file di recupero contiene una credenziale privata: non condividerlo. La matricola identifica il profilo locale, mentre il file permette di recuperare la stessa identità online.</p>
         </main>
       );
     }
     return (
-      <main className="academy-choice-shell">
-        <div className="academy-choice-topline">POKÉ STUDY · PORTALE DI AMMISSIONE</div>
+      <main className="academy-choice-shell admission-shell">
+        <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>PORTALE DI AMMISSIONE · 2026/27</span></div>
         <header className="academy-choice-brand">
           <div className="pokeball-mark" aria-hidden="true"><span /></div>
-          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Accademia Pokémon</h1><p>Portale dello studente · Iscrizione</p></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Accademia Pokémon</h1><p>Portale dello studente · Nuova immatricolazione</p></div>
         </header>
-        <section className="academy-choice-intro">
-          <span className="academy-choice-label">NUOVO ALLIEVO · ANNO ACCADEMICO 2026</span>
-          <h2>In quale accademia vuoi studiare?</h2>
-          <p>Scegli la tua accademia di Paldea. La scelta verrà salvata sul dispositivo insieme al tuo profilo di gioco.</p>
+        <div className="enrollment-stepper" aria-label="Fase 1 di 3">
+          <div className="enrollment-step is-current"><span>1</span><small>Accademia</small></div><i />
+          <div className="enrollment-step"><span>2</span><small>Identità</small></div><i />
+          <div className="enrollment-step"><span>3</span><small>Conferma</small></div>
+        </div>
+        <section className="academy-choice-intro admission-intro">
+          <span className="academy-choice-label">NUOVO ALLIEVO · ANNO ACCADEMICO 2026/27</span>
+          <h2>Seleziona la tua accademia</h2>
+          <p>La tua avventura di studio comincia qui. Scegli il campus ispirato alla tua versione di Pokémon: potrai iniziare subito a catalogare le specie e costruire il tuo registro personale.</p>
         </section>
         <div className="academy-choice-grid">
-          <button className="academy-choice-card academy-orange" onClick={() => chooseAcademy('arancia')}>
+          <button type="button" className="academy-choice-card academy-orange" onClick={() => chooseAcademy('arancia')}>
+            <div className="academy-choice-card-top"><span>01 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
             <div className="academy-crest crest-orange"><span>A</span></div>
             <span className="academy-game-tag">POKÉMON SCARLATTO</span>
             <h3>Accademia Arancia</h3>
-            <p>La scuola di Scarlatto, con i colori e il simbolo dell'arancia.</p>
-            <span className="academy-enroll">ISCRIVITI ALL'ACCADEMIA <ChevronRight size={17}/></span>
+            <p>Un campus solare, tradizione di ricerca e spirito d'iniziativa.</p>
+            <span className="academy-enroll">SCEGLI ACCADEMIA <ChevronRight size={17}/></span>
           </button>
-          <button className="academy-choice-card academy-purple" onClick={() => chooseAcademy('uva')}>
+          <button type="button" className="academy-choice-card academy-purple" onClick={() => chooseAcademy('uva')}>
+            <div className="academy-choice-card-top"><span>02 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
             <div className="academy-crest crest-purple"><span>U</span></div>
             <span className="academy-game-tag">POKÉMON VIOLETTO</span>
             <h3>Accademia Uva</h3>
-            <p>La scuola di Violetto, con i colori e il simbolo dell'uva.</p>
-            <span className="academy-enroll">ISCRIVITI ALL'ACCADEMIA <ChevronRight size={17}/></span>
+            <p>Un campus elegante, ricerca metodica e nuove prospettive.</p>
+            <span className="academy-enroll">SCEGLI ACCADEMIA <ChevronRight size={17}/></span>
           </button>
         </div>
-        <p className="academy-choice-footnote">La scelta dell'accademia non modifica l’Archivio Nazionale: tutte le 1.025 specie restano disponibili fin dall'inizio.</p>
+        <section className="admission-info-grid" aria-label="Informazioni sull'immatricolazione">
+          <article><span>01</span><div><strong>Scegli il campus</strong><p>Arancia o Uva: entrambe le accademie danno accesso allo stesso catalogo.</p></div></article>
+          <article><span>02</span><div><strong>Registra la tua identità</strong><p>Nickname ufficiale senza password o email. Puoi recuperare l'account con il file privato.</p></div></article>
+          <article><span>03</span><div><strong>Inizia a studiare</strong><p>La progressione e gli acquisti restano sul dispositivo e non vengono cancellati dall'immatricolazione.</p></div></article>
+        </section>
+        <p className="academy-choice-footnote">L'accademia modifica l'identità visiva del campus, non la disponibilità delle specie: tutti i 1.025 Pokémon sono previsti nel percorso.</p>
       </main>
     );
   }
@@ -746,27 +800,38 @@ export default function App() {
   if (showEnrollmentCard && student) {
     return (
       <main className="academy-choice-shell enrollment-shell enrollment-success">
-        <div className="academy-choice-topline">POKÉ STUDY · IMMATRICOLAZIONE COMPLETATA</div>
+        <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>SEGRETERIA DIGITALE · ESITO UFFICIALE</span></div>
         <header className="academy-choice-brand">
           <div className="pokeball-mark" aria-hidden="true"><span /></div>
-          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Benvenuto, {displayNickname}!</h1><p>La tua iscrizione è stata registrata.</p></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Immatricolazione completata</h1><p>Benvenuto nel portale, {displayNickname}.</p></div>
         </header>
-        <section className="academy-choice-intro">
-          <span className="academy-choice-label">PROFILO ALLIEVO CREATO</span>
-          <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
-          <p>Conserva il codice matricola del profilo locale e, dalla pagina Profilo, esporta anche i metadati dell’identità online per poterla recuperare.</p>
-        </section>
+        <div className="enrollment-stepper" aria-label="Fase 3 di 3">
+          <div className="enrollment-step is-complete"><span>✓</span><small>Accademia</small></div><i />
+          <div className="enrollment-step is-complete"><span>✓</span><small>Identità</small></div><i />
+          <div className="enrollment-step is-current"><span>3</span><small>Conferma</small></div>
+        </div>
+        <section className="enrollment-completion-banner"><span className="enrollment-completion-mark"><CheckCircle2 size={27}/></span><div><span>AMMISSIONE CONFERMATA</span><h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2><p>Il profilo locale è pronto e l'identità online è stata verificata.</p></div></section>
         <section className="matricola-card" aria-label="Codice matricola assegnato">
-          <span>CODICE MATRICOLA</span>
+          <span>CODICE MATRICOLA LOCALE</span>
           <strong>{student.matricola}</strong>
-          <button type="button" onClick={() => { void navigator.clipboard?.writeText(student.matricola); }}>Copia codice</button>
+          <button type="button" onClick={() => { void navigator.clipboard?.writeText(student.matricola); }}>Copia matricola</button>
         </section>
-        <button className="enrollment-submit enrollment-enter" type="button" onClick={() => { setShowEnrollmentCard(false); setView('home'); }}>Entra nel portale <ChevronRight size={18} /></button>
-        <p className="academy-choice-footnote">Nickname locale, matricola e progressi sono salvati nel browser. L’identità online va recuperata tramite il file dei metadati esportato.</p>
+        <section className="enrollment-next-steps">
+          <h3>Prima di entrare</h3>
+          <div><span>1</span><p><strong>Conserva la matricola</strong><small>Identifica il profilo salvato su questo browser.</small></p></div>
+          <div><span>2</span><p><strong>Scarica il file di recupero</strong><small>Ti permette di ripristinare la stessa identità online su un altro browser.</small></p></div>
+          <div><span>3</span><p><strong>Inizia a catalogare</strong><small>I progressi di gioco restano locali e non vengono sincronizzati con l'identità online.</small></p></div>
+        </section>
+        {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
+        {communityError && <p className="community-account-error" role="alert">{communityError}</p>}
+        <div className="enrollment-success-actions">
+          <button className="enrollment-submit enrollment-export" type="button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Preparazione file…' : 'Scarica file di recupero'} <ChevronRight size={18}/></button>
+          <button className="enrollment-enter" type="button" onClick={() => { setShowEnrollmentCard(false); setView('home'); }}>Entra nel portale <ChevronRight size={18}/></button>
+        </div>
+        <p className="academy-choice-footnote">Il file JSON contiene una credenziale privata: conservalo in un luogo sicuro e non condividerlo. Se lo perdi insieme alla sessione, la stessa identità non può essere recuperata automaticamente.</p>
       </main>
     );
   }
-
   return (
     <div className={"site-shell academy-theme-" + academy}>
       <div className="utility-bar">
@@ -836,6 +901,12 @@ export default function App() {
                   <span className="portal-progress-caption">{progress.completedIds.length.toLocaleString('it-IT')} / {NATIONAL_DEX_SIZE.toLocaleString('it-IT')} Pokémon</span>
                 </div>
                 <div className="portal-hero-shine" aria-hidden="true"/>
+              </section>
+
+              <section className="portal-student-strip" aria-label="Stato del profilo e dell'account">
+                <div className="portal-student-campus"><span className={academy === 'arancia' ? 'portal-campus-mark campus-orange' : 'portal-campus-mark campus-purple'}>{academy === 'arancia' ? 'A' : 'U'}</span><div><small>IL TUO CAMPUS</small><strong>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</strong><span>{student.matricola}</span></div></div>
+                <div className="portal-student-identity"><span className={communityIdentity ? 'portal-identity-dot is-verified' : hasCommunityToken() ? 'portal-identity-dot is-pending' : 'portal-identity-dot is-local'}></span><div><small>IDENTITÀ PORTALE</small><strong>{communityIdentity ? 'Online verificata' : hasCommunityToken() ? 'Da verificare' : 'Profilo locale'}</strong><span>{communityIdentity ? 'Nickname ufficiale attivo' : online ? 'Progressi salvati su questo browser' : 'Offline · dati locali disponibili'}</span></div></div>
+                <button type="button" onClick={() => navTo('profilo')}>Gestisci profilo <ChevronRight size={15}/></button>
               </section>
 
               <section className="portal-stat-grid" aria-label="Riepilogo progressi">
