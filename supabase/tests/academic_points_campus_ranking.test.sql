@@ -122,18 +122,21 @@ select throws_ok(
   $sql$insert into public.academy_points_awards (attempt_id, identity_id, academy, attempt_kind, points)
        select lesson_attempt_id, identity_id, 'arancia', 'lesson', 1 from _academic_points_test_ids$sql$,
   '23505',
+  'duplicate key value violates unique constraint "academy_points_awards_attempt_id_key"',
   'a second ledger row for the same attempt is rejected'
 );
 select throws_ok(
   $sql$update public.academy_points_awards set points = 2
        where attempt_id = (select lesson_attempt_id from _academic_points_test_ids)$sql$,
   'P0001',
+  'Lo storico dei punti accademici è immutabile.',
   'award history cannot be updated'
 );
 select throws_ok(
   $sql$delete from public.academy_points_awards
        where attempt_id = (select lesson_attempt_id from _academic_points_test_ids)$sql$,
   'P0001',
+  'Lo storico dei punti accademici è immutabile.',
   'award history cannot be deleted'
 );
 
