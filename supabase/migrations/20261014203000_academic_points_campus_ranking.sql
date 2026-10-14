@@ -93,3 +93,10 @@ $$;
 
 revoke all on function public.get_academy_points_summary(uuid) from public, anon, authenticated;
 grant execute on function public.get_academy_points_summary(uuid) to service_role;
+
+
+-- Configurable pilot defaults for the subject-final exam.
+insert into public.academy_settings (setting_key, setting_value, updated_at)
+values
+  ('questions_per_subject_exam', '15'::jsonb, now())
+on conflict (setting_key) do nothing;
