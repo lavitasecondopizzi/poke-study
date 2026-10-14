@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Award, BookOpen, CheckCircle2, Crown, GraduationCap, MessageSquare, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { Award, BookOpen, CheckCircle2, Crown, MessageSquare, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { getPublicStudentProfile } from './community';
 import type { PublicStudentProfile } from './community';
 import type { PokemonSpecies } from './types';
