@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, Award, BookOpen, CheckCircle2, Clock3, Eye, FileText, GraduationCap, Medal, RotateCcw, Sparkles, Trophy, X } from 'lucide-react';
 import { loadAcademyAttemptReview, loadAcademyCurriculum } from './academy';
 import type { AcademyAttemptResult, AcademyAttemptSummary, AcademyLesson } from './academy';
-import type { ApiNamedResource, PokemonSpecies, SavedProgress } from './types';
+import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress } from './types';
 import { displayName, itemCard, MACRO_CATEGORIES, pokemonCard } from './catalog';
 
 const DEX_SIZE = 1025;
@@ -13,7 +13,7 @@ const REGIONS = [
   { name: 'Alola', start: 722, end: 809 }, { name: 'Galar', start: 810, end: 905 },
   { name: 'Paldea', start: 906, end: 1025 },
 ];
-type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; configured: boolean; identityReady: boolean; academy: string; onReset: () => void };
+type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; configured: boolean; identityReady: boolean; academy: string; typeCatalog: PokemonTypeIndex[]; typeLoading: boolean; online: boolean; onReset: () => void };
 type AcademyRecord = { lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[] };
 type RegisterView = 'summary' | 'detail';
 
@@ -47,7 +47,7 @@ function Bar({ value }: { value: number }) {
   return <div className="pr-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(safe)}><span style={{ width: `${safe}%` }} /></div>;
 }
 
-export default function PersonalRegister({ progress, species, items, loading, configured, identityReady, academy, onReset }: Props) {
+export default function PersonalRegister({ progress, species, items, loading, configured, identityReady, academy, typeCatalog, typeLoading, online, onReset }: Props) {
   const academyInfo = academyDetails(academy);
   const [academyRecord, setAcademyRecord] = useState<AcademyRecord | null>(null);
   const [academyLoading, setAcademyLoading] = useState(false);
@@ -155,6 +155,11 @@ export default function PersonalRegister({ progress, species, items, loading, co
     });
     return { regions, macros, pokemon: donePokemon.size, percent: donePokemon.size / DEX_SIZE * 100 };
   }, [catalog, donePokemon, doneEntries]);
+  const typeStats = useMemo(() => typeCatalog.map(type => {
+    const ids = type.ids.filter(id => id >= 1 && id <= DEX_SIZE);
+    const done = ids.filter(id => donePokemon.has(id)).length;
+    return { name: type.name, total: ids.length, done, percent: ids.length ? done / ids.length * 100 : 0, complete: ids.length > 0 && done === ids.length };
+  }).sort((a, b) => a.name.localeCompare(b.name, 'it')), [typeCatalog, donePokemon]);
   const medals = useMemo(() => [
     ...[
       { id: 'first', title: 'Primo passo', desc: 'Cataloga il primo Pokémon.', target: 1 },
@@ -224,7 +229,7 @@ export default function PersonalRegister({ progress, species, items, loading, co
     <header className="pr-hero">
       <div className="pr-hero-copy">
         <div className="pr-academy-identity"><img src={`${import.meta.env.BASE_URL}images/academies/${academyInfo.file}`} alt={`Stemma ${academyInfo.name}`} /><div><span>PORTALE ALLIEVI · {academyInfo.shortName}</span><strong>{academyInfo.name}</strong><small>Registro personale ufficiale</small></div></div>
-        <span className="eyebrow">CATALOGAZIONE · PROGRESSI PERSONALI</span><h1>Registro personale</h1><p>Il riepilogo del tuo percorso: Pokédex, collezioni, traguardi e attività recente.</p>
+        <span className="eyebrow">CATALOGAZIONE · PROGRESSI PERSONALI</span><h1>Registro personale</h1><p>Il riepilogo del tuo percorso: catalogazione, specializzazioni, medaglie e attività recente.</p>
         <div className="pr-total"><strong>{Math.round(stats.percent)}%</strong><span>Pokédex nazionale completato</span></div><Bar value={stats.percent}/><small>{stats.pokemon.toLocaleString('it-IT')} / {DEX_SIZE.toLocaleString('it-IT')} specie catalogate</small>
       </div><div className="pr-seal" aria-hidden="true"><Trophy size={32}/><span>REGISTRO</span><b>UFFICIALE</b></div>
     </header>
@@ -237,6 +242,12 @@ export default function PersonalRegister({ progress, species, items, loading, co
     <section className="pr-section">
       <div className="pr-heading"><div><span className="eyebrow">PANORAMICA</span><h2>Avanzamento per regione</h2></div><b>{stats.regions.filter(r=>r.complete).length} / {REGIONS.length} completate</b></div>
       <div className="pr-regions">{stats.regions.map(r=><article className={r.complete?'is-done':''} key={r.name}><div className="pr-region-head"><i>{r.complete?<CheckCircle2 size={17}/>:r.name.slice(0,2).toUpperCase()}</i><div><strong>{r.name}</strong><small>{r.done} / {r.total} specie</small></div><b>{Math.round(r.percent)}%</b></div><Bar value={r.percent}/><small className="pr-region-note">{r.complete?'Regione completata':`Ancora ${r.total-r.done} da catalogare`}</small></article>)}</div>
+    </section>
+    <section className="pr-section">
+      <div className="pr-heading"><div><span className="eyebrow">SPECIALIZZAZIONE</span><h2>Avanzamento per tipo Pokémon</h2><p>Progressi calcolati sulle specie catalogate nell’Archivio Nazionale.</p></div><b>{typeStats.filter(type => type.complete).length} / {typeStats.length || 18} completi</b></div>
+      {typeLoading ? <div className="pr-empty"><span className="pokeball-loader"/><p>Caricamento dei progressi per tipo…</p></div>
+        : typeStats.length ? <div className="pr-type-grid">{typeStats.map(type => <article className={type.complete ? 'is-done' : ''} key={type.name}><div className="pr-type-head"><strong>{displayName(type.name)}</strong><b>{Math.round(type.percent)}%</b></div><small>{type.done} / {type.total} specie</small><Bar value={type.percent}/><small className="pr-region-note">{type.complete ? 'Tipo completato' : 'Ancora ' + (type.total - type.done) + ' da catalogare'}</small></article>)}</div>
+        : <div className="pr-empty"><BookOpen size={22}/><strong>Progressi per tipo non disponibili</strong><p>{online ? 'Non è stato possibile caricare i dati dei tipi. Riprova aprendo nuovamente il Registro.' : 'I dati dei tipi non sono ancora disponibili offline. Connettiti una volta per caricarli.'}</p></div>}
     </section>
     <section className="pr-section">
       <div className="pr-heading"><div><span className="eyebrow">CLASSIFICAZIONE</span><h2>Macrocategorie e sottocategorie</h2></div><b>{stats.macros.filter(m=>m.total>0&&m.done===m.total).length} / {stats.macros.length} complete</b></div>
