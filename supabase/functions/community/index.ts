@@ -59,6 +59,38 @@ function cleanText(value: unknown, min: number, max: number): string | null {
   return cleaned.length >= min && cleaned.length <= max ? cleaned : null;
 }
 
+function normalizeProfileSettings(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const raw = value as Record<string, unknown>;
+  const textField = (key: string, max: number) => {
+    const candidate = raw[key];
+    return typeof candidate === "string" && candidate.length <= max ? candidate.trim() : null;
+  };
+  const bio = textField("bio", 180);
+  const favoritePokemon = textField("favoritePokemon", 60);
+  const motto = textField("motto", 90);
+  const activeTitle = textField("activeTitle", 80);
+  if (bio === null || favoritePokemon === null || motto === null || activeTitle === null) return null;
+  const frames = new Set(["academy", "research", "archive", "expert", "master"]);
+  if (typeof raw.frame !== "string" || !frames.has(raw.frame)) return null;
+  if (!Array.isArray(raw.badges) || raw.badges.length > 3
+    || !raw.badges.every(item => typeof item === "string" && item.length > 0 && item.length <= 80)) return null;
+  const visibilityKeys = ["bio", "favoritePokemon", "motto", "activeTitle", "badges", "catalogStats", "communityStats", "matricola"];
+  if (!raw.visibility || typeof raw.visibility !== "object" || Array.isArray(raw.visibility)) return null;
+  const visibilityRaw = raw.visibility as Record<string, unknown>;
+  const visibility: Record<string, boolean> = {};
+  for (const key of visibilityKeys) {
+    if (typeof visibilityRaw[key] !== "boolean") return null;
+    visibility[key] = visibilityRaw[key] as boolean;
+  }
+  return {
+    bio, favoritePokemon, motto, activeTitle,
+    badges: [...new Set(raw.badges as string[])],
+    frame: raw.frame,
+    visibility,
+  };
+}
+
 async function hashToken(token: string): Promise<string> {
   const bytes = new TextEncoder().encode(token);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -183,14 +215,21 @@ Deno.serve(async request => {
       const rawProfile = data.player_profile && typeof data.player_profile === "object" && !Array.isArray(data.player_profile)
         ? data.player_profile as Record<string, unknown>
         : null;
+      const settings = rawProfile?.profileSettings === undefined
+        ? null
+        : normalizeProfileSettings(rawProfile.profileSettings);
       const profile = rawProfile
         ? {
             matricola: identity.matricola,
             ...(typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? { avatarId: rawProfile.avatarId } : {}),
+            ...(settings ? { profileSettings: settings } : {}),
           }
         : null;
       if (data.player_profile !== null && !rawProfile) {
         return response(500, { error: "Il profilo salvato nel database non è valido; i dati non sono stati sovrascritti." });
+      }
+      if (rawProfile?.profileSettings !== undefined && !settings) {
+        return response(500, { error: "Le preferenze del profilo salvate nel database non sono valide; i dati non sono stati sovrascritti." });
       }
       const progress = data.player_progress === null ? null : normalizePlayerProgress(data.player_progress);
       if (data.player_progress !== null && !progress) {
@@ -212,13 +251,33 @@ Deno.serve(async request => {
         }
         avatarId = profileInput.avatarId;
       }
+      const profileSettings = profileInput.profileSettings === undefined
+        ? undefined
+        : normalizeProfileSettings(profileInput.profileSettings);
+      if (profileInput.profileSettings !== undefined && !profileSettings) {
+        return response(400, { error: "Preferenze del profilo non valide." });
+      }
       const progress = normalizePlayerProgress(input.progress);
       if (!progress) return response(400, { error: "Progressi giocatore non validi." });
+      const { data: existing, error: existingError } = await supabase
+        .from("community_identities")
+        .select("player_profile")
+        .eq("id", identity.id)
+        .single();
+      if (existingError || !existing) return response(500, { error: "Non è stato possibile leggere il profilo prima del salvataggio." });
+      const previousProfile = existing.player_profile && typeof existing.player_profile === "object" && !Array.isArray(existing.player_profile)
+        ? existing.player_profile as Record<string, unknown>
+        : {};
+      const preservedSettings = profileSettings ?? previousProfile.profileSettings;
+      const playerProfile = {
+        avatarId,
+        ...(preservedSettings !== undefined ? { profileSettings: preservedSettings } : {}),
+      };
       const updatedAt = new Date().toISOString();
       const { error } = await supabase
         .from("community_identities")
         .update({
-          player_profile: { avatarId },
+          player_profile: playerProfile,
           player_progress: progress,
           player_state_updated_at: updatedAt,
         })
