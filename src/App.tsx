@@ -3,8 +3,8 @@ import type { FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createMixedLesson, displayName, MACRO_CATEGORIES } from './catalog';
-import type { CatalogCard } from './catalog';
+import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
+import type { CatalogCard, MacroId } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
 
@@ -170,6 +170,8 @@ export default function App() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
   const [lessonReady, setLessonReady] = useState(false);
+  const [gamePage, setGamePage] = useState(0);
+  const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
   const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -309,6 +311,20 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
     [lessonDeck, lessonSolved],
   );
+  const gamePageSize = 15;
+  const gamePageCount = Math.max(1, Math.ceil(remainingLessonCards.length / gamePageSize));
+  const safeGamePage = Math.min(gamePage, gamePageCount - 1);
+  const visibleGameCards = remainingLessonCards.slice(safeGamePage * gamePageSize, safeGamePage * gamePageSize + gamePageSize);
+  const currentMacroTargets = openMacroId ? lessonTargets.filter(target => target.macroId === openMacroId) : [];
+  const currentMacro = MACRO_CATEGORIES.find(category => category.id === openMacroId);
+  const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
+    ...category,
+    total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
+    solved: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.solved, 0),
+  }));
+  useEffect(() => {
+    if (gamePage !== safeGamePage) setGamePage(safeGamePage);
+  }, [gamePage, safeGamePage]);
   const filteredAvatars = species.filter(pokemon => pokemon.name.toLowerCase().includes(avatarSearch.trim().toLowerCase()) || String(pokemon.id).includes(avatarSearch.trim()));
   const avatarPageCount = Math.max(1, Math.ceil(filteredAvatars.length / 15));
   const visibleAvatars = filteredAvatars.slice(avatarPage * 15, avatarPage * 15 + 15);
@@ -326,18 +342,20 @@ export default function App() {
 
   useEffect(() => {
     if (lessonReady || species.length === 0 || itemCatalog.length === 0) return;
-    setLessonDeck(createMixedLesson(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []));
+    setLessonDeck(createFullCatalog(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []));
     setLessonSolved([]);
     setLessonReady(true);
   }, [species, itemCatalog, lessonReady, progress.completedIds, progress.completedEntries]);
 
   function startNewLesson() {
-    const nextDeck = createMixedLesson(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []);
+    const nextDeck = createFullCatalog(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []);
     setLessonDeck(nextDeck);
     setLessonSolved([]);
     setSelectedCardId(null);
     setWrongTargetId(null);
-    setMessage(nextDeck.length ? 'Nuova lezione pronta: le carte provengono da macrocategorie diverse.' : 'Hai catalogato tutti gli elementi attualmente disponibili.');
+    setGamePage(0);
+    setOpenMacroId(null);
+    setMessage(nextDeck.length ? 'Catalogo pronto: classifica tutte le carte nelle sottocategorie corrette.' : 'Hai catalogato tutti gli elementi attualmente disponibili.');
   }
 
   function placeCard(cardId: string, targetId: string) {
@@ -346,7 +364,7 @@ export default function App() {
     if (card.subcategoryId !== targetId) {
       setWrongTargetId(targetId);
       setSelectedCardId(null);
-      setMessage(`Non corretto: ${displayName(card.name)} appartiene a “${card.subcategoryName}”. Nessuna penalità: puoi riprovare.`);
+      setMessage('Non corretto. Nessuna penalità: riprova oppure apri un’altra sottocategoria.');
       window.setTimeout(() => setWrongTargetId(current => current === targetId ? null : current), 650);
       return;
     }
@@ -378,7 +396,7 @@ export default function App() {
     });
     setSelectedCardId(null);
     setWrongTargetId(null);
-    setMessage(`Corretto! ${displayName(card.name)} · +1 Punto Poké.`);
+    setMessage(`Corretto! ${displayName(card.name)} · ${card.subcategoryName} · +1 Punto Poké.`);
   }
 
   function chooseAcademy(next: string) {
@@ -571,7 +589,7 @@ export default function App() {
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'game' ? 'active' : ''} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
-        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale</button>
+        {view !== 'game' && <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale</button>}
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
@@ -639,53 +657,87 @@ export default function App() {
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board mixed-lesson-board">
-              <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Sottocategorie della lezione">
-                <div className="game-zone-heading"><strong>CLASSIFICA LA CARTA</strong><span>{lessonSolved.length} / {lessonDeck.length} catalogate</span></div>
-                <div className="category-targets-grid">
-                  {lessonTargets.map(target => <button
-                    type="button"
-                    key={target.id}
-                    className={`category-target ${target.solved === target.total ? 'category-target-complete' : ''} ${wrongTargetId === target.id ? 'category-target-wrong' : ''}`}
-                    aria-label={`Classifica in ${target.macroName}, sottocategoria ${target.name}`}
-                    onDragOver={event => event.preventDefault()}
-                    onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, target.id); }}
-                    onClick={() => { if (selectedCardId) placeCard(selectedCardId, target.id); }}
-                  >
-                    <span className="category-target-macro">{target.macroName}</span>
-                    <strong>{target.name}</strong>
-                    <small>{target.solved} / {target.total}</small>
-                  </button>)}
-                  {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Nessun elemento disponibile</h3><p>Ricollegati per caricare il catalogo degli oggetti oppure avvia una nuova lezione quando il catalogo sarà pronto.</p></div>}
+              <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
+                <div className="game-zone-heading">
+                  <strong>{currentMacro ? \`CARTELLA · \${currentMacro.name.toLocaleUpperCase('it')}\` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
+                  <span>{lessonSolved.length} / {lessonDeck.length} classificate</span>
                 </div>
-                {lessonDeck.length > 0 && lessonSolved.length === lessonDeck.length && <div className="lesson-complete-banner"><strong>Lezione completata</strong><span>Hai classificato tutti gli elementi di questa lezione.</span><button className="primary-button" type="button" onClick={startNewLesson}>Inizia una nuova lezione</button></div>}
-              </section>
-              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
-              <section className="game-zone game-pokemon-zone" aria-label="Carte selezionabili">
-                <div className="game-zone-heading"><strong>CARTE MISTE</strong><span>{remainingLessonCards.length} da classificare</span></div><div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
-                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento archivio Pokémon…</h3></div>
-                  : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo misto non ancora pronto</h3><p>{online ? 'Caricamento del catalogo degli oggetti…' : 'Serve una prima connessione per scaricare gli oggetti. Dopo il caricamento saranno disponibili anche offline.'}</p></div>
-                  : remainingLessonCards.length > 0 ? <div className="pokemon-cards mixed-card-grid">
-                    {remainingLessonCards.map(card => <button
-                      key={card.id}
+                {openMacroId === null ? (
+                  <div className="category-targets-grid macro-folder-grid">
+                    {macroFolderCounts.map(folder => <button
                       type="button"
-                      aria-label="Seleziona carta da classificare"
-                      title="Seleziona carta"
-                      className={`pokemon-card mixed-card ${selectedCardId === card.id ? 'chosen' : ''}`}
-                      draggable
-                      onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
-                      onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Tocca la sottocategoria corretta.'); }}
+                      key={folder.id}
+                      className="category-target macro-folder"
+                      onClick={() => setOpenMacroId(folder.id)}
                     >
-                      <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                      <span className="folder-icon" aria-hidden="true">📁</span>
+                      <span className="category-target-macro">MACROCATEGORIA</span>
+                      <strong>{folder.name}</strong>
+                      <small>{folder.solved} / {folder.total}</small>
                     </button>)}
                   </div>
-                  : <div className="round-complete"><h3>Lezione completata!</h3><p>La prossima lezione è pronta dal tabellone superiore.</p></div>}
-                <div className="lesson-macro-legend">
-                  {MACRO_CATEGORIES.map(category => <span key={category.id}>{category.name}</span>)}
-                </div>
+                ) : (
+                  <>
+                    <div className="folder-toolbar">
+                      <button type="button" className="folder-back-button" onClick={() => setOpenMacroId(null)}>← Indietro</button>
+                      <span>Apri la sottocartella corretta per la carta selezionata</span>
+                    </div>
+                    <div className="category-targets-grid subfolder-grid">
+                      {currentMacroTargets.map(target => <button
+                        type="button"
+                        key={target.id}
+                        className={\`category-target subfolder-target \${target.solved === target.total ? 'category-target-complete' : ''} \${wrongTargetId === target.id ? 'category-target-wrong' : ''}\`}
+                        aria-label={\`Classifica in \${target.name}\`}
+                        onDragOver={event => event.preventDefault()}
+                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, target.id); }}
+                        onClick={() => { if (selectedCardId) placeCard(selectedCardId, target.id); else setMessage('Seleziona prima una carta da classificare.'); }}
+                      >
+                        <span className="folder-icon" aria-hidden="true">📂</span>
+                        <strong>{target.name}</strong>
+                        <small>{target.solved} / {target.total} classificate</small>
+                      </button>)}
+                    </div>
+                  </>
+                )}
+                {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
+              </section>
+              <div className={\`feedback-bar game-feedback \${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}\`} role="status">{message}</div>
+              <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
+                <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
+                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
+                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
+                  : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
+                  : visibleGameCards.length > 0 ? <>
+                    <div className="game-pagination game-pagination-cards">
+                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
+                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
+                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
+                    </div>
+                    <div className="pokemon-cards mixed-card-grid">
+                      {visibleGameCards.map(card => <button
+                        key={card.id}
+                        type="button"
+                        aria-label={selectedCardId === card.id ? 'Carta selezionata' : 'Seleziona carta da classificare'}
+                        title="Seleziona carta"
+                        className={\`pokemon-card mixed-card \${selectedCardId === card.id ? 'chosen' : ''}\`}
+                        draggable
+                        onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
+                        onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.'); }}
+                      >
+                        <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                      </button>)}
+                    </div>
+                    <div className="game-pagination game-pagination-cards">
+                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
+                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
+                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
+                    </div>
+                  </>
+                  : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili.</p><button type="button" className="primary-button" onClick={startNewLesson}>Rivedi il catalogo</button></div>}
               </section>
             </section>
           </>}
-          {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
+                    {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
           {view === 'shop' && <><div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div><div className="page-heading"><div><div className="eyebrow">SERVIZI STUDENTI</div><h1>Cartoleria punti</h1><p>Ogni potenziamento successivo compare dopo l’acquisto del livello precedente. Il costo complessivo in Punti Poké corrisponde ai punti ottenibili catalogando tutte le entità disponibili.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>ACQUISTI DISPONIBILI</span><strong>{availableShopCount}</strong></div></div><div className="shop-tabs"><button className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>Oggetti · Punti Poké</button><button className={shopTab === 'super-aiuti' ? 'active' : ''} onClick={() => setShopTab('super-aiuti')}>Passivi, archivi e modalità · Punti esame</button></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<div className="shop-grid">{shopProducts.filter(product => product.category === shopTab && (product.kind !== 'upgrade' || productUnlocked(product, inventory, progress.completedIds.length))).map(product => {const owned=inventory.includes(product.id);const unlocked=productUnlocked(product,inventory,progress.completedIds.length);const balance=product.currency==='poke'?progress.points:progress.examPoints;const canBuy=!owned&&unlocked&&balance>=product.cost&&(product.currency!=='poke'||shopPricingReady);const requirement=product.requirementLabel ?? (product.requires?.length ? `Richiede: ${product.requires.map(id=>SHOP_PRODUCTS.find(entry=>entry.id===id)?.name ?? id).join(', ')}` : 'Nessun requisito aggiuntivo');const status=owned?'Acquistato':!unlocked?'Bloccato':balance<product.cost?'Punti insufficienti':'Disponibile';return <article className={`shop-card ${!unlocked&&!owned?'shop-card-locked':''}`} key={product.id}><div className="shop-symbol">{product.kind==='active'?'⌁':product.kind==='upgrade'?'↗':product.kind==='archive'?'▤':product.kind==='cosmetic'?'✦':product.kind==='mode'?'◈':'★'}</div><div className="shop-product-content"><h3>{product.name}</h3><p>{product.description}</p><small className="shop-requirement">{requirement}</small><strong>{product.cost} {product.currency==='poke'?'Punti Poké':'Punti esame'}</strong><span className={`shop-product-status ${canBuy?'shop-product-ready':owned?'shop-product-owned':''}`}>{status}</span><button className="primary-button" disabled={!canBuy} onClick={()=>buyItem(product)}>{owned?'Acquistato':!unlocked?'Requisiti mancanti':product.currency==='poke'&&!shopPricingReady?'Calcolo del catalogo…':balance<product.cost?'Punti insufficienti':'Acquista'}</button></div></article>})}</div></>}
 
           {view === 'esami' && <><div className="breadcrumb">Home / Area didattica / <b>Esami</b></div><div className="page-heading"><div><div className="eyebrow">DIPARTIMENTO DIDATTICO</div><h1>Esami e prove speciali</h1><p>Completa le regioni, approfondisci i tipi Pokémon e affronta obiettivi speciali. I risultati vengono salvati localmente.</p></div></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<section className="archive-search"><h2>Esami regionali</h2><p>Completare una regione assegna automaticamente 1 Punto esame.</p><div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata · Punto esame ottenuto':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div></section><section className="archive-search"><h2>Esami per tipo</h2><p>I dati dei tipi provengono dalla PokéAPI e vengono messi in cache dopo il primo caricamento.</p>{typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}{typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}<div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;const key=`type-${type.name}`;const claimed=completedExams.includes(key);return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div>{done?<button className="secondary-button" disabled={claimed} onClick={()=>claimExam(key)}>{claimed?'Ricompensa riscossa':'Completa prova · +1 Punto esame'}</button>:<strong>{ids.length?Math.round(count/ids.length*100):0}% completato</strong>}</div></article>})}</div></section><section className="archive-search"><h2>Prove speciali</h2><p>Obiettivi progressivi di catalogazione. Ogni ricompensa può essere riscossa una sola volta.</p><div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10,reward:1},{id:'special-50',title:'Ricercatore in erba',target:50,reward:1},{id:'special-150',title:'Archivista Pokémon',target:150,reward:2},{id:'special-500',title:'Esperto Nazionale',target:500,reward:3},{id:'special-1025',title:'Maestro dell’Archivio',target:1025,reward:10}].map(exam=>{const done=progress.completedIds.length>=exam.target;const claimed=completedExams.includes(exam.id);return <article className="exam-card" key={exam.id}><div className="exam-card-mark special-mark">★</div><div><h3>{exam.title}</h3><p>Cataloga {exam.target} Pokémon · {Math.min(progress.completedIds.length,exam.target)} / {exam.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/exam.target*100)}%`}}/></div><strong>{exam.reward} {exam.reward===1?'Punto esame':'Punti esame'}</strong><button className="secondary-button" disabled={!done||claimed} onClick={()=>claimExam(exam.id,exam.reward)}>{claimed?'Ricompensa riscossa':done?'Riscatta ricompensa':'Prova in corso'}</button></div></article>})}</div></section></>}
