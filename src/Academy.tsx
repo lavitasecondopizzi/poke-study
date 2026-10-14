@@ -52,7 +52,10 @@ function isQuestionAnswered(question: AcademyQuestion, answer: unknown): boolean
     const mapping = asStringRecord(answer);
     const left = question.options.filter(option => option.side === "left");
     const rightIds = new Set(question.options.filter(option => option.side === "right").map(option => option.id));
-    return left.length > 0 && left.every(option => Boolean(mapping[option.id]) && rightIds.has(mapping[option.id]));
+    const selectedTargets = left.map(option => mapping[option.id]).filter(Boolean);
+    return left.length > 0
+      && left.every(option => Boolean(mapping[option.id]) && rightIds.has(mapping[option.id]))
+      && new Set(selectedTargets).size === left.length;
   }
   if (question.type === "ordering") {
     return Array.isArray(answer)
@@ -368,7 +371,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               {questions.map((question, index) => <fieldset className="academy-question" key={question.questionId}>
                 <legend><span>DOMANDA {index + 1} · {question.difficulty.toLocaleUpperCase("it-IT")}</span>{question.prompt}</legend>
                 {question.mediaUrl && <img className="academy-question-image" src={question.mediaUrl} alt="Immagine da identificare" loading="lazy" />}
-                {question.type === "matching" ? <div className="academy-matching-list">{question.options.filter(option => option.side === "left").map(option => <label key={option.id}><span>{option.label}</span><select aria-label={"Abbinamento per " + option.label} value={asStringRecord(answers[question.questionId])[option.id] ?? ""} onChange={event => setAnswers(current => ({ ...current, [question.questionId]: { ...asStringRecord(current[question.questionId]), [option.id]: event.target.value } }))}><option value="">Scegli un abbinamento</option>{question.options.filter(target => target.side === "right").map(target => <option key={target.id} value={target.id}>{target.label}</option>)}</select></label>)}</div>
+                {question.type === "matching" ? <div className="academy-matching-list">{question.options.filter(option => option.side === "left").map(option => <label key={option.id}><span>{option.label}</span><select aria-label={"Abbinamento per " + option.label} value={asStringRecord(answers[question.questionId])[option.id] ?? ""} onChange={event => setAnswers(current => ({ ...current, [question.questionId]: { ...asStringRecord(current[question.questionId]), [option.id]: event.target.value } }))}><option value="">Scegli un abbinamento</option>{question.options.filter(target => target.side === "right").map(target => <option key={target.id} value={target.id} disabled={Object.entries(asStringRecord(answers[question.questionId])).some(([mappedId, mappedTarget]) => mappedId !== option.id && mappedTarget === target.id)}>{target.label}</option>)}</select></label>)}</div>
                   : question.type === "ordering" ? <div className="academy-ordering-list">
                     {(Array.isArray(answers[question.questionId]) ? answers[question.questionId] as string[] : question.options.map(option => option.id)).map((optionId, orderIndex, currentOrder) => {
                       const option = question.options.find(item => item.id === optionId);
