@@ -193,6 +193,8 @@ export default function App() {
   const [student, setStudent] = useState<StudentProfile | null>(loadStudent);
   const [showEnrollmentCard, setShowEnrollmentCard] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [enrollmentBusy, setEnrollmentBusy] = useState(false);
+  const [enrollmentError, setEnrollmentError] = useState('');
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
@@ -473,17 +475,38 @@ export default function App() {
     setAcademy(next);
   }
 
-  function completeEnrollment(event: FormEvent<HTMLFormElement>) {
+  async function completeEnrollment(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const cleanNickname = nickname.trim();
-    if (!academy || !cleanNickname) return;
-    const profile = { nickname: cleanNickname, matricola: createMatricola() };
+    if (!academy || !cleanNickname || enrollmentBusy) return;
+    setEnrollmentBusy(true);
+    setEnrollmentError('');
     try {
-      localStorage.setItem(ACADEMY_KEY, academy);
-      localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
-    } catch { /* storage may be unavailable */ }
-    setStudent(profile);
-    setShowEnrollmentCard(true);
+      if (!communityConfigured) throw new Error('Il servizio account online non è configurato. Riprova dopo il rilascio della versione aggiornata.');
+      let identity: CommunityIdentity;
+      if (hasCommunityToken()) {
+        identity = await getCommunityIdentity();
+        if (identity.nickname !== cleanNickname || identity.academy !== academy) {
+          throw new Error('Nel browser è già presente un altro account online. Importa i metadati dell’account corretto prima di completare l’iscrizione.');
+        }
+      } else {
+        identity = await createCommunityIdentity(cleanNickname, academy as CommunityAcademy);
+      }
+      const profile = { nickname: cleanNickname, matricola: createMatricola() };
+      try {
+        localStorage.setItem(ACADEMY_KEY, academy);
+        localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
+      } catch {
+        throw new Error('Impossibile salvare il profilo su questo dispositivo. Verifica lo spazio disponibile e le impostazioni del browser.');
+      }
+      setCommunityIdentity(identity);
+      setStudent(profile);
+      setShowEnrollmentCard(true);
+    } catch (error) {
+      setEnrollmentError(error instanceof Error ? error.message : 'Non è stato possibile creare l’account online. Controlla la connessione e riprova.');
+    } finally {
+      setEnrollmentBusy(false);
+    }
   }
 
   function navTo(next: string) {
@@ -554,22 +577,6 @@ export default function App() {
     }));
     setMessage(hint);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
-  }
-
-  async function registerCommunityIdentity() {
-    if (!student || (academy !== 'arancia' && academy !== 'uva')) return;
-    setCommunityBusy(true);
-    setCommunityError('');
-    setCommunityNotice('');
-    try {
-      const identity = await createCommunityIdentity(student.nickname, academy);
-      setCommunityIdentity(identity);
-      setCommunityNotice('Identità community creata. Esporta i metadati per trasferirla in sicurezza su un altro dispositivo.');
-    } catch (error) {
-      setCommunityError(error instanceof Error ? error.message : 'Non è stato possibile creare l’identità community.');
-    } finally {
-      setCommunityBusy(false);
-    }
   }
 
   async function downloadCommunityAccount() {
@@ -668,16 +675,17 @@ export default function App() {
           <section className="academy-choice-intro">
             <span className="academy-choice-label">ACCADEMIA SELEZIONATA</span>
             <h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2>
-            <p>Inserisci il nickname che userai nel portale. Ti verrà assegnato un codice matricola personale, salvato su questo dispositivo.</p>
+            <p>Inserisci il nickname che userai nel portale. Dopo questa scelta verrà creata la tua identità online e ti verrà assegnato un codice matricola personale.</p>
           </section>
           <form className="enrollment-form" onSubmit={completeEnrollment}>
             <label htmlFor="student-nickname">Nickname allievo</label>
             <input id="student-nickname" name="nickname" type="text" value={nickname} onChange={event => setNickname(event.target.value)} placeholder="Es. AllenatorePikachu" maxLength={24} autoComplete="nickname" required />
-            <p className="enrollment-note">Da 1 a 24 caratteri. Potrai usare il nickname per riconoscere il tuo profilo.</p>
-            <button className="enrollment-submit" type="submit">Completa l'iscrizione <ChevronRight size={18} /></button>
-            <button className="enrollment-back" type="button" onClick={() => setAcademy('')}>← Cambia accademia</button>
+            <p className="enrollment-note">Da 1 a 24 caratteri. Serve una connessione Internet per creare l’account la prima volta.</p>
+            {enrollmentError && <p className="community-account-error" role="alert">{enrollmentError}</p>}
+            <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Creazione account online…' : 'Completa l’iscrizione'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
+            <button className="enrollment-back" type="button" disabled={enrollmentBusy} onClick={() => { setAcademy(''); setEnrollmentError(''); }}>← Cambia accademia</button>
           </form>
-          <p className="academy-choice-footnote">Il codice matricola viene generato al completamento dell'iscrizione. Il profilo e i progressi restano salvati nel browser.</p>
+          <p className="academy-choice-footnote">L’identità online viene creata dopo la scelta del nickname. I progressi di gioco restano salvati localmente su questo dispositivo.</p>
         </main>
       );
     }
@@ -1094,8 +1102,8 @@ export default function App() {
 
           {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
               <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
-              <p className="community-account-description">Collega il tuo profilo a un'identità online per preparare l'accesso alla Bacheca condivisa. Il gioco e i progressi locali continuano a funzionare anche senza Supabase.</p>
-              {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><button type="button" className="secondary-button" disabled={!communityConfigured || communityBusy} onClick={() => void registerCommunityIdentity()}>{communityBusy ? 'Attendere…' : 'Crea identità online'}</button><label className="community-import-button">Importa metadati<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              <p className="community-account-description">L’identità online viene creata durante l’iscrizione, subito dopo la scelta del nickname e dell’Accademia. Da qui puoi verificarla o trasferire l’account su un altro dispositivo.</p>
+              {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
               {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
