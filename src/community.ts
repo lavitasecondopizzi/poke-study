@@ -48,6 +48,11 @@ const TOKEN_KEY = "poke-study-community-token-v1";
 const METADATA_FORMAT = "poke-study-community-account";
 const METADATA_VERSION = 1;
 
+export interface CommunityPublicActivity {
+  discussions: number;
+  replies: number;
+}
+
 export interface CommunityRankingEntry {
   id: string;
   rank: number;
@@ -160,6 +165,12 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   });
   pendingPlayerStateWrite = write.catch(() => undefined);
   await write;
+}
+
+export async function getCommunityPublicActivity(): Promise<CommunityPublicActivity> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  return await call<CommunityPublicActivity>("get_my_public_activity", {}, token);
 }
 
 export async function listCommunityThreads(): Promise<CommunityThread[]> {
