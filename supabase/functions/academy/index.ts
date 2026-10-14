@@ -245,7 +245,10 @@ Deno.serve(async request => {
         .maybeSingle();
       const configuredCount = Number(setting?.setting_value ?? 5);
       const questionCount = Number.isSafeInteger(configuredCount) && configuredCount > 0 ? configuredCount : 5;
-      const targetCount = Math.min(questionCount, questionRows.length);
+      if (questionRows.length < questionCount) {
+        return response(409, { error: "Il repertorio di questa lezione non contiene abbastanza domande per il test configurato." });
+      }
+      const targetCount = questionCount;
       const difficultyPools = ["facile", "media", "difficile"].map(difficulty =>
         shuffle(questionRows.filter(question => question.difficulty === difficulty))
       );
