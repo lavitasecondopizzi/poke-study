@@ -744,3 +744,116 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .game-pagination-cards{flex-basis:29px;min-height:29px;padding:2px 4px}
   .game-pagination-cards button{min-height:24px;padding:3px 5px}
 }
+
+
+/* Portal dashboard refactor */
+.portal-dashboard{display:flex;flex-direction:column;gap:18px;max-width:1180px;margin:0 auto}
+.portal-dashboard .portal-notice{margin:0}
+.portal-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) 190px;align-items:center;gap:25px;min-height:230px;overflow:hidden;padding:30px 34px;border:1px solid #c9e1f3;border-radius:18px;background:linear-gradient(118deg,#fff 0%,#f4faff 57%,#dcefff 100%);box-shadow:0 4px 0 #d9ebf8,0 12px 30px #235b800c}
+.portal-hero-copy{position:relative;z-index:1;max-width:690px}
+.portal-eyebrow{display:inline-flex;align-items:center;gap:7px;color:#3979a6;font:800 10px 'DM Mono',monospace;letter-spacing:.07em}
+.portal-hero h1{margin:13px 0 10px;color:#164d7d;font:700 clamp(27px,3.2vw,39px)/1.13 'Libre Baskerville',Georgia,serif;letter-spacing:-.045em}
+.portal-hero p{max-width:610px;margin:0;color:#5d7890;font-size:14px;line-height:1.7}
+.portal-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:21px}
+.portal-primary-action,.portal-secondary-action{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:45px;padding:10px 15px;border:1px solid #1b6397;border-radius:9px;font-size:12px;font-weight:800}
+.portal-primary-action{background:linear-gradient(#398bc4,#216ba4);color:#fff;box-shadow:inset 0 1px #ffffff65,0 3px 0 #c6dfef}
+.portal-primary-action:hover{background:linear-gradient(#287cb7,#175c91)}
+.portal-secondary-action{border-color:#c1d9eb;background:#fff;color:#326b92}
+.portal-hero-progress{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+.portal-progress-ring{display:grid;place-items:center;width:142px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#3188c0 var(--progress),#d7e8f5 var(--progress));box-shadow:0 4px 12px #215f8c16}
+.portal-progress-ring>div{display:flex;flex-direction:column;align-items:center;justify-content:center;width:112px;aspect-ratio:1;border:1px solid #e0edf7;border-radius:50%;background:#fff}
+.portal-progress-ring strong{color:#185987;font:800 28px 'DM Mono',monospace;letter-spacing:-.07em}
+.portal-progress-ring span{margin-top:3px;color:#7a96ac;font:800 8px 'DM Mono',monospace;letter-spacing:.08em}
+.portal-progress-caption{color:#5e7d96;font-size:10px;font-weight:800}
+.portal-hero-shine{position:absolute;z-index:-1;right:120px;top:-115px;width:330px;height:330px;border:1px solid #fff9;border-radius:50%;box-shadow:0 0 0 28px #ffffff38,0 0 0 58px #ffffff24;pointer-events:none}
+.portal-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.portal-stat-card{display:flex;align-items:center;gap:12px;min-width:0;padding:17px;border:1px solid #dbe9f4;border-radius:13px;background:#fff;box-shadow:0 3px 12px #235d8608}
+.portal-stat-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#e8f5ff;color:#246e9e;font-size:23px;font-weight:800}
+.portal-stat-exams .portal-stat-icon{background:#fff6de;color:#a67a24}
+.portal-stat-catalog .portal-stat-icon{background:#e9f8ef;color:#2f8a58}
+.portal-stat-card>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.portal-stat-card small{color:#7c92a4;font:800 8px 'DM Mono',monospace;letter-spacing:.04em}
+.portal-stat-card strong{color:#204f75;font:800 22px 'DM Mono',monospace;line-height:1.2;overflow-wrap:anywhere}
+.portal-stat-card strong i{color:#8aa0b1;font-size:10px;font-style:normal}
+.portal-stat-card>div>span{color:#6c879c;font-size:10px}
+.portal-stat-card>button{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;margin-left:auto;border:1px solid #e0edf6;border-radius:8px;background:#f7fbff;color:#5d89a9}
+.portal-shortcuts,.portal-progress-panel{padding:21px;border:1px solid #dbe9f4;border-radius:15px;background:#fff;box-shadow:0 3px 12px #235d8608}
+.portal-section-heading,.portal-progress-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.portal-section-heading>div>span,.portal-progress-panel-heading>div>span{color:#6d8ca5;font:800 9px 'DM Mono',monospace;letter-spacing:.08em}
+.portal-section-heading h2,.portal-progress-panel-heading h2{margin:4px 0 0;color:#1d527d;font:700 19px 'Libre Baskerville',Georgia,serif;letter-spacing:-.03em}
+.portal-section-note{padding:6px 8px;border:1px solid #d9e9f5;border-radius:6px;background:#f4faff;color:#63829a;font:800 8px 'DM Mono',monospace;letter-spacing:.05em}
+.portal-shortcut-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.portal-shortcut{position:relative;display:flex;align-items:center;gap:12px;min-width:0;min-height:84px;padding:13px;text-align:left;border:1px solid #e0eaf2;border-radius:11px;background:linear-gradient(130deg,#fff,#f9fcff);color:inherit;transition:border-color .15s,transform .15s,box-shadow .15s}
+.portal-shortcut:hover{transform:translateY(-1px);border-color:#b7d8ed;box-shadow:0 4px 12px #235d860b}
+.portal-shortcut-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:11px;background:#e8f5ff;color:#2777a9}
+.portal-shortcut-record .portal-shortcut-icon{background:#fff5df;color:#a27a28}
+.portal-shortcut-exams .portal-shortcut-icon{background:#edf8ef;color:#378354}
+.portal-shortcut-shop .portal-shortcut-icon{background:#f2edff;color:#7b60b3}
+.portal-shortcut-archive .portal-shortcut-icon{background:#eaf4ff;color:#3676a5}
+.portal-shortcut-profile .portal-shortcut-icon{background:#fff0e7;color:#b76d3e}
+.portal-shortcut-copy{display:flex;flex-direction:column;gap:4px;min-width:0;padding-right:14px}
+.portal-shortcut-copy strong{color:#285371;font-size:12px;line-height:1.35}
+.portal-shortcut-copy small{color:#7890a3;font-size:10px;line-height:1.5}
+.portal-shortcut-arrow{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#86a3b9}
+.portal-shortcut-badge{position:absolute;top:8px;right:8px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:10px;background:#d95c4f;color:#fff;font:800 9px 'DM Mono',monospace}
+.portal-progress-panel-heading{margin-bottom:13px}
+.portal-progress-panel-heading>strong{color:#236e9e;font:800 20px 'DM Mono',monospace}
+.portal-progress-track{height:9px;overflow:hidden;border-radius:99px;background:#eaf2f8}
+.portal-progress-track>span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#4aa0d3,#2477b1);transition:width .25s}
+.portal-progress-panel-footer{display:flex;justify-content:space-between;gap:12px;margin-top:9px;color:#718ba0;font-size:10px}
+.mobile-app-nav button{position:relative;gap:5px;min-height:53px;padding:5px 2px;border-radius:11px;font-size:10px}
+.mobile-app-nav button svg{transition:transform .15s}
+.mobile-app-nav button.active svg{transform:translateY(-1px)}
+.mobile-app-nav button.active::before{position:absolute;top:2px;left:50%;width:22px;height:3px;content:"";transform:translateX(-50%);border-radius:3px;background:currentColor}
+.mobile-app-nav button.active{background:#eaf5ff}
+.mobile-shop-icon{position:relative;display:grid;place-items:center}
+.mobile-shop-icon .shop-notification-badge{position:absolute;top:-7px;right:-10px;min-width:15px;height:15px;padding:0 3px;font-size:8px}
+@media(min-width:651px){
+  .portal-dashboard{padding-bottom:18px}
+}
+@media(max-width:900px){
+  .portal-hero{grid-template-columns:minmax(0,1fr) 145px;padding:24px}
+  .portal-progress-ring{width:120px}
+  .portal-progress-ring>div{width:94px}
+  .portal-progress-ring strong{font-size:24px}
+  .portal-stat-card{gap:9px;padding:13px}
+  .portal-stat-icon{width:36px;height:36px;flex-basis:36px}
+}
+@media(max-width:650px){
+  .portal-dashboard{gap:12px}
+  .portal-hero{grid-template-columns:minmax(0,1fr) 76px;gap:8px;min-height:0;padding:18px 14px;border-radius:14px}
+  .portal-eyebrow{font-size:8px;letter-spacing:.015em;gap:4px}
+  .portal-hero h1{font-size:25px;margin:10px 0 8px;overflow-wrap:anywhere}
+  .portal-hero p{font-size:11px;line-height:1.6}
+  .portal-hero-actions{grid-column:1/-1;gap:7px;margin-top:14px}
+  .portal-primary-action,.portal-secondary-action{min-height:42px;padding:9px 10px;font-size:10px}
+  .portal-primary-action{flex:1}
+  .portal-secondary-action{flex:0 0 auto}
+  .portal-progress-ring{width:74px}
+  .portal-progress-ring>div{width:58px}
+  .portal-progress-ring strong{font-size:14px}
+  .portal-progress-ring span{font-size:6px}
+  .portal-progress-caption{max-width:82px;text-align:center;font-size:8px;line-height:1.35}
+  .portal-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .portal-stat-card{position:relative;align-items:flex-start;flex-direction:column;gap:8px;padding:10px 8px;border-radius:10px}
+  .portal-stat-icon{width:30px;height:30px;flex-basis:30px;border-radius:9px;font-size:17px}
+  .portal-stat-card>div{gap:3px}
+  .portal-stat-card small{font-size:6px;line-height:1.35;min-height:16px;letter-spacing:0}
+  .portal-stat-card strong{font-size:15px}
+  .portal-stat-card strong i{display:block;font-size:8px}
+  .portal-stat-card>div>span{font-size:8px;line-height:1.3}
+  .portal-stat-card>button{position:absolute;top:7px;right:5px;width:22px;height:22px;flex-basis:22px;border:0;background:transparent}
+  .portal-stat-card>button svg{width:14px}
+  .portal-shortcuts,.portal-progress-panel{padding:14px 11px;border-radius:12px}
+  .portal-section-heading h2,.portal-progress-panel-heading h2{font-size:16px}
+  .portal-section-note{font-size:7px;padding:5px}
+  .portal-shortcut-grid{grid-template-columns:minmax(0,1fr);gap:7px}
+  .portal-shortcut{min-height:68px;padding:9px;gap:10px;border-radius:10px}
+  .portal-shortcut-icon{width:36px;height:36px;flex-basis:36px;border-radius:9px}
+  .portal-shortcut-copy strong{font-size:11px}
+  .portal-shortcut-copy small{font-size:9px}
+  .portal-shortcut-arrow{right:8px}
+  .portal-progress-panel-footer{font-size:9px;flex-wrap:wrap}
+  .mobile-app-nav{grid-template-columns:repeat(5,minmax(0,1fr));padding:5px 7px calc(5px + env(safe-area-inset-bottom));border-top-color:#cfe2f0;background:#fffffff2}
+  .mobile-app-nav button{min-height:49px;font-size:9px}
+}
