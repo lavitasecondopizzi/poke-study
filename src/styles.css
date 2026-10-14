@@ -2765,3 +2765,8 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
     max-width: 760px;
   }
 }
+
+
+/* Cartoleria unificata: il saldo PP occupa una sola colonna. */
+.cartoleria-page .shop-wallets{grid-template-columns:minmax(0,280px)}
+@media(max-width:650px){.cartoleria-page .shop-wallets{grid-template-columns:minmax(0,1fr)}}
