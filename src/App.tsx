@@ -64,15 +64,15 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'research') return 7;
     if (id === 'auto-sort') return 12;
     if (id.startsWith('scanner-upgrade-')) {
-      const level = Number(id.split('-').at(-1));
+      const level = Number(id.slice(id.lastIndexOf('-') + 1));
       return 1.5 + (level - 2) * 0.55;
     }
     if (id.startsWith('research-upgrade-')) {
-      const level = Number(id.split('-').at(-1));
+      const level = Number(id.slice(id.lastIndexOf('-') + 1));
       return 3 + (level - 2) * 1.15;
     }
     if (id.startsWith('multi-select-')) {
-      const level = Number(id.split('-').at(-1));
+      const level = Number(id.slice(id.lastIndexOf('-') + 1));
       return 1 + level * 0.45;
     }
     return 0;
@@ -473,8 +473,8 @@ export default function App() {
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
     const currentInventory = progress.inventory ?? [];
-    const scannerLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.split('-').at(-1))));
-    const researchLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.split('-').at(-1))));
+    const scannerLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const researchLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
     const cooldownMs = abilityId === 'scanner'
       ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
       : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
