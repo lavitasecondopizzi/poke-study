@@ -132,11 +132,11 @@ function avatarPortraitUrl(id: number) {
 }
 
 function itemSpriteUrl(name: string) {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`;
+  return `${import.meta.env.BASE_URL}images/items/${name}.png`;
 }
 
 const IMAGE_CHECK_CONCURRENCY = 32;
-const ITEM_IMAGE_CACHE_KEY = 'poke-study-api-items-with-images-v2';
+const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
 
 function imageExists(url: string): Promise<boolean> {
   return new Promise(resolve => {
@@ -249,16 +249,15 @@ export default function App() {
       setItemCatalogLoading(false);
       return () => { active = false; };
     }
-    fetch('https://pokeapi.co/api/v2/item?limit=2000')
-      .then(response => { if (!response.ok) throw new Error('API oggetti non disponibile'); return response.json(); })
-      .then(payload => (payload.results as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name)))
-      .then(items => keepItemsWithImages(items))
-      .then(itemsWithImages => {
+    fetch(`${import.meta.env.BASE_URL}data/items.json`)
+      .then(response => { if (!response.ok) throw new Error('Catalogo locale strumenti non disponibile'); return response.json(); })
+      .then(items => {
         if (!active) return;
-        setItemCatalog(itemsWithImages);
-        try { localStorage.setItem(cacheKey, JSON.stringify(itemsWithImages)); } catch { /* quota storage */ }
+        const sorted = (items as ApiNamedResource[]).sort((a, b) => a.name.localeCompare(b.name));
+        setItemCatalog(sorted);
+        try { localStorage.setItem(cacheKey, JSON.stringify(sorted)); } catch { /* quota storage */ }
       })
-      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo oggetti non raggiungibile: riprova quando torni online.'); })
+      .catch(() => { if (active && !itemCatalog.length) setNotice('Catalogo locale strumenti non disponibile: aggiorna la pagina quando sei online.'); })
       .finally(() => { if (active) setItemCatalogLoading(false); });
     return () => { active = false; };
   }, [view, online]);
