@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   BookOpen, CheckCircle2, ChevronRight, FlaskConical, GraduationCap,
-  Search, ShieldCheck, ShoppingBag, Sparkles, Trophy, Wallet,
+  Search, ShieldCheck, ShoppingBag, Sparkles, Trophy,
 } from 'lucide-react';
 import type { SavedProgress } from './types';
 import type { ShopProduct } from './App';
@@ -129,7 +129,7 @@ function ProductCard({
         )}
         {!owned && requirements.length === 0 && <div className="shop-product-requirement requirement-met"><span aria-hidden="true">✓</span>{requirement}</div>}
         <div className="shop-product-footer">
-          <div className="shop-price"><strong>{displayCost.toLocaleString('it-IT')} ₱</strong><span>Punti Poké</span></div>
+          <div className="shop-price"><strong>₱ {displayCost.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div>
           {owned && !nextUpgrade
             ? <button type="button" className="shop-buy-button shop-buy-disabled" disabled>Livello massimo</button>
             : !purchaseUnlocked
@@ -160,7 +160,20 @@ export default function Cartoleria({
         const owned = inventory.includes(product.id);
         const unlocked = productUnlocked(product, inventory, progress.completedIds.length);
         if (filter === 'owned') return owned;
-        if (filter === 'available') return !owned && unlocked && progress.points >= product.cost && shopPricingReady;
+        if (filter === 'available') {
+          if (!owned) return unlocked && progress.points >= product.cost && shopPricingReady;
+          const upgradeIds = product.id === 'scanner'
+            ? Array.from({ length: SCANNER_LEVELS - 1 }, (_, index) => 'scanner-upgrade-' + (index + 2))
+            : product.id === 'research'
+              ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => 'research-upgrade-' + (index + 2))
+              : product.id === 'multi-select-1'
+                ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
+                : [];
+          const nextUpgrade = upgradeIds.map(id => shopProducts.find(entry => entry.id === id))
+            .find((entry): entry is ShopProduct => Boolean(entry && !inventory.includes(entry.id)));
+          return Boolean(nextUpgrade && productUnlocked(nextUpgrade, inventory, progress.completedIds.length)
+            && progress.points >= nextUpgrade.cost && shopPricingReady);
+        }
         if (filter === 'locked') return !owned && !unlocked;
         return true;
       })
