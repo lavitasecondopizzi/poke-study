@@ -162,6 +162,13 @@ Deno.serve(async request => {
         && gradeExamScores.reduce((sum, score) => sum + score, 0) / gradeExamScores.length >= 26;
     }
 
+    async function isCurrentGrade(gradeNumber: number): Promise<boolean> {
+      for (let previousGrade = 1; previousGrade < gradeNumber; previousGrade += 1) {
+        if (!(await hasPassedGrade(previousGrade))) return false;
+      }
+      return !(await hasPassedGrade(gradeNumber));
+    }
+
     if (action === "get_curriculum") {
       const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }, { data: progress, error: progressError }, { data: pointsSummary, error: pointsError }] = await Promise.all([
         supabase.from("academy_lessons")
@@ -252,8 +259,8 @@ Deno.serve(async request => {
         .eq("is_published", true)
         .maybeSingle();
       if (lessonError || !lesson) return response(404, { error: "Lezione non trovata o non pubblicata." });
-      if (lesson.grade_number > 1 && !(await hasPassedGrade(lesson.grade_number - 1))) {
-        return response(403, { error: "Completa il grado precedente prima di accedere a queste lezioni." });
+      if (!(await isCurrentGrade(lesson.grade_number))) {
+        return response(403, { error: "Questo grado non è attivo: completa il grado precedente e supera il grado corrente prima di proseguire." });
       }
 
       const { data: previousLessons, error: previousError } = await supabase.from("academy_lessons")
@@ -365,7 +372,7 @@ Deno.serve(async request => {
       const clientAttemptKey = typeof input.clientAttemptKey === "string" ? input.clientAttemptKey : "";
       const gradeNumber = Number(input.gradeNumber ?? 1);
       if (!Number.isSafeInteger(gradeNumber) || gradeNumber < 1 || gradeNumber > 10) return response(400, { error: "Grado accademico non valido." });
-      if (gradeNumber > 1 && !(await hasPassedGrade(gradeNumber - 1))) return response(403, { error: "Devi superare il grado precedente prima di accedere a questo esame." });
+      if (!(await isCurrentGrade(gradeNumber))) return response(403, { error: "Questo grado non è attivo: completa il grado precedente e supera il grado corrente prima di proseguire." });
       if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
         return response(400, { error: "Chiave del tentativo non valida." });
       }
@@ -508,7 +515,7 @@ Deno.serve(async request => {
       const subjectCode = typeof input.subjectCode === "string" ? input.subjectCode : "pokemon-sciences";
       const gradeNumber = Number(input.gradeNumber ?? 1);
       if (!Number.isSafeInteger(gradeNumber) || gradeNumber < 1 || gradeNumber > 10) return response(400, { error: "Grado accademico non valido." });
-      if (gradeNumber > 1 && !(await hasPassedGrade(gradeNumber - 1))) return response(403, { error: "Devi superare il grado precedente prima di accedere a questa materia." });
+      if (!(await isCurrentGrade(gradeNumber))) return response(403, { error: "Questo grado non è attivo: completa il grado precedente e supera il grado corrente prima di proseguire." });
       if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
         return response(400, { error: "Chiave del tentativo non valida." });
       }
