@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">Stemma Accademia Arancia</title><desc id="desc">Scudo arancione e crema con una fetta d'arancia al centro.</desc>
+<defs><clipPath id="shield"><path d="M256 15 453 76 447 282Q433 400 256 496 79 400 65 282L59 76Z"/></clipPath><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff2b4"/><stop offset="1" stop-color="#f6d778"/></linearGradient><linearGradient id="orange" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#ff9a43"/><stop offset="1" stop-color="#e84b28"/></linearGradient></defs>
+<path d="M256 9 458 71 452 284Q438 405 256 503 74 405 60 284L54 71Z" fill="#e95a31"/>
+<path d="M256 18 449 78 443 281Q429 395 256 491 83 395 69 281L63 78Z" fill="url(#gold)"/>
+<g clip-path="url(#shield)">
+<path d="M75 270H437V520H75Z" fill="url(#orange)"/>
+<path d="M81 265H431" stroke="#e95a31" stroke-width="11"/>
+<path d="M256 278V505M256 278 106 430M256 278 406 430" stroke="#f9d879" stroke-width="12" fill="none"/>
+<path d="M105 278H407" stroke="#f9d879" stroke-width="12"/>
+</g>
+<path d="M256 18 449 78 443 281Q429 395 256 491 83 395 69 281L63 78Z" fill="none" stroke="#e95a31" stroke-width="8"/>
+<path d="M256 40 427 92 421 278Q408 380 256 466 104 380 91 278L85 92Z" fill="none" stroke="#f5c65e" stroke-width="5"/>
+<path d="M245 132C209 114 189 91 193 67 222 75 243 96 245 132Z" fill="#f16a35" stroke="#f9d879" stroke-width="5"/><path d="M264 132C270 95 296 71 329 66 328 96 304 121 264 132Z" fill="#f16a35" stroke="#f9d879" stroke-width="5"/>
+<circle cx="256" cy="230" r="91" fill="#f7d978" stroke="#ed6337" stroke-width="12"/>
+<circle cx="256" cy="230" r="72" fill="#f7d978" stroke="#ed6337" stroke-width="8"/>
+<g stroke="#ed6337" stroke-width="10" stroke-linecap="round"><path d="M256 160V300M186 230H326M206 180 306 280M306 180 206 280M224 164 288 296M288 164 224 296"/></g>
+<circle cx="256" cy="230" r="10" fill="#ed6337"/>
+</svg>
