@@ -175,6 +175,7 @@ export default function App() {
   const [lessonSolved, setLessonSolved] = useState<string[]>([]);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
+  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>({});
   const [lessonReady, setLessonReady] = useState(false);
   const [gamePage, setGamePage] = useState(0);
   const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
@@ -320,8 +321,8 @@ export default function App() {
     );
   }, [lessonDeck, lessonSolved, progress.completedIds]);
   const remainingLessonCards = useMemo(
-    () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
-    [lessonDeck, lessonSolved],
+    () => lessonDeck.filter(card => !lessonSolved.includes(card.id) && !Object.prototype.hasOwnProperty.call(misplacedCards, card.id)),
+    [lessonDeck, lessonSolved, misplacedCards],
   );
   const gamePageSize = 15;
   const gamePageCount = Math.max(1, Math.ceil(remainingLessonCards.length / gamePageSize));
@@ -367,11 +368,19 @@ export default function App() {
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
       : card.subcategoryId === targetId;
     if (!isCorrect) {
-      setMessage('');
+      setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
       setSelectedCardId(null);
+      setWrongTargetId(targetId);
+      setMessage('Entità collocata nella posizione scelta. Classificazione errata: nessun Punto Poké assegnato. Seleziona la miniatura per riprenderla.');
       return;
     }
 
+    setMisplacedCards(old => {
+      if (!(cardId in old)) return old;
+      const next = { ...old };
+      delete next[cardId];
+      return next;
+    });
     setLessonSolved(old => old.includes(cardId) ? old : [...old, cardId]);
     setProgress(old => {
       if (card.kind === 'pokemon') {
@@ -721,13 +730,16 @@ export default function App() {
                     {macroFolderCounts.map(folder => <button
                       type="button"
                       key={folder.id}
-                      className="category-target macro-folder"
+                      className={'category-target macro-folder ' + (wrongTargetId === folder.id ? 'category-target-wrong' : '')}
+                      onDragOver={event => event.preventDefault()}
+                      onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, folder.id); }}
                       onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); }}
                     >
                       <span className="folder-icon" aria-hidden="true">📁</span>
                       <span className="category-target-macro">MACROCATEGORIA</span>
                       <strong>{folder.name}</strong>
                       <small>{folder.solved} / {folder.total}</small>
+                      {Object.entries(misplacedCards).filter(([, targetId]) => targetId === folder.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
                     </button>)}
                   </div>
                 ) : openMacroId === 'pokemon' && currentPokemonRegion ? (
@@ -755,6 +767,7 @@ export default function App() {
                           <strong>#{String(regionalNumber).padStart(3, '0')}</strong>
                           <small>N. {String(nationalId).padStart(4, '0')}</small>
                           {isCompleted && <span aria-hidden="true">✓</span>}
+                          {Object.entries(misplacedCards).filter(([, targetId]) => targetId === slotId).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-slot-chip" title="Riprendi Pokémon" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
                         </button>;
                       })}
                     </div>
@@ -785,6 +798,7 @@ export default function App() {
                         <span className="folder-icon" aria-hidden="true">📂</span>
                         <strong>{target.name}</strong>
                         <small>{target.solved} / {target.total} {openMacroId === 'pokemon' ? 'posizioni completate' : 'classificate'}</small>
+                        {Object.entries(misplacedCards).filter(([, targetId]) => targetId === target.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
                       </button>)}
                     </div>
                   </>
