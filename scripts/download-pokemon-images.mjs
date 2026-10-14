@@ -4,6 +4,9 @@ import path from 'node:path';
 const ROOT = process.cwd();
 const POKEMON_DIR = path.join(ROOT, 'public', 'images', 'pokemon');
 const PORTRAIT_DIR = path.join(ROOT, 'public', 'images', 'portraits');
+const ITEM_DIR = path.join(ROOT, 'public', 'images', 'items');
+const DATA_DIR = path.join(ROOT, 'public', 'data');
+const ITEMS_API_URL = 'https://pokeapi.co/api/v2/item?limit=2000';
 const NATIONAL_DEX_SIZE = 1025;
 const STARTER_IDS = [1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912];
 const CONCURRENCY = 12;
@@ -47,6 +50,8 @@ async function downloadPng(url, destination) {
 await Promise.all([
   mkdir(POKEMON_DIR, { recursive: true }),
   mkdir(PORTRAIT_DIR, { recursive: true }),
+  mkdir(ITEM_DIR, { recursive: true }),
+  mkdir(DATA_DIR, { recursive: true }),
 ]);
 
 const tasks = [];
@@ -65,9 +70,26 @@ for (const id of STARTER_IDS) {
   });
 }
 
+// L'elenco viene ricavato dalla PokéAPI; le immagini non disponibili vengono ignorate.
+const itemResponse = await fetch(ITEMS_API_URL);
+if (!itemResponse.ok) throw new Error(`Impossibile leggere il catalogo strumenti: HTTP ${itemResponse.status}`);
+const itemPayload = await itemResponse.json();
+const itemNames = itemPayload.results.map(item => item.name).sort((a, b) => a.localeCompare(b));
+for (const name of itemNames) {
+  tasks.push({
+    label: `oggetto ${name}`,
+    url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`,
+    destination: path.join(ITEM_DIR, `${name}.png`),
+    itemName: name,
+    optional: true,
+  });
+}
+
 let next = 0;
 let downloaded = 0;
 let cached = 0;
+let skipped = 0;
+const availableItems = [];
 const failures = [];
 
 async function worker() {
@@ -79,8 +101,13 @@ async function worker() {
       const result = await downloadPng(task.url, task.destination);
       if (result === 'downloaded') downloaded++;
       else cached++;
+      if (task.itemName) availableItems.push(task.itemName);
     } catch (error) {
-      failures.push(`${task.label}: ${error instanceof Error ? error.message : String(error)}`);
+      if (task.optional) {
+        skipped++;
+      } else {
+        failures.push(`${task.label}: ${error instanceof Error ? error.message : String(error)}`);
+      }
     }
     if ((index + 1) % 100 === 0 || index + 1 === tasks.length) {
       console.log(`Immagini controllate: ${index + 1}/${tasks.length}`);
@@ -90,7 +117,8 @@ async function worker() {
 
 await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
 
-console.log(`Immagini scaricate: ${downloaded}; già presenti: ${cached}; errori: ${failures.length}.`);
+await writeFile(path.join(DATA_DIR, 'items.json'), JSON.stringify([...new Set(availableItems)].sort().map(name => ({ name, url: `/images/items/${name}.png` }))));
+console.log(`Immagini scaricate: ${downloaded}; già presenti: ${cached}; oggetti senza immagine: ${skipped}; errori obbligatori: ${failures.length}.`);
 if (failures.length) {
   console.error(failures.slice(0, 20).join('\n'));
   throw new Error(`Download immagini incompleto (${failures.length} file).`);
