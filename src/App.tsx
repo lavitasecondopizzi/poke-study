@@ -131,34 +131,7 @@ function avatarPortraitUrl(id: number) {
   return `${import.meta.env.BASE_URL}images/portraits/${id}.png`;
 }
 
-function itemSpriteUrl(name: string) {
-  return `${import.meta.env.BASE_URL}images/items/${name}.png`;
-}
-
-const IMAGE_CHECK_CONCURRENCY = 32;
 const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
-
-function imageExists(url: string): Promise<boolean> {
-  return new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(image.naturalWidth > 0 && image.naturalHeight > 0);
-    image.onerror = () => resolve(false);
-    image.src = url;
-  });
-}
-
-async function keepItemsWithImages(items: ApiNamedResource[]): Promise<ApiNamedResource[]> {
-  const valid: ApiNamedResource[] = [];
-  for (let start = 0; start < items.length; start += IMAGE_CHECK_CONCURRENCY) {
-    const batch = items.slice(start, start + IMAGE_CHECK_CONCURRENCY);
-    const results = await Promise.all(batch.map(async item => ({
-      item,
-      available: await imageExists(itemSpriteUrl(item.name)),
-    })));
-    valid.push(...results.filter(result => result.available).map(result => result.item));
-  }
-  return valid;
-}
 
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
@@ -245,10 +218,6 @@ export default function App() {
       const cached = localStorage.getItem(cacheKey);
       if (cached) setItemCatalog(JSON.parse(cached) as ApiNamedResource[]);
     } catch { /* ignore broken cache */ }
-    if (!navigator.onLine) {
-      setItemCatalogLoading(false);
-      return () => { active = false; };
-    }
     fetch(`${import.meta.env.BASE_URL}data/items.json`)
       .then(response => { if (!response.ok) throw new Error('Catalogo locale strumenti non disponibile'); return response.json(); })
       .then(items => {
