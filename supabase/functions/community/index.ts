@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 const categories = new Set(["generale", "domande", "strategie", "annunci"]);
-type Academy = "arancia" | "uva";
+type Academy = "arancia" | "uva" | "mirtillo";
 
 function response(status: number, body: Record<string, unknown>) {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
@@ -57,7 +57,7 @@ Deno.serve(async request => {
     if (action === "create_identity") {
       const nickname = cleanText(input.nickname, 2, 24);
       const academy = input.academy;
-      if (!nickname || (academy !== "arancia" && academy !== "uva")) {
+      if (!nickname || (academy !== "arancia" && academy !== "uva" && academy !== "mirtillo")) {
         return response(400, { error: "Nickname o Accademia non validi." });
       }
 
