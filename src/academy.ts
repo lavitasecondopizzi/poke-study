@@ -13,6 +13,13 @@ export interface AcademyLesson {
   subject?: { subject_code: string; title: string; description: string } | null;
 }
 
+export interface AcademyProgressSummary {
+  lessonAverages: Record<string, { average: number; attemptCount: number }>;
+  gradeExamAverage: number | null;
+  gradeExamAttemptCount: number;
+  gradeExamPassed: boolean;
+}
+
 export interface AcademyAttemptSummary {
   id: string;
   lesson_code: string | null;
@@ -56,11 +63,11 @@ export interface AcademyAttemptResult {
 }
 
 export async function loadAcademyCurriculum() {
-  return callAcademyService<{ lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[] }>("get_curriculum");
+  return callAcademyService<{ lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[]; progress: AcademyProgressSummary }>("get_curriculum");
 }
 
 export async function loadAcademyLesson(lessonCode: string) {
-  return callAcademyService<{ lesson: AcademyLesson; attempts: AcademyAttemptSummary[] }>("get_lesson", { lessonCode });
+  return callAcademyService<{ lesson: AcademyLesson; attempts: AcademyAttemptSummary[]; lessonAverage: number | null; attemptCount: number }>("get_lesson", { lessonCode });
 }
 
 export async function startAcademyAttempt(lessonCode: string, clientAttemptKey: string) {
