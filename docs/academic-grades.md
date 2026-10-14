@@ -106,8 +106,9 @@ Se una materia non ha voti registrati o rimangono lezioni obbligatorie incomplet
 
 Devono essere soddisfatte entrambe le condizioni:
 
-1. tutte le lezioni obbligatorie del grado sono state completate superando i test con almeno 60/100;
-2. la media complessiva della pagella è almeno **80/100**.
+1. tutte le lezioni obbligatorie previste dal grado e tutte le materie attive risultano completate;
+2. la media ponderata del grado è almeno **26/30**;
+3. l'esame finale del grado è superato con almeno **26/30**.
 
 Se tutte le lezioni sono completate ma la media ponderata o l'esame finale è inferiore a 26/30, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
 
