@@ -75,11 +75,16 @@ function normalizeProfileSettings(value: unknown): Record<string, unknown> | nul
   if (typeof raw.frame !== "string" || !frames.has(raw.frame)) return null;
   if (!Array.isArray(raw.badges) || raw.badges.length > 3
     || !raw.badges.every(item => typeof item === "string" && item.length > 0 && item.length <= 80)) return null;
-  const visibilityKeys = ["bio", "favoritePokemon", "motto", "activeTitle", "badges", "catalogStats", "communityStats", "matricola"];
+  const visibilityKeys = ["bio", "favoritePokemon", "motto", "activeTitle", "badges", "catalogStats", "communityStats", "academicGrade", "matricola"];
   if (!raw.visibility || typeof raw.visibility !== "object" || Array.isArray(raw.visibility)) return null;
   const visibilityRaw = raw.visibility as Record<string, unknown>;
   const visibility: Record<string, boolean> = {};
   for (const key of visibilityKeys) {
+    // Backward compatibility: older saved profiles did not have this visibility flag.
+    if (key === "academicGrade" && visibilityRaw[key] === undefined) {
+      visibility[key] = true;
+      continue;
+    }
     if (typeof visibilityRaw[key] !== "boolean") return null;
     visibility[key] = visibilityRaw[key] as boolean;
   }
@@ -189,13 +194,25 @@ Deno.serve(async request => {
       }
       const visibility = settings?.visibility as Record<string, boolean> | undefined ?? {
         bio: true, favoritePokemon: true, motto: true, activeTitle: true,
-        badges: true, catalogStats: true, communityStats: true, matricola: true,
+        badges: true, catalogStats: true, communityStats: true, academicGrade: true, matricola: true,
       };
       const progress = target.player_progress === null ? null : normalizePlayerProgress(target.player_progress);
       if (target.player_progress !== null && !progress) {
         return response(500, { error: "Le statistiche del profilo non sono disponibili." });
       }
       let communityStats: { discussions: number; replies: number } | undefined;
+      let academicGrade: number | undefined;
+      if (visibility.academicGrade) {
+        const { data: gradeAttempts, error: gradeAttemptsError } = await supabase.from("academy_attempts")
+          .select("grade_number")
+          .eq("identity_id", target.id)
+          .eq("attempt_kind", "grade_exam")
+          .eq("status", "submitted")
+          .eq("passed", true);
+        if (gradeAttemptsError) return response(500, { error: "Non è stato possibile caricare il grado di studi pubblico." });
+        const grades = (gradeAttempts ?? []).map(attempt => Number(attempt.grade_number ?? 0)).filter(grade => Number.isInteger(grade) && grade > 0);
+        if (grades.length) academicGrade = Math.max(...grades);
+      }
       if (visibility.communityStats) {
         const [threads, replies] = await Promise.all([
           supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", target.id),
@@ -227,6 +244,7 @@ Deno.serve(async request => {
         };
       }
       if (communityStats) profile.communityStats = communityStats;
+      if (academicGrade !== undefined) profile.academicGrade = academicGrade;
       return response(200, profile);
     }
 
