@@ -37,6 +37,7 @@ const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'machines-archive', name: 'Archivio MT e tecniche', description: 'Sblocca una raccolta dedicata alle macchine e alle tecniche.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'fossils-archive', name: 'Archivio fossili e reperti', description: 'Sblocca una raccolta dedicata a fossili e reperti.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca una raccolta dedicata agli strumenti tenuti.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
+  { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile di Pokémon, strumenti e materiali. Richiede tutti i 1.025 Pokémon catalogati e tutti i potenziamenti informativi acquistati.', cost: 10, currency: 'exam', category: 'super-aiuti', requires: ['scanner', 'scanner-upgrade-2', 'research', 'research-upgrade-2', 'research-upgrade-3'], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista Scanner, Scanner livello 2 e tutti i livelli di Ricerca', kind: 'archive' },
   { id: 'academy-theme', name: 'Tema Accademia', description: 'Sblocca un tema grafico alternativo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
   { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca un titolo personale da mostrare nel profilo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
   { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
@@ -396,7 +397,7 @@ export default function App() {
     });
     setSelectedCardId(null);
     setWrongTargetId(null);
-    setMessage(`Corretto! ${displayName(card.name)} · ${card.subcategoryName} · +1 Punto Poké.`);
+    setMessage('Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
   }
 
   function chooseAcademy(next: string) {
@@ -417,6 +418,11 @@ export default function App() {
   }
 
   function navTo(next: string) {
+    if (next === 'pokedex' && !(progress.inventory ?? []).includes('national-catalog')) {
+      setNotice('Archivio Nazionale bloccato: cataloga tutti i 1.025 Pokémon e acquista tutti i potenziamenti informativi usando i Punti Poké, poi sbloccalo con i Punti esame.');
+      setMobileMenu(false);
+      return;
+    }
     setView(next);
     setMobileMenu(false);
     setNotice('');
@@ -645,7 +651,7 @@ export default function App() {
             </section>
             <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
           </>}
-          {view === 'pokedex' && <Archive
+          {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
             items={itemCatalog}
             loadingSpecies={loading}
@@ -653,7 +659,7 @@ export default function App() {
             online={online}
             completedPokemon={progress.completedIds}
             completedEntries={progress.completedEntries ?? []}
-          />}
+          /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon, acquistare con i Punti Poké Scanner e tutti i livelli di Ricerca, quindi acquistare questo archivio con i Punti esame.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria punti</button></section>)}
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
             <section className="challenge-board game-board mixed-lesson-board">
