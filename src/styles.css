@@ -1405,3 +1405,36 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .shop-next-upgrade{padding:8px}
  .shop-requirements-waiting{max-width:125px;padding:7px;font-size:9px}
 }
+
+
+/* Desktop: 15 entities per page in a 5-column by 3-row grid. */
+@media (min-width: 651px) {
+  .game-layout .game-pokemon-zone .pokemon-cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(3, minmax(54px, 1fr));
+    align-content: stretch;
+    overflow: hidden;
+  }
+  .game-layout .game-pokemon-zone .mixed-card { min-height: 54px !important; }
+  .game-layout .game-pokemon-zone .mixed-card img { max-width: 58px !important; max-height: 48px !important; }
+  .misplaced-card-chip, .misplaced-slot-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    padding: 2px;
+    border: 1px solid #d94848;
+    border-radius: 6px;
+    background: #fff0f0;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+  .misplaced-card-chip img { display:block; width:32px; height:32px; object-fit:contain; }
+  .misplaced-slot-chip img { display:block; width:38px; height:38px; object-fit:contain; }
+  .category-target-wrong, .pokemon-number-wrong { border-color:#d94848 !important; background:#fff0f0 !important; }
+}
+@media (max-width: 650px) {
+  .misplaced-card-chip, .misplaced-slot-chip { display:inline-flex; align-items:center; justify-content:center; margin:3px; padding:2px; border:1px solid #d94848; border-radius:6px; background:#fff0f0; cursor:pointer; vertical-align:middle; }
+  .misplaced-card-chip img { width:30px; height:30px; object-fit:contain; }
+  .misplaced-slot-chip img { width:34px; height:34px; object-fit:contain; }
+}
