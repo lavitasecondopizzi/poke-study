@@ -618,30 +618,75 @@ export default function App() {
 
         <section className="content">
           {view === 'home' && <>
-            <div className="breadcrumb">Portale dello studente / <b>Pagina iniziale</b></div>
-            <section className="welcome-panel">
-              <div className="welcome-copy">
-                <div className="welcome-ribbon"><span>✦</span> BENVENUTO IN ACCADEMIA</div>
-                <h1>Il tuo archivio del mondo Pokémon comincia qui!</h1>
-                <p>Cataloga le specie del Archivio Nazionale, tieni traccia dei tuoi progressi e scopri nuove curiosità dal nostro archivio scientifico.</p>
-                <button className="enter-pokedex" onClick={() => navTo('game')}><FlaskConical size={18} /> INIZIA UNA LEZIONE <ChevronRight size={19} /></button>
-              </div>
-              <div className="welcome-art"><div className="art-sun" /><div className="art-book"><BookOpen size={68} strokeWidth={1.3}/></div><div className="art-caption">IL SAPERE È LA TUA<br/>PRIMA POKÉ BALL!</div></div>
-            </section>
-            <div className="currency-row">
-              <div className="currency-card poke-currency"><div className="currency-icon">₱</div><div><small>PORTAFOGLIO ALLIEVO</small><strong>{progress.points.toLocaleString('it-IT')} <span>Punti Poké</span></strong><p>Per strumenti e oggetti utili</p></div><div className="currency-gloss" /></div>
-              <div className="currency-card exam-currency"><div className="currency-icon">★</div><div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')} <span>Punti esame</span></strong><p>Per sbloccare e potenziare super-aiuti</p></div><div className="currency-gloss" /></div>
+            <div className="portal-dashboard">
+              {notice && <div className="notice-inline portal-notice" role="status">{notice}</div>}
+              <section className="portal-hero">
+                <div className="portal-hero-copy">
+                  <span className="portal-eyebrow"><GraduationCap size={14}/> AREA PERSONALE · ACCADEMIA POKÉMON</span>
+                  <h1>Benvenuto{student?.nickname ? `, ${student.nickname}` : ''}.</h1>
+                  <p>Il tuo percorso di ricerca è pronto. Classifica nuove carte, accumula Punti Poké e completa le prove regionali per ottenere Punti esame.</p>
+                  <div className="portal-hero-actions">
+                    <button className="portal-primary-action" onClick={() => navTo('game')}><FlaskConical size={17}/> Continua a giocare <ChevronRight size={17}/></button>
+                    <button className="portal-secondary-action" onClick={() => navTo('esami')}>Vai agli esami</button>
+                  </div>
+                </div>
+                <div className="portal-hero-progress" aria-label={`${progress.completedIds.length} Pokémon catalogati su ${NATIONAL_DEX_SIZE}`}>
+                  <div className="portal-progress-ring" style={{'--progress': `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%` } as React.CSSProperties}>
+                    <div><strong>{Math.round(progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%</strong><span>COMPLETATO</span></div>
+                  </div>
+                  <span className="portal-progress-caption">{progress.completedIds.length.toLocaleString('it-IT')} / {NATIONAL_DEX_SIZE.toLocaleString('it-IT')} Pokémon</span>
+                </div>
+                <div className="portal-hero-shine" aria-hidden="true"/>
+              </section>
+
+              <section className="portal-stat-grid" aria-label="Riepilogo progressi">
+                <article className="portal-stat-card portal-stat-points">
+                  <span className="portal-stat-icon">₱</span>
+                  <div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div>
+                  <button aria-label="Apri Cartoleria" onClick={() => navTo('shop')}><ChevronRight size={17}/></button>
+                </article>
+                <article className="portal-stat-card portal-stat-exams">
+                  <span className="portal-stat-icon">★</span>
+                  <div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div>
+                  <button aria-label="Apri gli esami" onClick={() => navTo('esami')}><ChevronRight size={17}/></button>
+                </article>
+                <article className="portal-stat-card portal-stat-catalog">
+                  <span className="portal-stat-icon"><BookOpen size={20}/></span>
+                  <div><small>CATALOGO NAZIONALE</small><strong>{progress.completedIds.length.toLocaleString('it-IT')}<i> / 1.025</i></strong><span>Specie catalogate</span></div>
+                  <button aria-label="Apri il registro personale" onClick={() => navTo('registro')}><ChevronRight size={17}/></button>
+                </article>
+              </section>
+
+              <section className="portal-shortcuts">
+                <div className="portal-section-heading"><div><span>ACCESSO RAPIDO</span><h2>Da dove vuoi iniziare?</h2></div><span className="portal-section-note">IL TUO DESK</span></div>
+                <div className="portal-shortcut-grid">
+                  <button className="portal-shortcut portal-shortcut-game" onClick={() => navTo('game')}>
+                    <span className="portal-shortcut-icon"><FlaskConical size={22}/></span><span className="portal-shortcut-copy"><strong>Gioco di classificazione</strong><small>Classifica le carte e guadagna Punti Poké.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                  <button className="portal-shortcut portal-shortcut-record" onClick={() => navTo('registro')}>
+                    <span className="portal-shortcut-icon"><Trophy size={22}/></span><span className="portal-shortcut-copy"><strong>Registro personale</strong><small>Controlla risultati e avanzamento.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                  <button className="portal-shortcut portal-shortcut-exams" onClick={() => navTo('esami')}>
+                    <span className="portal-shortcut-icon"><GraduationCap size={22}/></span><span className="portal-shortcut-copy"><strong>Esami regionali</strong><small>Completa una regione per ottenere Punti esame.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                  <button className="portal-shortcut portal-shortcut-shop" onClick={() => navTo('shop')}>
+                    <span className="portal-shortcut-icon"><ShoppingBag size={22}/></span><span className="portal-shortcut-copy"><strong>Cartoleria punti</strong><small>Acquista strumenti e potenziamenti.</small></span>{availableShopCount > 0 && <span className="portal-shortcut-badge">{availableShopCount}</span>}<ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                  <button className="portal-shortcut portal-shortcut-archive" onClick={() => navTo('pokedex')}>
+                    <span className="portal-shortcut-icon"><BookOpen size={22}/></span><span className="portal-shortcut-copy"><strong>Archivio Nazionale</strong><small>{inventory.includes('national-catalog') ? 'Consulta Pokémon, strumenti e materiali.' : 'Si sblocca dopo la catalogazione completa e gli acquisti richiesti.'}</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                  <button className="portal-shortcut portal-shortcut-profile" onClick={() => navTo('profilo')}>
+                    <span className="portal-shortcut-icon"><GraduationCap size={22}/></span><span className="portal-shortcut-copy"><strong>Profilo allievo</strong><small>Personalizza il tuo avatar e consulta la matricola.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
+                  </button>
+                </div>
+              </section>
+
+              <section className="portal-progress-panel">
+                <div className="portal-progress-panel-heading"><div><span>IL TUO PERCORSO</span><h2>Avanzamento Pokédex</h2></div><strong>{Math.round(progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%</strong></div>
+                <div className="portal-progress-track"><span style={{width: `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%`}}/></div>
+                <div className="portal-progress-panel-footer"><span>{progress.completedIds.length.toLocaleString('it-IT')} specie catalogate</span><span>{(NATIONAL_DEX_SIZE - Math.min(NATIONAL_DEX_SIZE, progress.completedIds.length)).toLocaleString('it-IT')} ancora da scoprire</span></div>
+              </section>
             </div>
-            <section className="portal-menu-panel">
-              <div className="portal-panel-heading"><div><span>AREA PERSONALE</span><h2>Che cosa vuoi fare oggi?</h2></div><span className="panel-badge">MENU ALLIEVO</span></div>
-              <button className="portal-menu-item" onClick={() => navTo('game')}><span className="menu-item-icon blue-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Gioco di classificazione</strong><small>Classifica le carte per sottocategoria e guadagna Punti Poké</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><BookOpen size={22}/></span><span className="menu-item-copy"><strong>Archivio Nazionale</strong><small>Consulta e cerca Pokémon e oggetti, senza avviare una lezione</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => navTo('pokedex')}><span className="menu-item-icon green-icon"><FlaskConical size={22}/></span><span className="menu-item-copy"><strong>Archivio scientifico</strong><small>Cerca una specie per nome o numero</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => navTo('forum')}><span className="menu-item-icon orange-icon"><CircleHelp size={22}/></span><span className="menu-item-copy"><strong>Forum studenti</strong><small>Avvisi, guide e comunicazioni dell'Accademia</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => navTo('shop')}><span className="menu-item-icon purple-icon"><ShoppingBag size={22}/></span><span className="menu-item-copy"><strong>Negozio strumenti</strong><small>Usa i tuoi punti per prepararti alle ricerche</small></span><ChevronRight className="menu-chevron"/></button>
-              <button className="portal-menu-item" onClick={() => navTo('classifica')}><span className="menu-item-icon orange-icon"><Trophy size={22}/></span><span className="menu-item-copy"><strong>Classifica globale</strong><small>Consulta il riepilogo locale; la graduatoria online arriverà con il backend</small></span><ChevronRight className="menu-chevron"/></button>
-            </section>
-            <section className="home-progress-panel"><div><div className="progress-medal">★</div><div><span className="section-label">IL TUO PERCORSO</span><h2>Registro personale</h2><p>Hai catalogato {progress.completedIds.length} specie su {NATIONAL_DEX_SIZE}.</p></div></div><button className="secondary-button" onClick={() => navTo('registro')}>Apri registro <ChevronRight size={15}/></button><div className="home-progress-track"><span style={{width: `${Math.min(100,progress.completedIds.length/NATIONAL_DEX_SIZE*100)}%`}}/></div></section>
           </>}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
@@ -749,11 +794,11 @@ export default function App() {
         </section>
       </main>
       <nav className="mobile-app-nav" aria-label="Navigazione principale">
-        <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
-        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio</span></button>
-        <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={20}/><span>Esami</span></button>
-        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><span className="mobile-shop-icon"><ShoppingBag size={20}/>{availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</span><span>Negozio</span></button>
-        <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo</span></button>
+        <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
+        <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={20}/><span>Gioca</span></button>
+        <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={20}/><span>Registro</span></button>
+        <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><GraduationCap size={20}/><span>Esami</span></button>
+        <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><span className="mobile-shop-icon"><ShoppingBag size={20}/>{availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</span><span>Negozio</span></button>
       </nav>
     </div>
   );
