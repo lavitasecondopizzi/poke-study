@@ -6,6 +6,9 @@ import {
 import type { CommunityIdentity, CommunityRankingEntry } from './community';
 import { listCommunityRanking } from './community';
 import type { SavedProgress } from './types';
+import { loadAcademyCurriculum } from './academy';
+import type { AcademyPointsSummary } from './academy';
+import './academy.css';
 
 type AcademyFilter = 'tutte' | 'arancia' | 'uva' | 'mirtillo';
 
@@ -137,6 +140,8 @@ export default function Leaderboard({
   const [academyFilter, setAcademyFilter] = useState<AcademyFilter>('tutte');
   const [query, setQuery] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [academicPoints, setAcademicPoints] = useState<AcademyPointsSummary | null>(null);
+  const [academicPointsError, setAcademicPointsError] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -160,6 +165,26 @@ export default function Leaderboard({
         setError(reason instanceof Error ? reason.message : 'Non è stato possibile caricare la classifica.');
       })
       .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [communityIdentity, communityConfigured, refreshKey]);
+
+  useEffect(() => {
+    let active = true;
+    if (!communityIdentity || !communityConfigured) {
+      setAcademicPoints(null);
+      setAcademicPointsError('');
+      return () => { active = false; };
+    }
+    loadAcademyCurriculum()
+      .then(data => {
+        if (active) {
+          setAcademicPoints(data.points);
+          setAcademicPointsError('');
+        }
+      })
+      .catch(reason => {
+        if (active) setAcademicPointsError(reason instanceof Error ? reason.message : 'Punteggio delle accademie non disponibile.');
+      });
     return () => { active = false; };
   }, [communityIdentity, communityConfigured, refreshKey]);
 
@@ -195,6 +220,29 @@ export default function Leaderboard({
           <small>ANNO ACCADEMICO 2026/27</small>
         </div>
       </header>
+
+      <section className="academy-content-card academy-campus-points leaderboard-campus-points">
+        <div className="academy-campus-points-heading">
+          <div><span className="academy-eyebrow">PUNTI ACCADEMICI</span><h2>Classifica delle accademie</h2></div>
+          {academicPoints && <div className="academy-student-points"><span>Il tuo saldo</span><strong>{academicPoints.studentPoints}</strong></div>}
+        </div>
+        <p>I punti ottenuti nelle prove contribuiscono al punteggio complessivo del campus.</p>
+        {!communityIdentity
+          ? <p className="leaderboard-campus-note">Collega il tuo profilo per visualizzare la classifica accademica.</p>
+          : academicPointsError
+            ? <p className="leaderboard-campus-note">{academicPointsError}</p>
+            : !academicPoints
+              ? <p className="leaderboard-campus-note">Caricamento della classifica accademica…</p>
+              : <ol className="academy-campus-ranking">
+                  {academicPoints.campusRanking.map((campus, index) => (
+                    <li key={campus.academy} className={academicPoints.studentAcademy === campus.academy ? 'is-own-campus' : ''}>
+                      <span className="academy-ranking-position">{index + 1}</span>
+                      <span className="academy-ranking-name">{campus.title}{academicPoints.studentAcademy === campus.academy && <small>Il tuo campus</small>}</span>
+                      <strong>{campus.points} pt</strong>
+                    </li>
+                  ))}
+                </ol>}
+      </section>
 
       {!communityIdentity ? (
         <LocalProgressPanel progress={progress} onConnect={onConnect} />
