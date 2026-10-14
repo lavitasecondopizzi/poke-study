@@ -18,6 +18,7 @@ interface LeaderboardProps {
   communityConfigured: boolean;
   progress: SavedProgress;
   onConnect: () => void;
+  onOpenPublicProfile: (identityId: string) => void;
 }
 
 const ACADEMIES: { value: AcademyFilter; label: string }[] = [
@@ -69,13 +70,13 @@ function AcademyBadge({ academy }: { academy: CommunityRankingEntry['academy'] }
   return <span className={`leaderboard-academy-badge academy-badge-${academy}`}>{academyLabel(academy)}</span>;
 }
 
-function PodiumCard({ entry, position, isCurrent }: { entry: CommunityRankingEntry; position: number; isCurrent: boolean }) {
+function PodiumCard({ entry, position, isCurrent, onOpenProfile }: { entry: CommunityRankingEntry; position: number; isCurrent: boolean; onOpenProfile: (identityId: string) => void }) {
   const Icon = position === 1 ? Crown : Medal;
   return (
     <article className={`leaderboard-podium-card leaderboard-podium-${position}${isCurrent ? ' is-current' : ''}`}>
       <div className="leaderboard-podium-position"><Icon size={17} aria-hidden="true" /><span>{rankLabel(position)} POSTO</span></div>
       <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} large />
-      <strong className="leaderboard-podium-name">{entry.nickname}</strong>
+      <button type="button" className="leaderboard-profile-link leaderboard-podium-name" onClick={() => onOpenProfile(entry.id)}>{entry.nickname}</button>
       <AcademyBadge academy={entry.academy} />
       <strong className="leaderboard-podium-score">{entry.points.toLocaleString('it-IT')} <small>PP</small></strong>
       {isCurrent && <span className="leaderboard-you-tag">LA TUA POSIZIONE</span>}
@@ -83,7 +84,7 @@ function PodiumCard({ entry, position, isCurrent }: { entry: CommunityRankingEnt
   );
 }
 
-function RankingTable({ entries, currentIdentityId }: { entries: CommunityRankingEntry[]; currentIdentityId: string }) {
+function RankingTable({ entries, currentIdentityId, onOpenProfile }: { entries: CommunityRankingEntry[]; currentIdentityId: string; onOpenProfile: (identityId: string) => void }) {
   return (
     <div className="leaderboard-table-wrap">
       <table className="leaderboard-table">
@@ -94,7 +95,7 @@ function RankingTable({ entries, currentIdentityId }: { entries: CommunityRankin
             <td>
               <div className="leaderboard-player-cell">
                 <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} />
-                <strong>{entry.nickname}</strong>
+                <button type="button" className="leaderboard-profile-link" onClick={() => onOpenProfile(entry.id)}>{entry.nickname}</button>
                 {entry.id === currentIdentityId && <span className="leaderboard-you-tag">TU</span>}
               </div>
             </td>
@@ -128,7 +129,7 @@ function LocalProgressPanel({ progress, onConnect }: { progress: SavedProgress; 
 }
 
 export default function Leaderboard({
-  academy, academyName: currentAcademyName, communityIdentity, communityConfigured, progress, onConnect,
+  academy, academyName: currentAcademyName, communityIdentity, communityConfigured, progress, onConnect, onOpenPublicProfile,
 }: LeaderboardProps) {
   const [entries, setEntries] = useState<CommunityRankingEntry[]>([]);
   const [totalPlayers, setTotalPlayers] = useState(0);
@@ -279,8 +280,8 @@ export default function Leaderboard({
             {loading && <div className="leaderboard-message" role="status"><RefreshCw size={20} className="leaderboard-spinning" aria-hidden="true" /><span>Caricamento della graduatoria online…</span></div>}
             {error && <div className="leaderboard-message leaderboard-message-error" role="alert"><AlertCircle size={20} aria-hidden="true" /><div><strong>Classifica non disponibile</strong><p>{error}</p><button type="button" onClick={() => setRefreshKey(value => value + 1)}>Riprova</button></div></div>}
 
-            {!loading && !error && podium.length > 0 && <div className="leaderboard-podium" aria-label="Podio dei primi classificati">{podium.map((entry, index) => <PodiumCard key={entry.id} entry={entry} position={index + 1} isCurrent={entry.id === communityIdentity.id} />)}</div>}
-            {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} />}
+            {!loading && !error && podium.length > 0 && <div className="leaderboard-podium" aria-label="Podio dei primi classificati">{podium.map((entry, index) => <PodiumCard key={entry.id} entry={entry} position={index + 1} isCurrent={entry.id === communityIdentity.id} onOpenProfile={onOpenPublicProfile} />)}</div>}
+            {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} onOpenProfile={onOpenPublicProfile} />}
             {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Prova un’altra ricerca.</p></div>}
 
           </section>
