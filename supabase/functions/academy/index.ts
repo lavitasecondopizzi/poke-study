@@ -103,7 +103,7 @@ Deno.serve(async request => {
     const action = input.action;
 
     if (action === "get_curriculum") {
-      const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }] = await Promise.all([
+      const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }, { data: progress, error: progressError }] = await Promise.all([
         supabase.from("academy_lessons")
           .select("lesson_code,grade_number,subject_code,order_index,title,summary,objectives,version")
           .eq("is_published", true)
@@ -117,9 +117,10 @@ Deno.serve(async request => {
           .eq("status", "submitted")
           .order("created_at", { ascending: false })
           .limit(500),
+        supabase.rpc("get_academy_progress", { p_identity_id: identity.id }),
       ]);
 
-      if (lessonsError || subjectsError || attemptsError) {
+      if (lessonsError || subjectsError || attemptsError || progressError) {
         return response(500, { error: "Impossibile caricare il programma o lo storico accademico." });
       }
       const subjectMap = new Map((subjects ?? []).map(subject => [subject.subject_code, subject]));
@@ -127,7 +128,7 @@ Deno.serve(async request => {
         ...lesson,
         subject: subjectMap.get(lesson.subject_code) ?? null,
       }));
-      return response(200, { lessons: enrichedLessons, attempts: attempts ?? [] });
+      return response(200, { lessons: enrichedLessons, attempts: attempts ?? [], progress: progress ?? null });
     }
 
     if (action === "get_lesson") {
@@ -139,16 +140,27 @@ Deno.serve(async request => {
         .maybeSingle();
       if (lessonError || !lesson) return response(404, { error: "Lezione non trovata o non pubblicata." });
 
-      const { data: attempts, error: attemptsError } = await supabase.from("academy_attempts")
-        .select("id,lesson_code,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
-        .eq("identity_id", identity.id)
-        .eq("attempt_kind", "lesson")
-        .eq("lesson_code", lessonCode)
-        .eq("status", "submitted")
-        .order("created_at", { ascending: false })
-        .limit(100);
-      if (attemptsError) return response(500, { error: "Impossibile caricare lo storico della lezione." });
-      return response(200, { lesson, attempts: attempts ?? [] });
+      const [{ data: attempts, error: attemptsError }, { data: progress, error: progressError }] = await Promise.all([
+        supabase.from("academy_attempts")
+          .select("id,lesson_code,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
+          .eq("identity_id", identity.id)
+          .eq("attempt_kind", "lesson")
+          .eq("lesson_code", lessonCode)
+          .eq("status", "submitted")
+          .order("created_at", { ascending: false })
+          .limit(100),
+        supabase.rpc("get_academy_progress", { p_identity_id: identity.id }),
+      ]);
+      if (attemptsError || progressError) return response(500, { error: "Impossibile caricare lo storico della lezione." });
+      const progressRecord = isRecord(progress) ? progress : {};
+      const averages = isRecord(progressRecord.lessonAverages) ? progressRecord.lessonAverages : {};
+      const lessonSummary = isRecord(averages[lessonCode]) ? averages[lessonCode] : {};
+      return response(200, {
+        lesson,
+        attempts: attempts ?? [],
+        lessonAverage: typeof lessonSummary.average === "number" ? lessonSummary.average : null,
+        attemptCount: typeof lessonSummary.attemptCount === "number" ? lessonSummary.attemptCount : 0,
+      });
     }
 
     if (action === "start_attempt") {
