@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Award, BookOpen, CheckCircle2, Crown, MessageSquare, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { Award, BookOpen, CheckCircle2, Crown, GraduationCap, MessageSquare, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { getPublicStudentProfile } from './community';
 import type { PublicStudentProfile } from './community';
 import type { PokemonSpecies } from './types';
@@ -75,6 +75,7 @@ export default function PublicStudentProfile({ identityId, species, onClose }: P
               <img className="public-student-profile-avatar" src={avatarUrl(profile.avatarId)} alt={'Avatar dello studente ' + profile.matricola}/>
               <div><span className="public-student-profile-academy">{academyName(profile.academy)}</span><h3>{profile.matricola}</h3>{profile.activeTitle && <span className="student-profile-title-pill"><Crown size={13}/>{titleLabel(profile.activeTitle)}</span>}</div>
             </div>
+            {typeof profile.academicGrade === 'number' && profile.academicGrade > 0 && <section className="public-student-profile-section"><h4><GraduationCap size={15}/> Grado di studi</h4><p>Grado {profile.academicGrade}</p></section>}
             {profile.bio && <section className="public-student-profile-section"><h4><ShieldCheck size={15}/> Presentazione</h4><p>{profile.bio}</p></section>}
             {favorite && <section className="public-student-profile-section"><h4><Sparkles size={15}/> Pokémon preferito</h4><p>#{String(favorite.id).padStart(4,'0')} · {favorite.name.split('-').map(part => part.charAt(0).toLocaleUpperCase('it-IT') + part.slice(1)).join(' ')}</p></section>}
             {profile.motto && <blockquote className="public-student-profile-motto">“{profile.motto}”</blockquote>}
