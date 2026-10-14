@@ -212,7 +212,21 @@ Deno.serve(async request => {
         .maybeSingle();
       const configuredCount = Number(setting?.setting_value ?? 5);
       const questionCount = Number.isSafeInteger(configuredCount) && configuredCount > 0 ? configuredCount : 5;
-      const selected = shuffle(questionRows).slice(0, Math.min(questionCount, questionRows.length));
+      const targetCount = Math.min(questionCount, questionRows.length);
+      const difficultyPools = ["facile", "media", "difficile"].map(difficulty =>
+        shuffle(questionRows.filter(question => question.difficulty === difficulty))
+      );
+      const selected: typeof questionRows = [];
+      while (selected.length < targetCount) {
+        let added = false;
+        for (const pool of difficultyPools) {
+          if (pool.length && selected.length < targetCount) {
+            selected.push(pool.shift()!);
+            added = true;
+          }
+        }
+        if (!added) break;
+      }
       const snapshot: QuestionSnapshot[] = selected.map(question => ({
         questionId: question.question_id,
         version: question.version,
@@ -297,7 +311,11 @@ Deno.serve(async request => {
       const answerMap = new Map(answers.map(answer => [answer!.questionId, answer!.answer]));
       const review = snapshot.map(question => ({
         questionId: question.questionId,
+        version: question.version,
+        type: question.type,
         prompt: question.prompt,
+        options: question.options,
+        difficulty: question.difficulty,
         selectedAnswer: answerMap.get(question.questionId) ?? null,
         correctAnswer: question.correctAnswer,
         isCorrect: answerMap.get(question.questionId) === question.correctAnswer,
