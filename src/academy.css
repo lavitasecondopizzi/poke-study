@@ -309,3 +309,123 @@
 .academy-next-grade-card p {
   max-width: 560px;
 }
+
+
+/* Desktop density: compact subject rows and lesson results */
+@media (min-width: 721px) {
+  .academy-subject-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+    align-items: start;
+    gap: 10px;
+  }
+
+  .academy-subject-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "top top"
+      "title stats"
+      "description stats"
+      "bottom bottom";
+    align-content: start;
+    align-items: center;
+    gap: 6px 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+
+  .academy-subject-card-top {
+    grid-area: top;
+    justify-content: flex-start;
+    gap: 9px;
+  }
+
+  .academy-subject-card-top > svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .academy-subject-card h2 {
+    grid-area: title;
+    font-size: 17px;
+    line-height: 1.25;
+  }
+
+  .academy-subject-card p {
+    grid-area: description;
+    align-self: start;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .academy-subject-card-stats {
+    grid-area: stats;
+    align-self: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .academy-subject-card-stats span {
+    padding: 5px 7px;
+    white-space: nowrap;
+  }
+
+  .academy-subject-card-bottom {
+    grid-area: bottom;
+    align-items: center;
+    margin-top: 3px;
+    padding-top: 8px;
+  }
+
+  .academy-subject-card-bottom > span {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .academy-lesson-card {
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: 11px;
+    padding: 11px 14px;
+    border-radius: 11px;
+  }
+
+  .academy-lesson-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .academy-lesson-copy h3 {
+    margin: 2px 0;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .academy-lesson-copy p {
+    margin: 0 0 4px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .academy-lesson-copy small {
+    font-size: 9px;
+  }
+
+  .academy-lesson-result {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .academy-lesson-result strong {
+    min-width: 42px;
+    text-align: right;
+    font-size: 14px;
+  }
+
+  .academy-lesson-result button {
+    padding: 8px 10px;
+  }
+}
