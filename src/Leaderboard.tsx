@@ -8,7 +8,6 @@ import { listCommunityRanking } from './community';
 import type { SavedProgress } from './types';
 import { loadAcademyCurriculum } from './academy';
 import type { AcademyPointsSummary } from './academy';
-import './academy.css';
 
 type AcademyFilter = 'tutte' | 'arancia' | 'uva' | 'mirtillo';
 
@@ -202,13 +201,13 @@ export default function Leaderboard({
 
   return (
     <div className={`leaderboard-page academy-theme-${academy}`}>
-      <div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div>
+      <div className="breadcrumb">Home / Comunità / <b>Classifica</b></div>
 
       <header className="leaderboard-hero">
         <div className="leaderboard-hero-copy">
-          <span className="leaderboard-eyebrow"><Trophy size={14} aria-hidden="true" /> PORTALE UFFICIALE · CLASSIFICHE</span>
-          <h1>Classifica globale</h1>
-          <p>I progressi degli allievi, in un’unica classifica.</p>
+          <span className="leaderboard-eyebrow"><Trophy size={14} aria-hidden="true" /> AREA COMPETITIVA</span>
+          <h1>Classifica</h1>
+          <p>Confronta i progressi degli allievi e il punteggio accademico dei campus.</p>
           <div className="leaderboard-hero-tags">
             <span><ShieldCheck size={14} aria-hidden="true" /> Identità verificate</span>
             <span><Users size={14} aria-hidden="true" /> Graduatoria online</span>
@@ -221,27 +220,33 @@ export default function Leaderboard({
         </div>
       </header>
 
-      <section className="academy-content-card academy-campus-points leaderboard-campus-points">
-        <div className="academy-campus-points-heading">
-          <div><span className="academy-eyebrow">PUNTI ACCADEMICI</span><h2>Classifica delle accademie</h2></div>
-          {academicPoints && <div className="academy-student-points"><span>Il tuo saldo</span><strong>{academicPoints.studentPoints}</strong></div>}
+      <section className="leaderboard-academy-ranking" aria-labelledby="leaderboard-academy-title">
+        <div className="leaderboard-academy-ranking-heading">
+          <div>
+            <span className="leaderboard-section-label">PUNTEGGIO ACCADEMICO</span>
+            <h2 id="leaderboard-academy-title">Classifica dei campus</h2>
+            <p>I punti assegnati alle prove degli studenti contribuiscono al totale della propria accademia.</p>
+          </div>
+          {academicPoints && <div className="leaderboard-academy-balance"><span>I TUOI PUNTI</span><strong>{academicPoints.studentPoints.toLocaleString('it-IT')}</strong></div>}
         </div>
-        <p>I punti ottenuti nelle prove contribuiscono al punteggio complessivo del campus.</p>
         {!communityIdentity
-          ? <p className="leaderboard-campus-note">Collega il tuo profilo per visualizzare la classifica accademica.</p>
-          : academicPointsError
-            ? <p className="leaderboard-campus-note">{academicPointsError}</p>
-            : !academicPoints
-              ? <p className="leaderboard-campus-note">Caricamento della classifica accademica…</p>
-              : <ol className="academy-campus-ranking">
-                  {academicPoints.campusRanking.map((campus, index) => (
-                    <li key={campus.academy} className={academicPoints.studentAcademy === campus.academy ? 'is-own-campus' : ''}>
-                      <span className="academy-ranking-position">{index + 1}</span>
-                      <span className="academy-ranking-name">{campus.title}{academicPoints.studentAcademy === campus.academy && <small>Il tuo campus</small>}</span>
-                      <strong>{campus.points} pt</strong>
-                    </li>
-                  ))}
-                </ol>}
+          ? <div className="leaderboard-academy-state"><GraduationCap size={19} aria-hidden="true" /><span>Collega il profilo online per visualizzare la graduatoria dei campus.</span></div>
+          : !communityConfigured
+            ? <div className="leaderboard-academy-state"><WifiOff size={19} aria-hidden="true" /><span>Il servizio accademico online non è configurato.</span></div>
+            : academicPointsError
+              ? <div className="leaderboard-academy-state leaderboard-academy-state-error"><AlertCircle size={19} aria-hidden="true" /><span>{academicPointsError}</span></div>
+              : !academicPoints
+                ? <div className="leaderboard-academy-state" role="status"><RefreshCw size={18} className="leaderboard-spinning" aria-hidden="true" /><span>Caricamento della graduatoria dei campus…</span></div>
+                : <ol className="leaderboard-academy-list">
+                    {academicPoints.campusRanking.map((campus, index) => (
+                      <li key={campus.academy} className={academicPoints.studentAcademy === campus.academy ? 'is-own-campus' : ''}>
+                        <span className="leaderboard-academy-rank">{index + 1}</span>
+                        <img src={crestUrl(campus.academy)} alt="" loading="lazy" />
+                        <span className="leaderboard-academy-name">{campus.title}{academicPoints.studentAcademy === campus.academy && <small>IL TUO CAMPUS</small>}</span>
+                        <strong>{campus.points.toLocaleString('it-IT')} <small>PA</small></strong>
+                      </li>
+                    ))}
+                  </ol>}
       </section>
 
       {!communityIdentity ? (
@@ -260,17 +265,17 @@ export default function Leaderboard({
             <article className="leaderboard-stat-card"><span><GraduationCap size={15} aria-hidden="true" /> PUNTI ESAME</span><strong>{currentEntry?.examPoints.toLocaleString('it-IT') ?? progress.examPoints.toLocaleString('it-IT')}</strong><small>Ricompense didattiche</small></article>
           </section>
 
-          <section className="leaderboard-content-panel">
+          <section className="leaderboard-content-panel" aria-labelledby="leaderboard-students-title">
             <div className="leaderboard-section-heading">
-              <div><span className="leaderboard-section-label">GRADUATORIA UFFICIALE</span><h2>Allievi in classifica</h2></div>
+              <div><span className="leaderboard-section-label">CLASSIFICA GLOBALE</span><h2 id="leaderboard-students-title">Graduatoria degli allievi</h2><p>Ordina e confronta i risultati della community.</p></div>
               <button type="button" className="leaderboard-refresh-button" onClick={() => setRefreshKey(value => value + 1)} disabled={loading} aria-label="Aggiorna classifica">
                 <RefreshCw size={15} className={loading ? 'leaderboard-spinning' : ''} aria-hidden="true" /> <span>Aggiorna</span>
               </button>
             </div>
 
-            <div className="leaderboard-filters">
+            <div className="leaderboard-filters" aria-label="Filtri della classifica">
               <label className="leaderboard-search"><Search size={16} aria-hidden="true" /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca nickname…" aria-label="Cerca nickname" /></label>
-              <label className="leaderboard-academy-filter"><span>Accademia</span><select value={academyFilter} onChange={event => setAcademyFilter(event.target.value as AcademyFilter)}>{ACADEMIES.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+              <label className="leaderboard-academy-filter"><span>Filtra per campus</span><select value={academyFilter} onChange={event => setAcademyFilter(event.target.value as AcademyFilter)}>{ACADEMIES.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
             </div>
 
             {loading && <div className="leaderboard-message" role="status"><RefreshCw size={20} className="leaderboard-spinning" aria-hidden="true" /><span>Caricamento della graduatoria online…</span></div>}
@@ -280,7 +285,6 @@ export default function Leaderboard({
             {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} />}
             {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Prova un’altra ricerca.</p></div>}
 
-            
           </section>
 
           <section className="leaderboard-total-progress"><div><strong>{completedPokemonTotal.toLocaleString('it-IT')}</strong><span>Pokémon catalogati complessivamente</span></div><span className="leaderboard-total-progress-mark">POKÉDEX NAZIONALE · 1025</span></section>
