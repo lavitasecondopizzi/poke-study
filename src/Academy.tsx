@@ -265,7 +265,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setReviewingHistory(false);
     setAnswers({});
     try {
-      const data = await startAcademySubjectExam(subjectCode, makeAttemptKey());
+      const data = await startAcademySubjectExam(subjectCode, makeAttemptKey(), activeGradeNumber);
       setSelectedSubjectCode(subjectCode);
       setSelectedCode("__subject_exam__");
       setAttemptKind("subject_exam");
