@@ -9,6 +9,7 @@ const corsHeaders = {
 
 type QuestionSnapshot = {
   questionId: string;
+  lessonCode?: string;
   version: number;
   type: "multiple_choice" | "true_false";
   prompt: string;
@@ -111,7 +112,7 @@ Deno.serve(async request => {
           .order("order_index", { ascending: true }),
         supabase.from("academy_subjects").select("subject_code,title,description"),
         supabase.from("academy_attempts")
-          .select("id,lesson_code,status,score,passed,correct_count,question_count,created_at,submitted_at")
+          .select("id,lesson_code,grade_number,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
           .eq("identity_id", identity.id)
           .eq("status", "submitted")
           .order("created_at", { ascending: false })
@@ -139,8 +140,9 @@ Deno.serve(async request => {
       if (lessonError || !lesson) return response(404, { error: "Lezione non trovata o non pubblicata." });
 
       const { data: attempts, error: attemptsError } = await supabase.from("academy_attempts")
-        .select("id,score,passed,correct_count,question_count,created_at,submitted_at")
+        .select("id,lesson_code,attempt_kind,score,passed,correct_count,question_count,created_at,submitted_at")
         .eq("identity_id", identity.id)
+        .eq("attempt_kind", "lesson")
         .eq("lesson_code", lessonCode)
         .eq("status", "submitted")
         .order("created_at", { ascending: false })
@@ -244,6 +246,8 @@ Deno.serve(async request => {
         .insert({
           identity_id: identity.id,
           lesson_code: lessonCode,
+          grade_number: lesson.grade_number,
+          attempt_kind: "lesson",
           client_attempt_key: clientAttemptKey,
           question_snapshot: snapshot,
           question_count: snapshot.length,
@@ -262,6 +266,127 @@ Deno.serve(async request => {
           return response(200, { attemptId: raced.id, questions: racedSnapshot.map(publicQuestion), questionCount: racedSnapshot.length });
         }
         return response(500, { error: "Non è stato possibile creare il tentativo." });
+      }
+
+      return response(201, {
+        attemptId: created.id,
+        questions: snapshot.map(publicQuestion),
+        questionCount: snapshot.length,
+      });
+    }
+
+
+    if (action === "start_grade_exam") {
+      const clientAttemptKey = typeof input.clientAttemptKey === "string" ? input.clientAttemptKey : "";
+      if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
+        return response(400, { error: "Chiave del tentativo non valida." });
+      }
+
+      const { data: existing } = await supabase.from("academy_attempts")
+        .select("id,status,question_snapshot")
+        .eq("identity_id", identity.id)
+        .eq("client_attempt_key", clientAttemptKey)
+        .maybeSingle();
+      if (existing) {
+        if (existing.status !== "started") return response(409, { error: "Questo tentativo è già stato consegnato." });
+        const snapshot = existing.question_snapshot as QuestionSnapshot[];
+        return response(200, { attemptId: existing.id, questions: snapshot.map(publicQuestion), questionCount: snapshot.length });
+      }
+
+      const { data: lessons, error: lessonsError } = await supabase.from("academy_lessons")
+        .select("lesson_code,order_index")
+        .eq("grade_number", 1)
+        .eq("subject_code", "pokemon-sciences")
+        .eq("is_published", true)
+        .order("order_index", { ascending: true });
+      if (lessonsError || !lessons?.length) return response(409, { error: "Il programma del grado non è disponibile." });
+
+      for (const lesson of lessons) {
+        const { data: history, error: historyError } = await supabase.from("academy_attempts")
+          .select("score")
+          .eq("identity_id", identity.id)
+          .eq("attempt_kind", "lesson")
+          .eq("lesson_code", lesson.lesson_code)
+          .eq("status", "submitted");
+        if (historyError) return response(500, { error: "Impossibile verificare i prerequisiti dell'esame." });
+        if (!history?.length || history.reduce((sum, item) => sum + Number(item.score ?? 0), 0) / history.length < 18) {
+          return response(403, { error: "Per accedere all'esame finale devi superare tutte le lezioni del grado con una media di almeno 18/30." });
+        }
+      }
+
+      const lessonCodes = lessons.map(lesson => lesson.lesson_code);
+      const { data: questionRows, error: questionsError } = await supabase.from("academy_questions")
+        .select("question_id,lesson_code,question_type,prompt,options,correct_answer,explanation,source_title,source_url,difficulty,version")
+        .in("lesson_code", lessonCodes)
+        .eq("is_active", true);
+      if (questionsError) return response(500, { error: "Impossibile caricare le domande dell'esame." });
+
+      const { data: setting } = await supabase.from("academy_settings")
+        .select("setting_value")
+        .eq("setting_key", "questions_per_grade_exam")
+        .maybeSingle();
+      const configuredCount = Number(setting?.setting_value ?? 20);
+      const questionCount = Number.isSafeInteger(configuredCount) && configuredCount >= 20 && configuredCount <= 30
+        ? configuredCount
+        : 20;
+      if (!questionRows || questionRows.length < questionCount) {
+        return response(409, { error: "L'archivio non contiene ancora abbastanza domande uniche per l'esame finale." });
+      }
+
+      const targetCount = questionCount;
+      const difficultyPools = ["facile", "media", "difficile"].map(difficulty =>
+        shuffle(questionRows.filter(question => question.difficulty === difficulty))
+      );
+      const selected: typeof questionRows = [];
+      while (selected.length < targetCount) {
+        let added = false;
+        for (const pool of difficultyPools) {
+          if (pool.length && selected.length < targetCount) {
+            selected.push(pool.shift()!);
+            added = true;
+          }
+        }
+        if (!added) break;
+      }
+
+      const snapshot: QuestionSnapshot[] = selected.map(question => ({
+        questionId: question.question_id,
+        lessonCode: question.lesson_code,
+        version: question.version,
+        type: question.question_type,
+        prompt: question.prompt,
+        options: question.options,
+        correctAnswer: question.correct_answer,
+        explanation: question.explanation,
+        sourceTitle: question.source_title,
+        sourceUrl: question.source_url,
+        difficulty: question.difficulty,
+      }));
+
+      const { data: created, error: createError } = await supabase.from("academy_attempts")
+        .insert({
+          identity_id: identity.id,
+          lesson_code: null,
+          grade_number: 1,
+          attempt_kind: "grade_exam",
+          client_attempt_key: clientAttemptKey,
+          question_snapshot: snapshot,
+          question_count: snapshot.length,
+        })
+        .select("id")
+        .single();
+
+      if (createError || !created) {
+        const { data: raced } = await supabase.from("academy_attempts")
+          .select("id,status,question_snapshot")
+          .eq("identity_id", identity.id)
+          .eq("client_attempt_key", clientAttemptKey)
+          .maybeSingle();
+        if (raced?.status === "started") {
+          const racedSnapshot = raced.question_snapshot as QuestionSnapshot[];
+          return response(200, { attemptId: raced.id, questions: racedSnapshot.map(publicQuestion), questionCount: racedSnapshot.length });
+        }
+        return response(500, { error: "Non è stato possibile creare l'esame finale." });
       }
 
       return response(201, {
@@ -311,6 +436,7 @@ Deno.serve(async request => {
       const answerMap = new Map(answers.map(answer => [answer!.questionId, answer!.answer]));
       const review = snapshot.map(question => ({
         questionId: question.questionId,
+        lessonCode: question.lessonCode,
         version: question.version,
         type: question.type,
         prompt: question.prompt,
