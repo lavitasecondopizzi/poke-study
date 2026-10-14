@@ -13,6 +13,18 @@ export interface AcademyLesson {
   subject?: { subject_code: string; title: string; description: string } | null;
 }
 
+export interface AcademyCampusRankingEntry {
+  academy: "arancia" | "uva" | "mirtillo";
+  title: string;
+  points: number;
+}
+
+export interface AcademyPointsSummary {
+  studentPoints: number;
+  studentAcademy: "arancia" | "uva" | "mirtillo";
+  campusRanking: AcademyCampusRankingEntry[];
+}
+
 export interface AcademyProgressSummary {
   lessonAverages: Record<string, { average: number; attemptCount: number }>;
   gradeAverage: number | null;
@@ -26,7 +38,8 @@ export interface AcademyProgressSummary {
 export interface AcademyAttemptSummary {
   id: string;
   lesson_code: string | null;
-  attempt_kind: "lesson" | "grade_exam";
+  attempt_kind: "lesson" | "subject_exam" | "grade_exam";
+  subject_code?: string | null;
   grade_number?: number;
   status: "started" | "submitted";
   score: number | null;
@@ -67,13 +80,17 @@ export interface AcademyAttemptResult {
   gradingRuleVersion?: string;
   gradeMax?: number;
   passThreshold?: number;
-  attemptKind?: "lesson" | "grade_exam";
+  attemptKind?: "lesson" | "subject_exam" | "grade_exam";
   lessonCode?: string | null;
+  subjectCode?: string | null;
+  pointsAwarded?: number;
+  academicPoints?: number;
+  campusRanking?: AcademyCampusRankingEntry[];
   review: AcademyQuestionReview[];
 }
 
 export async function loadAcademyCurriculum() {
-  return callAcademyService<{ lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[]; progress: AcademyProgressSummary }>("get_curriculum");
+  return callAcademyService<{ lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[]; progress: AcademyProgressSummary; points: AcademyPointsSummary }>("get_curriculum");
 }
 
 export async function loadAcademyLesson(lessonCode: string) {
@@ -88,6 +105,13 @@ export async function startAcademyAttempt(lessonCode: string, clientAttemptKey: 
   return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
     "start_attempt",
     { lessonCode, clientAttemptKey },
+  );
+}
+
+export async function startAcademySubjectExam(subjectCode: string, clientAttemptKey: string) {
+  return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
+    "start_subject_exam",
+    { subjectCode, clientAttemptKey },
   );
 }
 
