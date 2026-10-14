@@ -61,7 +61,7 @@ export default function PersonalRegister({ progress, species, items, loading, on
   return <>
     <div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div>
     <header className="pr-hero">
-      <div><span className="eyebrow">SEGRETERIA DIDATTICA · SCHEDA STUDENTE</span><h1>Registro personale</h1><p>Risultati, classificazioni, obiettivi e attività raccolti in un unico quadro.</p>
+      <div><span className="eyebrow">SEGRETERIA DIDATTICA · SCHEDA STUDENTE</span><h1>Registro personale</h1><p>Progressi e traguardi.</p>
         <div className="pr-total"><strong>{Math.round(stats.percent)}%</strong><span>Pokédex nazionale completato</span></div><Bar value={stats.percent}/><small>{stats.pokemon.toLocaleString('it-IT')} / {DEX_SIZE.toLocaleString('it-IT')} specie</small>
       </div><div className="pr-seal" aria-hidden="true"><Trophy size={32}/><span>REGISTRO</span><b>UFFICIALE</b></div>
     </header>
@@ -72,24 +72,24 @@ export default function PersonalRegister({ progress, species, items, loading, on
       <article className="pr-errors"><i className="pr-icon"><AlertTriangle size={20}/></i><div><small>ALLENAMENTO</small><strong>{(progress.errors ?? 0).toLocaleString('it-IT')}</strong><span>Errori registrati</span></div></article>
     </section>
     <section className="pr-section">
-      <div className="pr-heading"><div><span className="eyebrow">PANORAMICA</span><h2>Avanzamento per regione</h2><p>Completare tutte le specie di una regione assegna automaticamente un Punto esame.</p></div><b>{stats.regions.filter(r=>r.complete).length} / {REGIONS.length} completate</b></div>
+      <div className="pr-heading"><div><span className="eyebrow">PANORAMICA</span><h2>Avanzamento per regione</h2></div><b>{stats.regions.filter(r=>r.complete).length} / {REGIONS.length} completate</b></div>
       <div className="pr-regions">{stats.regions.map(r=><article className={r.complete?'is-done':''} key={r.name}><div className="pr-region-head"><i>{r.complete?<CheckCircle2 size={17}/>:r.name.slice(0,2).toUpperCase()}</i><div><strong>{r.name}</strong><small>{r.done} / {r.total} specie</small></div><b>{Math.round(r.percent)}%</b></div><Bar value={r.percent}/><small className="pr-region-note">{r.complete?'Punto esame regionale ottenuto':`Ancora ${r.total-r.done} da catalogare`}</small></article>)}</div>
     </section>
     <section className="pr-section">
-      <div className="pr-heading"><div><span className="eyebrow">CLASSIFICAZIONE</span><h2>Macrocategorie e sottocategorie</h2><p>Ogni entità completata viene conteggiata una sola volta; i progressi sono conservati nel salvataggio.</p></div><b>{stats.macros.filter(m=>m.total>0&&m.done===m.total).length} / {stats.macros.length} complete</b></div>
+      <div className="pr-heading"><div><span className="eyebrow">CLASSIFICAZIONE</span><h2>Macrocategorie e sottocategorie</h2></div><b>{stats.macros.filter(m=>m.total>0&&m.done===m.total).length} / {stats.macros.length} complete</b></div>
       {loading?<div className="pr-empty"><span className="pokeball-loader"/><p>Caricamento dei dati del registro…</p></div>:stats.macros.map(m=><details className="pr-macro" key={m.id}>
         <summary><i>{m.id==='pokemon'?<Sparkles size={19}/>:m.id==='special'?<Award size={19}/>:<BookOpen size={19}/>}</i><div><strong>{m.name}</strong><small>{m.done.toLocaleString('it-IT')} / {m.total.toLocaleString('it-IT')} classificate</small><Bar value={m.percent}/></div><b>{Math.round(m.percent)}%</b><span className="pr-chevron">⌄</span></summary>
         <div className="pr-subs">{m.subs.map(s=><div key={s.name}><span>{s.name}</span><small>{s.done} / {s.total}</small><Bar value={s.total?s.done/s.total*100:0}/></div>)}{!m.total&&<p>Nessuna entità disponibile per questa categoria.</p>}</div>
       </details>)}
     </section>
     <section className="pr-section">
-      <div className="pr-heading"><div><span className="eyebrow">OBIETTIVI</span><h2>Medaglie e traguardi</h2><p>Le medaglie si aggiornano automaticamente in base ai progressi registrati.</p></div><b>{earned} ottenute</b></div>
+      <div className="pr-heading"><div><span className="eyebrow">OBIETTIVI</span><h2>Medaglie e traguardi</h2></div><b>{earned} ottenute</b></div>
       <div className="pr-medals">{medals.map(m=><article className={m.earned?'is-earned':''} key={m.id}><i>{m.earned?<Medal size={22}/>:<Award size={22}/>}</i><strong>{m.title}</strong><p>{m.desc}</p><small>{m.earned?'TRAGUARDO RAGGIUNTO':'OBIETTIVO DA COMPLETARE'}</small></article>)}</div>
     </section>
     <section className="pr-section">
-      <div className="pr-heading"><div><span className="eyebrow">ATTIVITÀ RECENTE</span><h2>Storico del registro</h2><p>Le ultime 12 catalogazioni, risposte errate e ricompense.</p></div><b>{(progress.history??[]).length} eventi salvati</b></div>
-      {history.length?<ol className="pr-history">{history.map(event=><li className={`is-${event.kind}`} key={event.id}><i>{event.kind==='error'?<AlertTriangle size={16}/>:event.kind==='exam'?<Trophy size={16}/>:<CheckCircle2 size={16}/>}</i><div><strong>{event.title}</strong><p>{displayName(event.detail)}</p><small><Clock3 size={12}/>{new Date(event.timestamp).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})}</small></div></li>)}</ol>:<div className="pr-empty"><Clock3 size={25}/><strong>Nessuna attività registrata</strong><p>Catalogazioni e ricompense appariranno qui automaticamente.</p></div>}
+      <div className="pr-heading"><div><span className="eyebrow">ATTIVITÀ RECENTE</span><h2>Storico del registro</h2></div><b>{(progress.history??[]).length} eventi salvati</b></div>
+      {history.length?<ol className="pr-history">{history.map(event=><li className={`is-${event.kind}`} key={event.id}><i>{event.kind==='error'?<AlertTriangle size={16}/>:event.kind==='exam'?<Trophy size={16}/>:<CheckCircle2 size={16}/>}</i><div><strong>{event.title}</strong><p>{displayName(event.detail)}</p><small><Clock3 size={12}/>{new Date(event.timestamp).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})}</small></div></li>)}</ol>:<div className="pr-empty"><Clock3 size={25}/><strong>Nessuna attività registrata</strong></div>}
     </section>
-    <footer className="pr-footer"><div><strong><RotateCcw size={16}/> Gestione progressi</strong><p>Azzerare il registro non elimina il profilo, l’accademia o la matricola.</p></div><button type="button" className="secondary-button" onClick={onReset}>Azzera progressi</button></footer>
+    <footer className="pr-footer"><div><strong><RotateCcw size={16}/> Gestione progressi</strong></div><button type="button" className="secondary-button" onClick={onReset}>Azzera progressi</button></footer>
   </>;
 }

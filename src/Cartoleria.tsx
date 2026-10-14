@@ -32,18 +32,14 @@ export default function Cartoleria({
                     <div className="shop-hero-copy">
                       <span className="eyebrow">NEGOZIO DELL’ACCADEMIA</span>
                       <h1>Cartoleria</h1>
-                      <p>Investi i punti guadagnati per sbloccare strumenti, potenziamenti e nuovi archivi. Gli acquisti permanenti restano nel tuo profilo.</p>
+                      <p>Strumenti e archivi per la tua ricerca Pokémon.</p>
                     </div>
                     <div className="shop-wallets">
-                      <div className="shop-wallet shop-wallet-poke"><span className="shop-wallet-icon">✦</span><div><small>IL TUO SALDO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></div>
+                      <div className="shop-wallet shop-wallet-poke"><span className="shop-wallet-icon">₱</span><div><small>IL TUO SALDO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></div>
                       <div className="shop-wallet shop-wallet-exam"><span className="shop-wallet-icon">★</span><div><small>IL TUO SALDO</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div></div>
                     </div>
                   </section>
-                  <section className="shop-guide-strip">
-                    <div><span className="shop-guide-number">01</span><div><strong>Scegli una sezione</strong><small>Strumenti e potenziamenti oppure contenuti speciali.</small></div></div>
-                    <div><span className="shop-guide-number">02</span><div><strong>Controlla i requisiti</strong><small>Le schede indicano cosa serve per sbloccare ogni acquisto.</small></div></div>
-                    <div><span className="shop-guide-number">03</span><div><strong>Acquista e usa</strong><small>Gli elementi acquistati restano disponibili.</small></div></div>
-                  </section>
+                  
                   <div className="shop-section-heading"><div><span className="eyebrow">CATALOGO</span><h2>Cosa vuoi sbloccare?</h2></div><span className="shop-available-count">{availableShopCount} acquistabili ora</span></div>
                   <div className="shop-tabs" role="tablist" aria-label="Sezioni della cartoleria">
                     <button role="tab" aria-selected={shopTab === 'oggetti'} className={shopTab === 'oggetti' ? 'active' : ''} onClick={() => setShopTab('oggetti')}>
@@ -54,7 +50,7 @@ export default function Cartoleria({
                     </button>
                   </div>
                   {notice && <div className="notice-inline" role="status">{notice}</div>}
-                  <div className="shop-catalog-intro"><div><strong>{shopTab === 'oggetti' ? 'Strumenti per la tua ricerca' : 'Premi per i tuoi progressi'}</strong><p>{shopTab === 'oggetti' ? 'Gli strumenti attivi aiutano durante la classificazione; i livelli successivi migliorano quelli già acquistati.' : 'Usa i Punti esame ottenuti completando le prove per sbloccare archivi, modalità e personalizzazioni.'}</p></div><span>{shopProducts.filter(product => product.category === shopTab).length} articoli</span></div>
+                  <div className="shop-catalog-intro"><div><strong>{shopTab === 'oggetti' ? 'Strumenti' : 'Contenuti speciali'}</strong></div><span>{shopProducts.filter(product => product.category === shopTab).length} articoli</span></div>
                   <div className="shop-grid shop-grid-refactor">
                     {shopProducts.filter(product => product.category === shopTab && product.kind !== 'upgrade').sort((left, right) => left.cost - right.cost || left.name.localeCompare(right.name, 'it')).map(product => {
                       const owned = inventory.includes(product.id);
@@ -70,8 +66,8 @@ export default function Cartoleria({
                       const purchaseUnlocked = owned ? Boolean(nextUpgrade && productUnlocked(nextUpgrade, inventory, progress.completedIds.length)) : unlocked;
                       const purchaseBalance = purchaseProduct.currency === 'poke' ? progress.points : progress.examPoints;
                       const canBuy = !owned ? unlocked && balance >= product.cost && (product.currency !== 'poke' || shopPricingReady) : Boolean(nextUpgrade && purchaseUnlocked && purchaseBalance >= purchaseProduct.cost && (purchaseProduct.currency !== 'poke' || shopPricingReady));
-                      const requirement = product.requirementLabel ?? (product.requires?.length ? `Acquista prima: ${product.requires.map(id => SHOP_PRODUCTS.find(entry => entry.id === id)?.name ?? id).join(', ')}` : product.requiredPokemon ? `Cataloga almeno ${product.requiredPokemon} Pokémon` : 'Nessun requisito aggiuntivo');
-                      const requirements = [...(product.requires ?? []).map(id => ({ label: `Acquista ${SHOP_PRODUCTS.find(entry => entry.id === id)?.name ?? id}`, done: inventory.includes(id) })), ...(product.requiredPokemon ? [{ label: `Cataloga ${product.requiredPokemon} Pokémon (${Math.min(progress.completedIds.length, product.requiredPokemon)}/${product.requiredPokemon})`, done: progress.completedIds.length >= product.requiredPokemon, ratio: Math.min(1, progress.completedIds.length / product.requiredPokemon) }] : [])];
+                      const requirement = product.requirementLabel ?? (product.requires?.length ? `Acquista prima: ${product.requires.map(id => shopProducts.find(entry => entry.id === id)?.name ?? id).join(', ')}` : product.requiredPokemon ? `Cataloga almeno ${product.requiredPokemon} Pokémon` : 'Nessun requisito aggiuntivo');
+                      const requirements = [...(product.requires ?? []).map(id => ({ label: `Acquista ${shopProducts.find(entry => entry.id === id)?.name ?? id}`, done: inventory.includes(id) })), ...(product.requiredPokemon ? [{ label: `Cataloga ${product.requiredPokemon} Pokémon (${Math.min(progress.completedIds.length, product.requiredPokemon)}/${product.requiredPokemon})`, done: progress.completedIds.length >= product.requiredPokemon, ratio: Math.min(1, progress.completedIds.length / product.requiredPokemon) }] : [])];
                       const requirementProgress = requirements.length ? requirements.reduce((sum, item) => sum + ('ratio' in item ? item.ratio : item.done ? 1 : 0), 0) / requirements.length : unlocked ? 1 : 0;
                       const displayDescription = owned && nextUpgrade ? nextUpgrade.description : product.description;
                       const displayCost = owned && nextUpgrade ? nextUpgrade.cost : product.cost;
