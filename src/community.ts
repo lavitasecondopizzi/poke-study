@@ -62,6 +62,7 @@ export interface PublicStudentProfile {
   frame: string;
   catalogStats?: { completedPokemon: number; completedEntries: number; points: number };
   communityStats?: { discussions: number; replies: number };
+  academicGrade?: number;
 }
 
 export interface CommunityPublicActivity {
