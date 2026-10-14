@@ -2770,3 +2770,117 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 /* Cartoleria unificata: il saldo PP occupa una sola colonna. */
 .cartoleria-page .shop-wallets{grid-template-columns:minmax(0,280px)}
 @media(max-width:650px){.cartoleria-page .shop-wallets{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Registro personale: pagella accademica in primo piano, catalogazione come area secondaria. */
+.pr-academic-record{margin:0 0 24px;padding:clamp(15px,2.2vw,23px);border:1px solid #9fc9e8;border-radius:13px;background:linear-gradient(180deg,#fff 0%,#f2f9ff 100%);box-shadow:inset 0 1px #fff,0 3px 0 #d4e9f8;min-width:0}
+.pr-academic-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:17px}
+.pr-academic-heading h2{display:flex;align-items:center;gap:8px;margin:5px 0;color:#164b83;font:700 clamp(19px,2.3vw,25px) 'Libre Baskerville',Georgia,serif}
+.pr-academic-heading h2 svg{flex:0 0 auto}
+.pr-academic-heading p{margin:0;color:#64819a;font-size:12px;line-height:1.55}
+.pr-view-switch{display:flex;flex:0 0 auto;gap:4px;padding:4px;border:1px solid #bfd8eb;border-radius:9px;background:#e9f5ff}
+.pr-view-switch button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:6px;padding:8px 10px;background:transparent;color:#4d7292;font-size:11px;font-weight:800}
+.pr-view-switch button.is-active{border-color:#b1d2eb;background:linear-gradient(#fff,#dcefff);color:#164b83;box-shadow:0 1px 2px #164b8318}
+.pr-academic-state{display:flex;align-items:flex-start;gap:12px;padding:17px;border:1px dashed #b4d2e9;border-radius:9px;background:#f8fcff;color:#28618f}
+.pr-academic-state>svg{flex:0 0 auto}
+.pr-academic-state strong{display:block;color:#214f77;font-size:13px}
+.pr-academic-state p{margin:5px 0 0;color:#637e95;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.pr-academic-state .pokeball-loader{flex:0 0 30px;width:30px;height:30px;margin:0}
+.pr-academic-state.is-error{border-color:#e4b8b3;background:#fff8f7;color:#a4493d}
+.pr-academic-state.is-error strong{color:#9b3932}
+.pr-academic-state .secondary-button{margin-top:10px}
+.pr-academic-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:18px}
+.pr-academic-metrics article{min-width:0;padding:13px;border:1px solid #c6deef;border-radius:9px;background:linear-gradient(#fff,#f0f8ff)}
+.pr-academic-metrics article>span{display:block;color:#64819a;font:800 9px 'DM Mono',monospace;letter-spacing:.045em;line-height:1.5}
+.pr-academic-metrics article>strong{display:block;margin:7px 0 4px;color:#174e82;font:700 clamp(20px,2.6vw,27px) 'Libre Baskerville',Georgia,serif;overflow-wrap:anywhere}
+.pr-academic-metrics article>strong small{font:700 12px 'Nunito Sans',sans-serif;color:#8aa1b5}
+.pr-academic-metrics article>small{display:block;color:#718ba1;font-size:10px;line-height:1.4}
+.pr-academic-subheading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:17px 0 10px}
+.pr-academic-subheading strong{color:#234f75;font-size:14px}
+.pr-academic-subheading p{margin:4px 0 0;color:#70869a;font-size:11px;line-height:1.5}
+.pr-grade-summary{padding:13px;margin-bottom:9px;border:1px solid #d0e3f1;border-radius:9px;background:#fff}
+.pr-grade-summary-title,.pr-subject-results article>div{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pr-grade-summary-title>strong,.pr-subject-results article>div>strong{color:#2a5276;font-size:13px}
+.pr-grade-summary-title>span,.pr-subject-results article>div>span,.pr-detail-lesson-heading>span{flex:0 0 auto;padding:4px 7px;border-radius:5px;font-size:9px;font-weight:900}
+.pr-academic-record .is-passed{background:#e4f5e9;color:#28693c}
+.pr-academic-record .is-pending{background:#fff2dc;color:#875a1c}
+.pr-grade-summary-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.pr-grade-summary-values>div{display:flex;flex-direction:column;gap:4px}
+.pr-grade-summary-values small{color:#7a91a5;font-size:10px}
+.pr-grade-summary-values strong{color:#27577f;font-size:14px;overflow-wrap:anywhere}
+.pr-subject-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pr-subject-results article{min-width:0;padding:11px;border:1px solid #d2e4f1;border-radius:8px;background:#fff}
+.pr-subject-results article>div{align-items:flex-start}
+.pr-subject-results article>div>strong{min-width:0;overflow-wrap:anywhere}
+.pr-subject-average{display:block;margin:8px 0 3px;color:#174e82;font:700 19px 'Libre Baskerville',Georgia,serif}
+.pr-subject-results article>small{color:#7b91a4;font-size:10px}
+.pr-academic-muted{color:#75899b;font-size:11px;line-height:1.5}
+.pr-detail-grade{padding:14px 0;border-top:1px solid #d6e7f3}
+.pr-detail-grade:first-child{border-top:0;padding-top:0}
+.pr-detail-grade h3{margin:0 0 12px;color:#174e82;font:700 17px 'Libre Baskerville',Georgia,serif}
+.pr-detail-subject{margin:0 0 12px;padding:12px;border:1px solid #cbdfee;border-radius:9px;background:#fff}
+.pr-detail-subject-heading{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid #e7eff6}
+.pr-detail-subject-heading strong{color:#244f74;font-size:13px}
+.pr-detail-subject-heading span{color:#6b8499;font-size:10px;text-align:right}
+.pr-detail-lesson{padding:12px 0;border-bottom:1px solid #edf2f6}
+.pr-detail-lesson:last-of-type{border-bottom:0}
+.pr-detail-lesson-heading{display:flex;justify-content:space-between;gap:9px;align-items:flex-start}
+.pr-detail-lesson-heading>div{min-width:0;display:flex;flex-direction:column;gap:4px}
+.pr-detail-lesson-heading>div>strong{color:#365a79;font-size:12px;overflow-wrap:anywhere}
+.pr-detail-lesson-heading small{color:#7d91a3;font-size:10px}
+.pr-attempt-list{list-style:none;padding:0;margin:9px 0 0;border:1px solid #e4edf4;border-radius:7px;overflow:hidden}
+.pr-attempt-list li,.pr-detail-exams>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 10px;border-bottom:1px solid #e9f0f5;background:#fbfdff}
+.pr-attempt-list li:last-child,.pr-detail-exams>div:last-child{border-bottom:0}
+.pr-attempt-list li>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pr-attempt-list li>div>strong{color:#244f74;font-size:12px}
+.pr-attempt-list li>div>small,.pr-detail-exams>div>span{color:#758b9f;font-size:10px;line-height:1.45}
+.pr-review-button{display:inline-flex;align-items:center;justify-content:center;gap:4px;flex:0 0 auto;padding:5px 7px;border:1px solid #c2d9eb;border-radius:5px;background:#f0f8ff;color:#235b89;font-size:10px;font-weight:800}
+.pr-review-button:hover{background:#dfefff}
+.pr-detail-exams{margin-top:9px;border:1px solid #dce9f3;border-radius:7px;overflow:hidden}
+.pr-detail-exams>strong{display:block;padding:8px 10px;background:#edf6fd;color:#466b89;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.pr-grade-exam-history{margin-top:14px}
+.pr-grade-exam-history .pr-academic-muted{padding:0 10px}
+.pr-review-overlay{position:fixed;z-index:1000;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:#0d2d49a8}
+.pr-review-dialog{width:min(760px,100%);max-height:min(88vh,900px);overflow:auto;padding:18px;border:1px solid #9bc4e4;border-radius:13px;background:linear-gradient(#fff,#f2f9ff);box-shadow:0 15px 55px #06244255}
+.pr-review-dialog-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.pr-review-dialog-heading h2{margin:5px 0;color:#174e82;font:700 21px 'Libre Baskerville',Georgia,serif}
+.pr-review-dialog-heading p{margin:4px 0;color:#68849b;font-size:11px}
+.pr-review-dialog-heading>button{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #c4dcec;border-radius:7px;background:#fff;color:#315e82}
+.pr-review-questions{display:grid;gap:10px}
+.pr-review-questions article{padding:12px;border:1px solid #cddfea;border-left:4px solid #7fae8c;border-radius:8px;background:#fff;min-width:0}
+.pr-review-questions article.is-wrong{border-left-color:#d58a80}
+.pr-review-question-title{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:start}
+.pr-review-question-title>span{display:grid;place-items:center;width:25px;height:25px;border-radius:6px;background:#e8f3fb;color:#245b87;font-size:11px;font-weight:900}
+.pr-review-question-title>strong{color:#2a4f6e;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.pr-review-question-title>b{color:#4b8059;font-size:9px;text-transform:uppercase}
+.pr-review-questions .is-wrong .pr-review-question-title>b{color:#a4493d}
+.pr-review-questions article>p{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;padding:8px;border-radius:6px;background:#f5f9fc}
+.pr-review-questions article>p>small{color:#7a91a4;font-size:9px;text-transform:uppercase;font-weight:900;letter-spacing:.04em}
+.pr-review-questions article>p>strong{color:#355975;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.pr-review-questions article>p.pr-review-explanation{display:block;color:#5d778d;font-size:11px;line-height:1.6}
+.pr-review-source{display:block;margin-top:9px;color:#7b90a2;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.pr-review-source a{color:#235b89;font-weight:800}
+@media(max-width:650px){
+ .pr-academic-record{padding:13px;border-radius:10px}
+ .pr-academic-heading{flex-direction:column;gap:12px}
+ .pr-view-switch{width:100%}
+ .pr-view-switch button{flex:1}
+ .pr-academic-metrics{gap:6px}
+ .pr-academic-metrics article{padding:9px 7px}
+ .pr-academic-metrics article>span{font-size:7px}
+ .pr-academic-metrics article>strong{font-size:18px}
+ .pr-academic-metrics article>small{font-size:9px}
+ .pr-grade-summary{padding:10px}
+ .pr-grade-summary-values{gap:7px}
+ .pr-grade-summary-values small{font-size:9px}
+ .pr-grade-summary-values strong{font-size:12px}
+ .pr-subject-results{grid-template-columns:1fr}
+ .pr-detail-subject{padding:9px}
+ .pr-detail-subject-heading{flex-direction:column;gap:4px}
+ .pr-detail-subject-heading span{text-align:left}
+ .pr-detail-lesson-heading{flex-direction:column}
+ .pr-review-dialog{padding:12px}
+ .pr-review-question-title{grid-template-columns:24px minmax(0,1fr)}
+ .pr-review-question-title>b{grid-column:2}
+ .pr-review-overlay{padding:8px}
+}
