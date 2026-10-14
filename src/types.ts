@@ -14,6 +14,7 @@ export interface ProgressHistoryEntry {
 export interface SavedProgress {
   points: number;
   completedIds: number[];
+  /** Legacy save field retained for compatibility; no longer used by gameplay. */
   examPoints: number;
   completedExams?: string[];
   inventory?: string[];
