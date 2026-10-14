@@ -17,7 +17,7 @@ export interface CommunityIdentity {
 
 export interface CommunityAuthor {
   id?: string;
-  nickname: string;
+  matricola: string;
   academy: CommunityAcademy;
 }
 
@@ -51,10 +51,10 @@ const METADATA_VERSION = 1;
 
 export interface PublicStudentProfile {
   id: string;
-  nickname: string;
+  matricola: string;
   academy: CommunityAcademy;
   avatarId: number | null;
-  matricola?: string;
+  matricola: string;
   bio?: string;
   favoritePokemon?: string;
   motto?: string;
@@ -73,7 +73,7 @@ export interface CommunityPublicActivity {
 export interface CommunityRankingEntry {
   id: string;
   rank: number;
-  nickname: string;
+  matricola: string;
   academy: CommunityAcademy;
   avatarId: number | null;
   points: number;
