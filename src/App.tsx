@@ -436,15 +436,14 @@ export default function App() {
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
     const currentInventory = progress.inventory ?? [];
-    const scannerUpgraded = currentInventory.includes('scanner-upgrade-2');
-    const researchLevel = currentInventory.includes('research-upgrade-3') ? 3
-      : currentInventory.includes('research-upgrade-2') ? 2 : 1;
+    const scannerLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.split('-').at(-1))));
+    const researchLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.split('-').at(-1))));
     const cooldownMs = abilityId === 'scanner'
-      ? (scannerUpgraded ? 3 : 5) * 60_000
-      : (researchLevel === 3 ? 5 : researchLevel === 2 ? 7 : 10) * 60_000;
+      ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
+      : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
     const hint = abilityId === 'scanner'
       ? `Scanner: questa carta appartiene alla macro categoria “${card.macroName}”.`
-      : `Ricerca: la sottocategoria corretta inizia con “${card.subcategoryName.charAt(0).toUpperCase()}”.`;
+      : `Ricerca: la sottocategoria corretta è “${card.subcategoryName}”.`;
     setProgress(old => ({
       ...old,
       abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: Date.now() + cooldownMs },
@@ -826,7 +825,7 @@ export default function App() {
                 const owned = inventory.includes(product.id);
                 const unlocked = productUnlocked(product, inventory, progress.completedIds.length);
                 const balance = product.currency === 'poke' ? progress.points : progress.examPoints;
-                const upgradeIds = product.id === 'scanner' ? ['scanner-upgrade-2'] : product.id === 'research' ? ['research-upgrade-2', 'research-upgrade-3'] : [];
+                const upgradeIds = product.id === 'scanner' ? Array.from({ length: SCANNER_LEVELS - 1 }, (_, index) => `scanner-upgrade-${index + 2}`) : product.id === 'research' ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => `research-upgrade-${index + 2}`) : product.id === 'multi-select-1' ? Array.from({ length: 7 }, (_, index) => `multi-select-${index + 2}`) : [];
                 const upgrades = upgradeIds.map(id => shopProducts.find(entry => entry.id === id)).filter((entry): entry is ShopProduct => Boolean(entry));
                 const purchasedUpgrades = upgrades.filter(upgrade => inventory.includes(upgrade.id)).length;
                 const currentLevel = (owned ? 1 : 0) + purchasedUpgrades;
