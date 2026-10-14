@@ -37,15 +37,16 @@ export interface AcademyAttemptSummary {
 export interface AcademyQuestion {
   questionId: string;
   version: number;
-  type: "multiple_choice" | "true_false";
+  type: "multiple_choice" | "true_false" | "matching" | "ordering" | "visual_identification" | "scenario";
   prompt: string;
-  options: Array<{ id: string; label: string }>;
+  options: Array<{ id: string; label: string; side?: string }>;
+  mediaUrl?: string | null;
   difficulty: "facile" | "media" | "difficile";
 }
 
 export interface AcademyQuestionReview extends AcademyQuestion {
-  selectedAnswer: string | boolean | null;
-  correctAnswer: string | boolean;
+  selectedAnswer: unknown;
+  correctAnswer: unknown;
   isCorrect: boolean;
   explanation: string;
   sourceTitle: string;
@@ -85,6 +86,6 @@ export async function startAcademyGradeExam(clientAttemptKey: string) {
   );
 }
 
-export async function submitAcademyAttempt(attemptId: string, answers: Array<{ questionId: string; answer: string }>) {
+export async function submitAcademyAttempt(attemptId: string, answers: Array<{ questionId: string; answer: unknown }>) {
   return callAcademyService<AcademyAttemptResult>("submit_attempt", { attemptId, answers });
 }
