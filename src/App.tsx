@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties, FormEvent } from 'react';
+import type { ChangeEvent, CSSProperties, FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
@@ -576,7 +576,7 @@ export default function App() {
     }
   }
 
-  async function importCommunityAccount(event: React.ChangeEvent<HTMLInputElement>) {
+  async function importCommunityAccount(event: ChangeEvent<HTMLInputElement>) {
     const input = event.currentTarget;
     const file = input.files?.[0];
     if (!file) return;
