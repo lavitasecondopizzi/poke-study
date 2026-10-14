@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
+import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
@@ -347,17 +347,6 @@ export default function App() {
     setLessonSolved([]);
     setLessonReady(true);
   }, [species, itemCatalog, lessonReady, progress.completedIds, progress.completedEntries]);
-
-  function startNewLesson() {
-    const nextDeck = createFullCatalog(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []);
-    setLessonDeck(nextDeck);
-    setLessonSolved([]);
-    setSelectedCardId(null);
-    setWrongTargetId(null);
-    setGamePage(0);
-    setOpenMacroId(null);
-    setMessage(nextDeck.length ? 'Catalogo pronto: classifica tutte le carte nelle sottocategorie corrette.' : 'Hai catalogato tutti gli elementi attualmente disponibili.');
-  }
 
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
