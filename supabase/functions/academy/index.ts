@@ -431,6 +431,60 @@ Deno.serve(async request => {
       });
     }
 
+
+    if (action === "get_attempt_review") {
+      const attemptId = typeof input.attemptId === "string" ? input.attemptId : "";
+      if (!/^[0-9a-f-]{36}$/i.test(attemptId)) return response(400, { error: "Identificativo del tentativo non valido." });
+
+      const { data: attempt, error: attemptError } = await supabase.from("academy_attempts")
+        .select("id,lesson_code,grade_number,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at,question_snapshot")
+        .eq("id", attemptId)
+        .eq("identity_id", identity.id)
+        .maybeSingle();
+      if (attemptError || !attempt || attempt.status !== "submitted") {
+        return response(404, { error: "Tentativo consegnato non trovato per questa identità." });
+      }
+
+      const { data: answerRows, error: answerError } = await supabase.from("academy_attempt_answers")
+        .select("question_id,answer,is_correct,explanation_snapshot,source_title_snapshot,source_url_snapshot")
+        .eq("attempt_id", attemptId);
+      if (answerError) return response(500, { error: "Impossibile caricare le risposte storiche." });
+      const answerMap = new Map((answerRows ?? []).map(row => [row.question_id, row]));
+      const snapshot = attempt.question_snapshot as QuestionSnapshot[];
+      const review = snapshot.map(question => {
+        const saved = answerMap.get(question.questionId);
+        return {
+          questionId: question.questionId,
+          lessonCode: question.lessonCode,
+          version: question.version,
+          type: question.type,
+          prompt: question.prompt,
+          options: question.options,
+          mediaUrl: question.mediaUrl ?? null,
+          difficulty: question.difficulty,
+          selectedAnswer: saved?.answer ?? null,
+          correctAnswer: question.correctAnswer,
+          isCorrect: saved?.is_correct ?? false,
+          explanation: saved?.explanation_snapshot ?? question.explanation,
+          sourceTitle: saved?.source_title_snapshot ?? question.sourceTitle,
+          sourceUrl: saved?.source_url_snapshot ?? question.sourceUrl,
+          sourceCheckedAt: question.sourceCheckedAt,
+        };
+      });
+
+      return response(200, {
+        attemptId: attempt.id,
+        score: attempt.score,
+        correctCount: attempt.correct_count,
+        questionCount: attempt.question_count,
+        passed: attempt.passed,
+        submittedAt: attempt.submitted_at,
+        attemptKind: attempt.attempt_kind,
+        lessonCode: attempt.lesson_code,
+        review,
+      });
+    }
+
     if (action === "submit_attempt") {
       const attemptId = typeof input.attemptId === "string" ? input.attemptId : "";
       if (!/^[0-9a-f-]{36}$/i.test(attemptId)) return response(400, { error: "Identificativo del tentativo non valido." });
