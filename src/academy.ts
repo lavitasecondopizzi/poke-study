@@ -15,9 +15,12 @@ export interface AcademyLesson {
 
 export interface AcademyProgressSummary {
   lessonAverages: Record<string, { average: number; attemptCount: number }>;
+  gradeAverage: number | null;
+  gradeLessonsPassed: boolean;
   gradeExamAverage: number | null;
   gradeExamAttemptCount: number;
   gradeExamPassed: boolean;
+  gradePassed: boolean;
 }
 
 export interface AcademyAttemptSummary {
