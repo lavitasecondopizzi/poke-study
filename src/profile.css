@@ -193,3 +193,7 @@
 .forum-author-profile-link{display:inline;border:0;padding:0;background:transparent;color:var(--academy-accent-dark,#46529a);font:inherit;font-weight:800;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;cursor:pointer}
 .forum-author-profile-link:hover{text-decoration-color:currentColor}
 .forum-author-profile-link:disabled{color:inherit;text-decoration:none;cursor:default}
+
+.leaderboard-profile-link{display:inline;border:0;padding:0;background:transparent;color:var(--academy-accent-dark,#46529a);font:inherit;font-weight:850;text-align:left;cursor:pointer}
+.leaderboard-profile-link:hover{text-decoration:underline;text-underline-offset:3px}
+.leaderboard-podium-name{font-size:inherit}
