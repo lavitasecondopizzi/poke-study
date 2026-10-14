@@ -794,25 +794,6 @@ export default function App() {
                       </button>)}
                     </div>
                   </>
-                      <button type="button" className="folder-back-button" onClick={() => setOpenMacroId(null)}>← Indietro</button>
-                      <span>Apri la sottocartella corretta per la carta selezionata</span>
-                    </div>
-                    <div className="category-targets-grid subfolder-grid">
-                      {currentMacroTargets.map(target => <button
-                        type="button"
-                        key={target.id}
-                        className={`category-target subfolder-target ${target.solved === target.total ? 'category-target-complete' : ''} ${wrongTargetId === target.id ? 'category-target-wrong' : ''}`}
-                        aria-label={`Classifica in ${target.name}`}
-                        onDragOver={event => event.preventDefault()}
-                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, target.id); }}
-                        onClick={() => { if (selectedCardId) placeCard(selectedCardId, target.id); else setMessage('Seleziona prima una carta da classificare.'); }}
-                      >
-                        <span className="folder-icon" aria-hidden="true">📂</span>
-                        <strong>{target.name}</strong>
-                        <small>{target.solved} / {target.total} classificate</small>
-                      </button>)}
-                    </div>
-                  </>
                 )}
                 {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
               </section>
