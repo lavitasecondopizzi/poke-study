@@ -84,17 +84,20 @@ export default function PersonalRegister({ progress, species, items, loading, co
     });
     const overallAverage = average(lessonScores.map(item => item.average));
     const passedLessons = lessonScores.filter(item => item.passed).length;
-    const subjectCodes = [...new Set(academyRecord.lessons.map(lesson => lesson.subject_code))];
-    const subjectExams = subjectCodes.map(code => {
-      const lessons = academyRecord.lessons.filter(lesson => lesson.subject_code === code);
+    const subjectKeys = [...new Set(academyRecord.lessons.map(lesson => `${lesson.grade_number}:${lesson.subject_code}`))];
+    const subjectExams = subjectKeys.map(key => {
+      const [gradeText, code] = key.split(':');
+      const gradeNumber = Number(gradeText);
+      const lessons = academyRecord.lessons.filter(lesson => lesson.grade_number === gradeNumber && lesson.subject_code === code);
       const title = lessons[0]?.subject?.title ?? code;
-      const scores = submitted.filter(attempt => attempt.attempt_kind === 'subject_exam' && attempt.subject_code === code && attempt.score !== null).map(attempt => attempt.score);
-      return { code, title, average: average(scores), attempts: scores.length, passed: scores.length > 0 && scores.every(score => (score ?? 0) >= 18), lessons };
+      const scores = submitted.filter(attempt => attempt.attempt_kind === 'subject_exam' && attempt.grade_number === gradeNumber && attempt.subject_code === code && attempt.score !== null).map(attempt => attempt.score);
+      const subjectAverage = average(scores);
+      return { code, gradeNumber, title, average: subjectAverage, attempts: scores.length, passed: subjectAverage !== null && subjectAverage >= 18, lessons };
     });
     const gradeNumbers = [...new Set(academyRecord.lessons.map(lesson => lesson.grade_number))].sort((a,b) => a-b);
     const grades = gradeNumbers.map(grade => {
       const lessons = lessonScores.filter(item => item.lesson.grade_number === grade);
-      const exams = subjectExams.filter(subject => subject.lessons.some(lesson => lesson.grade_number === grade));
+      const exams = subjectExams.filter(subject => subject.gradeNumber === grade);
       const gradeExams = submitted.filter(attempt => attempt.attempt_kind === 'grade_exam' && attempt.grade_number === grade && attempt.score !== null);
       return {
         grade,
@@ -104,7 +107,7 @@ export default function PersonalRegister({ progress, species, items, loading, co
         subjectExams: exams,
         gradeExamAverage: average(gradeExams.map(attempt => attempt.score)),
         gradeExamAttempts: gradeExams.length,
-        gradeExamPassed: gradeExams.length > 0 && gradeExams.every(attempt => (attempt.score ?? 0) >= 26),
+        gradeExamPassed: average(gradeExams.map(attempt => attempt.score)) !== null && (average(gradeExams.map(attempt => attempt.score)) ?? 0) >= 26,
       };
     });
     return { submitted, lessonScores, overallAverage, passedLessons, subjectExams, grades, totalAttempts: academyRecord.attempts.length };
@@ -203,7 +206,7 @@ export default function PersonalRegister({ progress, species, items, loading, co
                   {attempts.length ? <ol className="pr-attempt-list">{attempts.map(attempt => <li key={attempt.id}><div><strong>{formatGrade(attempt.score)}</strong><small>{new Date(attempt.submitted_at ?? attempt.created_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})} · {attempt.status==='submitted' ? attempt.passed===true?'Superato':attempt.passed===false?'Non superato':'Valutato' : 'In corso'}</small></div>{attempt.status==='submitted' && <button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button>}</li>)}</ol> : <p className="pr-academic-muted">Nessun tentativo registrato.</p>}
                 </div>;
               })}
-              <div className="pr-detail-exams"><strong>Esami di materia</strong>{academyRecord.attempts.filter(item=>item.attempt_kind==='subject_exam' && item.subject_code===subject.code && item.status==='submitted').sort((a,b)=>new Date(b.submitted_at ?? b.created_at).getTime()-new Date(a.submitted_at ?? a.created_at).getTime()).map(attempt=><div key={attempt.id}><span>{formatGrade(attempt.score)} · {new Date(attempt.submitted_at ?? attempt.created_at).toLocaleDateString('it-IT')}</span><button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button></div>)}</div>
+              <div className="pr-detail-exams"><strong>Esami di materia</strong>{academyRecord.attempts.filter(item=>item.attempt_kind==='subject_exam' && item.grade_number===grade.grade && item.subject_code===subject.code && item.status==='submitted').sort((a,b)=>new Date(b.submitted_at ?? b.created_at).getTime()-new Date(a.submitted_at ?? a.created_at).getTime()).map(attempt=><div key={attempt.id}><span>{formatGrade(attempt.score)} · {new Date(attempt.submitted_at ?? attempt.created_at).toLocaleDateString('it-IT')}</span><button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button></div>)}</div>
             </div>)}
             <div className="pr-detail-exams pr-grade-exam-history"><strong>Esami di grado</strong>{academyRecord.attempts.filter(item=>item.attempt_kind==='grade_exam' && item.grade_number===grade.grade).sort((a,b)=>new Date(b.submitted_at ?? b.created_at).getTime()-new Date(a.submitted_at ?? a.created_at).getTime()).map(attempt=><div key={attempt.id}><span>{formatGrade(attempt.score)} · {new Date(attempt.submitted_at ?? attempt.created_at).toLocaleDateString('it-IT')} · {attempt.status==='submitted' ? attempt.passed===true?'Superato':attempt.passed===false?'Non superato':'Valutato':'In corso'}</span>{attempt.status==='submitted' && <button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button>}</div>)}{!academyRecord.attempts.some(item=>item.attempt_kind==='grade_exam' && item.grade_number===grade.grade) && <p className="pr-academic-muted">Nessun tentativo registrato.</p>}</div>
           </section>)}
