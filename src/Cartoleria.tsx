@@ -72,17 +72,40 @@ function ProductCard({
   const canBuy = !owned
     ? unlocked && progress.points >= product.cost && shopPricingReady
     : Boolean(nextUpgrade && purchaseUnlocked && progress.points >= purchaseProduct.cost && shopPricingReady);
-  const requirements = [
-    ...(product.requires ?? []).map(id => ({
+  const requirementIds = product.requires ?? [];
+  const groupedRequirementIds = new Set<string>();
+  const requirements: Array<{ label: string; done: boolean; ratio?: number }> = [];
+
+  // Le catene di potenziamenti si riassumono nel solo livello massimo richiesto.
+  for (const chain of [
+    { baseId: 'scanner', prefix: 'scanner-upgrade-', label: 'Scanner', maxLevel: SCANNER_LEVELS },
+    { baseId: 'research', prefix: 'research-upgrade-', label: 'Ricerca', maxLevel: RESEARCH_LEVELS },
+  ]) {
+    const chainIds = [chain.baseId, ...Array.from({ length: chain.maxLevel - 1 }, (_, index) => chain.prefix + (index + 2))];
+    if (chainIds.some(id => requirementIds.includes(id))) {
+      const requiredChainIds = chainIds.filter(id => requirementIds.includes(id));
+      requiredChainIds.forEach(id => groupedRequirementIds.add(id));
+      requirements.push({
+        label: chain.label + ' · livello ' + chain.maxLevel,
+        done: requiredChainIds.every(id => inventory.includes(id)),
+      });
+    }
+  }
+
+  requirementIds
+    .filter(id => !groupedRequirementIds.has(id))
+    .forEach(id => requirements.push({
       label: 'Acquista ' + (products.find(entry => entry.id === id)?.name ?? id),
       done: inventory.includes(id),
-    })),
-    ...(product.requiredPokemon ? [{
+    }));
+
+  if (product.requiredPokemon) {
+    requirements.push({
       label: 'Cataloga ' + product.requiredPokemon + ' Pokémon (' + Math.min(completedPokemon, product.requiredPokemon) + '/' + product.requiredPokemon + ')',
       done: completedPokemon >= product.requiredPokemon,
       ratio: Math.min(1, completedPokemon / product.requiredPokemon),
-    }] : []),
-  ];
+    });
+  }
   const requirementProgress = requirements.length
     ? requirements.reduce((sum, item) => sum + ('ratio' in item ? item.ratio : item.done ? 1 : 0), 0) / requirements.length
     : unlocked ? 1 : 0;
