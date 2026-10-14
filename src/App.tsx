@@ -801,7 +801,7 @@ export default function App() {
                         return <button
                           type="button"
                           key={nationalId}
-                          className={'pokemon-number-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')}
+                          className={'pokemon-number-slot pokemon-number-entity-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')}
                           aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')}
                           disabled={isCompleted}
                           onDragOver={event => event.preventDefault()}
