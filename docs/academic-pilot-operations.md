@@ -8,7 +8,7 @@ Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft 
 
 - I file locali `player_state`, `server_matricola` e `blueberry_academy` usano ora le versioni registrate nel progetto remoto: `20261014131025`, `20261014131029` e `20261014131201`. La migrazione duplicata `add_blueberry_academy` è stata rimossa.
 - La migrazione locale `20261014090000_community_foundation.sql` non compare nella cronologia remota. Le tabelle community, gli indici, il trigger, RLS e i privilegi server-side che istituisce risultano già presenti; la constraint dell'accademia è stata poi estesa per includere Mirtillo.
-- Rimane da riconciliare questo baseline prima del prossimo `supabase db push`. Non modificare direttamente la cronologia interna delle migrazioni via SQL; usare il comando di riparazione della cronologia Supabase da un ambiente CLI collegato al progetto, dopo aver verificato nuovamente lo schema.
+- Rimane da riconciliare questo baseline prima del prossimo `supabase db push`. Da un ambiente autorizzato con Supabase CLI, eseguire `supabase link --project-ref hfcdiixfdxvefgyqhapy`, verificare ancora gli oggetti community e poi `supabase migration repair 20261014090000 --status applied`. Controllare `supabase migration list` prima di qualunque `supabase db push`. Non modificare direttamente la cronologia interna delle migrazioni via SQL.
 
 ## Prerequisiti
 
