@@ -141,7 +141,7 @@ export async function createCommunityReply(threadId: string, body: string): Prom
  * Exports the private bearer token as portable metadata. Treat the result like a password:
  * anyone holding it can act as this identity. The metadata must never be posted publicly.
  */
-export async function exportCommunityMetadata(): Promise<string> {
+export async function exportCommunityMetadata(gameBackup?: Record<string, unknown>): Promise<string> {
   const token = readToken();
   if (!token) throw new Error("Nessuna identità community da esportare.");
   const identity = await getCommunityIdentity();
@@ -151,6 +151,7 @@ export async function exportCommunityMetadata(): Promise<string> {
     exportedAt: new Date().toISOString(),
     identity: { id: identity.id, nickname: identity.nickname, academy: identity.academy },
     token,
+    ...(gameBackup ? { gameBackup } : {}),
   }, null, 2);
 }
 

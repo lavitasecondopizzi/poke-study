@@ -182,6 +182,67 @@ function avatarPortraitUrl(id: number) {
 
 const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
 
+type LocalGameBackup = {
+  academy: string;
+  student: StudentProfile;
+  progress: SavedProgress;
+};
+
+function normalizeSavedProgress(value: unknown): SavedProgress | null {
+  if (!value || typeof value !== 'object') return null;
+  const saved = value as Partial<SavedProgress>;
+  const finiteNonNegative = (candidate: unknown) => typeof candidate === 'number' && Number.isFinite(candidate) && candidate >= 0 ? candidate : 0;
+  const stringArray = (candidate: unknown) => Array.isArray(candidate) ? candidate.filter((entry): entry is string => typeof entry === 'string') : [];
+  const numberArray = (candidate: unknown) => Array.isArray(candidate) ? candidate.filter((entry): entry is number => Number.isInteger(entry) && entry > 0 && entry <= NATIONAL_DEX_SIZE) : [];
+  const cooldowns: Record<string, number> = {};
+  if (saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object') {
+    for (const [key, until] of Object.entries(saved.abilityCooldowns)) {
+      if (typeof until === 'number' && Number.isFinite(until) && until >= 0) cooldowns[key] = until;
+    }
+  }
+  return {
+    points: finiteNonNegative(saved.points),
+    completedIds: [...new Set(numberArray(saved.completedIds))],
+    examPoints: finiteNonNegative(saved.examPoints),
+    completedExams: stringArray(saved.completedExams),
+    inventory: stringArray(saved.inventory),
+    completedEntries: stringArray(saved.completedEntries),
+    abilityCooldowns: cooldowns,
+  };
+}
+
+function readGameBackup(serialized: string, identity: CommunityIdentity): LocalGameBackup | null {
+  try {
+    const parsed = JSON.parse(serialized) as Record<string, unknown>;
+    const raw = parsed?.gameBackup;
+    if (!raw || typeof raw !== 'object') return null;
+    const backup = raw as Record<string, unknown>;
+    if (backup.format !== 'poke-study-local-game-backup' || backup.version !== 1
+      || backup.academy !== identity.academy
+      || typeof backup.academy !== 'string' || !['arancia', 'uva', 'mirtillo'].includes(backup.academy)
+      || !backup.student || typeof backup.student !== 'object') return null;
+    const candidate = backup.student as Record<string, unknown>;
+    if (typeof candidate.nickname !== 'string' || candidate.nickname.trim() !== identity.nickname
+      || typeof candidate.matricola !== 'string' || !candidate.matricola.trim()) return null;
+    const student: StudentProfile = {
+      nickname: candidate.nickname.trim(),
+      matricola: candidate.matricola.trim(),
+      ...(typeof candidate.avatarId === 'number' && STARTER_POKEMON_IDS.includes(candidate.avatarId) ? { avatarId: candidate.avatarId } : {}),
+    };
+    const progress = normalizeSavedProgress(backup.progress);
+    if (!progress) return null;
+    return { academy: backup.academy, student, progress };
+  } catch {
+    return null;
+  }
+}
+
+function hasMeaningfulProgress(progress: SavedProgress): boolean {
+  return progress.points > 0 || progress.examPoints > 0 || progress.completedIds.length > 0
+    || (progress.completedEntries?.length ?? 0) > 0 || (progress.inventory?.length ?? 0) > 0
+    || (progress.completedExams?.length ?? 0) > 0;
+}
+
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
   return Number(parts[parts.length - 1] ?? 0);
@@ -553,19 +614,34 @@ export default function App() {
     setEnrollmentError('');
     setCommunityError('');
     try {
-      const identity = await importCommunityMetadata(await file.text());
-      const profile = { nickname: identity.nickname, matricola: createMatricola() };
+      const serialized = await file.text();
+      const identity = await importCommunityMetadata(serialized);
+      const backup = readGameBackup(serialized, identity);
+      const hasLocalData = Boolean(student) || hasMeaningfulProgress(progress);
+      const restoreBackup = Boolean(backup && (!hasLocalData || window.confirm('Il file contiene un backup del profilo e dei progressi. Vuoi ripristinare questi dati, sostituendo quelli presenti su questo dispositivo?')));
+      const profile: StudentProfile = restoreBackup && backup
+        ? backup.student
+        : student?.nickname === identity.nickname
+          ? { ...student, nickname: identity.nickname }
+          : { nickname: identity.nickname, matricola: createMatricola() };
       try {
-        localStorage.setItem(ACADEMY_KEY, identity.academy);
+        localStorage.setItem(ACADEMY_KEY, restoreBackup && backup ? backup.academy : identity.academy);
         localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
+        if (restoreBackup && backup) localStorage.setItem(SAVE_KEY, JSON.stringify(backup.progress));
       } catch {
-        throw new Error('Identità verificata, ma non è stato possibile salvare il profilo locale. Verifica le impostazioni di archiviazione del browser e riprova.');
+        throw new Error('Identità verificata, ma non è stato possibile salvare i dati locali. Verifica lo spazio disponibile e le impostazioni del browser, poi riprova.');
       }
-      setAcademy(identity.academy);
+      const finalAcademy = restoreBackup && backup ? backup.academy : identity.academy;
+      setAcademy(finalAcademy);
       setNickname(identity.nickname);
       setCommunityIdentity(identity);
       setStudent(profile);
-      setCommunityNotice('Account esistente recuperato. È stata mantenuta la stessa identità online.');
+      if (restoreBackup && backup) setProgress(backup.progress);
+      setCommunityNotice(restoreBackup && backup
+        ? 'Account recuperato: profilo, avatar e progressi inclusi nel backup sono stati ripristinati.'
+        : backup
+          ? 'Identità online recuperata. I dati locali esistenti sono stati mantenuti.'
+          : 'Identità online recuperata. Questo file non contiene un backup completo compatibile: non è possibile recuperare progressi e avatar che non siano più presenti sul dispositivo.');
       setShowEnrollmentCard(true);
     } catch (error) {
       setEnrollmentError(error instanceof Error ? error.message : 'Recupero account non riuscito. Verifica di aver selezionato il file JSON esportato da Poké Study.');
@@ -650,7 +726,14 @@ export default function App() {
     setCommunityError('');
     setCommunityNotice('');
     try {
-      const metadata = await exportCommunityMetadata();
+      const metadata = await exportCommunityMetadata({
+        format: 'poke-study-local-game-backup',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        academy,
+        student,
+        progress,
+      });
       const blob = new Blob([metadata], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -660,7 +743,7 @@ export default function App() {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      setCommunityNotice('Metadati account esportati. Conserva il file in un luogo privato: contiene il token di accesso.');
+      setCommunityNotice('Backup completo esportato: include identità online, profilo, avatar e progressi locali. Conserva il file in un luogo privato: contiene il token di accesso.');
     } catch (error) {
       setCommunityError(error instanceof Error ? error.message : 'Esportazione account non riuscita.');
     } finally {
@@ -676,10 +759,30 @@ export default function App() {
     setCommunityError('');
     setCommunityNotice('');
     try {
-      const identity = await importCommunityMetadata(await file.text());
+      const serialized = await file.text();
+      const identity = await importCommunityMetadata(serialized);
+      const backup = readGameBackup(serialized, identity);
+      let restored = false;
+      if (backup) {
+        const hasLocalData = Boolean(student) || hasMeaningfulProgress(progress);
+        const shouldRestore = !hasLocalData || window.confirm('Il file contiene anche un backup del profilo e dei progressi. Vuoi sostituire i dati attualmente presenti su questo dispositivo con quelli del file?');
+        if (shouldRestore) {
+          localStorage.setItem(ACADEMY_KEY, backup.academy);
+          localStorage.setItem(STUDENT_KEY, JSON.stringify(backup.student));
+          localStorage.setItem(SAVE_KEY, JSON.stringify(backup.progress));
+          setAcademy(backup.academy);
+          setStudent(backup.student);
+          setProgress(backup.progress);
+          restored = true;
+        }
+      }
       setCommunityIdentity(identity);
       setCommunityError('');
-      setCommunityNotice('Identità ufficiale importata e verificata dal server. Il nickname ufficiale verrà usato nel portale quando sei connesso.');
+      setCommunityNotice(backup
+        ? restored
+          ? 'Identità verificata e backup ripristinato: profilo, avatar e progressi sono stati recuperati.'
+          : 'Identità verificata. Il backup locale non è stato applicato perché hai scelto di mantenere i dati presenti su questo dispositivo.'
+        : 'Identità online importata. Questo file non contiene un backup completo compatibile: i dati locali non sono stati modificati. Esporta un nuovo backup dal dispositivo dove i progressi sono ancora disponibili.');
     } catch (error) {
       setCommunityError(error instanceof Error ? error.message : 'Importazione account non riuscita.');
     } finally {
