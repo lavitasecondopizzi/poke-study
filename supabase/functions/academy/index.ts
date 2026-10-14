@@ -118,6 +118,7 @@ Deno.serve(async request => {
       .maybeSingle();
 
     if (identityError || !identity) return response(401, { error: "Identità account non riconosciuta." });
+    const identityId = identity.id;
 
     const action = input.action;
 
@@ -130,7 +131,7 @@ Deno.serve(async request => {
 
       const { data: history, error: historyError } = await supabase.from("academy_attempts")
         .select("lesson_code,subject_code,attempt_kind,score")
-        .eq("identity_id", identity.id)
+        .eq("identity_id", identityId)
         .eq("grade_number", gradeNumber)
         .eq("status", "submitted");
       if (historyError) return false;
@@ -141,7 +142,7 @@ Deno.serve(async request => {
         return scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : null;
       });
       if (lessonAverages.some(score => score === null || score < 18)) return false;
-      const gradeAverage = lessonAverages.reduce((sum, score) => sum + (score ?? 0), 0) / lessonAverages.length;
+      const gradeAverage = lessonAverages.reduce<number>((sum, score) => sum + (score ?? 0), 0) / lessonAverages.length;
       if (gradeAverage < 26) return false;
 
       const subjectCodes = Array.from(new Set(gradeLessons.map(lesson => lesson.subject_code)));
