@@ -65,10 +65,16 @@ insert into public.academy_settings (setting_key, setting_value)
 values ('questions_per_attempt', '5'::jsonb)
 on conflict (setting_key) do nothing;
 
+insert into public.academy_settings (setting_key, setting_value)
+values ('questions_per_grade_exam', '20'::jsonb)
+on conflict (setting_key) do nothing;
+
 create table if not exists public.academy_attempts (
   id uuid primary key default gen_random_uuid(),
   identity_id uuid not null references public.community_identities(id) on delete restrict,
-  lesson_code text not null references public.academy_lessons(lesson_code) on delete restrict,
+  lesson_code text references public.academy_lessons(lesson_code) on delete restrict,
+  grade_number smallint not null default 1 references public.academy_grades(grade_number),
+  attempt_kind text not null default 'lesson' check (attempt_kind in ('lesson', 'grade_exam')),
   client_attempt_key text not null,
   status text not null default 'started' check (status in ('started', 'submitted')),
   question_snapshot jsonb not null check (jsonb_typeof(question_snapshot) = 'array'),
@@ -79,6 +85,7 @@ create table if not exists public.academy_attempts (
   created_at timestamptz not null default now(),
   submitted_at timestamptz,
   unique (identity_id, client_attempt_key),
+  check ((attempt_kind = 'lesson' and lesson_code is not null) or (attempt_kind = 'grade_exam' and lesson_code is null)),
   check (
     (status = 'started' and submitted_at is null and score is null and passed is null)
     or
@@ -122,6 +129,7 @@ declare
   v_correct_count integer := 0;
   v_total integer;
   v_score integer;
+  v_passed boolean;
 begin
   if jsonb_typeof(p_answers) <> 'array' then
     raise exception 'Le risposte devono essere un array JSON.';
@@ -187,12 +195,13 @@ begin
 
   -- The application uses integer grades from 1 to 30; averages may be decimal.
   v_score := greatest(1, least(30, round(30.0 * v_correct_count / v_total)::integer));
+  v_passed := case when v_attempt.attempt_kind = 'grade_exam' then v_score >= 26 else v_score >= 18 end;
 
   update public.academy_attempts
   set status = 'submitted',
       correct_count = v_correct_count,
       score = v_score,
-      passed = v_score >= 18,
+      passed = v_passed,
       submitted_at = now()
   where id = v_attempt.id and status = 'started';
 
@@ -201,7 +210,7 @@ begin
     'score', v_score,
     'correctCount', v_correct_count,
     'questionCount', v_total,
-    'passed', v_score >= 18,
+    'passed', v_passed,
     'submittedAt', now()
   );
 end;
