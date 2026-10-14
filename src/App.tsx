@@ -4,7 +4,7 @@ import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads } from './community';
-import type { CommunityCategory, CommunityIdentity, CommunityThread } from './community';
+import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
