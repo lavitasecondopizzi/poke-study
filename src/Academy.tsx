@@ -120,7 +120,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     : null;
   const allLessonsPassed = lessons.length > 0 && lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const gradeExamAverage = progressSummary?.gradeExamAverage ?? averageScore(gradeExamAttempts);
-  const gradePassed = allLessonsPassed && gradeAverage !== null && gradeAverage >= 26 && gradeExamAverage !== null && gradeExamAverage >= 26;
+  const gradePassed = progressSummary?.gradePassed ?? false;
 
   async function refreshCurriculum() {
     const data = await loadAcademyCurriculum();
