@@ -899,10 +899,11 @@ export default function App() {
         </header>
         <section className="academy-choice-intro admission-intro">
           <h2>Scegli l’accademia</h2>
+          <p>Seleziona il campus collegato alla tua avventura Pokémon.</p>
         </section>
         <section className="enrollment-recovery-panel admission-recovery-panel" aria-label="Recupero salvataggio">
           <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
-          <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per caricare profilo e progressi salvati.</p></div>
+          <div className="enrollment-recovery-copy"><strong>Sei già uno studente?</strong><p>Importa il file di recupero per caricare profilo e progressi salvati.</p></div>
           <label className="community-import-button enrollment-import-button">{enrollmentBusy ? 'Caricamento…' : 'Importa salvataggio'}<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
         </section>
         {(enrollmentError || communityError) && <p className="community-account-error" role="alert">{enrollmentError || communityError}</p>}
@@ -923,7 +924,7 @@ export default function App() {
           </button>
           <button type="button" className="academy-choice-card academy-blueberry" onClick={() => chooseAcademy('mirtillo')}>
             <div className="academy-choice-card-top"><span>03 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
-            <div className="academy-crest crest-blueberry"><AcademyCrest academy="mirtillo" className="academy-crest-image" /></div>
+            <div className="academy-crest"><AcademyCrest academy="mirtillo" className="academy-crest-image" /></div>
             <span className="academy-game-tag">IL DISCO INDACO</span>
             <h3>Istituto Mirtillo</h3>
             <span className="academy-enroll">SCEGLI <ChevronRight size={17}/></span>

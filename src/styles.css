@@ -1836,7 +1836,9 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .enrollment-step.is-complete{color:#31815c}
 .enrollment-step.is-complete>span{border-color:#a6d7bb;background:linear-gradient(#f5fff8,#d9f4e3);color:#27804d}
 .academy-choice-intro{margin-top:28px}
-.admission-intro{margin-top:31px;margin-bottom:27px}
+.admission-intro{margin-top:31px;margin-bottom:22px}
+.admission-intro p{margin:8px 0 0;color:#718da3;font-size:12px;line-height:1.6}
+.admission-recovery-panel{margin:0 auto 26px}
 .academy-choice-intro h2{letter-spacing:-.035em}
 .academy-choice-grid{gap:18px;max-width:850px}
 .academy-choice-card{
@@ -1953,7 +1955,9 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .enrollment-step>span{flex-basis:24px;width:24px;height:24px;font-size:9px}
   .enrollment-step small{font-size:7px}
   .enrollment-stepper>i{min-width:8px}
-  .admission-intro{margin:23px auto 18px}
+  .admission-intro{margin:23px auto 16px}
+  .admission-intro p{font-size:10px}
+  .admission-recovery-panel{margin-bottom:19px}
   .academy-choice-intro h2{font-size:24px}
   .academy-choice-intro p{font-size:11px;line-height:1.6}
   .academy-choice-grid{grid-template-columns:1fr;gap:11px}
@@ -2043,7 +2047,6 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .academy-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px}
 .academy-blueberry{border-color:#b9cce9;background:linear-gradient(155deg,#fff 0%,#f7faff 60%,#e5efff 100%)}
 .academy-blueberry:hover{border-color:#4d75b5}
-.crest-blueberry{background:radial-gradient(circle at 35% 25%,#c6dcff,#4778c4 63%,#163e7e);color:#183e7c}
 .academy-blueberry:before{background:linear-gradient(90deg,#6e99d8,#d4e3fb)}
 .academy-blueberry .academy-game-tag{background:#edf4ff;color:#2d5794;border-color:#c7d8f1}
 .academy-blueberry h3{color:#244e8d}
