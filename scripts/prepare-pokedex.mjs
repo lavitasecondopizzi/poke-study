@@ -34,4 +34,4 @@ if (pokemon.length !== MAX_ID) {
 }
 
 await writeFile(path.join(DATA_DIR, 'pokemon.json'), JSON.stringify(pokemon));
-console.log(`Catalogo locale pronto: ${pokemon.length} specie. Le immagini saranno caricate on-demand dalla CDN pubblica.`);
+console.log(`Catalogo locale pronto: ${pokemon.length} specie. Sprite Pokémon, ritratti starter e immagini strumenti vengono salvati localmente.`);
