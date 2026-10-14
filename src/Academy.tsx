@@ -148,6 +148,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         setLessons(data.lessons);
         setAttempts(data.attempts);
         setProgressSummary(data.progress);
+        setPointsSummary(data.points);
       })
       .catch(reason => {
         if (!cancelled) setError(reason instanceof Error ? reason.message : "Impossibile caricare il programma.");
