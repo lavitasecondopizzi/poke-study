@@ -555,7 +555,7 @@ Deno.serve(async request => {
 
       if (createError || !created) {
         const { data: raced } = await supabase.from("academy_attempts")
-          .select("id,status,question_snapshot")
+          .select("id,status,question_snapshot,attempt_kind,subject_code")
           .eq("identity_id", identity.id)
           .eq("client_attempt_key", clientAttemptKey)
           .maybeSingle();
