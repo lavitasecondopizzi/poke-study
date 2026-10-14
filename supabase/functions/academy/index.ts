@@ -540,7 +540,6 @@ Deno.serve(async request => {
           subject_code: subjectCode,
           grade_number: 1,
           attempt_kind: "subject_exam",
-          subject_code: subjectCode,
           grading_rule_version: "thirtieths-v1",
           grade_max: 30,
           pass_threshold: 18,
