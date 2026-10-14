@@ -54,7 +54,6 @@ export interface PublicStudentProfile {
   matricola: string;
   academy: CommunityAcademy;
   avatarId: number | null;
-  matricola: string;
   bio?: string;
   favoritePokemon?: string;
   motto?: string;
