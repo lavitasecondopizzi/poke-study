@@ -842,6 +842,7 @@ export default function App() {
           <h2>{communityError ? 'Impossibile caricare il profilo' : 'Recupero dei dati in corso'}</h2>
           <p>{communityError || 'Stiamo recuperando dal database il profilo, l’avatar e i progressi salvati. La scelta dell’accademia non verrà richiesta per un account già registrato.'}</p>
           {communityError && <div className="enrollment-recovery-panel">
+            <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
             <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per verificare l’identità e caricare i progressi salvati.</p></div>
             <label className="community-import-button enrollment-import-button">Importa salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
             <button type="button" className="enrollment-back" onClick={() => window.location.reload()}>Riprova caricamento</button>
@@ -900,6 +901,7 @@ export default function App() {
           <h2>Scegli l’accademia</h2>
         </section>
         <section className="enrollment-recovery-panel admission-recovery-panel" aria-label="Recupero salvataggio">
+          <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
           <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per caricare profilo e progressi salvati.</p></div>
           <label className="community-import-button enrollment-import-button">{enrollmentBusy ? 'Caricamento…' : 'Importa salvataggio'}<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
         </section>
