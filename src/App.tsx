@@ -4,6 +4,7 @@ import Archive from './Archive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
+import StudentCard from './StudentCard';
 import PublicStudentProfile from './PublicStudentProfile';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
@@ -1105,7 +1106,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><AcademyCrest academy={academy} className="student-card-crest" /><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{displayNickname}</strong><span>{student?.matricola ?? ''}</span><span>{academyName(academy)}</span></span></button>
+        <StudentCard academy={academy} academyLabel={academyName(academy)} nickname={displayNickname} matricola={student?.matricola ?? ''} avatarId={currentProfileAvatarId} onOpen={() => navTo('profilo')} />
       </header>
       <nav id="main-navigation" aria-label="Navigazione principale" className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
