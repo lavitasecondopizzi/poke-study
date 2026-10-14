@@ -96,3 +96,17 @@
 .academy-grade-complete{display:flex;align-items:center;gap:7px;margin-top:10px!important;color:#21834c!important;font-weight:800}
 .academy-grade-exam-lock{display:block;margin-top:8px;color:var(--muted,#718197);font-size:10px}
 @media(max-width:720px){.academy-grade-exam-card{align-items:stretch;flex-direction:column;gap:12px}.academy-grade-exam-card>.academy-primary-button{width:100%}}
+
+.academy-question-image{display:block;max-width:min(100%,220px);max-height:220px;object-fit:contain;margin:0 0 14px;padding:10px;border:1px solid #dce7f0;border-radius:12px;background:#f8fbff}
+.academy-review-image{max-width:140px;max-height:140px;margin-top:4px}
+.academy-matching-list{display:flex;flex-direction:column;gap:9px}
+.academy-matching-list label{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,1fr);align-items:center;gap:12px;padding:10px;border:1px solid #dce7f0;border-radius:10px;background:#fff;font-size:12px}
+.academy-matching-list select{min-width:0;width:100%;border:1px solid #cbd9e6;border-radius:8px;background:white;color:#18324b;padding:10px;font:inherit}
+.academy-ordering-list{display:flex;flex-direction:column;gap:8px}
+.academy-ordering-list>div{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px;border:1px solid #dce7f0;border-radius:10px;background:white}
+.academy-order-index{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--academy-soft,#f3f9ff);color:var(--academy-accent-dark,#1d5d8f);font-weight:850}
+.academy-ordering-list>div>div{display:flex;gap:5px}
+.academy-ordering-list>div button{width:31px;height:31px;border:1px solid var(--academy-border,#c9e1f3);border-radius:8px;background:white;color:var(--academy-accent-dark,#1d5d8f);cursor:pointer;font-size:16px}
+.academy-ordering-list>div button:disabled{opacity:.35;cursor:not-allowed}
+.academy-confirm-order{align-self:flex-start;margin-top:3px}
+@media(max-width:520px){.academy-matching-list label{grid-template-columns:1fr}.academy-ordering-list>div{grid-template-columns:28px minmax(0,1fr) auto;gap:7px}}
