@@ -122,31 +122,59 @@ stable
 security definer
 set search_path = ''
 as $$
+  with lesson_averages as (
+    select
+      l.lesson_code,
+      avg(a.score)::numeric as average_score,
+      count(a.id)::integer as attempt_count
+    from public.academy_lessons l
+    left join public.academy_attempts a
+      on a.lesson_code = l.lesson_code
+      and a.identity_id = p_identity_id
+      and a.attempt_kind = 'lesson'
+      and a.status = 'submitted'
+    where l.grade_number = 1
+      and l.subject_code = 'pokemon-sciences'
+      and l.is_published = true
+    group by l.lesson_code
+  ),
+  grade_metrics as (
+    select
+      avg(average_score)::numeric as grade_average,
+      bool_and(coalesce(average_score >= 18, false)) as lessons_passed
+    from lesson_averages
+  ),
+  exam_metrics as (
+    select
+      avg(score)::numeric as exam_average,
+      count(*)::integer as exam_attempt_count
+    from public.academy_attempts
+    where identity_id = p_identity_id
+      and attempt_kind = 'grade_exam'
+      and status = 'submitted'
+  )
   select jsonb_build_object(
     'lessonAverages',
     coalesce((
       select jsonb_object_agg(
-        grouped.lesson_code,
-        jsonb_build_object('average', grouped.average_score, 'attemptCount', grouped.attempt_count)
+        lesson_code,
+        jsonb_build_object('average', average_score, 'attemptCount', attempt_count)
       )
-      from (
-        select lesson_code, avg(score)::numeric as average_score, count(*)::integer as attempt_count
-        from public.academy_attempts
-        where identity_id = p_identity_id and attempt_kind = 'lesson' and status = 'submitted'
-        group by lesson_code
-      ) grouped
+      from lesson_averages
+      where attempt_count > 0
     ), '{}'::jsonb),
-    'gradeExamAverage',
-    (select avg(score)::numeric from public.academy_attempts
-      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'),
-    'gradeExamAttemptCount',
-    (select count(*)::integer from public.academy_attempts
-      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'),
-    'gradeExamPassed',
-    coalesce((select avg(score) >= 26 from public.academy_attempts
-      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'), false)
-  );
-$;
+    'gradeAverage', grade_metrics.grade_average,
+    'gradeLessonsPassed', coalesce(grade_metrics.lessons_passed, false),
+    'gradeExamAverage', exam_metrics.exam_average,
+    'gradeExamAttemptCount', coalesce(exam_metrics.exam_attempt_count, 0),
+    'gradeExamPassed', coalesce(exam_metrics.exam_average >= 26, false),
+    'gradePassed',
+      coalesce(grade_metrics.lessons_passed, false)
+      and coalesce(grade_metrics.grade_average >= 26, false)
+      and coalesce(exam_metrics.exam_average >= 26, false)
+  )
+  from grade_metrics cross join exam_metrics;
+$$;
 
 revoke all on function public.get_academy_progress(uuid) from public, anon, authenticated;
 grant execute on function public.get_academy_progress(uuid) to service_role;
