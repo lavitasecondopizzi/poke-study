@@ -250,7 +250,7 @@ function PortalDashboard({
         <div className="portal-v2-hero-copy">
           <span className="portal-v2-eyebrow"><GraduationCap size={15} /> AREA PERSONALE · {academyName(academy).toLocaleUpperCase('it-IT')}</span>
           <h1 id="portal-welcome-title">Bentornato, {displayNickname}.</h1>
-          <p>Catalogazione, esami e progressi.</p>
+          <p>Catalogazione, attività accademiche e progressi.</p>
           <div className="portal-v2-actions">
             <button type="button" className="portal-v2-primary" onClick={() => onNavigate('game')}><FlaskConical size={17} /> Continua a giocare <ChevronRight size={17} /></button>
           </div>
@@ -557,7 +557,7 @@ export default function App() {
     let active = true;
     const cacheKey = 'poke-study-api-types-v1';
     try { const cached = localStorage.getItem(cacheKey); if (cached) { setTypeCatalog(JSON.parse(cached) as PokemonTypeIndex[]); return; } } catch { /* ignore broken cache */ }
-    if (!navigator.onLine) { setNotice('Gli esami per tipo richiedono il primo caricamento online.'); return; }
+    if (!navigator.onLine) { setNotice('I progressi per tipo richiedono un primo caricamento online.'); return; }
     setTypeLoading(true);
     fetch('https://pokeapi.co/api/v2/type?limit=30')
       .then(response => { if (!response.ok) throw new Error('API tipi non disponibile'); return response.json(); })
@@ -818,7 +818,7 @@ export default function App() {
   }
 
   function resetProgress() {
-    if (!window.confirm('Vuoi azzerare punti, catalogazione, esami, medaglie e storico? Il profilo studente e la matricola resteranno invariati.')) return;
+    if (!window.confirm('Vuoi azzerare punti, catalogazione, risultati, medaglie e storico? Il profilo studente e la matricola resteranno invariati.')) return;
     setProgress(emptyProgress());
     setLessonReady(false);
     setLessonDeck([]);
