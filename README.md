@@ -34,3 +34,7 @@ Il workflow GitHub Actions in `.github/workflows/deploy.yml` pubblica automatica
 Le specie e gli oggetti vengono caricati da risorse pubbliche; il primo caricamento del catalogo completo degli oggetti richiede una connessione Internet. Le illustrazioni sono recuperate dal repository pubblico degli sprite Pokémon.
 
 Questo è un progetto fan-made non ufficiale e non è affiliato a Nintendo, Game Freak o The Pokémon Company.
+
+## Bacheca community (foundation in progress)
+
+La prima tranche del backend condiviso è documentata in [docs/community-backend.md](docs/community-backend.md). Include lo schema Supabase, una Edge Function con token privato e il client TypeScript; la Bacheca online non è ancora esposta nell'interfaccia finché il flusso di iscrizione non può associare in sicurezza il profilo del gioco all'identità remota. Le variabili locali vanno in `.env.local` (ignorato da Git); non committare mai chiavi service-role.
