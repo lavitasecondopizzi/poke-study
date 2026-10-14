@@ -1,5 +1,7 @@
-import { useMemo } from 'react';
-import { AlertTriangle, Award, BookOpen, CheckCircle2, Clock3, Medal, RotateCcw, Sparkles, Trophy } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { AlertTriangle, Award, BookOpen, CheckCircle2, Clock3, Eye, FileText, GraduationCap, Medal, RotateCcw, Sparkles, Trophy, X } from 'lucide-react';
+import { loadAcademyAttemptReview, loadAcademyCurriculum } from './academy';
+import type { AcademyAttemptResult, AcademyAttemptSummary, AcademyLesson } from './academy';
 import type { ApiNamedResource, PokemonSpecies, SavedProgress } from './types';
 import { displayName, itemCard, MACRO_CATEGORIES, pokemonCard } from './catalog';
 
@@ -11,14 +13,115 @@ const REGIONS = [
   { name: 'Alola', start: 722, end: 809 }, { name: 'Galar', start: 810, end: 905 },
   { name: 'Paldea', start: 906, end: 1025 },
 ];
-type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; onReset: () => void };
+type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; configured: boolean; identityReady: boolean; onReset: () => void };
+type AcademyRecord = { lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[] };
+type RegisterView = 'summary' | 'detail';
+
+function average(values: Array<number | null | undefined>): number | null {
+  const scores = values.filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+  return scores.length ? scores.reduce((sum, value) => sum + value, 0) / scores.length : null;
+}
+
+function formatGrade(value: number | null): string {
+  return value === null ? '—' : `${value.toLocaleString('it-IT', { maximumFractionDigits: 2 })}/30`;
+}
+
+function attemptKindLabel(kind: AcademyAttemptSummary['attempt_kind']): string {
+  if (kind === 'lesson') return 'Test lezione';
+  if (kind === 'subject_exam') return 'Esame di materia';
+  return 'Esame di grado';
+}
+
+function answerLabel(attempt: AcademyAttemptResult['review'][number], answer: unknown): string {
+  const label = (id: unknown) => attempt.options.find(option => option.id === String(id))?.label ?? String(id ?? 'Nessuna risposta');
+  if (Array.isArray(answer)) return answer.map(label).join(' → ');
+  if (answer && typeof answer === 'object') return Object.entries(answer as Record<string, unknown>).map(([left, right]) => `${label(left)} → ${label(right)}`).join(' · ');
+  return label(answer);
+}
 
 function Bar({ value }: { value: number }) {
   const safe = Math.max(0, Math.min(100, value));
   return <div className="pr-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(safe)}><span style={{ width: `${safe}%` }} /></div>;
 }
 
-export default function PersonalRegister({ progress, species, items, loading, onReset }: Props) {
+export default function PersonalRegister({ progress, species, items, loading, configured, identityReady, onReset }: Props) {
+  const [academyRecord, setAcademyRecord] = useState<AcademyRecord | null>(null);
+  const [academyLoading, setAcademyLoading] = useState(false);
+  const [academyError, setAcademyError] = useState('');
+  const [registerView, setRegisterView] = useState<RegisterView>('summary');
+  const [reviewAttempt, setReviewAttempt] = useState<AcademyAttemptResult | null>(null);
+  const [reviewLoading, setReviewLoading] = useState(false);
+  const [reviewError, setReviewError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    if (!configured || !identityReady) {
+      setAcademyRecord(null);
+      setAcademyLoading(false);
+      setAcademyError('');
+      return () => { active = false; };
+    }
+    setAcademyLoading(true);
+    setAcademyError('');
+    loadAcademyCurriculum()
+      .then(data => { if (active) setAcademyRecord({ lessons: data.lessons, attempts: data.attempts }); })
+      .catch(error => {
+        if (active) {
+          setAcademyRecord(null);
+          setAcademyError(error instanceof Error ? error.message : 'Impossibile caricare i risultati accademici.');
+        }
+      })
+      .finally(() => { if (active) setAcademyLoading(false); });
+    return () => { active = false; };
+  }, [configured, identityReady]);
+
+  const academicStats = useMemo(() => {
+    if (!academyRecord) return null;
+    const submitted = academyRecord.attempts.filter(attempt => attempt.status === 'submitted');
+    const lessonScores = academyRecord.lessons.map(lesson => {
+      const scores = submitted.filter(attempt => attempt.attempt_kind === 'lesson' && attempt.lesson_code === lesson.lesson_code && attempt.score !== null).map(attempt => attempt.score);
+      return { lesson, average: average(scores), attempts: scores.length, passed: scores.length > 0 && scores.every(score => (score ?? 0) >= 18) };
+    });
+    const overallAverage = average(lessonScores.map(item => item.average));
+    const passedLessons = lessonScores.filter(item => item.passed).length;
+    const subjectCodes = [...new Set(academyRecord.lessons.map(lesson => lesson.subject_code))];
+    const subjectExams = subjectCodes.map(code => {
+      const lessons = academyRecord.lessons.filter(lesson => lesson.subject_code === code);
+      const title = lessons[0]?.subject?.title ?? code;
+      const scores = submitted.filter(attempt => attempt.attempt_kind === 'subject_exam' && attempt.subject_code === code && attempt.score !== null).map(attempt => attempt.score);
+      return { code, title, average: average(scores), attempts: scores.length, passed: scores.length > 0 && scores.every(score => (score ?? 0) >= 18), lessons };
+    });
+    const gradeNumbers = [...new Set(academyRecord.lessons.map(lesson => lesson.grade_number))].sort((a,b) => a-b);
+    const grades = gradeNumbers.map(grade => {
+      const lessons = lessonScores.filter(item => item.lesson.grade_number === grade);
+      const exams = subjectExams.filter(subject => subject.lessons.some(lesson => lesson.grade_number === grade));
+      const gradeExams = submitted.filter(attempt => attempt.attempt_kind === 'grade_exam' && attempt.grade_number === grade && attempt.score !== null);
+      return {
+        grade,
+        lessons,
+        lessonAverage: average(lessons.map(item => item.average)),
+        lessonsPassed: lessons.length > 0 && lessons.every(item => item.passed),
+        subjectExams: exams,
+        gradeExamAverage: average(gradeExams.map(attempt => attempt.score)),
+        gradeExamAttempts: gradeExams.length,
+        gradeExamPassed: gradeExams.length > 0 && gradeExams.every(attempt => (attempt.score ?? 0) >= 26),
+      };
+    });
+    return { submitted, lessonScores, overallAverage, passedLessons, subjectExams, grades, totalAttempts: academyRecord.attempts.length };
+  }, [academyRecord]);
+
+  async function openAttemptReview(attemptId: string) {
+    setReviewLoading(true);
+    setReviewError('');
+    setReviewAttempt(null);
+    try {
+      setReviewAttempt(await loadAcademyAttemptReview(attemptId));
+    } catch (error) {
+      setReviewError(error instanceof Error ? error.message : 'Impossibile caricare la revisione del tentativo.');
+    } finally {
+      setReviewLoading(false);
+    }
+  }
   const donePokemon = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const doneEntries = useMemo(() => new Set(progress.completedEntries ?? []), [progress.completedEntries]);
   const catalog = useMemo(() => [...species.map(pokemonCard), ...items.map(itemCard)], [species, items]);
@@ -60,8 +163,58 @@ export default function PersonalRegister({ progress, species, items, loading, on
 
   return <>
     <div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div>
+    <section className="pr-academic-record" aria-labelledby="pr-academic-title">
+      <div className="pr-academic-heading">
+        <div><span className="eyebrow">PERCORSO FORMATIVO</span><h2 id="pr-academic-title"><GraduationCap size={23}/> Pagella accademica</h2><p>Voti, medie ed esiti registrati nell’Accademia.</p></div>
+        <div className="pr-view-switch" role="group" aria-label="Vista della pagella">
+          <button type="button" className={registerView === 'summary' ? 'is-active' : ''} aria-pressed={registerView === 'summary'} onClick={() => setRegisterView('summary')}><FileText size={15}/> Sintesi</button>
+          <button type="button" className={registerView === 'detail' ? 'is-active' : ''} aria-pressed={registerView === 'detail'} onClick={() => setRegisterView('detail')}><Eye size={15}/> Dettaglio</button>
+        </div>
+      </div>
+      {!configured ? <div className="pr-academic-state"><GraduationCap size={22}/><div><strong>Registro accademico non configurato</strong><p>I risultati saranno disponibili quando il servizio dell’Accademia sarà configurato.</p></div></div>
+      : !identityReady ? <div className="pr-academic-state"><GraduationCap size={22}/><div><strong>Collega l’identità online</strong><p>Per consultare voti e tentativi, verifica prima l’identità community dal Profilo allievo.</p></div></div>
+      : academyLoading ? <div className="pr-academic-state"><span className="pokeball-loader"/><div><strong>Caricamento della pagella…</strong><p>Recupero dei risultati accademici.</p></div></div>
+      : academyError ? <div className="pr-academic-state is-error" role="alert"><AlertTriangle size={22}/><div><strong>Risultati non disponibili</strong><p>{academyError}</p><button type="button" className="secondary-button" onClick={() => { setAcademyRecord(null); setAcademyError(''); setAcademyLoading(true); loadAcademyCurriculum().then(data => setAcademyRecord({lessons:data.lessons,attempts:data.attempts})).catch(error => setAcademyError(error instanceof Error ? error.message : 'Impossibile caricare i risultati accademici.')).finally(() => setAcademyLoading(false)); }}>Riprova</button></div></div>
+      : !academyRecord || !academicStats ? <div className="pr-academic-state"><BookOpen size={22}/><div><strong>Nessun dato accademico</strong><p>Quando inizierai il percorso, voti e tentativi appariranno qui.</p></div></div>
+      : <>
+        <div className="pr-academic-metrics">
+          <article><span>MEDIA DELLE LEZIONI</span><strong>{formatGrade(academicStats.overallAverage)}</strong><small>Media delle medie disponibili</small></article>
+          <article><span>LEZIONI SUPERATE</span><strong>{academicStats.passedLessons}<small> / {academyRecord.lessons.length}</small></strong><small>Media dei tentativi almeno 18/30</small></article>
+          <article><span>TENTATIVI INVIATI</span><strong>{academicStats.submitted.length}</strong><small>{academicStats.totalAttempts} registrati in totale</small></article>
+        </div>
+        {registerView === 'summary' ? <div className="pr-academic-summary">
+          <div className="pr-academic-subheading"><div><strong>Quadro dei gradi</strong><p>Medie ed esiti, senza confondere la media con il superamento ufficiale.</p></div></div>
+          {academicStats.grades.length ? academicStats.grades.map(grade => <article className="pr-grade-summary" key={grade.grade}>
+            <div className="pr-grade-summary-title"><strong>Grado {grade.grade}</strong><span className={grade.lessonsPassed && grade.lessonAverage !== null && grade.lessonAverage >= 26 && grade.subjectExams.every(item => item.passed) && grade.gradeExamPassed ? 'is-passed' : 'is-pending'}>{grade.lessonsPassed && grade.lessonAverage !== null && grade.lessonAverage >= 26 && grade.subjectExams.length > 0 && grade.subjectExams.every(item => item.passed) && grade.gradeExamPassed ? 'Percorso completato' : 'In corso'}</span></div>
+            <div className="pr-grade-summary-values"><div><small>Media lezioni</small><strong>{formatGrade(grade.lessonAverage)}</strong></div><div><small>Esami materia superati</small><strong>{grade.subjectExams.filter(item=>item.passed).length} / {grade.subjectExams.length}</strong></div><div><small>Media esame di grado</small><strong>{formatGrade(grade.gradeExamAverage)}</strong></div></div>
+          </article>) : <p className="pr-academic-muted">Il curriculum non contiene ancora gradi pubblicati.</p>}
+          <div className="pr-academic-subheading"><div><strong>Esami per materia</strong><p>La media usa solo i tentativi inviati e valutati.</p></div></div>
+          <div className="pr-subject-results">{academicStats.subjectExams.map(subject => <article key={subject.code}><div><strong>{subject.title}</strong><span className={subject.passed?'is-passed':'is-pending'}>{subject.passed?'Superato':subject.average === null?'Da sostenere':'Da consolidare'}</span></div><strong className="pr-subject-average">{formatGrade(subject.average)}</strong><small>{subject.attempts} {subject.attempts===1?'tentativo':'tentativi'} valutati</small></article>)}</div>
+        </div> : <div className="pr-academic-detail">
+          {academicStats.grades.map(grade => <section className="pr-detail-grade" key={grade.grade}>
+            <h3>Grado {grade.grade}</h3>
+            {grade.subjectExams.map(subject => <div className="pr-detail-subject" key={subject.code}>
+              <div className="pr-detail-subject-heading"><strong>{subject.title}</strong><span>Media esame: {formatGrade(subject.average)}</span></div>
+              {subject.lessons.map(lesson => {
+                const score = academicStats.lessonScores.find(item => item.lesson.lesson_code === lesson.lesson_code);
+                const attempts = academyRecord.attempts.filter(item => item.attempt_kind === 'lesson' && item.lesson_code === lesson.lesson_code).sort((a,b) => new Date(b.submitted_at ?? b.created_at).getTime() - new Date(a.submitted_at ?? a.created_at).getTime());
+                return <div className="pr-detail-lesson" key={lesson.lesson_code}>
+                  <div className="pr-detail-lesson-heading"><div><strong>{lesson.title}</strong><small>{attempts.length} {attempts.length===1?'tentativo':'tentativi'} · media {formatGrade(score?.average ?? null)}</small></div><span className={score?.passed?'is-passed':'is-pending'}>{score?.passed?'Superata':score?.average === null || score?.average === undefined?'Da sostenere':'Da consolidare'}</span></div>
+                  {attempts.length ? <ol className="pr-attempt-list">{attempts.map(attempt => <li key={attempt.id}><div><strong>{formatGrade(attempt.score)}</strong><small>{new Date(attempt.submitted_at ?? attempt.created_at).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})} · {attempt.status==='submitted' ? attempt.passed===true?'Superato':attempt.passed===false?'Non superato':'Valutato' : 'In corso'}</small></div>{attempt.status==='submitted' && <button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button>}</li>)}</ol> : <p className="pr-academic-muted">Nessun tentativo registrato.</p>}
+                </div>;
+              })}
+              <div className="pr-detail-exams"><strong>Esami di materia</strong>{academyRecord.attempts.filter(item=>item.attempt_kind==='subject_exam' && item.subject_code===subject.code && item.status==='submitted').sort((a,b)=>new Date(b.submitted_at ?? b.created_at).getTime()-new Date(a.submitted_at ?? a.created_at).getTime()).map(attempt=><div key={attempt.id}><span>{formatGrade(attempt.score)} · {new Date(attempt.submitted_at ?? attempt.created_at).toLocaleDateString('it-IT')}</span><button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button></div>)}</div>
+            </div>)}
+            <div className="pr-detail-exams pr-grade-exam-history"><strong>Esami di grado</strong>{academyRecord.attempts.filter(item=>item.attempt_kind==='grade_exam' && item.grade_number===grade.grade).sort((a,b)=>new Date(b.submitted_at ?? b.created_at).getTime()-new Date(a.submitted_at ?? a.created_at).getTime()).map(attempt=><div key={attempt.id}><span>{formatGrade(attempt.score)} · {new Date(attempt.submitted_at ?? attempt.created_at).toLocaleDateString('it-IT')} · {attempt.status==='submitted' ? attempt.passed===true?'Superato':attempt.passed===false?'Non superato':'Valutato':'In corso'}</span>{attempt.status==='submitted' && <button type="button" className="pr-review-button" onClick={() => void openAttemptReview(attempt.id)}>Rivedi <Eye size={13}/></button>}</div>)}{!academyRecord.attempts.some(item=>item.attempt_kind==='grade_exam' && item.grade_number===grade.grade) && <p className="pr-academic-muted">Nessun tentativo registrato.</p>}</div>
+          </section>)}
+        </div>}
+      </>}
+    </section>
+    {reviewLoading && <div className="pr-review-overlay" role="dialog" aria-modal="true" aria-label="Revisione del tentativo"><div className="pr-review-dialog"><div className="pr-review-dialog-heading"><h2>Revisione del tentativo</h2><button type="button" aria-label="Chiudi" onClick={() => setReviewLoading(false)}><X size={18}/></button></div><p>Caricamento delle risposte…</p></div></div>}
+    {reviewError && !reviewAttempt && !reviewLoading && <div className="pr-review-overlay" role="dialog" aria-modal="true" aria-label="Revisione non disponibile"><div className="pr-review-dialog"><div className="pr-review-dialog-heading"><h2>Revisione non disponibile</h2><button type="button" aria-label="Chiudi" onClick={() => setReviewError('')}><X size={18}/></button></div><p role="alert">{reviewError}</p></div></div>}
+    {reviewAttempt && <div className="pr-review-overlay" role="dialog" aria-modal="true" aria-label="Revisione del tentativo" onClick={() => setReviewAttempt(null)}><div className="pr-review-dialog" onClick={event => event.stopPropagation()}><div className="pr-review-dialog-heading"><div><span className="eyebrow">ESITO {reviewAttempt.passed?'POSITIVO':'DA RIVEDERE'}</span><h2>Revisione del tentativo</h2><p>{formatGrade(reviewAttempt.score)} · {reviewAttempt.correctCount}/{reviewAttempt.questionCount} risposte corrette</p></div><button type="button" aria-label="Chiudi" onClick={() => setReviewAttempt(null)}><X size={18}/></button></div><div className="pr-review-questions">{reviewAttempt.review.map((question,index)=><article key={question.questionId} className={question.isCorrect?'is-correct':'is-wrong'}><div className="pr-review-question-title"><span>{index+1}</span><strong>{question.prompt}</strong><b>{question.isCorrect?'Corretta':'Da rivedere'}</b></div><p><small>La tua risposta</small><strong>{answerLabel(question,question.selectedAnswer)}</strong></p><p><small>Risposta corretta</small><strong>{answerLabel(question,question.correctAnswer)}</strong></p>{question.explanation && <p className="pr-review-explanation">{question.explanation}</p>}{question.sourceTitle && <small className="pr-review-source">Fonte: {question.sourceTitle}{question.sourceUrl ? <> · <a href={question.sourceUrl} target="_blank" rel="noreferrer">Apri fonte</a></> : null}</small>}</article>)}</div></div></div>}
     <header className="pr-hero">
-      <div><span className="eyebrow">SEGRETERIA DIDATTICA · SCHEDA STUDENTE</span><h1>Registro personale</h1><p>Progressi e traguardi.</p>
+      <div><span className="eyebrow">CATALOGAZIONE · PROGRESSI PERSONALI</span><h1>Progressi di catalogazione</h1><p>Pokédex, collezioni e traguardi personali.</p>
         <div className="pr-total"><strong>{Math.round(stats.percent)}%</strong><span>Pokédex nazionale completato</span></div><Bar value={stats.percent}/><small>{stats.pokemon.toLocaleString('it-IT')} / {DEX_SIZE.toLocaleString('it-IT')} specie</small>
       </div><div className="pr-seal" aria-hidden="true"><Trophy size={32}/><span>REGISTRO</span><b>UFFICIALE</b></div>
     </header>
