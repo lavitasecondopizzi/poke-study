@@ -6,6 +6,7 @@ import {
   loadAcademyAttemptReview,
   startAcademyAttempt,
   startAcademyGradeExam,
+  startAcademySubjectExam,
   submitAcademyAttempt,
 } from "./academy";
 import type {
@@ -14,6 +15,7 @@ import type {
   AcademyLesson,
   AcademyQuestion,
   AcademyProgressSummary,
+  AcademyPointsSummary,
 } from "./academy";
 import "./academy.css";
 
@@ -87,6 +89,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const [lessons, setLessons] = useState<AcademyLesson[]>([]);
   const [attempts, setAttempts] = useState<AcademyAttemptSummary[]>([]);
   const [progressSummary, setProgressSummary] = useState<AcademyProgressSummary | null>(null);
+  const [pointsSummary, setPointsSummary] = useState<AcademyPointsSummary | null>(null);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [lesson, setLesson] = useState<AcademyLesson | null>(null);
   const [lessonAttempts, setLessonAttempts] = useState<AcademyAttemptSummary[]>([]);
@@ -94,7 +97,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const [lessonAttemptCount, setLessonAttemptCount] = useState(0);
   const [questions, setQuestions] = useState<AcademyQuestion[]>([]);
   const [attemptId, setAttemptId] = useState<string | null>(null);
-  const [attemptKind, setAttemptKind] = useState<"lesson" | "grade_exam" | null>(null);
+  const [attemptKind, setAttemptKind] = useState<"lesson" | "subject_exam" | "grade_exam" | null>(null);
   const [reviewingHistory, setReviewingHistory] = useState(false);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [result, setResult] = useState<AcademyAttemptResult | null>(null);
@@ -116,8 +119,9 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const answeredCount = questions.filter(question => isQuestionAnswered(question, answers[question.questionId])).length;
   const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam");
+  const subjectExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "subject_exam");
   const gradeExamAttemptCount = progressSummary?.gradeExamAttemptCount ?? gradeExamAttempts.length;
-  const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount;
+  const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount + subjectExamAttempts.length;
   const gradeAverage = lessons.length > 0 && lessons.every(item => averages.get(item.lesson_code) !== null)
     ? lessons.reduce((sum, item) => sum + (averages.get(item.lesson_code) ?? 0), 0) / lessons.length
     : null;
@@ -130,6 +134,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setLessons(data.lessons);
     setAttempts(data.attempts);
     setProgressSummary(data.progress);
+    setPointsSummary(data.points);
   }
 
   useEffect(() => {
@@ -154,7 +159,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   }, [configured, identityReady]);
 
   useEffect(() => {
-    if (!selectedCode || selectedCode === "__grade_exam__" || !configured || !identityReady) {
+    if (!selectedCode || selectedCode === "__grade_exam__" || selectedCode === "__subject_exam__" || !configured || !identityReady) {
       setLesson(null);
       setLessonAttempts([]);
       setLessonAverage(null);
@@ -201,6 +206,26 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     }
   }
 
+  async function beginSubjectExam() {
+    setLoading(true);
+    setError("");
+    setNotice("");
+    setResult(null);
+    setReviewingHistory(false);
+    setAnswers({});
+    try {
+      const data = await startAcademySubjectExam("pokemon-sciences", makeAttemptKey());
+      setSelectedCode("__subject_exam__");
+      setAttemptKind("subject_exam");
+      setAttemptId(data.attemptId);
+      setQuestions(data.questions);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Non è stato possibile avviare l'esame finale di materia.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function beginGradeExam() {
     setLoading(true);
     setError("");
@@ -237,7 +262,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
       setNotice("Tentativo registrato nello storico accademico.");
       try {
         await refreshCurriculum();
-        if (selectedCode && selectedCode !== "__grade_exam__") {
+        if (selectedCode && selectedCode !== "__grade_exam__" && selectedCode !== "__subject_exam__") {
           const detail = await loadAcademyLesson(selectedCode);
           setLesson(detail.lesson);
           setLessonAttempts(detail.attempts);
@@ -254,13 +279,13 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     }
   }
 
-  async function reviewAttempt(id: string, kind: "lesson" | "grade_exam", lessonCode?: string | null) {
+  async function reviewAttempt(id: string, kind: "lesson" | "subject_exam" | "grade_exam", lessonCode?: string | null) {
     setLoading(true);
     setError("");
     setNotice("");
     try {
       const historical = await loadAcademyAttemptReview(id);
-      setSelectedCode(kind === "grade_exam" ? "__grade_exam__" : (lessonCode ?? selectedCode));
+      setSelectedCode(kind === "grade_exam" ? "__grade_exam__" : kind === "subject_exam" ? "__subject_exam__" : (lessonCode ?? selectedCode));
       setAttemptKind(kind);
       setAttemptId(null);
       setQuestions([]);
@@ -320,6 +345,26 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
 
       {!selectedCode ? (
         <>
+          <section className="academy-content-card academy-campus-points">
+            <div className="academy-campus-points-heading">
+              <div><span className="academy-eyebrow">PUNTI ACCADEMICI</span><h2>Classifica delle accademie</h2></div>
+              <div className="academy-student-points"><span>Il tuo saldo</span><strong>{pointsSummary?.studentPoints ?? 0}</strong></div>
+            </div>
+            <p>I punti di ogni prova consegnata si sommano al punteggio del campus dello studente.</p>
+            <ol className="academy-campus-ranking">
+              {(pointsSummary?.campusRanking ?? [
+                { academy: "arancia" as const, title: "Accademia Arancia", points: 0 },
+                { academy: "uva" as const, title: "Accademia Uva", points: 0 },
+                { academy: "mirtillo" as const, title: "Istituto Mirtillo", points: 0 },
+              ]).map((campus, index) => (
+                <li key={campus.academy} className={pointsSummary?.studentAcademy === campus.academy ? "is-own-campus" : ""}>
+                  <span className="academy-ranking-position">{index + 1}</span>
+                  <span className="academy-ranking-name">{campus.title}{pointsSummary?.studentAcademy === campus.academy && <small>Il tuo campus</small>}</span>
+                  <strong>{campus.points} pt</strong>
+                </li>
+              ))}
+            </ol>
+          </section>
           <div className="academy-summary-grid">
             <article><span>LEZIONI</span><strong>{lessons.length}</strong><small>Programma pubblicato</small></article>
             <article><span>SUPERATE</span><strong>{lessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
@@ -340,7 +385,18 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
           </div>
           <section className="academy-content-card academy-grade-exam-card">
             <div>
-              <span className="academy-eyebrow">ESAME FINALE</span>
+              <span className="academy-eyebrow">ESAME FINALE DI MATERIA</span>
+              <h3>Scienze Pokémon e Pokédex</h3>
+              <p>L'esame finale di materia contiene 15 domande estratte dalle lezioni della materia. Ogni tentativo consegnato assegna 3 punti accademici, anche se insufficiente.</p>
+              <div className="academy-grade-exam-stats"><span>Tentativi <strong>{subjectExamAttempts.length}</strong></span><span>Punti per consegna <strong>3</strong></span></div>
+              {subjectExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi</strong>{subjectExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {subjectExamAttempts.length - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "subject_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
+            </div>
+            <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginSubjectExam()}>{subjectExamAttempts.length ? "Ripeti l’esame di materia" : "Accedi all’esame di materia"}</button>
+            {!allLessonsPassed && <small className="academy-grade-exam-lock">Completa tutte le lezioni della materia con una media di almeno 18/30 per sbloccare l’esame.</small>}
+          </section>
+          <section className="academy-content-card academy-grade-exam-card">
+            <div>
+              <span className="academy-eyebrow">ESAME FINALE DI GRADO</span>
               <h3>Esame di grado — Fondamenti</h3>
               <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 25 domande uniche.</p>
               <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttemptCount}</strong></span></div>
@@ -354,9 +410,10 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
       ) : (
         <div className="academy-detail">
           <button type="button" className="academy-back-button" onClick={() => { resetAttempt(); setSelectedCode(null); }}><ArrowLeft size={16} /> Tutte le lezioni</button>
-          {(lesson || selectedCode === "__grade_exam__") && <>
-            <header className="academy-detail-heading"><span className="academy-eyebrow">{selectedCode === "__grade_exam__" ? "ESAME FINALE" : "LEZIONE " + (lesson?.order_index ?? "")}</span><h2>{selectedCode === "__grade_exam__" ? "Esame finale del Grado I" : lesson?.title}</h2><p>{selectedCode === "__grade_exam__" ? "Rispondi alle domande estratte dal programma del Grado I. Il voto minimo per superare l’esame è 26/30." : lesson?.summary}</p></header>
+          {(lesson || selectedCode === "__grade_exam__" || selectedCode === "__subject_exam__") && <>
+            <header className="academy-detail-heading"><span className="academy-eyebrow">{selectedCode === "__grade_exam__" ? "ESAME FINALE DI GRADO" : selectedCode === "__subject_exam__" ? "ESAME FINALE DI MATERIA" : "LEZIONE " + (lesson?.order_index ?? "")}</span><h2>{selectedCode === "__grade_exam__" ? "Esame finale del Grado I" : selectedCode === "__subject_exam__" ? "Esame finale — Scienze Pokémon e Pokédex" : lesson?.title}</h2><p>{selectedCode === "__grade_exam__" ? "Rispondi alle domande estratte dal programma del Grado I. Il voto minimo per superare l’esame è 26/30." : selectedCode === "__subject_exam__" ? "Rispondi a 15 domande estratte dalle lezioni della materia. Il voto minimo è 18/30." : lesson?.summary}</p></header>
             {lesson && !selectedIsUnlocked && <div className="academy-alert academy-alert-error">Questa lezione è bloccata: completa la precedente con una media di almeno 18/30.</div>}
+            {selectedCode === "__subject_exam__" && !attemptId && !result && <section className="academy-content-card academy-test-intro"><div><h3><BookOpen size={18} /> Esame finale di materia</h3><p>Il test contiene 15 domande. La consegna assegna 3 punti accademici, indipendentemente dal voto ottenuto.</p></div><button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginSubjectExam()}>Inizia l'esame</button></section>}
             {lesson && !attemptId && !result && <>
               <section className="academy-content-card">
                 <h3><BookOpen size={18} /> Obiettivi formativi</h3>
@@ -367,7 +424,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               {lessonAttemptCount > 0 && <section className="academy-content-card"><h3>Storico della lezione</h3><div className="academy-history-list">{lessonAttempts.map((attempt, index) => <div key={attempt.id}><span>Tentativo {lessonAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "lesson", lesson?.lesson_code)}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div><p className="academy-average-note">Media di tutti i tentativi: <strong>{formatAverage(lessonAverage)}</strong></p></section>}
             </>}
             {attemptId && <section className="academy-test-panel">
-              <div className="academy-test-progress"><span>{attemptKind === "grade_exam" ? "ESAME FINALE DEL GRADO" : "TEST DELLA LEZIONE"}</span><strong>{answeredCount} / {questions.length} risposte</strong></div>
+              <div className="academy-test-progress"><span>{attemptKind === "grade_exam" ? "ESAME FINALE DEL GRADO" : attemptKind === "subject_exam" ? "ESAME FINALE DI MATERIA" : "TEST DELLA LEZIONE"}</span><strong>{answeredCount} / {questions.length} risposte</strong></div>
               {questions.map((question, index) => <fieldset className="academy-question" key={question.questionId}>
                 <legend><span>DOMANDA {index + 1} · {question.difficulty.toLocaleUpperCase("it-IT")}</span>{question.prompt}</legend>
                 {question.mediaUrl && <img className="academy-question-image" src={question.mediaUrl} alt="Immagine da identificare" loading="lazy" />}
@@ -385,7 +442,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
             </section>}
             {result && <section className="academy-result-panel">
               <div className={"academy-result-mark " + (result.passed ? "passed" : "failed")}>{result.passed ? <CheckCircle2 size={28} /> : <CircleHelp size={28} />}</div>
-              <span className="academy-eyebrow">RISULTATO DEL TENTATIVO</span><h3>{result.score}/{result.gradeMax ?? 30}</h3><small className="academy-rule-note">Regola {result.gradingRuleVersion ?? "thirtieths-v1"} · soglia di questo tentativo {result.passThreshold ?? (attemptKind === "grade_exam" ? 26 : 18)}/{result.gradeMax ?? 30}</small><p>{result.correctCount} risposte corrette su {result.questionCount}. {attemptKind === "grade_exam" ? (result.passed ? "Questo tentativo raggiunge almeno 26/30." : "Questo tentativo è inferiore a 26/30 e verrà conteggiato nella media.") : (result.passed ? "Il voto di questo tentativo raggiunge almeno 18/30; la media di tutti i tentativi determina il superamento." : "Tentativo insufficiente: verrà comunque conteggiato nella media.")}</p>
+              <span className="academy-eyebrow">RISULTATO DEL TENTATIVO</span><h3>{result.score}/{result.gradeMax ?? 30}</h3><small className="academy-rule-note">Regola {result.gradingRuleVersion ?? "thirtieths-v1"} · soglia di questo tentativo {result.passThreshold ?? (attemptKind === "grade_exam" ? 26 : 18)}/{result.gradeMax ?? 30}</small><p>{result.correctCount} risposte corrette su {result.questionCount}. {attemptKind === "grade_exam" ? (result.passed ? "Questo tentativo raggiunge almeno 26/30." : "Questo tentativo è inferiore a 26/30 e verrà conteggiato nella media.") : (result.passed ? "Il voto di questo tentativo raggiunge almeno 18/30; la media di tutti i tentativi determina il superamento." : "Tentativo insufficiente: verrà comunque conteggiato nella media.")}</p><p className="academy-points-awarded">Punti accademici assegnati per questa consegna: <strong>+{result.pointsAwarded ?? (attemptKind === "lesson" ? 1 : attemptKind === "subject_exam" ? 3 : 5)}</strong>. Saldo personale: <strong>{result.academicPoints ?? pointsSummary?.studentPoints ?? "—"}</strong>.</p>
               {attemptKind === "grade_exam" && <p>Media del grado: <strong>{formatAverage(gradeAverage)}</strong> · Media di tutti i tentativi d’esame: <strong>{formatAverage(gradeExamAverage)}</strong>. {gradePassed ? "Grado I superato." : "Il grado risulta superato solo quando entrambe le medie raggiungono 26/30."}</p>}
               <div className="academy-review-list">{result.review.map((item, index) => <article key={item.questionId} className={item.isCorrect ? "correct" : "incorrect"}><h4>{index + 1}. {item.prompt}</h4>{item.mediaUrl && <img className="academy-question-image academy-review-image" src={item.mediaUrl} alt="Immagine della domanda" loading="lazy" />}<p><strong>La tua risposta:</strong> {formatAnswer(item.options, item.selectedAnswer)}</p><p><strong>{item.isCorrect ? "Risposta corretta" : "Risposta corretta attesa"}:</strong> {formatAnswer(item.options, item.correctAnswer)}</p><p>{item.explanation}</p><a href={item.sourceUrl} target="_blank" rel="noreferrer">Fonte: {item.sourceTitle} · verificata il {item.sourceCheckedAt}</a></article>)}</div>
               <button type="button" className="academy-primary-button" onClick={() => { const returnToLesson = reviewingHistory && attemptKind === "lesson"; resetAttempt(); if (!returnToLesson) setSelectedCode(null); }}>{reviewingHistory ? (attemptKind === "lesson" ? "Torna alla lezione" : "Torna al programma") : "Torna al programma"}</button>
