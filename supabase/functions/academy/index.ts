@@ -113,7 +113,7 @@ Deno.serve(async request => {
     const tokenHash = await hashToken(token);
     const { data: identity, error: identityError } = await supabase
       .from("community_identities")
-      .select("id,nickname,matricola")
+      .select("id,nickname,matricola,academy")
       .eq("token_hash", tokenHash)
       .maybeSingle();
 
@@ -122,7 +122,7 @@ Deno.serve(async request => {
     const action = input.action;
 
     if (action === "get_curriculum") {
-      const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }, { data: progress, error: progressError }] = await Promise.all([
+      const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }, { data: progress, error: progressError }, { data: pointsSummary, error: pointsError }] = await Promise.all([
         supabase.from("academy_lessons")
           .select("lesson_code,grade_number,subject_code,order_index,title,summary,objectives,version")
           .eq("is_published", true)
@@ -137,9 +137,10 @@ Deno.serve(async request => {
           .order("created_at", { ascending: false })
           .limit(500),
         supabase.rpc("get_academy_progress", { p_identity_id: identity.id }),
+        supabase.rpc("get_academy_points_summary", { p_identity_id: identity.id }),
       ]);
 
-      if (lessonsError || subjectsError || attemptsError || progressError) {
+      if (lessonsError || subjectsError || attemptsError || progressError || pointsError) {
         return response(500, { error: "Impossibile caricare il programma o lo storico accademico." });
       }
       const subjectMap = new Map((subjects ?? []).map(subject => [subject.subject_code, subject]));
@@ -147,7 +148,7 @@ Deno.serve(async request => {
         ...lesson,
         subject: subjectMap.get(lesson.subject_code) ?? null,
       }));
-      return response(200, { lessons: enrichedLessons, attempts: attempts ?? [], progress: progress ?? null });
+      return response(200, { lessons: enrichedLessons, attempts: attempts ?? [], progress: progress ?? null, points: pointsSummary ?? null, academy: identity.academy });
     }
 
     if (action === "get_lesson") {
@@ -282,6 +283,7 @@ Deno.serve(async request => {
         .insert({
           identity_id: identity.id,
           lesson_code: lessonCode,
+          subject_code: lesson.subject_code,
           grade_number: lesson.grade_number,
           attempt_kind: "lesson",
           grading_rule_version: "thirtieths-v1",
@@ -441,12 +443,141 @@ Deno.serve(async request => {
     }
 
 
+    if (action === "start_subject_exam") {
+      const clientAttemptKey = typeof input.clientAttemptKey === "string" ? input.clientAttemptKey : "";
+      const subjectCode = typeof input.subjectCode === "string" ? input.subjectCode : "pokemon-sciences";
+      if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
+        return response(400, { error: "Chiave del tentativo non valida." });
+      }
+
+      const { data: existing } = await supabase.from("academy_attempts")
+        .select("id,status,question_snapshot")
+        .eq("identity_id", identity.id)
+        .eq("client_attempt_key", clientAttemptKey)
+        .maybeSingle();
+      if (existing) {
+        if (existing.status !== "started") return response(409, { error: "Questo tentativo è già stato consegnato." });
+        const snapshot = existing.question_snapshot as QuestionSnapshot[];
+        return response(200, { attemptId: existing.id, questions: snapshot.map(publicQuestion), questionCount: snapshot.length });
+      }
+
+      const { data: lessons, error: lessonsError } = await supabase.from("academy_lessons")
+        .select("lesson_code,order_index")
+        .eq("grade_number", 1)
+        .eq("subject_code", subjectCode)
+        .eq("is_published", true)
+        .order("order_index", { ascending: true });
+      if (lessonsError || !lessons?.length) return response(409, { error: "Il programma della materia non è disponibile." });
+
+      for (const lesson of lessons) {
+        const { data: history, error: historyError } = await supabase.from("academy_attempts")
+          .select("score")
+          .eq("identity_id", identity.id)
+          .eq("attempt_kind", "lesson")
+          .eq("lesson_code", lesson.lesson_code)
+          .eq("status", "submitted");
+        if (historyError) return response(500, { error: "Impossibile verificare i prerequisiti dell'esame." });
+        if (!history?.length || history.reduce((sum, item) => sum + Number(item.score ?? 0), 0) / history.length < 18) {
+          return response(403, { error: "Per accedere all'esame finale di materia devi superare tutte le lezioni del grado con una media di almeno 18/30." });
+        }
+      }
+
+      const lessonCodes = lessons.map(lesson => lesson.lesson_code);
+      const { data: questionRows, error: questionsError } = await supabase.from("academy_questions")
+        .select("question_id,lesson_code,question_type,prompt,media_url,options,correct_answer,explanation,source_title,source_url,source_checked_at,difficulty,version")
+        .in("lesson_code", lessonCodes)
+        .eq("is_active", true);
+      if (questionsError) return response(500, { error: "Impossibile caricare le domande dell'esame." });
+
+      const { data: setting } = await supabase.from("academy_settings")
+        .select("setting_value")
+        .eq("setting_key", "questions_per_subject_exam")
+        .maybeSingle();
+      const configuredCount = Number(setting?.setting_value ?? 15);
+      const questionCount = Number.isSafeInteger(configuredCount) && configuredCount >= 10 && configuredCount <= 20
+        ? configuredCount
+        : 15;
+      if (!questionRows || questionRows.length < questionCount) {
+        return response(409, { error: "L'archivio non contiene ancora abbastanza domande uniche per l'esame finale di materia." });
+      }
+
+      const targetCount = questionCount;
+      const difficultyPools = ["facile", "media", "difficile"].map(difficulty =>
+        shuffle(questionRows.filter(question => question.difficulty === difficulty))
+      );
+      const selected: typeof questionRows = [];
+      while (selected.length < targetCount) {
+        let added = false;
+        for (const pool of difficultyPools) {
+          if (pool.length && selected.length < targetCount) {
+            selected.push(pool.shift()!);
+            added = true;
+          }
+        }
+        if (!added) break;
+      }
+
+      const snapshot: QuestionSnapshot[] = selected.map(question => ({
+        questionId: question.question_id,
+        lessonCode: question.lesson_code,
+        version: question.version,
+        type: question.question_type,
+        prompt: question.prompt,
+        options: question.question_type === "ordering" ? shuffle(question.options) : question.options,
+        mediaUrl: question.media_url ?? null,
+        correctAnswer: question.correct_answer,
+        explanation: question.explanation,
+        sourceTitle: question.source_title,
+        sourceUrl: question.source_url,
+        sourceCheckedAt: question.source_checked_at,
+        difficulty: question.difficulty,
+      }));
+
+      const { data: created, error: createError } = await supabase.from("academy_attempts")
+        .insert({
+          identity_id: identity.id,
+          lesson_code: null,
+          subject_code: subjectCode,
+          grade_number: 1,
+          attempt_kind: "subject_exam",
+          subject_code: subjectCode,
+          grading_rule_version: "thirtieths-v1",
+          grade_max: 30,
+          pass_threshold: 18,
+          client_attempt_key: clientAttemptKey,
+          question_snapshot: snapshot,
+          question_count: snapshot.length,
+        })
+        .select("id")
+        .single();
+
+      if (createError || !created) {
+        const { data: raced } = await supabase.from("academy_attempts")
+          .select("id,status,question_snapshot")
+          .eq("identity_id", identity.id)
+          .eq("client_attempt_key", clientAttemptKey)
+          .maybeSingle();
+        if (raced?.status === "started") {
+          const racedSnapshot = raced.question_snapshot as QuestionSnapshot[];
+          return response(200, { attemptId: raced.id, questions: racedSnapshot.map(publicQuestion), questionCount: racedSnapshot.length });
+        }
+        return response(500, { error: "Non è stato possibile creare l'esame finale di materia." });
+      }
+
+      return response(201, {
+        attemptId: created.id,
+        questions: snapshot.map(publicQuestion),
+        questionCount: snapshot.length,
+      });
+    }
+
+
     if (action === "get_attempt_review") {
       const attemptId = typeof input.attemptId === "string" ? input.attemptId : "";
       if (!/^[0-9a-f-]{36}$/i.test(attemptId)) return response(400, { error: "Identificativo del tentativo non valido." });
 
       const { data: attempt, error: attemptError } = await supabase.from("academy_attempts")
-        .select("id,lesson_code,grade_number,attempt_kind,grading_rule_version,grade_max,pass_threshold,status,score,passed,correct_count,question_count,created_at,submitted_at,question_snapshot")
+        .select("id,lesson_code,subject_code,grade_number,attempt_kind,grading_rule_version,grade_max,pass_threshold,status,score,passed,correct_count,question_count,created_at,submitted_at,question_snapshot")
         .eq("id", attemptId)
         .eq("identity_id", identity.id)
         .maybeSingle();
@@ -454,9 +585,9 @@ Deno.serve(async request => {
         return response(404, { error: "Tentativo consegnato non trovato per questa identità." });
       }
 
-      const { data: answerRows, error: answerError } = await supabase.from("academy_attempt_answers")
+      const [{ data: answerRows, error: answerError }, { data: award }] = await Promise.all([supabase.from("academy_attempt_answers")
         .select("question_id,answer,is_correct,explanation_snapshot,source_title_snapshot,source_url_snapshot")
-        .eq("attempt_id", attemptId);
+        .eq("attempt_id", attemptId), supabase.from("academy_points_awards").select("points").eq("attempt_id", attemptId).maybeSingle()]);
       if (answerError) return response(500, { error: "Impossibile caricare le risposte storiche." });
       const answerMap = new Map((answerRows ?? []).map(row => [row.question_id, row]));
       const snapshot = attempt.question_snapshot as QuestionSnapshot[];
@@ -490,6 +621,8 @@ Deno.serve(async request => {
         submittedAt: attempt.submitted_at,
         attemptKind: attempt.attempt_kind,
         lessonCode: attempt.lesson_code,
+        subjectCode: attempt.subject_code,
+        pointsAwarded: award?.points ?? 0,
         gradingRuleVersion: attempt.grading_rule_version,
         gradeMax: attempt.grade_max,
         passThreshold: attempt.pass_threshold,
@@ -509,7 +642,7 @@ Deno.serve(async request => {
       if (answers.some(value => value === null)) return response(400, { error: "Formato delle risposte non valido." });
 
       const { data: attempt, error: attemptError } = await supabase.from("academy_attempts")
-        .select("id,identity_id,status,question_snapshot")
+        .select("id,identity_id,status,attempt_kind,question_snapshot")
         .eq("id", attemptId)
         .eq("identity_id", identity.id)
         .maybeSingle();
@@ -534,6 +667,10 @@ Deno.serve(async request => {
         return response(400, { error: "Non è stato possibile correggere il tentativo. Ricarica lo storico prima di riprovare." });
       }
 
+      const [{ data: award }, { data: pointsSummary }] = await Promise.all([
+        supabase.from("academy_points_awards").select("points").eq("attempt_id", attemptId).maybeSingle(),
+        supabase.rpc("get_academy_points_summary", { p_identity_id: identity.id }),
+      ]);
       const answerMap = new Map(answers.map(answer => [answer!.questionId, answer!.answer]));
       const review = snapshot.map(question => ({
         questionId: question.questionId,
@@ -552,7 +689,7 @@ Deno.serve(async request => {
         sourceUrl: question.sourceUrl,
         sourceCheckedAt: question.sourceCheckedAt,
       }));
-      return response(200, { ...result, review });
+      return response(200, { ...result, attemptKind: attempt.attempt_kind, pointsAwarded: award?.points ?? 0, academicPoints: isRecord(pointsSummary) ? pointsSummary.studentPoints : 0, campusRanking: isRecord(pointsSummary) ? pointsSummary.campusRanking : [], review });
     }
 
     return response(400, { error: "Azione accademica non riconosciuta." });
