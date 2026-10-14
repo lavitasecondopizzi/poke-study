@@ -155,10 +155,10 @@ export default function StudentProfilePage({
     if (pokemonCount >= 1025) result.push({ id: 'title-archive-master', label: 'Maestro dell’Archivio', description: 'Hai completato il Pokédex nazionale.' });
     completedRegions.forEach(region => result.push({ id: 'title-region-' + region.name.toLowerCase(), label: 'Custode di ' + region.name, description: 'Hai completato la regione ' + region.name + '.' }));
     if (academicGrade > 0) result.push({ id: 'title-grade-' + academicGrade, label: 'Allievo di Grado ' + academicGrade, description: 'Hai superato l’esame di grado ' + academicGrade + '.' });
-    if (ownThreads.length > 0) result.push({ id: 'title-community-author', label: 'Voce della Bacheca', description: 'Hai pubblicato una discussione pubblica.' });
+    if (ownThreads > 0) result.push({ id: 'title-community-author', label: 'Voce della Bacheca', description: 'Hai pubblicato una discussione pubblica.' });
     if (ownReplies > 0) result.push({ id: 'title-community-helper', label: 'Compagno di Studio', description: 'Hai contribuito con una risposta pubblica.' });
     return result;
-  }, [pokemonCount, completedRegions, academicGrade, ownThreads.length, ownReplies]);
+  }, [pokemonCount, completedRegions, academicGrade, ownThreads, ownReplies]);
 
   const badges = useMemo(() => {
     const result: Array<{ id: string; label: string; description: string; icon: string }> = [];
@@ -168,10 +168,10 @@ export default function StudentProfilePage({
     if (pokemonCount >= 1025) result.push({ id: 'badge-1025', label: 'Pokédex completo', description: '1.025 Pokémon catalogati', icon: 'master' });
     completedRegions.forEach(region => result.push({ id: 'badge-region-' + region.name.toLowerCase(), label: region.name, description: 'Regione completata', icon: 'region' }));
     if (completedEntries >= 50) result.push({ id: 'badge-entries-50', label: 'Catalogatore', description: '50 entità extra catalogate', icon: 'catalog' });
-    if (ownThreads.length > 0) result.push({ id: 'badge-community-thread', label: 'Prima discussione', description: 'Hai pubblicato una discussione pubblica', icon: 'community' });
+    if (ownThreads > 0) result.push({ id: 'badge-community-thread', label: 'Prima discussione', description: 'Hai pubblicato una discussione pubblica', icon: 'community' });
     if (ownReplies >= 10) result.push({ id: 'badge-community-replies', label: 'Punto di riferimento', description: 'Hai pubblicato 10 risposte pubbliche', icon: 'replies' });
     return result;
-  }, [pokemonCount, completedEntries, completedRegions, ownThreads.length, ownReplies]);
+  }, [pokemonCount, completedEntries, completedRegions, ownThreads, ownReplies]);
 
   const unlockedFrames = FRAME_OPTIONS.filter(frame => pokemonCount >= frame.unlock);
   const visibleAvatars = species.filter(pokemon => STARTER_IDS.includes(pokemon.id));
