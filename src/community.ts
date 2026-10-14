@@ -11,6 +11,7 @@ export interface CommunityIdentity {
   id: string;
   nickname: string;
   academy: CommunityAcademy;
+  matricola: string;
   created_at: string;
 }
 
@@ -133,7 +134,7 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   const token = readToken();
   if (!token) throw new Error("Nessuna identità community disponibile per salvare i progressi.");
   const snapshot = {
-    profile: { matricola: profile.matricola, avatarId: profile.avatarId ?? null },
+    profile: { avatarId: profile.avatarId ?? null },
     progress,
   };
   const write = pendingPlayerStateWrite.then(async () => {

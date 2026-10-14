@@ -70,6 +70,10 @@ function newPrivateToken(): string {
   return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
 }
 
+function newMatricola(): string {
+  return `PS-${new Date().getFullYear()}-${crypto.randomUUID().replaceAll("-", "").slice(0, 6).toUpperCase()}`;
+}
+
 Deno.serve(async request => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (request.method !== "POST") return response(405, { error: "Metodo non consentito." });
@@ -105,8 +109,8 @@ Deno.serve(async request => {
       const tokenHash = await hashToken(token);
       const { data: identity, error } = await supabase
         .from("community_identities")
-        .insert({ nickname, academy: academy as Academy, token_hash: tokenHash })
-        .select("id,nickname,academy,created_at")
+        .insert({ nickname, academy: academy as Academy, matricola: newMatricola(), token_hash: tokenHash })
+        .select("id,nickname,academy,matricola,created_at")
         .single();
 
       if (error || !identity) {
@@ -123,7 +127,7 @@ Deno.serve(async request => {
     const tokenHash = await hashToken(token);
     const { data: identity, error: identityError } = await supabase
       .from("community_identities")
-      .select("id,nickname,academy,created_at")
+      .select("id,nickname,academy,matricola,created_at")
       .eq("token_hash", tokenHash)
       .maybeSingle();
 
@@ -134,21 +138,20 @@ Deno.serve(async request => {
     if (action === "load_player_state") {
       const { data, error } = await supabase
         .from("community_identities")
-        .select("player_profile,player_progress,player_state_updated_at")
+        .select("matricola,player_profile,player_progress,player_state_updated_at")
         .eq("id", identity.id)
         .single();
       if (error || !data) return response(500, { error: "Non è stato possibile caricare i dati del giocatore." });
-      const rawProfile = data.player_profile && typeof data.player_profile === "object"
+      const rawProfile = data.player_profile && typeof data.player_profile === "object" && !Array.isArray(data.player_profile)
         ? data.player_profile as Record<string, unknown>
         : null;
-      const profile = rawProfile && typeof rawProfile.matricola === "string"
-        && /^PS-\\d{4}-[A-Z0-9]{6}$/.test(rawProfile.matricola)
+      const profile = rawProfile
         ? {
-            matricola: rawProfile.matricola,
+            matricola: identity.matricola,
             ...(typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? { avatarId: rawProfile.avatarId } : {}),
           }
         : null;
-      if (data.player_profile !== null && !profile) {
+      if (data.player_profile !== null && !rawProfile) {
         return response(500, { error: "Il profilo salvato nel database non è valido; i dati non sono stati sovrascritti." });
       }
       const progress = data.player_progress === null ? null : normalizePlayerProgress(data.player_progress);
@@ -164,10 +167,6 @@ Deno.serve(async request => {
         return response(400, { error: "Profilo giocatore non valido." });
       }
       const profileInput = rawProfile as Record<string, unknown>;
-      const matricola = cleanText(profileInput.matricola, 12, 24);
-      if (!matricola || !/^PS-\d{4}-[A-Z0-9]{6}$/.test(matricola)) {
-        return response(400, { error: "Matricola giocatore non valida." });
-      }
       let avatarId: number | null = null;
       if (profileInput.avatarId !== null && profileInput.avatarId !== undefined) {
         if (typeof profileInput.avatarId !== "number" || !STARTER_AVATAR_IDS.has(profileInput.avatarId)) {
@@ -181,7 +180,7 @@ Deno.serve(async request => {
       const { error } = await supabase
         .from("community_identities")
         .update({
-          player_profile: { matricola, avatarId },
+          player_profile: { avatarId },
           player_progress: progress,
           player_state_updated_at: updatedAt,
         })

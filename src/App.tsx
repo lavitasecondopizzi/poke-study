@@ -146,10 +146,6 @@ function loadStudent(): StudentProfile | null {
   } catch { return null; }
 }
 
-function createMatricola() {
-  return `PS-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
-}
-
 const regions = [
   { name: 'Kanto', start: 1, end: 151 },
   { name: 'Johto', start: 152, end: 251 },
@@ -292,8 +288,8 @@ export default function App() {
           const sameLocalAccount = localProfile?.nickname === communityIdentity.nickname
             && localAcademy === communityIdentity.academy;
           nextStudent = sameLocalAccount && localProfile
-            ? { ...localProfile, nickname: communityIdentity.nickname }
-            : { nickname: communityIdentity.nickname, matricola: createMatricola() };
+            ? { ...localProfile, nickname: communityIdentity.nickname, matricola: communityIdentity.matricola }
+            : { nickname: communityIdentity.nickname, matricola: communityIdentity.matricola };
           nextProgress = sameLocalAccount ? loadProgress() : emptyProgress();
           await saveCommunityPlayerState(nextStudent, nextProgress);
         }
@@ -601,8 +597,8 @@ export default function App() {
         identity = await createCommunityIdentity(cleanNickname, academy as CommunityAcademy);
       }
       const profile: StudentProfile = student?.nickname === identity.nickname
-        ? { ...student, nickname: identity.nickname }
-        : { nickname: cleanNickname, matricola: createMatricola() };
+        ? { ...student, nickname: identity.nickname, matricola: identity.matricola }
+        : { nickname: cleanNickname, matricola: identity.matricola };
       try {
         localStorage.setItem(ACADEMY_KEY, academy);
         localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
@@ -644,8 +640,8 @@ export default function App() {
         try { localAcademy = localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { /* storage unavailable */ }
         const sameLocalAccount = localProfile?.nickname === identity.nickname && localAcademy === identity.academy;
         profile = sameLocalAccount && localProfile
-          ? { ...localProfile, nickname: identity.nickname }
-          : { nickname: identity.nickname, matricola: createMatricola() };
+          ? { ...localProfile, nickname: identity.nickname, matricola: identity.matricola }
+          : { nickname: identity.nickname, matricola: identity.matricola };
         restoredProgress = sameLocalAccount ? loadProgress() : emptyProgress();
         await saveCommunityPlayerState(profile, restoredProgress);
       }
