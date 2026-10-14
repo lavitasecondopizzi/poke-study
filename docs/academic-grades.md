@@ -27,7 +27,7 @@ Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce qual
 
 ## Pesi delle materie per grado
 
-Il peso di una materia determina quanto incide sulla media del grado. La scala va da 1 a 3 ed è specifica per materia e grado: le materie più specialistiche possono pesare maggiormente nei gradi avanzati. Il peso non aumenta il voto massimo: ogni voto resta compreso tra 0 e 100 e la media ponderata resta compresa tra 0 e 100.
+Il peso di una materia determina quanto incide sulla media del grado. La scala va da 1 a 3 ed è specifica per materia e grado: le materie più specialistiche possono pesare maggiormente nei gradi avanzati. Il peso non aumenta il voto massimo: ogni valutazione è un numero intero da 1 a 30 e la media ponderata può contenere decimali.
 
 | Materia | Grado I — Fondamenti | Grado II — Conoscenza e relazioni | Grado III — Applicazione | Grado IV — Sintesi e approfondimento |
 |---|:---:|:---:|:---:|:---:|
@@ -75,16 +75,18 @@ I gradi sono una progressione interna al gioco e non corrispondono a una durata 
 
 ## Scala di valutazione
 
-Tutti i voti sono espressi su 100 punti. La soglia di superamento del test è **60/100**; la soglia per superare il grado è una media complessiva di **80/100**. Le medie sono calcolate sui valori numerici effettivi, senza arrotondamenti intermedi. L'interfaccia può mostrare anche eventuali decimali.
+I voti dei tentativi sono interi da **1 a 30**. Le medie dei tentativi e delle materie possono contenere decimali: i calcoli usano i valori effettivi, senza arrotondamenti intermedi. Una materia è superata con una media di almeno **18/30**, oltre al completamento di tutte le sue lezioni obbligatorie. Il superamento del grado richiede sia una media ponderata del grado di almeno **26/30**, sia un esame finale del grado di almeno **26/30**.
+
+Le soglie dei bonus di rendimento sulla scala in trentesimi sono **27/30**, **29/30** e **30/30**, equivalenti alle soglie originarie del 90%, 95% e 100%. I punti accademici restano separati dai voti e dai Punti Poké.
 
 ## Test al termine di ogni lezione
 
 - Ogni lezione obbligatoria termina con un test dedicato.
-- Il voto è espresso in centesimi, da 0 a 100, secondo una scala analoga a quella universitaria.
+- Il voto di ogni tentativo è un numero intero da 1 a 30.
 - Il giocatore può ripetere lo stesso test tutte le volte che desidera; a ogni tentativo il sistema propone domande casuali selezionate dal database pertinente alla lezione.
-- Ogni tentativo riceve un voto in centesimi e viene conservato nello storico.
+- Ogni tentativo riceve un voto intero in trentesimi e viene conservato nello storico, insieme alle domande estratte, alle risposte, alle fonti e alla versione dei quesiti.
 - Il voto effettivo della lezione è la media aritmetica di **tutti** i tentativi svolti per quel test, inclusi quelli insufficienti.
-- La lezione è superata e quella successiva si sblocca quando la media effettiva raggiunge almeno **60/100**. Finché la media è inferiore a 60/100, il test può essere ripetuto.
+- La lezione è superata e quella successiva si sblocca quando la media di tutti i tentativi raggiunge almeno **18/30**. Finché la media è inferiore a 18/30, il test può essere ripetuto.
 - Le domande valutano gli obiettivi spiegati nella lezione e non introducono conoscenze mai presentate.
 
 ## Pagella del grado
@@ -96,7 +98,7 @@ La pagella mostra:
 - la media complessiva del grado;
 - lo stato: **In corso**, **Da completare** oppure **Superato**.
 
-Il voto di una materia è la media aritmetica dei voti effettivi delle lezioni superate di quella materia; ogni voto effettivo di lezione è già la media di tutti i tentativi del relativo test. La media complessiva del grado è la media ponderata dei voti delle materie previste in quel grado, usando i pesi della tabella «Pesi delle materie per grado».
+Il voto di una materia è la media aritmetica dei voti effettivi di tutte le lezioni obbligatorie previste per quella materia; ogni voto effettivo di lezione è già la media di tutti i tentativi del relativo test. La materia è superata soltanto quando tutte le lezioni obbligatorie sono completate e la media della materia è almeno 18/30. La media complessiva del grado è la media ponderata dei voti delle materie previste in quel grado, usando i pesi della tabella «Pesi delle materie per grado».
 
 Se una materia non ha voti registrati o rimangono lezioni obbligatorie incomplete, la pagella è provvisoria e il grado non può essere superato.
 
@@ -107,9 +109,9 @@ Devono essere soddisfatte entrambe le condizioni:
 1. tutte le lezioni obbligatorie del grado sono state completate superando i test con almeno 60/100;
 2. la media complessiva della pagella è almeno **80/100**.
 
-Se tutte le lezioni sono completate ma la media è inferiore a 80/100, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
+Se tutte le lezioni sono completate ma la media ponderata o l'esame finale è inferiore a 26/30, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
 
-I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non può trasformare una media inferiore a 80 in un grado superato.
+I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non può trasformare una media inferiore a 26/30 in un grado superato.
 
 ## Regole editoriali per test e pagelle
 
@@ -123,4 +125,4 @@ I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non pu
 
 ## Nota di implementazione
 
-Questa specifica definisce il comportamento desiderato, ma non implementa ancora schermate, salvataggi o calcolo dei voti. Restano da definire le regole per recuperare o migliorare voti quando il grado è completo ma la media complessiva è inferiore a 80/100, oltre al programma dettagliato di lezioni, prerequisiti e fonti per ogni materia.
+Questa specifica è il riferimento per l'implementazione accademica. Restano da definire gli importi dei punti e dei bonus prima della fase ricompense, il numero di domande per test lezione prima del collaudo, le proporzioni definitive delle difficoltà e la visualizzazione delle medie decimali. Il numero di domande dell'esame finale resta nell'intervallo approvato di 20–30.
