@@ -234,7 +234,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if ((view !== 'shop' && view !== 'pokedex') || itemCatalog.length) return;
+    if ((view !== 'shop' && view !== 'pokedex' && view !== 'game') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
     setItemCatalogLoading(true);
@@ -733,7 +733,7 @@ export default function App() {
                       <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
                     </div>
                   </>
-                  : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili.</p><button type="button" className="primary-button" onClick={startNewLesson}>Rivedi il catalogo</button></div>}
+                  : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>}
               </section>
             </section>
           </>}
