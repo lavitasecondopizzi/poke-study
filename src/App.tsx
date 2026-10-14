@@ -848,7 +848,6 @@ export default function App() {
                 const requirement = product.requirementLabel ?? (product.requires?.length ? `Acquista prima: ${product.requires.map(id => SHOP_PRODUCTS.find(entry => entry.id === id)?.name ?? id).join(', ')}` : product.requiredPokemon ? `Cataloga almeno ${product.requiredPokemon} Pokémon` : 'Nessun requisito aggiuntivo');
                 const requirements = [...(product.requires ?? []).map(id => ({ label: `Acquista ${SHOP_PRODUCTS.find(entry => entry.id === id)?.name ?? id}`, done: inventory.includes(id) })), ...(product.requiredPokemon ? [{ label: `Cataloga ${product.requiredPokemon} Pokémon (${Math.min(progress.completedIds.length, product.requiredPokemon)}/${product.requiredPokemon})`, done: progress.completedIds.length >= product.requiredPokemon, ratio: Math.min(1, progress.completedIds.length / product.requiredPokemon) }] : [])];
                 const requirementProgress = requirements.length ? requirements.reduce((sum, item) => sum + ('ratio' in item ? item.ratio : item.done ? 1 : 0), 0) / requirements.length : unlocked ? 1 : 0;
-                const displayProduct = owned ? nextUpgrade : product;
                 const displayDescription = owned && nextUpgrade ? nextUpgrade.description : product.description;
                 const displayCost = owned && nextUpgrade ? nextUpgrade.cost : product.cost;
                 const displayCurrency = owned && nextUpgrade ? nextUpgrade.currency : product.currency;
