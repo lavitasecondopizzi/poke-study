@@ -19,19 +19,24 @@ Questa è una specifica progettuale: non modifica ancora schermate o regole del 
 
 ## Materie didattiche proposte
 
-| Materia | Ambiti di studio |
-| --- | --- |
-| Scienze Pokémon e Pokédex | Specie, forme, tipi, statistiche, abilità, evoluzioni, habitat, regioni e lore verificata. |
-| Videogiochi Pokémon | Generazioni, titoli e versioni, regioni, personaggi, progressione, sistemi e meccaniche specifiche. |
-| Lotte e strategie nei videogiochi | Efficacia dei tipi, statistiche, abilità, mosse, composizione della squadra, strategie e regolamenti competitivi per generazione. |
-| Strumenti, bacche e risorse | Strumenti, oggetti tenuti ed evolutivi, bacche, materiali, MT/macchine e funzioni nei giochi di riferimento. |
-| Storia, fossili e reperti Pokémon | Fossili e Pokémon associati, reperti, oggetti speciali e contesto storico del franchise. |
-| Pokémon TCG: carte e collezione | Tipi di carte, struttura, espansioni, set, numerazione, rarità, varianti, ristampe e identificazione. |
-| Pokémon TCG: regole e gioco competitivo | Preparazione, turni, attacchi, abilità, condizioni, costruzione dei mazzi, formati, regolamenti e strategia. |
-| Mercato, autenticità e conservazione del TCG | Condizioni, autenticazione e falsi, grading, prezzi di riferimento, vendite concluse, liquidità, domanda, ristampe, tendenze e rischio. |
+| # | Materia | Ambiti di studio |
+|---:|---|---|
+| 1 | Scienze Pokémon e Pokédex | Specie, forme, tipi, statistiche, abilità, evoluzioni e classificazioni. |
+| 2 | Regioni, personaggi e lore | Regioni, luoghi, personaggi, organizzazioni, leggende e universo narrativo. |
+| 3 | Storia del franchise e media | Origini del brand, anime, film, manga, spin-off e tappe storiche. |
+| 4 | Storia e generazioni dei videogiochi | Titoli, versioni, piattaforme, regioni e novità introdotte. |
+| 5 | Meccaniche e progressione di gioco | Esplorazione, cattura, allevamento, palestre, Lega, sistemi e contenuti post-game. |
+| 6 | Lotte e strategie nei videogiochi | Tipi, statistiche, mosse, abilità, sinergie e costruzione delle squadre. |
+| 7 | Competitivo e metagame | Regolamenti, formati, strategie competitive e cambiamenti del metagame. |
+| 8 | Strumenti, oggetti e risorse | Strumenti tenuti, oggetti evolutivi, bacche, MT, materiali, fossili e funzioni nei giochi. |
+| 9 | Anatomia e identificazione delle carte TCG | Struttura, simboli, numerazione, lingue, rarità e varianti. |
+| 10 | Storia ed espansioni del TCG | Serie, espansioni, set, ristampe e prodotti speciali. |
+| 11 | Regolamento e gioco TCG | Preparazione, turni, condizioni, attacchi, abilità, carte Allenatore ed Energia. |
+| 12 | Deckbuilding e competitivo TCG | Costruzione dei mazzi, sinergie, archetipi, formati e metagame. |
+| 13 | Collezionismo, conservazione e autenticità | Condizioni, protezione, falsi, autenticazione, grading e limiti delle valutazioni. |
+| 14 | Mercato e analisi dei prezzi | Prezzi richiesti e vendite concluse, andamento storico, domanda, liquidità, ristampe e rischi. |
 
-Le cinque macrocategorie dell'archivio continuano a funzionare come categorie per catalogare elementi, ma non sono più il limite del programma scolastico. Una lezione può collegare più materie, mantenendo un obiettivo didattico chiaro e una materia principale per la valutazione.
-
+Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce quali materie sono attive e quali lezioni specifiche appartengono a ciascuna. Le cinque macrocategorie dell'archivio continuano a funzionare come categorie di catalogazione, ma non limitano il programma scolastico. Una lezione può collegare più ambiti, mantenendo una materia principale per la valutazione.
 ## Struttura indipendente per grado, materia e lezione
 
 Le **materie** sono aree di studio permanenti; i **gradi** stabiliscono quali materie sono attive e quali lezioni appartengono a ciascuna materia in quel grado. Una materia può essere presente in più gradi, con lezioni differenti per contenuto, difficoltà e competenze richieste.
@@ -74,19 +79,23 @@ Il grado si completa superando tutte le lezioni obbligatorie previste per quel g
 
 I gradi non corrispondono a una durata reale. Il dettaglio delle lezioni, i prerequisiti e la quantità di contenuti devono essere definiti prima dell'implementazione.
 
+## Scala di valutazione
+
+Tutti i voti sono espressi su 100 punti, con una scala analoga a quella universitaria. La soglia per superare un test è **60/100**; la media complessiva richiesta per superare un grado è **80/100**. Le medie sono calcolate sui valori effettivi senza arrotondamenti intermedi; l'interfaccia può mostrare decimali.
+
 ## Regole per test, tentativi e pagelle
 
 - Ogni lezione obbligatoria termina con un test dedicato.
 - Ogni tentativo genera domande casuali da un ampio database revisionato, coerenti con la lezione e con gli obiettivi già insegnati.
-- Il voto di ogni tentativo è espresso in decimi e resta nello storico.
+- Il voto di ogni tentativo è espresso in centesimi, da 0 a 100 e resta nello storico.
 - Il voto effettivo di un test è la media aritmetica di **tutti i tentativi**, compresi quelli insufficienti.
-- La lezione è superata e la successiva si sblocca quando la media effettiva del test raggiunge almeno **6/10**.
+- La lezione è superata e la successiva si sblocca quando la media effettiva del test raggiunge almeno **60/100**.
 - Il voto della materia è la media dei voti effettivi delle lezioni superate assegnate a quella materia.
 - La media complessiva del grado è la media aritmetica dei voti delle materie, ciascuna con lo stesso peso.
-- Per superare un grado occorre completare tutte le lezioni obbligatorie e ottenere una media complessiva di almeno **8/10**.
+- Per superare un grado occorre completare tutte le lezioni obbligatorie e ottenere una media complessiva di almeno **80/100**.
 - I calcoli usano valori non arrotondati; l'arrotondamento è solo visivo. Nessun tentativo o voto storico viene cancellato.
 
-La pagella deve mostrare voti per materia, media complessiva, lezioni completate e mancanti, storico dei tentativi e stato del grado. Se ci sono lezioni obbligatorie incomplete, la pagella resta provvisoria e il grado non può essere superato. Le regole di recupero per migliorare una media di grado inferiore a 8/10 restano da definire.
+La pagella deve mostrare voti per materia, media complessiva, lezioni completate e mancanti, storico dei tentativi e stato del grado. Se ci sono lezioni obbligatorie incomplete, la pagella resta provvisoria e il grado non può essere superato. Le regole di recupero per migliorare una media di grado inferiore a 80/100 restano da definire.
 
 ## Standard di una lezione
 
