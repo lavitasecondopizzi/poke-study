@@ -846,7 +846,7 @@ export default function App() {
           <section className="academy-choice-intro enrollment-intro">
             <span className="academy-choice-label">ACCADEMIA SELEZIONATA</span>
             <h2>{selectedAcademy}</h2>
-            <p>Scegli il nickname ufficiale che userai nel portale. La prima immatricolazione crea un'identità online; i progressi del gioco continueranno a essere salvati localmente su questo dispositivo.</p>
+            <p>Scegli il nickname ufficiale che userai nel portale. La prima immatricolazione crea un'identità online; profilo e progressi vengono salvati sul tuo account e sincronizzati con il database.</p>
           </section>
           <form className="enrollment-form" onSubmit={completeEnrollment}>
             <div className="enrollment-field-heading"><span>01</span><div><label htmlFor="student-nickname">Nickname allievo</label><small>Sarà il nome mostrato nella Bacheca e nel portale quando l'identità è verificata.</small></div></div>

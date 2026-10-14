@@ -142,12 +142,19 @@ Deno.serve(async request => {
         ? data.player_profile as Record<string, unknown>
         : null;
       const profile = rawProfile && typeof rawProfile.matricola === "string"
+        && /^PS-\\d{4}-[A-Z0-9]{6}$/.test(rawProfile.matricola)
         ? {
             matricola: rawProfile.matricola,
             ...(typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? { avatarId: rawProfile.avatarId } : {}),
           }
         : null;
-      const progress = normalizePlayerProgress(data.player_progress);
+      if (data.player_profile !== null && !profile) {
+        return response(500, { error: "Il profilo salvato nel database non è valido; i dati non sono stati sovrascritti." });
+      }
+      const progress = data.player_progress === null ? null : normalizePlayerProgress(data.player_progress);
+      if (data.player_progress !== null && !progress) {
+        return response(500, { error: "I progressi salvati nel database non sono validi; i dati non sono stati sovrascritti." });
+      }
       return response(200, { profile, progress, updatedAt: data.player_state_updated_at });
     }
 
