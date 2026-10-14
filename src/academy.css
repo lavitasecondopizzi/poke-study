@@ -122,3 +122,5 @@
 .academy-exam-history>div>strong{font-size:12px}
 .academy-exam-history small{grid-column:1/-1;color:var(--muted,#718197);font-size:10px}
 @media(max-width:430px){.academy-history-list>div{grid-template-columns:minmax(0,1fr) auto auto}.academy-exam-history>div{grid-template-columns:minmax(0,1fr) auto auto}}
+
+.academy-rule-note{display:block;margin-top:-4px;color:var(--muted,#718197);font-size:10px}
