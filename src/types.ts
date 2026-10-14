@@ -51,6 +51,7 @@ export interface StudentProfileVisibility {
   badges: boolean;
   catalogStats: boolean;
   communityStats: boolean;
+  academicGrade: boolean;
   matricola: boolean;
 }
 
