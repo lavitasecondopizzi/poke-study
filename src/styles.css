@@ -2884,3 +2884,74 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .pr-review-question-title>b{grid-column:2}
  .pr-review-overlay{padding:8px}
 }
+
+
+/* Personal Register — academy-aware visual system */
+.personal-register-page{--pr-accent:var(--academy-accent,#4778c7);--pr-accent-dark:var(--academy-accent-dark,#244e8d);--pr-soft:var(--academy-soft,#edf4ff);--pr-mid:var(--academy-mid,#7ea6e5);--pr-border:var(--academy-border,#b9cce9);min-width:0;color:var(--text,#18324b)}
+.personal-register-page .pr-breadcrumb{margin:0 0 13px;color:var(--muted,#718197)}
+.personal-register-page .pr-breadcrumb b{color:var(--pr-accent-dark)}
+.personal-register-page .pr-hero{position:relative;grid-template-columns:minmax(0,1fr) 116px;gap:22px;padding:clamp(18px,2.4vw,30px);border-color:var(--pr-border);background:linear-gradient(120deg,#fff 0%,color-mix(in srgb,var(--pr-soft) 55%,white) 58%,var(--pr-soft) 100%);box-shadow:inset 0 1px #fff,0 4px 0 color-mix(in srgb,var(--pr-accent) 18%,white),0 12px 25px #203d5510}
+.personal-register-page .pr-hero-copy{min-width:0}
+.personal-register-page .pr-academy-identity{display:flex;align-items:center;gap:11px;margin:0 0 20px;padding:0 0 15px;border-bottom:1px solid var(--pr-border)}
+.personal-register-page .pr-academy-identity img{width:48px;height:48px;object-fit:contain;flex:0 0 48px;padding:4px;border:1px solid var(--pr-border);border-radius:12px;background:#fff;box-shadow:0 2px 0 color-mix(in srgb,var(--pr-accent) 12%,white)}
+.personal-register-page .pr-academy-identity div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.personal-register-page .pr-academy-identity span{font:800 9px 'DM Mono',monospace;letter-spacing:.1em;color:var(--pr-accent)}
+.personal-register-page .pr-academy-identity strong{font:700 16px 'Libre Baskerville',Georgia,serif;color:var(--pr-accent-dark);overflow-wrap:anywhere}
+.personal-register-page .pr-academy-identity small{font-size:10px;color:var(--muted,#718197)}
+.personal-register-page .pr-hero .eyebrow,.personal-register-page .pr-section .eyebrow{color:var(--pr-accent)}
+.personal-register-page .pr-hero h1{font-size:clamp(25px,3vw,35px);color:var(--pr-accent-dark);line-height:1.15;margin:7px 0}
+.personal-register-page .pr-hero p{max-width:650px;font-size:13px;color:var(--muted,#718197);margin:0 0 18px}
+.personal-register-page .pr-total strong{color:var(--pr-accent-dark)}
+.personal-register-page .pr-total span{color:var(--pr-accent-dark)}
+.personal-register-page .pr-hero .pr-bar{border-color:var(--pr-border);background:color-mix(in srgb,var(--pr-soft) 75%,white)}
+.personal-register-page .pr-hero .pr-bar span{background:linear-gradient(90deg,var(--pr-mid),var(--pr-accent))}
+.personal-register-page .pr-hero small{color:var(--muted,#718197)}
+.personal-register-page .pr-seal{border-color:var(--pr-accent);outline-color:var(--pr-border);color:var(--pr-accent-dark);background:linear-gradient(#fff,var(--pr-soft));box-shadow:inset 0 2px #fff,0 3px 0 color-mix(in srgb,var(--pr-accent) 14%,white)}
+.personal-register-page .pr-stats{gap:12px}
+.personal-register-page .pr-stats article{padding:15px 13px;border-color:var(--pr-border);border-radius:12px;background:linear-gradient(#fff,var(--pr-soft));box-shadow:inset 0 1px #fff,0 3px 0 color-mix(in srgb,var(--pr-accent) 10%,white);transition:transform .16s,border-color .16s,box-shadow .16s}
+.personal-register-page .pr-stats article:hover{transform:translateY(-2px);border-color:var(--pr-mid);box-shadow:0 5px 14px color-mix(in srgb,var(--pr-accent) 12%,transparent)}
+.personal-register-page .pr-icon{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-mid));color:var(--pr-accent-dark)}
+.personal-register-page .pr-points-stat .pr-points-symbol{font:800 23px 'Nunito Sans',sans-serif;background:linear-gradient(145deg,#fff,var(--pr-soft));color:var(--pr-accent-dark);text-shadow:0 1px #fff}
+.personal-register-page .pr-stats small{color:var(--muted,#718197)}
+.personal-register-page .pr-stats strong{color:var(--pr-accent-dark)}
+.personal-register-page .pr-stats article>div>span{color:var(--muted,#718197)}
+.personal-register-page .pr-section{margin-top:29px}
+.personal-register-page .pr-heading{align-items:center;padding-bottom:11px;border-bottom:1px solid var(--pr-border)}
+.personal-register-page .pr-heading h2{color:var(--pr-accent-dark);font-size:clamp(18px,2vw,22px);margin:5px 0}
+.personal-register-page .pr-heading>b{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft));color:var(--pr-accent-dark);border-radius:8px}
+.personal-register-page .pr-bar{border-color:var(--pr-border);background:color-mix(in srgb,var(--pr-soft) 75%,white)}
+.personal-register-page .pr-bar span{background:linear-gradient(90deg,var(--pr-mid),var(--pr-accent))}
+.personal-register-page .pr-regions article{border-color:var(--pr-border);border-radius:12px;background:linear-gradient(#fff,var(--pr-soft));padding:14px;box-shadow:0 2px 0 color-mix(in srgb,var(--pr-accent) 7%,white)}
+.personal-register-page .pr-region-head>i{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft));color:var(--pr-accent-dark)}
+.personal-register-page .pr-region-head strong,.personal-register-page .pr-region-head>b{color:var(--pr-accent-dark)}
+.personal-register-page .pr-macro{border-color:var(--pr-border);border-radius:12px;box-shadow:0 2px 0 color-mix(in srgb,var(--pr-accent) 9%,white)}
+.personal-register-page .pr-macro summary{background:linear-gradient(#fff,var(--pr-soft));padding:14px 16px}
+.personal-register-page .pr-macro summary:hover{background:linear-gradient(#fff,color-mix(in srgb,var(--pr-soft) 75%,var(--pr-mid)))}
+.personal-register-page .pr-macro summary>i{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft));color:var(--pr-accent-dark)}
+.personal-register-page .pr-macro summary strong,.personal-register-page .pr-macro summary>b{color:var(--pr-accent-dark)}
+.personal-register-page .pr-subs{border-top-color:var(--pr-border);background:color-mix(in srgb,var(--pr-soft) 35%,white)}
+.personal-register-page .pr-medals article{border-color:var(--pr-border);border-radius:12px;background:linear-gradient(#fff,var(--pr-soft));transition:transform .16s,border-color .16s}
+.personal-register-page .pr-medals article:hover{transform:translateY(-2px);border-color:var(--pr-accent)}
+.personal-register-page .pr-medals article.is-earned{border-color:#e6ce83;background:linear-gradient(#fffdf5,#fff3cb)}
+.personal-register-page .pr-history{border-color:var(--pr-border);border-radius:12px}
+.personal-register-page .pr-history li{padding:14px 16px}
+.personal-register-page .pr-history li>i{border-color:var(--pr-border);background:var(--pr-soft);color:var(--pr-accent-dark)}
+.personal-register-page .pr-history strong{color:var(--pr-accent-dark)}
+.personal-register-page .pr-empty{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft));color:var(--pr-accent)}
+.personal-register-page .pr-empty strong{color:var(--pr-accent-dark)}
+.personal-register-page .pr-footer{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft))}
+.personal-register-page .pr-footer>div>strong{color:var(--pr-accent-dark)}
+.personal-register-page .pr-academic-record{border-color:var(--pr-border);border-radius:15px;background:linear-gradient(180deg,#fff 0%,color-mix(in srgb,var(--pr-soft) 70%,white) 100%);box-shadow:inset 0 1px #fff,0 4px 0 color-mix(in srgb,var(--pr-accent) 14%,white)}
+.personal-register-page .pr-academic-heading h2,.personal-register-page .pr-academic-subheading strong,.personal-register-page .pr-grade-summary-title>strong,.personal-register-page .pr-detail-grade>h3{color:var(--pr-accent-dark)}
+.personal-register-page .pr-academic-heading .eyebrow{color:var(--pr-accent)}
+.personal-register-page .pr-view-switch{border-color:var(--pr-border);background:#fff}
+.personal-register-page .pr-view-switch button{color:var(--pr-accent-dark)}
+.personal-register-page .pr-view-switch button.is-active{border-color:var(--pr-accent-dark);background:linear-gradient(var(--pr-mid),var(--pr-accent));color:#fff;box-shadow:0 2px 0 color-mix(in srgb,var(--pr-accent) 25%,white)}
+.personal-register-page .pr-academic-metrics article,.personal-register-page .pr-grade-summary,.personal-register-page .pr-subject-results article,.personal-register-page .pr-detail-grade,.personal-register-page .pr-detail-subject{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft))}
+.personal-register-page .pr-academic-metrics article>strong,.personal-register-page .pr-subject-average{color:var(--pr-accent-dark)}
+.personal-register-page .pr-academic-state{border-color:var(--pr-border);background:linear-gradient(#fff,var(--pr-soft))}
+.personal-register-page .pr-review-button{border-color:var(--pr-border);background:#fff;color:var(--pr-accent-dark)}
+.personal-register-page .pr-review-button:hover{border-color:var(--pr-accent);background:var(--pr-soft)}
+.personal-register-page button:focus-visible,.personal-register-page a:focus-visible,.personal-register-page summary:focus-visible{outline:3px solid var(--pr-accent);outline-offset:3px}
+@media(max-width:850px){.personal-register-page .pr-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.personal-register-page .pr-regions{grid-template-columns:repeat(2,minmax(0,1fr))}.personal-register-page .pr-medals{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.personal-register-page .pr-hero{grid-template-columns:minmax(0,1fr);padding:17px 14px;gap:14px}.personal-register-page .pr-academy-identity{margin-bottom:15px;padding-bottom:12px}.personal-register-page .pr-academy-identity img{width:42px;height:42px;flex-basis:42px}.personal-register-page .pr-academy-identity strong{font-size:14px}.personal-register-page .pr-seal{display:none}.personal-register-page .pr-stats{gap:8px}.personal-register-page .pr-stats article{padding:11px 9px}.personal-register-page .pr-stats strong{font-size:18px}.personal-register-page .pr-section{margin-top:23px}.personal-register-page .pr-heading{align-items:flex-start}.personal-register-page .pr-regions{grid-template-columns:1fr}.personal-register-page .pr-macro summary{padding:11px 9px}.personal-register-page .pr-medals{grid-template-columns:repeat(2,minmax(0,1fr))}}
