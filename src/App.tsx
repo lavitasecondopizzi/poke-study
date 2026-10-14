@@ -332,7 +332,6 @@ export default function App() {
   }, [communityIdentity, cloudStateIdentityId, student, progress, online]);
 
   useEffect(() => {
-    if (view !== 'forum' || !communityIdentity || !communityConfigured) return;  useEffect(() => {
     if (view !== 'forum' || !communityIdentity || !communityConfigured) return;
     let active = true;
     setCommunityForumLoading(true);
