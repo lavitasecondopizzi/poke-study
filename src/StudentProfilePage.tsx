@@ -244,8 +244,7 @@ export default function StudentProfilePage({
               {draft.visibility.badges && <div className="student-profile-active-badges">{activeBadges.map(badge => <span key={badge.id} title={badge.description}><Award size={16}/><small>{badge.label}</small></span>)}</div>}
             </div>
             <div className="student-profile-inline-note"><ShieldCheck size={15}/><span>Il nickname, la matricola e l’Accademia ufficiale sono gestiti dall’identità studente. L’avatar resta scelto tra i Pokémon predefiniti.</span></div>
-            <div className="student-profile-avatar-heading"><div><h3>Avatar Pokémon</h3><p>27 avatar predefiniti · 3 per regione</p></div><span>{visibleAvatars.length} disponibili</span></div>
-            <div className="student-profile-avatar-grid">{visibleAvatars.map(pokemon => <button type="button" key={pokemon.id} className={currentAvatar === pokemon.id ? 'student-profile-avatar-option is-selected' : 'student-profile-avatar-option'} onClick={() => onChooseAvatar(pokemon.id)} aria-pressed={currentAvatar === pokemon.id} aria-label={'Scegli ' + titleCase(pokemon.name) + ' come avatar'}><img src={avatarUrl(pokemon.id)} alt="" loading="lazy"/><strong>{titleCase(pokemon.name)}</strong><small>{REGION_DATA.find(region => pokemon.id >= region.start && pokemon.id <= region.end)?.name}</small></button>)}</div>
+            
           </section>
 
           <section className="student-profile-card">
