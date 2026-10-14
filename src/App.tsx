@@ -328,10 +328,8 @@ export default function App() {
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
       : card.subcategoryId === targetId;
     if (!isCorrect) {
-      setWrongTargetId(targetId);
+      setMessage('');
       setSelectedCardId(null);
-      setMessage('Posizione errata. Nessuna penalità: scegli un altro numero.');
-      window.setTimeout(() => setWrongTargetId(current => current === targetId ? null : current), 650);
       return;
     }
 
