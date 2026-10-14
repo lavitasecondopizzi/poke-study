@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties, FormEvent } from 'react';
+import type { ChangeEvent, CSSProperties, FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
+import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads } from './community';
+import type { CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
@@ -202,6 +204,39 @@ export default function App() {
   const [typeLoading, setTypeLoading] = useState(false);
   const [notice, setNotice] = useState('');
   const [clockNow, setClockNow] = useState(() => Date.now());
+  const [communityIdentity, setCommunityIdentity] = useState<CommunityIdentity | null>(null);
+  const [communityBusy, setCommunityBusy] = useState(false);
+  const [communityError, setCommunityError] = useState('');
+  const [communityNotice, setCommunityNotice] = useState('');
+  const [communityThreads, setCommunityThreads] = useState<CommunityThread[]>([]);
+  const [communityForumLoading, setCommunityForumLoading] = useState(false);
+  const [communityForumError, setCommunityForumError] = useState('');
+  const [communityThreadTitle, setCommunityThreadTitle] = useState('');
+  const [communityThreadBody, setCommunityThreadBody] = useState('');
+  const [communityThreadCategory, setCommunityThreadCategory] = useState<CommunityCategory>('generale');
+  const [communityReplyDrafts, setCommunityReplyDrafts] = useState<Record<string, string>>({});
+  const communityConfigured = isCommunityConfigured();
+
+  useEffect(() => {
+    let active = true;
+    if (!hasCommunityToken()) return () => { active = false; };
+    getCommunityIdentity()
+      .then(identity => { if (active) setCommunityIdentity(identity); })
+      .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (view !== 'forum' || !communityIdentity || !communityConfigured) return;
+    let active = true;
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    listCommunityThreads()
+      .then(threads => { if (active) setCommunityThreads(threads); })
+      .catch(error => { if (active) setCommunityForumError(error instanceof Error ? error.message : 'Impossibile caricare la Bacheca.'); })
+      .finally(() => { if (active) setCommunityForumLoading(false); });
+    return () => { active = false; };
+  }, [view, communityIdentity, communityConfigured]);
 
   useEffect(() => {
     let active = true;
@@ -519,6 +554,98 @@ export default function App() {
     }));
     setMessage(hint);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
+  }
+
+  async function registerCommunityIdentity() {
+    if (!student || (academy !== 'arancia' && academy !== 'uva')) return;
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const identity = await createCommunityIdentity(student.nickname, academy);
+      setCommunityIdentity(identity);
+      setCommunityNotice('Identità community creata. Esporta i metadati per trasferirla in sicurezza su un altro dispositivo.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Non è stato possibile creare l’identità community.');
+    } finally {
+      setCommunityBusy(false);
+    }
+  }
+
+  async function downloadCommunityAccount() {
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const metadata = await exportCommunityMetadata();
+      const blob = new Blob([metadata], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'poke-study-account.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setCommunityNotice('Metadati account esportati. Conserva il file in un luogo privato: contiene il token di accesso.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Esportazione account non riuscita.');
+    } finally {
+      setCommunityBusy(false);
+    }
+  }
+
+  async function importCommunityAccount(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    if (!file) return;
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const identity = await importCommunityMetadata(await file.text());
+      setCommunityIdentity(identity);
+      setCommunityNotice('Identità importata e verificata dal server.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Importazione account non riuscita.');
+    } finally {
+      input.value = '';
+      setCommunityBusy(false);
+    }
+  }
+
+  async function submitCommunityThread(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!communityIdentity) { setCommunityForumError('Crea o importa prima un’identità community dal Profilo.'); return; }
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    try {
+      await createCommunityThread({ title: communityThreadTitle, body: communityThreadBody, category: communityThreadCategory });
+      setCommunityThreadTitle('');
+      setCommunityThreadBody('');
+      setCommunityThreads(await listCommunityThreads());
+    } catch (error) {
+      setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la discussione.');
+    } finally {
+      setCommunityForumLoading(false);
+    }
+  }
+
+  async function submitCommunityReply(event: FormEvent<HTMLFormElement>, threadId: string) {
+    event.preventDefault();
+    const body = (communityReplyDrafts[threadId] ?? '').trim();
+    if (!body || !communityIdentity) return;
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    try {
+      await createCommunityReply(threadId, body);
+      setCommunityReplyDrafts(old => ({ ...old, [threadId]: '' }));
+      setCommunityThreads(await listCommunityThreads());
+    } catch (error) {
+      setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la risposta.');
+    } finally {
+      setCommunityForumLoading(false);
+    }
   }
 
   function saveAvatar(id: number) {
@@ -965,7 +1092,17 @@ export default function App() {
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
+          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
+              <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
+              <p className="community-account-description">Collega il tuo profilo a un'identità online per preparare l'accesso alla Bacheca condivisa. Il gioco e i progressi locali continuano a funzionare anche senza Supabase.</p>
+              {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><button type="button" className="secondary-button" disabled={!communityConfigured || communityBusy} onClick={() => void registerCommunityIdentity()}>{communityBusy ? 'Attendere…' : 'Crea identità online'}</button><label className="community-import-button">Importa metadati<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
+              {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
+              {communityError && <p className="community-account-error" role="alert">{communityError}</p>}
+              <p className="community-account-warning">Il file esportato contiene una credenziale privata: chi lo possiede può usare questa identità. Non condividerlo e non pubblicarlo.</p>
+            </section>
+            <div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
 
           {view === 'forum' && <>
             <div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div>
@@ -973,6 +1110,27 @@ export default function App() {
               <div><div className="eyebrow">COMUNITÀ SCOLASTICA</div><h1>Bacheca studenti</h1><p>Avvisi ufficiali, guide rapide e informazioni utili per l'Accademia.</p></div>
               <div className="forum-heading-mark"><CircleHelp size={25}/><span>AREA<br/>STUDENTI</span></div>
             </div>
+            <section className="community-forum-panel">
+              <div className="forum-section-heading"><div><span className="section-label">BACHECA CONDIVISA</span><h2>Discussioni degli studenti</h2></div><button type="button" className="secondary-button" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}>Aggiorna</button></div>
+              {!communityConfigured ? <p className="community-account-hint">La Bacheca online non è configurata in questa build. Dopo il rilascio della versione aggiornata, verifica le variabili Supabase nelle impostazioni GitHub Actions.</p> : !communityIdentity ? <div className="community-forum-empty"><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p><button type="button" className="secondary-button" onClick={() => navTo('profilo')}>Vai al Profilo e collega l’identità</button></div> : <>
+                <form className="community-thread-form" onSubmit={event => void submitCommunityThread(event)}>
+                  <h3>Apri una discussione</h3>
+                  <label>Titolo <input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Di cosa vuoi parlare?" /></label>
+                  <label>Categoria <select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Generale</option><option value="domande">Domande</option><option value="strategie">Strategie</option><option value="annunci">Annunci</option></select></label>
+                  <label>Messaggio <textarea required maxLength={5000} rows={4} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Scrivi il tuo messaggio…" /></label>
+                  <button type="submit" className="secondary-button" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>Pubblica discussione</button>
+                </form>
+                {communityForumError && <p className="community-account-error" role="alert">{communityForumError}</p>}
+                {communityForumLoading && <p role="status">Caricamento Bacheca…</p>}
+                {!communityForumLoading && communityThreads.length === 0 && <p className="community-forum-empty">Non ci sono ancora discussioni. Puoi aprire la prima qui sopra.</p>}
+                <div className="community-thread-list">{communityThreads.map(thread => <article className="community-thread-card" key={thread.id}>
+                  <div className="community-thread-meta"><span>{({ generale: 'Generale', domande: 'Domande', strategie: 'Strategie', annunci: 'Annunci' } as Record<CommunityCategory, string>)[thread.category]}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleString('it-IT')}</time></div>
+                  <h3>{thread.title}</h3><p className="community-thread-author">{thread.author?.nickname ?? 'Studente'} · {thread.author?.academy === 'uva' ? 'Accademia Uva' : 'Accademia Arancia'}</p><p className="community-thread-body">{thread.body}</p>
+                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small>{post.author?.nickname ?? 'Studente'} · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
+                  <form className="community-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>Rispondi</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={2} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({ ...old, [thread.id]: event.target.value }))} placeholder="Scrivi una risposta…"/><button type="submit" className="secondary-button" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>Invia risposta</button></form>
+                </article>)}</div>
+              </>}
+            </section>
             <section className="forum-featured">
               <div className="forum-featured-top"><span className="forum-pin">AVVISO IN EVIDENZA</span><span className="forum-date">SEGRETERIA DIDATTICA</span></div>
               <div className="forum-featured-body"><div className="forum-featured-icon"><GraduationCap size={25}/></div><div><h2>Benvenuto nell'Archivio Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall'inizio. Ogni collocazione corretta assegna un Punto Poké; gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p></div></div>

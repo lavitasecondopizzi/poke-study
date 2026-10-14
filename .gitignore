@@ -4,3 +4,8 @@ dist/
 .DS_Store
 .vscode/
 .idea/
+
+# Local environment files; keep the documented example in version control.
+.env
+.env.*
+!.env.example
