@@ -3,7 +3,7 @@ import type { ChangeEvent, CSSProperties, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
 import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads } from './community';
+import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
@@ -167,6 +167,10 @@ function loadProgress(): SavedProgress {
     const raw = localStorage.getItem(SAVE_KEY);
     if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? saved.completedIds : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? saved.completedExams : [], inventory: Array.isArray(saved.inventory) ? saved.inventory : [], completedEntries: Array.isArray(saved.completedEntries) ? saved.completedEntries : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {} }; }
   } catch { /* storage may be unavailable */ }
+  return emptyProgress();
+}
+
+function emptyProgress(): SavedProgress {
   return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} };
 }
 
@@ -181,67 +185,6 @@ function avatarPortraitUrl(id: number) {
 }
 
 const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
-
-type LocalGameBackup = {
-  academy: string;
-  student: StudentProfile;
-  progress: SavedProgress;
-};
-
-function normalizeSavedProgress(value: unknown): SavedProgress | null {
-  if (!value || typeof value !== 'object') return null;
-  const saved = value as Partial<SavedProgress>;
-  const finiteNonNegative = (candidate: unknown) => typeof candidate === 'number' && Number.isFinite(candidate) && candidate >= 0 ? candidate : 0;
-  const stringArray = (candidate: unknown) => Array.isArray(candidate) ? candidate.filter((entry): entry is string => typeof entry === 'string') : [];
-  const numberArray = (candidate: unknown) => Array.isArray(candidate) ? candidate.filter((entry): entry is number => Number.isInteger(entry) && entry > 0 && entry <= NATIONAL_DEX_SIZE) : [];
-  const cooldowns: Record<string, number> = {};
-  if (saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object') {
-    for (const [key, until] of Object.entries(saved.abilityCooldowns)) {
-      if (typeof until === 'number' && Number.isFinite(until) && until >= 0) cooldowns[key] = until;
-    }
-  }
-  return {
-    points: finiteNonNegative(saved.points),
-    completedIds: [...new Set(numberArray(saved.completedIds))],
-    examPoints: finiteNonNegative(saved.examPoints),
-    completedExams: stringArray(saved.completedExams),
-    inventory: stringArray(saved.inventory),
-    completedEntries: stringArray(saved.completedEntries),
-    abilityCooldowns: cooldowns,
-  };
-}
-
-function readGameBackup(serialized: string, identity: CommunityIdentity): LocalGameBackup | null {
-  try {
-    const parsed = JSON.parse(serialized) as Record<string, unknown>;
-    const raw = parsed?.gameBackup;
-    if (!raw || typeof raw !== 'object') return null;
-    const backup = raw as Record<string, unknown>;
-    if (backup.format !== 'poke-study-local-game-backup' || backup.version !== 1
-      || backup.academy !== identity.academy
-      || typeof backup.academy !== 'string' || !['arancia', 'uva', 'mirtillo'].includes(backup.academy)
-      || !backup.student || typeof backup.student !== 'object') return null;
-    const candidate = backup.student as Record<string, unknown>;
-    if (typeof candidate.nickname !== 'string' || candidate.nickname.trim() !== identity.nickname
-      || typeof candidate.matricola !== 'string' || !candidate.matricola.trim()) return null;
-    const student: StudentProfile = {
-      nickname: candidate.nickname.trim(),
-      matricola: candidate.matricola.trim(),
-      ...(typeof candidate.avatarId === 'number' && STARTER_POKEMON_IDS.includes(candidate.avatarId) ? { avatarId: candidate.avatarId } : {}),
-    };
-    const progress = normalizeSavedProgress(backup.progress);
-    if (!progress) return null;
-    return { academy: backup.academy, student, progress };
-  } catch {
-    return null;
-  }
-}
-
-function hasMeaningfulProgress(progress: SavedProgress): boolean {
-  return progress.points > 0 || progress.examPoints > 0 || progress.completedIds.length > 0
-    || (progress.completedEntries?.length ?? 0) > 0 || (progress.inventory?.length ?? 0) > 0
-    || (progress.completedExams?.length ?? 0) > 0;
-}
 
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
@@ -285,6 +228,7 @@ export default function App() {
   const [notice, setNotice] = useState('');
   const [clockNow, setClockNow] = useState(() => Date.now());
   const [communityIdentity, setCommunityIdentity] = useState<CommunityIdentity | null>(null);
+  const [cloudStateIdentityId, setCloudStateIdentityId] = useState<string | null>(null);
   const [communityBusy, setCommunityBusy] = useState(false);
   const [communityError, setCommunityError] = useState('');
   const [communityNotice, setCommunityNotice] = useState('');
@@ -320,12 +264,79 @@ export default function App() {
         .then(identity => { if (active) setCommunityIdentity(identity); })
         .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità online non verificabile. Importa i metadati esportati in precedenza per recuperare l’account.'); });
     }
-    // Non creare automaticamente una nuova identità se il token manca o non è più valido:
-    // senza i metadati esportati, la vecchia identità non è recuperabile.
+    // Non creare automaticamente una nuova identità se il token manca o non è più valido.
     return () => { active = false; };
   }, []);
 
   useEffect(() => {
+    let active = true;
+    if (!communityIdentity || !communityConfigured || cloudStateIdentityId === communityIdentity.id) return;
+    setCloudStateIdentityId(null);
+    loadCommunityPlayerState()
+      .then(async remote => {
+        if (!active) return;
+        let nextStudent: StudentProfile;
+        let nextProgress: SavedProgress;
+        if (remote.profile && remote.progress) {
+          nextStudent = {
+            nickname: communityIdentity.nickname,
+            matricola: remote.profile.matricola,
+            ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+          };
+          nextProgress = remote.progress;
+        } else {
+          // Migrate local data only when the stored profile matches this verified account.
+          const localProfile = loadStudent();
+          let localAcademy = '';
+          try { localAcademy = localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { /* storage unavailable */ }
+          const sameLocalAccount = localProfile?.nickname === communityIdentity.nickname
+            && localAcademy === communityIdentity.academy;
+          nextStudent = sameLocalAccount && localProfile
+            ? { ...localProfile, nickname: communityIdentity.nickname }
+            : { nickname: communityIdentity.nickname, matricola: createMatricola() };
+          nextProgress = sameLocalAccount ? loadProgress() : emptyProgress();
+          await saveCommunityPlayerState(nextStudent, nextProgress);
+        }
+        if (!active) return;
+        setAcademy(communityIdentity.academy);
+        setStudent(nextStudent);
+        setProgress(nextProgress);
+        try {
+          localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
+          localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
+          localStorage.setItem(SAVE_KEY, JSON.stringify(nextProgress));
+        } catch { /* local cache is optional */ }
+        setCloudStateIdentityId(communityIdentity.id);
+        setCommunityError('');
+      })
+      .catch(error => {
+        if (!active) return;
+        setCommunityError(error instanceof Error
+          ? `Impossibile caricare/sincronizzare i dati dal database: ${error.message}`
+          : 'Impossibile caricare i dati del giocatore dal database. Riprova quando sei online.');
+      });
+    return () => { active = false; };
+  }, [communityIdentity, communityConfigured, cloudStateIdentityId, online]);
+
+  useEffect(() => {
+    if (!communityIdentity || cloudStateIdentityId !== communityIdentity.id || !student || !online) return;
+    let active = true;
+    const profileSnapshot = student;
+    const progressSnapshot = progress;
+    const timer = window.setTimeout(() => {
+      saveCommunityPlayerState(profileSnapshot, progressSnapshot)
+        .then(() => { if (active) setCommunityError(''); })
+        .catch(error => {
+          if (active) setCommunityError(error instanceof Error
+            ? `Modifiche salvate sul dispositivo ma non ancora sincronizzate: ${error.message}`
+            : 'Modifiche non ancora sincronizzate con il database. Riprova quando sei online.');
+        });
+    }, 700);
+    return () => { active = false; window.clearTimeout(timer); };
+  }, [communityIdentity, cloudStateIdentityId, student, progress, online]);
+
+  useEffect(() => {
+    if (view !== 'forum' || !communityIdentity || !communityConfigured) return;  useEffect(() => {
     if (view !== 'forum' || !communityIdentity || !communityConfigured) return;
     let active = true;
     setCommunityForumLoading(true);
@@ -589,7 +600,9 @@ export default function App() {
       } else {
         identity = await createCommunityIdentity(cleanNickname, academy as CommunityAcademy);
       }
-      const profile = { nickname: cleanNickname, matricola: createMatricola() };
+      const profile: StudentProfile = student?.nickname === identity.nickname
+        ? { ...student, nickname: identity.nickname }
+        : { nickname: cleanNickname, matricola: createMatricola() };
       try {
         localStorage.setItem(ACADEMY_KEY, academy);
         localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
@@ -614,34 +627,42 @@ export default function App() {
     setEnrollmentError('');
     setCommunityError('');
     try {
-      const serialized = await file.text();
-      const identity = await importCommunityMetadata(serialized);
-      const backup = readGameBackup(serialized, identity);
-      const hasLocalData = Boolean(student) || hasMeaningfulProgress(progress);
-      const restoreBackup = Boolean(backup && (!hasLocalData || window.confirm('Il file contiene un backup del profilo e dei progressi. Vuoi ripristinare questi dati, sostituendo quelli presenti su questo dispositivo?')));
-      const profile: StudentProfile = restoreBackup && backup
-        ? backup.student
-        : student?.nickname === identity.nickname
-          ? { ...student, nickname: identity.nickname }
+      const identity = await importCommunityMetadata(await file.text());
+      const remote = await loadCommunityPlayerState();
+      let profile: StudentProfile;
+      let restoredProgress: SavedProgress;
+      if (remote.profile && remote.progress) {
+        profile = {
+          nickname: identity.nickname,
+          matricola: remote.profile.matricola,
+          ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+        };
+        restoredProgress = remote.progress;
+      } else {
+        const localProfile = loadStudent();
+        let localAcademy = '';
+        try { localAcademy = localStorage.getItem(ACADEMY_KEY) ?? ''; } catch { /* storage unavailable */ }
+        const sameLocalAccount = localProfile?.nickname === identity.nickname && localAcademy === identity.academy;
+        profile = sameLocalAccount && localProfile
+          ? { ...localProfile, nickname: identity.nickname }
           : { nickname: identity.nickname, matricola: createMatricola() };
-      try {
-        localStorage.setItem(ACADEMY_KEY, restoreBackup && backup ? backup.academy : identity.academy);
-        localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
-        if (restoreBackup && backup) localStorage.setItem(SAVE_KEY, JSON.stringify(backup.progress));
-      } catch {
-        throw new Error('Identità verificata, ma non è stato possibile salvare i dati locali. Verifica lo spazio disponibile e le impostazioni del browser, poi riprova.');
+        restoredProgress = sameLocalAccount ? loadProgress() : emptyProgress();
+        await saveCommunityPlayerState(profile, restoredProgress);
       }
-      const finalAcademy = restoreBackup && backup ? backup.academy : identity.academy;
-      setAcademy(finalAcademy);
+      try {
+        localStorage.setItem(ACADEMY_KEY, identity.academy);
+        localStorage.setItem(STUDENT_KEY, JSON.stringify(profile));
+        localStorage.setItem(SAVE_KEY, JSON.stringify(restoredProgress));
+      } catch {
+        throw new Error('Account verificato, ma non è stato possibile aggiornare la cache locale. I dati restano nel database; verifica le impostazioni del browser.');
+      }
+      setAcademy(identity.academy);
       setNickname(identity.nickname);
       setCommunityIdentity(identity);
       setStudent(profile);
-      if (restoreBackup && backup) setProgress(backup.progress);
-      setCommunityNotice(restoreBackup && backup
-        ? 'Account recuperato: profilo, avatar e progressi inclusi nel backup sono stati ripristinati.'
-        : backup
-          ? 'Identità online recuperata. I dati locali esistenti sono stati mantenuti.'
-          : 'Identità online recuperata. Questo file non contiene un backup completo compatibile: non è possibile recuperare progressi e avatar che non siano più presenti sul dispositivo.');
+      setProgress(restoredProgress);
+      setCloudStateIdentityId(identity.id);
+      setCommunityNotice('Account verificato. Profilo, avatar e progressi sono stati caricati dal database.');
       setShowEnrollmentCard(true);
     } catch (error) {
       setEnrollmentError(error instanceof Error ? error.message : 'Recupero account non riuscito. Verifica di aver selezionato il file JSON esportato da Poké Study.');
@@ -726,14 +747,7 @@ export default function App() {
     setCommunityError('');
     setCommunityNotice('');
     try {
-      const metadata = await exportCommunityMetadata({
-        format: 'poke-study-local-game-backup',
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        academy,
-        student,
-        progress,
-      });
+      const metadata = await exportCommunityMetadata();
       const blob = new Blob([metadata], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -743,7 +757,7 @@ export default function App() {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      setCommunityNotice('Backup completo esportato: include identità online, profilo, avatar e progressi locali. Conserva il file in un luogo privato: contiene il token di accesso.');
+      setCommunityNotice('File di recupero esportato. Contiene solo il riferimento dell’account e la credenziale privata: conservalo in un luogo sicuro e non condividerlo.');
     } catch (error) {
       setCommunityError(error instanceof Error ? error.message : 'Esportazione account non riuscita.');
     } finally {
@@ -759,30 +773,10 @@ export default function App() {
     setCommunityError('');
     setCommunityNotice('');
     try {
-      const serialized = await file.text();
-      const identity = await importCommunityMetadata(serialized);
-      const backup = readGameBackup(serialized, identity);
-      let restored = false;
-      if (backup) {
-        const hasLocalData = Boolean(student) || hasMeaningfulProgress(progress);
-        const shouldRestore = !hasLocalData || window.confirm('Il file contiene anche un backup del profilo e dei progressi. Vuoi sostituire i dati attualmente presenti su questo dispositivo con quelli del file?');
-        if (shouldRestore) {
-          localStorage.setItem(ACADEMY_KEY, backup.academy);
-          localStorage.setItem(STUDENT_KEY, JSON.stringify(backup.student));
-          localStorage.setItem(SAVE_KEY, JSON.stringify(backup.progress));
-          setAcademy(backup.academy);
-          setStudent(backup.student);
-          setProgress(backup.progress);
-          restored = true;
-        }
-      }
+      const identity = await importCommunityMetadata(await file.text());
       setCommunityIdentity(identity);
       setCommunityError('');
-      setCommunityNotice(backup
-        ? restored
-          ? 'Identità verificata e backup ripristinato: profilo, avatar e progressi sono stati recuperati.'
-          : 'Identità verificata. Il backup locale non è stato applicato perché hai scelto di mantenere i dati presenti su questo dispositivo.'
-        : 'Identità online importata. Questo file non contiene un backup completo compatibile: i dati locali non sono stati modificati. Esporta un nuovo backup dal dispositivo dove i progressi sono ancora disponibili.');
+      setCommunityNotice('Credenziale verificata dal server. Caricamento di profilo, avatar e progressi dal database…');
     } catch (error) {
       setCommunityError(error instanceof Error ? error.message : 'Importazione account non riuscita.');
     } finally {
@@ -918,7 +912,7 @@ export default function App() {
         <section className="admission-info-grid" aria-label="Informazioni sull'immatricolazione">
           <article><span>01</span><div><strong>Scegli il campus</strong><p>Arancia, Uva o Mirtillo: tutti i campus danno accesso allo stesso catalogo.</p></div></article>
           <article><span>02</span><div><strong>Registra la tua identità</strong><p>Nickname ufficiale senza password o email. Puoi recuperare l'account con il file privato.</p></div></article>
-          <article><span>03</span><div><strong>Inizia a studiare</strong><p>La progressione e gli acquisti restano sul dispositivo e non vengono cancellati dall'immatricolazione.</p></div></article>
+          <article><span>03</span><div><strong>Inizia a studiare</strong><p>La progressione e gli acquisti vengono salvati sul tuo account e si sincronizzano quando sei online.</p></div></article>
         </section>
         <p className="academy-choice-footnote">L'accademia modifica l'identità visiva del campus, non la disponibilità delle specie: tutti i 1.025 Pokémon sono previsti nel percorso.</p>
       </main>
@@ -1316,7 +1310,7 @@ export default function App() {
             </div>
           </>}
 
-          {view === 'esami' && <><div className="breadcrumb">Home / Area didattica / <b>Esami</b></div><div className="page-heading"><div><div className="eyebrow">DIPARTIMENTO DIDATTICO</div><h1>Esami e prove speciali</h1><p>Completa le regioni, approfondisci i tipi Pokémon e affronta obiettivi speciali. I risultati vengono salvati localmente.</p></div></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<section className="archive-search"><h2>Esami regionali</h2><p>Completare una regione assegna automaticamente 1 Punto esame.</p><div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata · Punto esame ottenuto':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div></section><section className="archive-search"><h2>Esami per tipo</h2><p>I dati dei tipi provengono dalla PokéAPI e vengono messi in cache dopo il primo caricamento.</p>{typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}{typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}<div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;const key=`type-${type.name}`;const claimed=completedExams.includes(key);return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div>{done?<button className="secondary-button" disabled={claimed} onClick={()=>claimExam(key)}>{claimed?'Ricompensa riscossa':'Completa prova · +1 Punto esame'}</button>:<strong>{ids.length?Math.round(count/ids.length*100):0}% completato</strong>}</div></article>})}</div></section><section className="archive-search"><h2>Prove speciali</h2><p>Obiettivi progressivi di catalogazione. Ogni ricompensa può essere riscossa una sola volta.</p><div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10,reward:1},{id:'special-50',title:'Ricercatore in erba',target:50,reward:1},{id:'special-150',title:'Archivista Pokémon',target:150,reward:2},{id:'special-500',title:'Esperto Nazionale',target:500,reward:3},{id:'special-1025',title:'Maestro dell’Archivio',target:1025,reward:10}].map(exam=>{const done=progress.completedIds.length>=exam.target;const claimed=completedExams.includes(exam.id);return <article className="exam-card" key={exam.id}><div className="exam-card-mark special-mark">★</div><div><h3>{exam.title}</h3><p>Cataloga {exam.target} Pokémon · {Math.min(progress.completedIds.length,exam.target)} / {exam.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/exam.target*100)}%`}}/></div><strong>{exam.reward} {exam.reward===1?'Punto esame':'Punti esame'}</strong><button className="secondary-button" disabled={!done||claimed} onClick={()=>claimExam(exam.id,exam.reward)}>{claimed?'Ricompensa riscossa':done?'Riscatta ricompensa':'Prova in corso'}</button></div></article>})}</div></section></>}
+          {view === 'esami' && <><div className="breadcrumb">Home / Area didattica / <b>Esami</b></div><div className="page-heading"><div><div className="eyebrow">DIPARTIMENTO DIDATTICO</div><h1>Esami e prove speciali</h1><p>Completa le regioni, approfondisci i tipi Pokémon e affronta obiettivi speciali. I risultati vengono salvati sul tuo account e sincronizzati con il database quando sei online.</p></div></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<section className="archive-search"><h2>Esami regionali</h2><p>Completare una regione assegna automaticamente 1 Punto esame.</p><div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata · Punto esame ottenuto':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div></section><section className="archive-search"><h2>Esami per tipo</h2><p>I dati dei tipi provengono dalla PokéAPI e vengono messi in cache dopo il primo caricamento.</p>{typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}{typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}<div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;const key=`type-${type.name}`;const claimed=completedExams.includes(key);return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div>{done?<button className="secondary-button" disabled={claimed} onClick={()=>claimExam(key)}>{claimed?'Ricompensa riscossa':'Completa prova · +1 Punto esame'}</button>:<strong>{ids.length?Math.round(count/ids.length*100):0}% completato</strong>}</div></article>})}</div></section><section className="archive-search"><h2>Prove speciali</h2><p>Obiettivi progressivi di catalogazione. Ogni ricompensa può essere riscossa una sola volta.</p><div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10,reward:1},{id:'special-50',title:'Ricercatore in erba',target:50,reward:1},{id:'special-150',title:'Archivista Pokémon',target:150,reward:2},{id:'special-500',title:'Esperto Nazionale',target:500,reward:3},{id:'special-1025',title:'Maestro dell’Archivio',target:1025,reward:10}].map(exam=>{const done=progress.completedIds.length>=exam.target;const claimed=completedExams.includes(exam.id);return <article className="exam-card" key={exam.id}><div className="exam-card-mark special-mark">★</div><div><h3>{exam.title}</h3><p>Cataloga {exam.target} Pokémon · {Math.min(progress.completedIds.length,exam.target)} / {exam.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/exam.target*100)}%`}}/></div><strong>{exam.reward} {exam.reward===1?'Punto esame':'Punti esame'}</strong><button className="secondary-button" disabled={!done||claimed} onClick={()=>claimExam(exam.id,exam.reward)}>{claimed?'Ricompensa riscossa':done?'Riscatta ricompensa':'Prova in corso'}</button></div></article>})}</div></section></>}
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 

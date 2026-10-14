@@ -1,7 +1,9 @@
 /**
- * Thin client for the Supabase community Edge Function.
+ * Thin client for the Supabase Edge Function.
+ * Account identity and all authoritative player data live in the database.
  * No service-role secret belongs in this browser bundle.
  */
+import type { SavedProgress, StudentProfile } from "./types";
 export type CommunityAcademy = "arancia" | "uva" | "mirtillo";
 export type CommunityCategory = "generale" | "domande" | "strategie" | "annunci";
 
@@ -44,6 +46,14 @@ interface CommunityResponse<T> {
 const TOKEN_KEY = "poke-study-community-token-v1";
 const METADATA_FORMAT = "poke-study-community-account";
 const METADATA_VERSION = 1;
+
+export interface CommunityPlayerState {
+  profile: Pick<StudentProfile, "matricola" | "avatarId"> | null;
+  progress: SavedProgress | null;
+  updatedAt: string | null;
+}
+
+let pendingPlayerStateWrite: Promise<void> = Promise.resolve();
 
 function configuration() {
   const url = import.meta.env.VITE_SUPABASE_URL?.trim().replace(/\/$/, "");
@@ -112,6 +122,27 @@ export async function getCommunityIdentity(): Promise<CommunityIdentity> {
   return result.identity;
 }
 
+export async function loadCommunityPlayerState(): Promise<CommunityPlayerState> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  return await call<CommunityPlayerState>("load_player_state", {}, token);
+}
+
+/** Serialize writes so a slower older request cannot overwrite a newer snapshot. */
+export async function saveCommunityPlayerState(profile: StudentProfile, progress: SavedProgress): Promise<void> {
+  const token = readToken();
+  if (!token) throw new Error("Nessuna identità community disponibile per salvare i progressi.");
+  const snapshot = {
+    profile: { matricola: profile.matricola, avatarId: profile.avatarId ?? null },
+    progress,
+  };
+  const write = pendingPlayerStateWrite.then(async () => {
+    await call<{ saved: boolean }>("save_player_state", snapshot, token);
+  });
+  pendingPlayerStateWrite = write.catch(() => undefined);
+  await write;
+}
+
 export async function listCommunityThreads(): Promise<CommunityThread[]> {
   const token = readToken();
   if (!token) throw new Error("Registra o importa prima la tua identità community.");
@@ -138,20 +169,19 @@ export async function createCommunityReply(threadId: string, body: string): Prom
 }
 
 /**
- * Exports the private bearer token as portable metadata. Treat the result like a password:
- * anyone holding it can act as this identity. The metadata must never be posted publicly.
+ * Exports only the account reference and its private bearer credential.
+ * The token is equivalent to a password: keep the file private and never publish it.
+ * Profile details and game progress are fetched from Supabase after identity verification.
  */
-export async function exportCommunityMetadata(gameBackup?: Record<string, unknown>): Promise<string> {
+export async function exportCommunityMetadata(): Promise<string> {
   const token = readToken();
   if (!token) throw new Error("Nessuna identità community da esportare.");
   const identity = await getCommunityIdentity();
   return JSON.stringify({
     format: METADATA_FORMAT,
     version: METADATA_VERSION,
-    exportedAt: new Date().toISOString(),
-    identity: { id: identity.id, nickname: identity.nickname, academy: identity.academy },
+    identityId: identity.id,
     token,
-    ...(gameBackup ? { gameBackup } : {}),
   }, null, 2);
 }
 
@@ -169,7 +199,15 @@ export async function importCommunityMetadata(serialized: string): Promise<Commu
     || typeof record.token !== "string" || !/^[a-f0-9]{64}$/.test(record.token)) {
     throw new Error("Formato dei metadati account non supportato.");
   }
+  // Accept old exports, but never trust identity fields supplied by the file.
+  const legacyIdentity = record.identity && typeof record.identity === "object"
+    ? (record.identity as Record<string, unknown>).id
+    : null;
+  const expectedIdentityId = typeof record.identityId === "string" ? record.identityId : legacyIdentity;
   const result = await call<{ identity: CommunityIdentity }>("whoami", {}, record.token);
+  if (typeof expectedIdentityId === "string" && result.identity.id !== expectedIdentityId) {
+    throw new Error("Il riferimento dell'account non corrisponde alla credenziale verificata dal server.");
+  }
   saveToken(record.token);
   return result.identity;
 }

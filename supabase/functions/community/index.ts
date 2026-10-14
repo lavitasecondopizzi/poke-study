@@ -10,6 +10,45 @@ const corsHeaders = {
 const categories = new Set(["generale", "domande", "strategie", "annunci"]);
 type Academy = "arancia" | "uva" | "mirtillo";
 
+const STARTER_AVATAR_IDS = new Set([1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912]);
+const NATIONAL_DEX_SIZE = 1025;
+
+function normalizePlayerProgress(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const raw = value as Record<string, unknown>;
+  const count = (candidate: unknown) => typeof candidate === "number" && Number.isSafeInteger(candidate) && candidate >= 0 && candidate <= 1_000_000_000 ? candidate : null;
+  const strings = (candidate: unknown, maxLength: number) => {
+    if (!Array.isArray(candidate) || candidate.length > 5000) return null;
+    if (!candidate.every(item => typeof item === "string" && item.length > 0 && item.length <= maxLength)) return null;
+    return [...new Set(candidate as string[])];
+  };
+  if (!Array.isArray(raw.completedIds) || raw.completedIds.length > NATIONAL_DEX_SIZE
+    || !raw.completedIds.every(id => Number.isInteger(id) && Number(id) >= 1 && Number(id) <= NATIONAL_DEX_SIZE)) return null;
+  const points = count(raw.points);
+  const examPoints = count(raw.examPoints);
+  const completedExams = strings(raw.completedExams ?? [], 100);
+  const inventory = strings(raw.inventory ?? [], 120);
+  const completedEntries = strings(raw.completedEntries ?? [], 180);
+  if (points === null || examPoints === null || !completedExams || !inventory || !completedEntries) return null;
+  const cooldowns: Record<string, number> = {};
+  if (raw.abilityCooldowns !== undefined) {
+    if (!raw.abilityCooldowns || typeof raw.abilityCooldowns !== "object" || Array.isArray(raw.abilityCooldowns)) return null;
+    for (const [key, until] of Object.entries(raw.abilityCooldowns as Record<string, unknown>)) {
+      if ((key !== "scanner" && key !== "research") || typeof until !== "number" || !Number.isSafeInteger(until) || until < 0) return null;
+      cooldowns[key] = until;
+    }
+  }
+  return {
+    points,
+    completedIds: [...new Set(raw.completedIds as number[])],
+    examPoints,
+    completedExams,
+    inventory,
+    completedEntries,
+    abilityCooldowns: cooldowns,
+  };
+}
+
 function response(status: number, body: Record<string, unknown>) {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
 }
@@ -91,6 +130,58 @@ Deno.serve(async request => {
     if (identityError || !identity) return response(401, { error: "Identità community non riconosciuta." });
 
     if (action === "whoami") return response(200, { identity });
+
+    if (action === "load_player_state") {
+      const { data, error } = await supabase
+        .from("community_identities")
+        .select("player_profile,player_progress,player_state_updated_at")
+        .eq("id", identity.id)
+        .single();
+      if (error || !data) return response(500, { error: "Non è stato possibile caricare i dati del giocatore." });
+      const rawProfile = data.player_profile && typeof data.player_profile === "object"
+        ? data.player_profile as Record<string, unknown>
+        : null;
+      const profile = rawProfile && typeof rawProfile.matricola === "string"
+        ? {
+            matricola: rawProfile.matricola,
+            ...(typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? { avatarId: rawProfile.avatarId } : {}),
+          }
+        : null;
+      const progress = normalizePlayerProgress(data.player_progress);
+      return response(200, { profile, progress, updatedAt: data.player_state_updated_at });
+    }
+
+    if (action === "save_player_state") {
+      const rawProfile = input.profile;
+      if (!rawProfile || typeof rawProfile !== "object" || Array.isArray(rawProfile)) {
+        return response(400, { error: "Profilo giocatore non valido." });
+      }
+      const profileInput = rawProfile as Record<string, unknown>;
+      const matricola = cleanText(profileInput.matricola, 12, 24);
+      if (!matricola || !/^PS-\d{4}-[A-Z0-9]{6}$/.test(matricola)) {
+        return response(400, { error: "Matricola giocatore non valida." });
+      }
+      let avatarId: number | null = null;
+      if (profileInput.avatarId !== null && profileInput.avatarId !== undefined) {
+        if (typeof profileInput.avatarId !== "number" || !STARTER_AVATAR_IDS.has(profileInput.avatarId)) {
+          return response(400, { error: "Avatar giocatore non valido." });
+        }
+        avatarId = profileInput.avatarId;
+      }
+      const progress = normalizePlayerProgress(input.progress);
+      if (!progress) return response(400, { error: "Progressi giocatore non validi." });
+      const updatedAt = new Date().toISOString();
+      const { error } = await supabase
+        .from("community_identities")
+        .update({
+          player_profile: { matricola, avatarId },
+          player_progress: progress,
+          player_state_updated_at: updatedAt,
+        })
+        .eq("id", identity.id);
+      if (error) return response(500, { error: "Non è stato possibile salvare i dati del giocatore nel database." });
+      return response(200, { saved: true, updatedAt });
+    }
 
     if (action === "list_threads") {
       const { data, error } = await supabase
