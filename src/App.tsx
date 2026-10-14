@@ -238,10 +238,8 @@ function PortalDashboard({
     { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
     { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
     { id: 'registro', title: 'Registro personale', description: 'Rivedi i risultati e il tuo avanzamento.', icon: <Trophy size={21} />, className: 'portal-v2-record' },
-    { id: 'esami', title: 'Traguardi', description: 'Monitora regioni, tipi e obiettivi di catalogazione.', icon: <GraduationCap size={21} />, className: 'portal-v2-exams' },
     { id: 'academia', title: 'Accademia', description: 'Segui le lezioni, sostieni i test e consulta la pagella.', icon: <BookOpen size={21} />, className: 'portal-v2-academy' },
     { id: 'shop', title: 'Cartoleria', description: 'Acquista strumenti e potenziamenti.', icon: <ShoppingBag size={21} />, className: 'portal-v2-shop', status: availableShopCount > 0 ? availableShopCount + ' disponibili' : undefined },
-    { id: 'profilo', title: 'Profilo allievo', description: 'Gestisci avatar, nickname e matricola.', icon: <GraduationCap size={21} />, className: 'portal-v2-profile' },
   ];
 
   return (
@@ -255,7 +253,6 @@ function PortalDashboard({
           <p>Catalogazione, esami e progressi.</p>
           <div className="portal-v2-actions">
             <button type="button" className="portal-v2-primary" onClick={() => onNavigate('game')}><FlaskConical size={17} /> Continua a giocare <ChevronRight size={17} /></button>
-            <button type="button" className="portal-v2-secondary" onClick={() => onNavigate('esami')}>Vai ai traguardi</button>
           </div>
         </div>
         <div className="portal-v2-campus-card">
@@ -556,7 +553,7 @@ export default function App() {
   }, [view, online]);
 
   useEffect(() => {
-    if (view !== 'esami' || typeCatalog.length) return;
+    if (view !== 'registro' || typeCatalog.length) return;
     let active = true;
     const cacheKey = 'poke-study-api-types-v1';
     try { const cached = localStorage.getItem(cacheKey); if (cached) { setTypeCatalog(JSON.parse(cached) as PokemonTypeIndex[]); return; } } catch { /* ignore broken cache */ }
@@ -1114,10 +1111,8 @@ export default function App() {
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
-        <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><FlaskConical size={16} /> Traguardi</button>
         <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
         <button className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
-        <button className={view === 'profilo' ? 'active' : ''} aria-current={view === 'profilo' ? 'page' : undefined} onClick={() => navTo('profilo')}><GraduationCap size={16} /> Profilo</button>
         <button className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca</button>
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
@@ -1129,7 +1124,6 @@ export default function App() {
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
             <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
             <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
-            <button className={view === 'esami' ? 'side-active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}>▸ Traguardi</button>
             <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
           </section>
           <section className="side-box">
@@ -1312,7 +1306,7 @@ export default function App() {
               </section>
             </section>
           </>}
-                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} academy={academy} onReset={resetProgress} />}
+                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} academy={academy} typeCatalog={typeCatalog} typeLoading={typeLoading} online={online} onReset={resetProgress} />}
           {view === 'shop' && <Cartoleria
             academy={academy}
             progress={progress}
@@ -1324,25 +1318,6 @@ export default function App() {
             buyItem={buyItem}
             notice={notice}
           />}
-
-          {view === 'esami' && <>
-            <div className="breadcrumb">Home / Progressi / <b>Traguardi</b></div>
-            <div className="page-heading"><div><div className="eyebrow">PROGRESSIONE DEL CATALOGO</div><h1>Traguardi di catalogazione</h1><p>Segui i progressi per regione, tipo e obiettivi personali.</p></div></div>
-            <section className="archive-search">
-              <h2>Regioni</h2>
-              <div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div>
-            </section>
-            <section className="archive-search">
-              <h2>Tipi Pokémon</h2>
-              {typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}
-              {typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}
-              <div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div><strong>{done?'Tipo completato':`${ids.length?Math.round(count/ids.length*100):0}% completato`}</strong></div></article>})}</div>
-            </section>
-            <section className="archive-search">
-              <h2>Obiettivi speciali</h2>
-              <div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10},{id:'special-50',title:'Ricercatore in erba',target:50},{id:'special-150',title:'Archivista Pokémon',target:150},{id:'special-500',title:'Esperto Nazionale',target:500},{id:'special-1025',title:'Maestro dell’Archivio',target:1025}].map(goal=>{const done=progress.completedIds.length>=goal.target;return <article className="exam-card" key={goal.id}><div className="exam-card-mark special-mark">{done?'✓':'★'}</div><div><h3>{goal.title}</h3><p>Cataloga {goal.target} Pokémon · {Math.min(progress.completedIds.length,goal.target)} / {goal.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/goal.target*100)}%`}}/></div><strong>{done?'Obiettivo raggiunto':'In corso'}</strong></div></article>})}</div>
-            </section>
-          </>}
 
           {view === 'classifica' && <Leaderboard
             academy={academy}
@@ -1438,7 +1413,6 @@ export default function App() {
             <button type="button" className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio Nazionale</span>{!inventory.includes('national-catalog') && <small>Bloccato</small>}</button>
             <button type="button" className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Cartoleria</span>{availableShopCount > 0 && <small>{availableShopCount} disponibili</small>}</button>
             <button type="button" className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={20}/><span>Classifica</span></button>
-            <button type="button" className={view === 'profilo' ? 'active' : ''} aria-current={view === 'profilo' ? 'page' : undefined} onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo allievo</span></button>
             <button type="button" className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
             <button type="button" className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={20}/><span>Accademia</span></button>
           </div>
@@ -1448,7 +1422,7 @@ export default function App() {
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={21}/><span>Portale</span></button>
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={21}/><span>Gioca</span></button>
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={21}/><span>Registro</span></button>
-        <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><GraduationCap size={21}/><span>Esami</span></button>
+        <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={21}/><span>Accademia</span></button>
         <button className={['pokedex','shop','classifica','profilo','forum','academia'].includes(view) ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
       </nav>
     </div>
