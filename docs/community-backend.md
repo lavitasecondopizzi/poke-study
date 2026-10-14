@@ -34,7 +34,7 @@ All requests are POST JSON to `/functions/v1/community`.
 - `create_thread`: creates a discussion in `generale`, `domande`, `strategie` or `annunci`.
 - `create_reply`: adds a reply to an existing discussion.
 
-The typed browser wrapper is `src/community.ts`. It is intentionally not wired into the current Bacheca until enrollment can establish the identity safely.
+The typed browser wrapper is `src/community.ts`. The profile page now exposes optional controls to create a community identity and export/import its metadata. The current Bacheca remains unchanged until the Supabase project is configured and the identity flow is verified end to end.
 
 ## Verification checklist
 
