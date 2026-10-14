@@ -110,6 +110,43 @@ create table if not exists public.academy_attempt_answers (
   unique (attempt_id, question_id)
 );
 
+
+create or replace function public.get_academy_progress(p_identity_id uuid)
+returns jsonb
+language sql
+stable
+security definer
+set search_path = ''
+as $
+  select jsonb_build_object(
+    'lessonAverages',
+    coalesce((
+      select jsonb_object_agg(
+        grouped.lesson_code,
+        jsonb_build_object('average', grouped.average_score, 'attemptCount', grouped.attempt_count)
+      )
+      from (
+        select lesson_code, avg(score)::numeric as average_score, count(*)::integer as attempt_count
+        from public.academy_attempts
+        where identity_id = p_identity_id and attempt_kind = 'lesson' and status = 'submitted'
+        group by lesson_code
+      ) grouped
+    ), '{}'::jsonb),
+    'gradeExamAverage',
+    (select avg(score)::numeric from public.academy_attempts
+      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'),
+    'gradeExamAttemptCount',
+    (select count(*)::integer from public.academy_attempts
+      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'),
+    'gradeExamPassed',
+    coalesce((select avg(score) >= 26 from public.academy_attempts
+      where identity_id = p_identity_id and attempt_kind = 'grade_exam' and status = 'submitted'), false)
+  );
+$;
+
+revoke all on function public.get_academy_progress(uuid) from public, anon, authenticated;
+grant execute on function public.get_academy_progress(uuid) to service_role;
+
 create or replace function public.submit_academy_attempt(
   p_identity_id uuid,
   p_attempt_id uuid,
