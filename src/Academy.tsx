@@ -130,8 +130,10 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     return Array.from(groups.values());
   }, [lessons]);
 
-  const selectedIndex = lessons.findIndex(item => item.lesson_code === selectedCode);
-  const selectedIsUnlocked = selectedIndex <= 0 || lessons
+  const selectedLesson = lessons.find(item => item.lesson_code === selectedCode);
+  const selectedSubjectLessons = selectedLesson ? lessons.filter(item => item.subject_code === selectedLesson.subject_code) : [];
+  const selectedIndex = selectedSubjectLessons.findIndex(item => item.lesson_code === selectedCode);
+  const selectedIsUnlocked = selectedIndex <= 0 || selectedSubjectLessons
     .slice(0, selectedIndex)
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const answeredCount = questions.filter(question => isQuestionAnswered(question, answers[question.questionId])).length;
@@ -150,7 +152,6 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const gradeAverage = lessons.length > 0 && lessons.every(item => averages.get(item.lesson_code) !== null)
     ? lessons.reduce((sum, item) => sum + (averages.get(item.lesson_code) ?? 0), 0) / lessons.length
     : null;
-  const allLessonsPassed = lessons.length > 0 && lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const gradeExamAverage = progressSummary?.gradeExamAverage ?? averageScore(gradeExamAttempts);
   const gradePassed = progressSummary?.gradePassed ?? false;
 
@@ -409,9 +410,9 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               </div>
               <div className="academy-lesson-list">
                 {group.lessons.map(item => {
-                  const index = lessons.findIndex(lessonItem => lessonItem.lesson_code === item.lesson_code);
+                  const index = group.lessons.findIndex(lessonItem => lessonItem.lesson_code === item.lesson_code);
                   const score = averages.get(item.lesson_code) ?? null;
-                  const unlocked = index === 0 || lessons.slice(0, index).every(previous => (averages.get(previous.lesson_code) ?? 0) >= 18);
+                  const unlocked = index === 0 || group.lessons.slice(0, index).every(previous => (averages.get(previous.lesson_code) ?? 0) >= 18);
                   const passed = score !== null && score >= 18;
                   return <article className={"academy-lesson-card " + (!unlocked ? "is-locked" : "")} key={item.lesson_code}>
                     <div className={"academy-lesson-number " + (passed ? "is-passed" : "")}>{passed ? <CheckCircle2 size={20} /> : unlocked ? String(index + 1).padStart(2, "0") : <LockKeyhole size={17} />}</div>
