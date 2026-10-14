@@ -1441,7 +1441,7 @@ export default function App() {
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={21}/><span>Gioca</span></button>
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={21}/><span>Registro</span></button>
         <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><GraduationCap size={21}/><span>Esami</span></button>
-        <button className={['pokedex','shop','classifica','profilo','forum','academia'].includes(view) ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
+        <button className={mobileMoreOpen ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
       </nav>
     </div>
   );
