@@ -81,7 +81,7 @@ as $$
     group by c.academy, c.title
   )
   select jsonb_build_object(
-    'studentPoints', coalesce((select sum(points)::integer from public.academy_points_awards where identity_id = p_identity_id), 0),
+    'studentPoints', coalesce((select sum(points)::integer from public.academy_points_awards where identity_id = p_identity_id and academy = (select academy from public.community_identities where id = p_identity_id)), 0),
     'studentAcademy', (select academy from public.community_identities where id = p_identity_id),
     'campusRanking', coalesce((
       select jsonb_agg(jsonb_build_object('academy', academy, 'title', title, 'points', points)
