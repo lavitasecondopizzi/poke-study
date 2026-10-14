@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { FormEvent } from 'react';
+import type { CSSProperties, FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
@@ -631,7 +631,7 @@ export default function App() {
                   </div>
                 </div>
                 <div className="portal-hero-progress" aria-label={`${progress.completedIds.length} Pokémon catalogati su ${NATIONAL_DEX_SIZE}`}>
-                  <div className="portal-progress-ring" style={{'--progress': `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%` } as React.CSSProperties}>
+                  <div className="portal-progress-ring" style={{'--progress': `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%` } as CSSProperties}>
                     <div><strong>{Math.round(progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%</strong><span>COMPLETATO</span></div>
                   </div>
                   <span className="portal-progress-caption">{progress.completedIds.length.toLocaleString('it-IT')} / {NATIONAL_DEX_SIZE.toLocaleString('it-IT')} Pokémon</span>
