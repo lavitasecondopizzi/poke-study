@@ -12,6 +12,7 @@ import type {
   AcademyAttemptSummary,
   AcademyLesson,
   AcademyQuestion,
+  AcademyProgressSummary,
 } from "./academy";
 import "./academy.css";
 
@@ -42,9 +43,12 @@ function makeAttemptKey(): string {
 export default function Academy({ configured, identityReady, onOpenProfile }: Props) {
   const [lessons, setLessons] = useState<AcademyLesson[]>([]);
   const [attempts, setAttempts] = useState<AcademyAttemptSummary[]>([]);
+  const [progressSummary, setProgressSummary] = useState<AcademyProgressSummary | null>(null);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [lesson, setLesson] = useState<AcademyLesson | null>(null);
   const [lessonAttempts, setLessonAttempts] = useState<AcademyAttemptSummary[]>([]);
+  const [lessonAverage, setLessonAverage] = useState<number | null>(null);
+  const [lessonAttemptCount, setLessonAttemptCount] = useState(0);
   const [questions, setQuestions] = useState<AcademyQuestion[]>([]);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [attemptKind, setAttemptKind] = useState<"lesson" | "grade_exam" | null>(null);
@@ -57,10 +61,10 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const averages = useMemo(() => {
     const resultMap = new Map<string, number | null>();
     for (const item of lessons) {
-      resultMap.set(item.lesson_code, averageScore(attempts.filter(attempt => attempt.lesson_code === item.lesson_code)));
+      resultMap.set(item.lesson_code, progressSummary?.lessonAverages[item.lesson_code]?.average ?? null);
     }
     return resultMap;
-  }, [lessons, attempts]);
+  }, [lessons, progressSummary]);
 
   const selectedIndex = lessons.findIndex(item => item.lesson_code === selectedCode);
   const selectedIsUnlocked = selectedIndex <= 0 || lessons
@@ -68,17 +72,20 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const answeredCount = questions.filter(question => answers[question.questionId] !== undefined).length;
   const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam");
+  const gradeExamAttemptCount = progressSummary?.gradeExamAttemptCount ?? gradeExamAttempts.length;
+  const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount;
   const gradeAverage = lessons.length > 0 && lessons.every(item => averages.get(item.lesson_code) !== null)
     ? lessons.reduce((sum, item) => sum + (averages.get(item.lesson_code) ?? 0), 0) / lessons.length
     : null;
   const allLessonsPassed = lessons.length > 0 && lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
-  const gradeExamAverage = averageScore(gradeExamAttempts);
+  const gradeExamAverage = progressSummary?.gradeExamAverage ?? averageScore(gradeExamAttempts);
   const gradePassed = allLessonsPassed && gradeAverage !== null && gradeAverage >= 26 && gradeExamAverage !== null && gradeExamAverage >= 26;
 
   async function refreshCurriculum() {
     const data = await loadAcademyCurriculum();
     setLessons(data.lessons);
     setAttempts(data.attempts);
+    setProgressSummary(data.progress);
   }
 
   useEffect(() => {
@@ -91,6 +98,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         if (cancelled) return;
         setLessons(data.lessons);
         setAttempts(data.attempts);
+        setProgressSummary(data.progress);
       })
       .catch(reason => {
         if (!cancelled) setError(reason instanceof Error ? reason.message : "Impossibile caricare il programma.");
@@ -105,6 +113,8 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     if (!selectedCode || selectedCode === "__grade_exam__" || !configured || !identityReady) {
       setLesson(null);
       setLessonAttempts([]);
+      setLessonAverage(null);
+      setLessonAttemptCount(0);
       return;
     }
     let cancelled = false;
@@ -115,6 +125,8 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         if (cancelled) return;
         setLesson(data.lesson);
         setLessonAttempts(data.attempts);
+        setLessonAverage(data.lessonAverage);
+        setLessonAttemptCount(data.attemptCount);
       })
       .catch(reason => {
         if (!cancelled) setError(reason instanceof Error ? reason.message : "Impossibile caricare la lezione.");
@@ -182,6 +194,8 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         const detail = await loadAcademyLesson(selectedCode);
         setLesson(detail.lesson);
         setLessonAttempts(detail.attempts);
+        setLessonAverage(detail.lessonAverage);
+        setLessonAttemptCount(detail.attemptCount);
       }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Non è stato possibile consegnare il test.");
@@ -238,7 +252,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
           <div className="academy-summary-grid">
             <article><span>LEZIONI</span><strong>{lessons.length}</strong><small>Programma pubblicato</small></article>
             <article><span>SUPERATE</span><strong>{lessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
-            <article><span>STORICO</span><strong>{attempts.length}</strong><small>Tentativi consegnati</small></article>
+            <article><span>STORICO</span><strong>{totalAttemptCount}</strong><small>Tentativi consegnati</small></article>
           </div>
           <div className="academy-section-heading"><div><span className="academy-eyebrow">IL TUO PERCORSO</span><h2>Lezioni del Grado I</h2></div><span className="academy-grade-pill">Soglia: 18/30</span></div>
           <div className="academy-lesson-list">
@@ -248,7 +262,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               const passed = score !== null && score >= 18;
               return <article className={"academy-lesson-card " + (!unlocked ? "is-locked" : "")} key={item.lesson_code}>
                 <div className={"academy-lesson-number " + (passed ? "is-passed" : "")}>{passed ? <CheckCircle2 size={20} /> : unlocked ? String(index + 1).padStart(2, "0") : <LockKeyhole size={17} />}</div>
-                <div className="academy-lesson-copy"><span>LEZIONE {index + 1}</span><h3>{item.title}</h3><p>{item.summary}</p><small>{item.objectives.length} obiettivi formativi · {attempts.filter(attempt => attempt.lesson_code === item.lesson_code).length} tentativi</small></div>
+                <div className="academy-lesson-copy"><span>LEZIONE {index + 1}</span><h3>{item.title}</h3><p>{item.summary}</p><small>{item.objectives.length} obiettivi formativi · {progressSummary?.lessonAverages[item.lesson_code]?.attemptCount ?? attempts.filter(attempt => attempt.lesson_code === item.lesson_code).length} tentativi</small></div>
                 <div className="academy-lesson-result"><span>MEDIA</span><strong>{formatAverage(score)}</strong><button type="button" disabled={!unlocked} onClick={() => { setSelectedCode(item.lesson_code); setAttemptKind(null); setResult(null); setQuestions([]); setAttemptId(null); setError(""); setNotice(""); }}>Apri lezione</button></div>
               </article>;
             })}
@@ -258,10 +272,10 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               <span className="academy-eyebrow">ESAME FINALE</span>
               <h3>Esame di grado — Fondamenti</h3>
               <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 20–30 domande uniche.</p>
-              <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttempts.length}</strong></span></div>
+              <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttemptCount}</strong></span></div>
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado I superato.</p>}
             </div>
-            <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginGradeExam()}>{gradeExamAttempts.length ? "Ripeti l’esame" : "Accedi all’esame"}</button>
+            <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginGradeExam()}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
             {!allLessonsPassed && <small className="academy-grade-exam-lock">Completa e supera tutte le lezioni con una media di almeno 18/30 per sbloccare l’esame.</small>}
           </section>
         </>
@@ -278,7 +292,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               </section>
               {(lesson.content ?? []).map((section, index) => <section className="academy-content-card" key={lesson.lesson_code + "-" + index}><h3>{section.title}</h3><p>{section.body}</p></section>)}
               <section className="academy-content-card academy-test-intro"><div><h3><CircleHelp size={18} /> Verifica della lezione</h3><p>Il test seleziona domande dal repertorio della lezione. Ogni tentativo viene registrato e la media comprende tutti i tentativi, anche quelli insufficienti.</p></div><button type="button" className="academy-primary-button" disabled={loading || !selectedIsUnlocked} onClick={() => void beginAttempt()}>Inizia il test</button></section>
-              {lessonAttempts.length > 0 && <section className="academy-content-card"><h3>Storico della lezione</h3><div className="academy-history-list">{lessonAttempts.map((attempt, index) => <div key={attempt.id}><span>Tentativo {lessonAttempts.length - index}</span><strong>{attempt.score}/30</strong><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div><p className="academy-average-note">Media di tutti i tentativi: <strong>{formatAverage(averageScore(lessonAttempts))}</strong></p></section>}
+              {lessonAttemptCount > 0 && <section className="academy-content-card"><h3>Storico della lezione</h3><div className="academy-history-list">{lessonAttempts.map((attempt, index) => <div key={attempt.id}><span>Tentativo {lessonAttemptCount - index}</span><strong>{attempt.score}/30</strong><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div><p className="academy-average-note">Media di tutti i tentativi: <strong>{formatAverage(lessonAverage)}</strong></p></section>}
             </>}
             {attemptId && <section className="academy-test-panel">
               <div className="academy-test-progress"><span>{attemptKind === "grade_exam" ? "ESAME FINALE DEL GRADO" : "TEST DELLA LEZIONE"}</span><strong>{answeredCount} / {questions.length} risposte</strong></div>
