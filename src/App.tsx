@@ -3,6 +3,8 @@ import type { CSSProperties, FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
+import { createCommunityIdentity, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured } from './community';
+import type { CommunityIdentity } from './community';
 import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
@@ -202,6 +204,20 @@ export default function App() {
   const [typeLoading, setTypeLoading] = useState(false);
   const [notice, setNotice] = useState('');
   const [clockNow, setClockNow] = useState(() => Date.now());
+  const [communityIdentity, setCommunityIdentity] = useState<CommunityIdentity | null>(null);
+  const [communityBusy, setCommunityBusy] = useState(false);
+  const [communityError, setCommunityError] = useState('');
+  const [communityNotice, setCommunityNotice] = useState('');
+  const communityConfigured = isCommunityConfigured();
+
+  useEffect(() => {
+    let active = true;
+    if (!hasCommunityToken()) return () => { active = false; };
+    getCommunityIdentity()
+      .then(identity => { if (active) setCommunityIdentity(identity); })
+      .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
+    return () => { active = false; };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -519,6 +535,64 @@ export default function App() {
     }));
     setMessage(hint);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
+  }
+
+  async function registerCommunityIdentity() {
+    if (!student || (academy !== 'arancia' && academy !== 'uva')) return;
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const identity = await createCommunityIdentity(student.nickname, academy);
+      setCommunityIdentity(identity);
+      setCommunityNotice('Identità community creata. Esporta i metadati per trasferirla in sicurezza su un altro dispositivo.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Non è stato possibile creare l’identità community.');
+    } finally {
+      setCommunityBusy(false);
+    }
+  }
+
+  async function downloadCommunityAccount() {
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const metadata = await exportCommunityMetadata();
+      const blob = new Blob([metadata], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'poke-study-account.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setCommunityNotice('Metadati account esportati. Conserva il file in un luogo privato: contiene il token di accesso.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Esportazione account non riuscita.');
+    } finally {
+      setCommunityBusy(false);
+    }
+  }
+
+  async function importCommunityAccount(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    if (!file) return;
+    setCommunityBusy(true);
+    setCommunityError('');
+    setCommunityNotice('');
+    try {
+      const identity = await importCommunityMetadata(await file.text());
+      setCommunityIdentity(identity);
+      setCommunityNotice('Identità importata e verificata dal server.');
+    } catch (error) {
+      setCommunityError(error instanceof Error ? error.message : 'Importazione account non riuscita.');
+    } finally {
+      input.value = '';
+      setCommunityBusy(false);
+    }
   }
 
   function saveAvatar(id: number) {
@@ -965,7 +1039,17 @@ export default function App() {
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
+          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
+              <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
+              <p className="community-account-description">Collega il tuo profilo a un'identità online per preparare l'accesso alla Bacheca condivisa. Il gioco e i progressi locali continuano a funzionare anche senza Supabase.</p>
+              {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><button type="button" className="secondary-button" disabled={!communityConfigured || communityBusy} onClick={() => void registerCommunityIdentity()}>{communityBusy ? 'Attendere…' : 'Crea identità online'}</button><label className="community-import-button">Importa metadati<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
+              {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
+              {communityError && <p className="community-account-error" role="alert">{communityError}</p>}
+              <p className="community-account-warning">Il file esportato contiene una credenziale privata: chi lo possiede può usare questa identità. Non condividerlo e non pubblicarlo.</p>
+            </section>
+            <div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
 
           {view === 'forum' && <>
             <div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div>
