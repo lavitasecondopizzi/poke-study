@@ -26,12 +26,6 @@ function formatGrade(value: number | null): string {
   return value === null ? '—' : `${value.toLocaleString('it-IT', { maximumFractionDigits: 2 })}/30`;
 }
 
-function attemptKindLabel(kind: AcademyAttemptSummary['attempt_kind']): string {
-  if (kind === 'lesson') return 'Test lezione';
-  if (kind === 'subject_exam') return 'Esame di materia';
-  return 'Esame di grado';
-}
-
 function answerLabel(attempt: AcademyAttemptResult['review'][number], answer: unknown): string {
   const label = (id: unknown) => attempt.options.find(option => option.id === String(id))?.label ?? String(id ?? 'Nessuna risposta');
   if (Array.isArray(answer)) return answer.map(label).join(' → ');
