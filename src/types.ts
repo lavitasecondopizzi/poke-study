@@ -3,6 +3,14 @@ export interface PokemonSpecies {
   name: string;
 }
 
+export interface ProgressHistoryEntry {
+  id: string;
+  timestamp: number;
+  kind: 'catalog' | 'error' | 'exam';
+  title: string;
+  detail: string;
+}
+
 export interface SavedProgress {
   points: number;
   completedIds: number[];
@@ -12,6 +20,8 @@ export interface SavedProgress {
   completedEntries?: string[];
   /** Unix timestamps in milliseconds; one cooldown per active ability. */
   abilityCooldowns?: Record<string, number>;
+  errors?: number;
+  history?: ProgressHistoryEntry[];
 }
 
 export interface ApiNamedResource {
