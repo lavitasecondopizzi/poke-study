@@ -281,6 +281,9 @@ Deno.serve(async request => {
           lesson_code: lessonCode,
           grade_number: lesson.grade_number,
           attempt_kind: "lesson",
+          grading_rule_version: "thirtieths-v1",
+          grade_max: 30,
+          pass_threshold: 18,
           client_attempt_key: clientAttemptKey,
           question_snapshot: snapshot,
           question_count: snapshot.length,
@@ -404,6 +407,9 @@ Deno.serve(async request => {
           lesson_code: null,
           grade_number: 1,
           attempt_kind: "grade_exam",
+          grading_rule_version: "thirtieths-v1",
+          grade_max: 30,
+          pass_threshold: 26,
           client_attempt_key: clientAttemptKey,
           question_snapshot: snapshot,
           question_count: snapshot.length,
@@ -437,7 +443,7 @@ Deno.serve(async request => {
       if (!/^[0-9a-f-]{36}$/i.test(attemptId)) return response(400, { error: "Identificativo del tentativo non valido." });
 
       const { data: attempt, error: attemptError } = await supabase.from("academy_attempts")
-        .select("id,lesson_code,grade_number,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at,question_snapshot")
+        .select("id,lesson_code,grade_number,attempt_kind,grading_rule_version,grade_max,pass_threshold,status,score,passed,correct_count,question_count,created_at,submitted_at,question_snapshot")
         .eq("id", attemptId)
         .eq("identity_id", identity.id)
         .maybeSingle();
@@ -481,6 +487,9 @@ Deno.serve(async request => {
         submittedAt: attempt.submitted_at,
         attemptKind: attempt.attempt_kind,
         lessonCode: attempt.lesson_code,
+        gradingRuleVersion: attempt.grading_rule_version,
+        gradeMax: attempt.grade_max,
+        passThreshold: attempt.pass_threshold,
         review,
       });
     }
