@@ -224,6 +224,7 @@ export default function App() {
   const [notice, setNotice] = useState('');
   const [clockNow, setClockNow] = useState(() => Date.now());
   const [communityIdentity, setCommunityIdentity] = useState<CommunityIdentity | null>(null);
+  const [identityCheckComplete, setIdentityCheckComplete] = useState(() => !hasCommunityToken());
   const [cloudStateIdentityId, setCloudStateIdentityId] = useState<string | null>(null);
   const [communityBusy, setCommunityBusy] = useState(false);
   const [communityError, setCommunityError] = useState('');
@@ -255,12 +256,17 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
-    if (hasCommunityToken()) {
-      getCommunityIdentity()
-        .then(identity => { if (active) setCommunityIdentity(identity); })
-        .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità online non verificabile. Importa i metadati esportati in precedenza per recuperare l’account.'); });
+    if (!hasCommunityToken()) {
+      setIdentityCheckComplete(true);
+      return () => { active = false; };
     }
-    // Non creare automaticamente una nuova identità se il token manca o non è più valido.
+    getCommunityIdentity()
+      .then(identity => { if (active) setCommunityIdentity(identity); })
+      .catch(error => {
+        if (active) setCommunityError(error instanceof Error ? error.message : 'Identità online non verificabile. Importa i metadati esportati in precedenza per recuperare l’account.');
+      })
+      .finally(() => { if (active) setIdentityCheckComplete(true); });
+    // Verifica l'identità prima di mostrare la scelta dell'accademia.
     return () => { active = false; };
   }, []);
 
@@ -823,6 +829,24 @@ export default function App() {
     setNotice('Immagine profilo aggiornata.');
   }
 
+  if (!identityCheckComplete || (communityIdentity && cloudStateIdentityId !== communityIdentity.id)) {
+    return (
+      <main className="academy-choice-shell enrollment-shell">
+        <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>PORTALE DELLO STUDENTE</span></div>
+        <header className="academy-choice-brand">
+          <div className="pokeball-mark" aria-hidden="true"><span /></div>
+          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>{communityError ? 'Caricamento non riuscito' : 'Portale dello studente'}</h1><p>{communityError ? 'I dati del tuo account non sono ancora disponibili.' : 'Verifica dell’identità e caricamento dei dati personali…'}</p></div>
+        </header>
+        <section className="academy-choice-intro enrollment-intro" role={communityError ? 'alert' : 'status'}>
+          <span className="academy-choice-label">{communityError ? 'ATTENZIONE' : 'SINCRONIZZAZIONE ACCOUNT'}</span>
+          <h2>{communityError ? 'Impossibile caricare il profilo' : 'Recupero dei dati in corso'}</h2>
+          <p>{communityError || 'Stiamo recuperando dal database il profilo, l’avatar e i progressi salvati. La scelta dell’accademia non verrà richiesta per un account già registrato.'}</p>
+          {communityError && <button type="button" className="enrollment-submit" onClick={() => window.location.reload()}>Riprova <ChevronRight size={18}/></button>}
+        </section>
+      </main>
+    );
+  }
+
   if (!academy || !student) {
     const selectedAcademy = academyName(academy);
     if (academy && !student) {
@@ -1382,12 +1406,6 @@ export default function App() {
               </>}
             </section>
 
-            <div className="forum-section-heading"><div><span className="section-label">ORIENTAMENTO</span><h2>Guide per gli allievi</h2></div><span className="forum-count">2 GUIDE</span></div>
-            <div className="forum-guide-grid">
-              <article className="forum-guide-card"><div className="forum-guide-icon guide-blue"><BookOpen size={22}/></div><div className="forum-guide-copy"><span className="section-label">GUIDA RAPIDA</span><h3>Come catalogare</h3><p>Trascina una carta nella sottocategoria corretta. Su mobile, seleziona la carta e tocca la destinazione. Il nome viene rivelato dopo la risposta.</p><button type="button" className="forum-action" onClick={() => navTo('game')}>Vai a Gioca <ChevronRight size={15}/></button></div></article>
-              <article className="forum-guide-card"><div className="forum-guide-icon guide-gold"><Trophy size={22}/></div><div className="forum-guide-copy"><span className="section-label">PROGRESSI</span><h3>Punti e ricompense</h3><p>Controlla i Pokémon catalogati, i Punti Poké e i Punti esame. Le regioni completate sbloccano le relative ricompense.</p><button type="button" className="forum-action" onClick={() => navTo('registro')}>Apri il registro <ChevronRight size={15}/></button></div></article>
-            </div>
-            <section className="forum-help-strip"><div className="forum-help-symbol"><CircleHelp size={19}/></div><div><strong>Ti serve un riepilogo dei progressi?</strong><p>Nel Registro personale trovi l'avanzamento per regione e il totale delle specie catalogate.</p></div><button type="button" className="secondary-button" onClick={() => navTo('registro')}>Apri registro</button></section>
           </>}<footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
