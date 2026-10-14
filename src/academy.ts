@@ -61,6 +61,8 @@ export interface AcademyAttemptResult {
   questionCount: number;
   passed: boolean;
   submittedAt: string;
+  attemptKind?: "lesson" | "grade_exam";
+  lessonCode?: string | null;
   review: AcademyQuestionReview[];
 }
 
@@ -70,6 +72,10 @@ export async function loadAcademyCurriculum() {
 
 export async function loadAcademyLesson(lessonCode: string) {
   return callAcademyService<{ lesson: AcademyLesson; attempts: AcademyAttemptSummary[]; lessonAverage: number | null; attemptCount: number }>("get_lesson", { lessonCode });
+}
+
+export async function loadAcademyAttemptReview(attemptId: string) {
+  return callAcademyService<AcademyAttemptResult>("get_attempt_review", { attemptId });
 }
 
 export async function startAcademyAttempt(lessonCode: string, clientAttemptKey: string) {
