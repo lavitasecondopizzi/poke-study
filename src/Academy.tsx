@@ -91,6 +91,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const [progressSummary, setProgressSummary] = useState<AcademyProgressSummary | null>(null);
   const [pointsSummary, setPointsSummary] = useState<AcademyPointsSummary | null>(null);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
+  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
   const [lesson, setLesson] = useState<AcademyLesson | null>(null);
   const [lessonAttempts, setLessonAttempts] = useState<AcademyAttemptSummary[]>([]);
   const [lessonAverage, setLessonAverage] = useState<number | null>(null);
@@ -113,19 +114,44 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     return resultMap;
   }, [lessons, progressSummary]);
 
-  const selectedIndex = lessons.findIndex(item => item.lesson_code === selectedCode);
-  const selectedIsUnlocked = selectedIndex <= 0 || lessons
+  const subjectGroups = useMemo(() => {
+    const groups = new Map<string, { code: string; title: string; description: string; lessons: AcademyLesson[] }>();
+    for (const item of lessons) {
+      const code = item.subject_code;
+      const existing = groups.get(code);
+      if (existing) existing.lessons.push(item);
+      else groups.set(code, {
+        code,
+        title: item.subject?.title ?? (code === "pokemon-sciences" ? "Scienze Pokémon e Pokédex" : code),
+        description: item.subject?.description ?? "",
+        lessons: [item],
+      });
+    }
+    return Array.from(groups.values());
+  }, [lessons]);
+
+  const selectedLesson = lessons.find(item => item.lesson_code === selectedCode);
+  const selectedSubjectLessons = selectedLesson ? lessons.filter(item => item.subject_code === selectedLesson.subject_code) : [];
+  const selectedIndex = selectedSubjectLessons.findIndex(item => item.lesson_code === selectedCode);
+  const selectedIsUnlocked = selectedIndex <= 0 || selectedSubjectLessons
     .slice(0, selectedIndex)
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const answeredCount = questions.filter(question => isQuestionAnswered(question, answers[question.questionId])).length;
   const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam");
   const subjectExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "subject_exam");
+  const subjectExamAverage = subjectGroups.length > 0 && subjectGroups.every(group =>
+    averageScore(subjectExamAttempts.filter(attempt => attempt.subject_code === group.code)) !== null
+  )
+    ? subjectGroups.reduce((sum, group) => sum + (averageScore(subjectExamAttempts.filter(attempt => attempt.subject_code === group.code)) ?? 0), 0) / subjectGroups.length
+    : null;
+  const gradeExamUnlocked = subjectExamAverage !== null && subjectExamAverage >= 18;
+  const selectedSubject = subjectGroups.find(group => group.code === selectedSubjectCode);
+  const selectedSubjectLessonsPassed = Boolean(selectedSubject?.lessons.length) && selectedSubject!.lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const gradeExamAttemptCount = progressSummary?.gradeExamAttemptCount ?? gradeExamAttempts.length;
   const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount + subjectExamAttempts.length;
   const gradeAverage = lessons.length > 0 && lessons.every(item => averages.get(item.lesson_code) !== null)
     ? lessons.reduce((sum, item) => sum + (averages.get(item.lesson_code) ?? 0), 0) / lessons.length
     : null;
-  const allLessonsPassed = lessons.length > 0 && lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const gradeExamAverage = progressSummary?.gradeExamAverage ?? averageScore(gradeExamAttempts);
   const gradePassed = progressSummary?.gradePassed ?? false;
 
@@ -207,7 +233,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     }
   }
 
-  async function beginSubjectExam() {
+  async function beginSubjectExam(subjectCode: string) {
     setLoading(true);
     setError("");
     setNotice("");
@@ -215,7 +241,8 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setReviewingHistory(false);
     setAnswers({});
     try {
-      const data = await startAcademySubjectExam("pokemon-sciences", makeAttemptKey());
+      const data = await startAcademySubjectExam(subjectCode, makeAttemptKey());
+      setSelectedSubjectCode(subjectCode);
       setSelectedCode("__subject_exam__");
       setAttemptKind("subject_exam");
       setAttemptId(data.attemptId);
@@ -287,6 +314,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     try {
       const historical = await loadAcademyAttemptReview(id);
       setSelectedCode(kind === "grade_exam" ? "__grade_exam__" : kind === "subject_exam" ? "__subject_exam__" : (lessonCode ?? selectedCode));
+      setSelectedSubjectCode(kind === "subject_exam" ? (historical.subjectCode ?? "pokemon-sciences") : null);
       setAttemptKind(kind);
       setAttemptId(null);
       setQuestions([]);
@@ -371,41 +399,52 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
             <article><span>SUPERATE</span><strong>{lessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
             <article><span>STORICO</span><strong>{totalAttemptCount}</strong><small>Tentativi consegnati</small></article>
           </div>
-          <div className="academy-section-heading"><div><span className="academy-eyebrow">IL TUO PERCORSO</span><h2>Lezioni del Grado I</h2></div><span className="academy-grade-pill">Soglia: 18/30</span></div>
-          <div className="academy-lesson-list">
-            {lessons.map((item, index) => {
-              const score = averages.get(item.lesson_code) ?? null;
-              const unlocked = index === 0 || lessons.slice(0, index).every(previous => (averages.get(previous.lesson_code) ?? 0) >= 18);
-              const passed = score !== null && score >= 18;
-              return <article className={"academy-lesson-card " + (!unlocked ? "is-locked" : "")} key={item.lesson_code}>
-                <div className={"academy-lesson-number " + (passed ? "is-passed" : "")}>{passed ? <CheckCircle2 size={20} /> : unlocked ? String(index + 1).padStart(2, "0") : <LockKeyhole size={17} />}</div>
-                <div className="academy-lesson-copy"><span>LEZIONE {index + 1}</span><h3>{item.title}</h3><p>{item.summary}</p><small>{item.objectives.length} obiettivi formativi · {progressSummary?.lessonAverages[item.lesson_code]?.attemptCount ?? attempts.filter(attempt => attempt.lesson_code === item.lesson_code).length} tentativi</small></div>
-                <div className="academy-lesson-result"><span>MEDIA</span><strong>{formatAverage(score)}</strong><button type="button" disabled={!unlocked} onClick={() => { setSelectedCode(item.lesson_code); setAttemptKind(null); setResult(null); setQuestions([]); setAttemptId(null); setError(""); setNotice(""); }}>Apri lezione</button></div>
-              </article>;
-            })}
-          </div>
-          <section className="academy-content-card academy-grade-exam-card">
-            <div>
-              <span className="academy-eyebrow">ESAME FINALE DI MATERIA</span>
-              <h3>Scienze Pokémon e Pokédex</h3>
-              <p>L'esame finale di materia contiene 15 domande estratte dalle lezioni della materia. Ogni tentativo consegnato assegna 3 punti accademici, anche se insufficiente.</p>
-              <div className="academy-grade-exam-stats"><span>Tentativi <strong>{subjectExamAttempts.length}</strong></span><span>Punti per consegna <strong>3</strong></span></div>
-              {subjectExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi</strong>{subjectExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {subjectExamAttempts.length - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "subject_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
-            </div>
-            <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginSubjectExam()}>{subjectExamAttempts.length ? "Ripeti l’esame di materia" : "Accedi all’esame di materia"}</button>
-            {!allLessonsPassed && <small className="academy-grade-exam-lock">Completa tutte le lezioni della materia con una media di almeno 18/30 per sbloccare l’esame.</small>}
-          </section>
+          {subjectGroups.map((group, groupIndex) => {
+            const groupLessonsPassed = group.lessons.length > 0 && group.lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
+            const groupAttempts = subjectExamAttempts.filter(attempt => attempt.subject_code === group.code);
+            const groupAverage = averageScore(groupAttempts);
+            return <section className="academy-subject-block" key={group.code}>
+              <div className="academy-section-heading academy-subject-heading">
+                <div><span className="academy-eyebrow">MATERIA {String(groupIndex + 1).padStart(2, "0")}</span><h2>{group.title}</h2>{group.description && <p>{group.description}</p>}</div>
+                <span className="academy-grade-pill">{group.lessons.length} lezioni · soglia 18/30</span>
+              </div>
+              <div className="academy-lesson-list">
+                {group.lessons.map(item => {
+                  const index = group.lessons.findIndex(lessonItem => lessonItem.lesson_code === item.lesson_code);
+                  const score = averages.get(item.lesson_code) ?? null;
+                  const unlocked = index === 0 || group.lessons.slice(0, index).every(previous => (averages.get(previous.lesson_code) ?? 0) >= 18);
+                  const passed = score !== null && score >= 18;
+                  return <article className={"academy-lesson-card " + (!unlocked ? "is-locked" : "")} key={item.lesson_code}>
+                    <div className={"academy-lesson-number " + (passed ? "is-passed" : "")}>{passed ? <CheckCircle2 size={20} /> : unlocked ? String(index + 1).padStart(2, "0") : <LockKeyhole size={17} />}</div>
+                    <div className="academy-lesson-copy"><span>LEZIONE {index + 1}</span><h3>{item.title}</h3><p>{item.summary}</p><small>{item.objectives.length} obiettivi formativi · {progressSummary?.lessonAverages[item.lesson_code]?.attemptCount ?? attempts.filter(attempt => attempt.lesson_code === item.lesson_code).length} tentativi</small></div>
+                    <div className="academy-lesson-result"><span>MEDIA</span><strong>{formatAverage(score)}</strong><button type="button" disabled={!unlocked} onClick={() => { setSelectedSubjectCode(group.code); setSelectedCode(item.lesson_code); setAttemptKind(null); setResult(null); setQuestions([]); setAttemptId(null); setError(""); setNotice(""); }}>Apri lezione</button></div>
+                  </article>;
+                })}
+              </div>
+              <section className="academy-content-card academy-grade-exam-card academy-subject-exam-card">
+                <div>
+                  <span className="academy-eyebrow">ESAME FINALE DI MATERIA</span>
+                  <h3>{group.title}</h3>
+                  <p>L'esame finale contiene 15 domande estratte dalle lezioni della materia. Ogni tentativo consegnato assegna 3 punti accademici, anche se insufficiente.</p>
+                  <div className="academy-grade-exam-stats"><span>Media esami <strong>{formatAverage(groupAverage)}</strong></span><span>Tentativi <strong>{groupAttempts.length}</strong></span><span>Punti per consegna <strong>3</strong></span></div>
+                  {groupAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi</strong>{groupAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {groupAttempts.length - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "subject_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
+                </div>
+                <button type="button" className="academy-primary-button" disabled={loading || !groupLessonsPassed} onClick={() => void beginSubjectExam(group.code)}>{groupAttempts.length ? "Ripeti l’esame di materia" : "Accedi all’esame di materia"}</button>
+                {!groupLessonsPassed && <small className="academy-grade-exam-lock">Completa tutte le lezioni di questa materia con una media di almeno 18/30 per sbloccare l'esame.</small>}
+              </section>
+            </section>;
+          })}
           <section className="academy-content-card academy-grade-exam-card">
             <div>
               <span className="academy-eyebrow">ESAME FINALE DI GRADO</span>
               <h3>Esame di grado — Fondamenti</h3>
-              <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 25 domande uniche.</p>
-              <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttemptCount}</strong></span></div>
+              <p>L'esame di grado si sblocca quando la media degli esami finali di tutte le materie è almeno 18/30. Per superare il Grado I restano necessari una media del grado di almeno 26/30 e una media di tutti i tentativi dell'esame di grado di almeno 26/30. Ogni tentativo contiene 25 domande uniche.</p>
+              <div className="academy-grade-exam-stats"><span>Media esami materie <strong>{formatAverage(subjectExamAverage)}</strong></span><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame di grado <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi <strong>{gradeExamAttemptCount}</strong></span></div>
               {gradeExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi d’esame</strong>{gradeExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {gradeExamAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "grade_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado I superato.</p>}
             </div>
-            <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginGradeExam()}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
-            {!allLessonsPassed && <small className="academy-grade-exam-lock">Completa e supera tutte le lezioni con una media di almeno 18/30 per sbloccare l’esame.</small>}
+            <button type="button" className="academy-primary-button" disabled={loading || !gradeExamUnlocked} onClick={() => void beginGradeExam()}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
+            {!gradeExamUnlocked && <small className="academy-grade-exam-lock">Consegna l'esame finale di ogni materia e raggiungi una media complessiva di almeno 18/30 per sbloccare l'esame di grado.</small>}
           </section>
         </>
       ) : (
@@ -414,7 +453,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
           {(lesson || selectedCode === "__grade_exam__" || selectedCode === "__subject_exam__") && <>
             <header className="academy-detail-heading"><span className="academy-eyebrow">{selectedCode === "__grade_exam__" ? "ESAME FINALE DI GRADO" : selectedCode === "__subject_exam__" ? "ESAME FINALE DI MATERIA" : "LEZIONE " + (lesson?.order_index ?? "")}</span><h2>{selectedCode === "__grade_exam__" ? "Esame finale del Grado I" : selectedCode === "__subject_exam__" ? "Esame finale — Scienze Pokémon e Pokédex" : lesson?.title}</h2><p>{selectedCode === "__grade_exam__" ? "Rispondi alle domande estratte dal programma del Grado I. Il voto minimo per superare l’esame è 26/30." : selectedCode === "__subject_exam__" ? "Rispondi a 15 domande estratte dalle lezioni della materia. Il voto minimo è 18/30." : lesson?.summary}</p></header>
             {lesson && !selectedIsUnlocked && <div className="academy-alert academy-alert-error">Questa lezione è bloccata: completa la precedente con una media di almeno 18/30.</div>}
-            {selectedCode === "__subject_exam__" && !attemptId && !result && <section className="academy-content-card academy-test-intro"><div><h3><BookOpen size={18} /> Esame finale di materia</h3><p>Il test contiene 15 domande. La consegna assegna 3 punti accademici, indipendentemente dal voto ottenuto.</p></div><button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginSubjectExam()}>Inizia l'esame</button></section>}
+            {selectedCode === "__subject_exam__" && !attemptId && !result && <section className="academy-content-card academy-test-intro"><div><h3><BookOpen size={18} /> Esame finale di materia</h3><p>Il test contiene 15 domande. La consegna assegna 3 punti accademici, indipendentemente dal voto ottenuto.</p></div><button type="button" className="academy-primary-button" disabled={loading || !selectedSubjectLessonsPassed} onClick={() => selectedSubjectCode && void beginSubjectExam(selectedSubjectCode)}>Inizia l'esame</button></section>}
             {lesson && !attemptId && !result && <>
               <section className="academy-content-card">
                 <h3><BookOpen size={18} /> Obiettivi formativi</h3>

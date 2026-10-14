@@ -127,11 +127,11 @@ Deno.serve(async request => {
           .select("lesson_code,grade_number,subject_code,order_index,title,summary,objectives,version")
           .eq("is_published", true)
           .eq("grade_number", 1)
-          .eq("subject_code", "pokemon-sciences")
+          .order("subject_code", { ascending: true })
           .order("order_index", { ascending: true }),
         supabase.from("academy_subjects").select("subject_code,title,description"),
         supabase.from("academy_attempts")
-          .select("id,lesson_code,grade_number,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
+          .select("id,lesson_code,subject_code,grade_number,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
           .eq("identity_id", identity.id)
           .eq("status", "submitted")
           .order("created_at", { ascending: false })
@@ -335,24 +335,36 @@ Deno.serve(async request => {
       }
 
       const { data: lessons, error: lessonsError } = await supabase.from("academy_lessons")
-        .select("lesson_code,order_index")
+        .select("lesson_code,subject_code,order_index")
         .eq("grade_number", 1)
-        .eq("subject_code", "pokemon-sciences")
         .eq("is_published", true)
+        .order("subject_code", { ascending: true })
         .order("order_index", { ascending: true });
       if (lessonsError || !lessons?.length) return response(409, { error: "Il programma del grado non è disponibile." });
 
-      for (const lesson of lessons) {
-        const { data: history, error: historyError } = await supabase.from("academy_attempts")
-          .select("score")
-          .eq("identity_id", identity.id)
-          .eq("attempt_kind", "lesson")
-          .eq("lesson_code", lesson.lesson_code)
-          .eq("status", "submitted");
-        if (historyError) return response(500, { error: "Impossibile verificare i prerequisiti dell'esame." });
-        if (!history?.length || history.reduce((sum, item) => sum + Number(item.score ?? 0), 0) / history.length < 18) {
-          return response(403, { error: "Per accedere all'esame finale devi superare tutte le lezioni del grado con una media di almeno 18/30." });
+      const subjectCodes = Array.from(new Set(lessons.map(lesson => lesson.subject_code)));
+      if (!subjectCodes.length) return response(409, { error: "Il grado non contiene materie pubblicate." });
+      const { data: subjectExamHistory, error: subjectExamHistoryError } = await supabase.from("academy_attempts")
+        .select("subject_code,score")
+        .eq("identity_id", identity.id)
+        .eq("attempt_kind", "subject_exam")
+        .eq("status", "submitted")
+        .in("subject_code", subjectCodes);
+      if (subjectExamHistoryError) return response(500, { error: "Impossibile verificare gli esami finali delle materie." });
+
+      const subjectAverages: number[] = [];
+      for (const subjectCode of subjectCodes) {
+        const scores = (subjectExamHistory ?? [])
+          .filter(attempt => attempt.subject_code === subjectCode)
+          .map(attempt => Number(attempt.score ?? 0));
+        if (!scores.length) {
+          return response(403, { error: "Per accedere all'esame di grado devi consegnare l'esame finale di ogni materia." });
         }
+        subjectAverages.push(scores.reduce((sum, score) => sum + score, 0) / scores.length);
+      }
+      const averageAcrossSubjects = subjectAverages.reduce((sum, score) => sum + score, 0) / subjectAverages.length;
+      if (averageAcrossSubjects < 18) {
+        return response(403, { error: "Per accedere all'esame di grado la media degli esami finali delle materie deve essere almeno 18/30." });
       }
 
       const lessonCodes = lessons.map(lesson => lesson.lesson_code);
