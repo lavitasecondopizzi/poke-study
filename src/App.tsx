@@ -125,10 +125,6 @@ function titleCase(name: string) {
   return name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
 }
 
-function spriteUrl(id: number) {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-}
-
 const STARTER_POKEMON_IDS = [1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912];
 
 function avatarPortraitUrl(id: number) {
