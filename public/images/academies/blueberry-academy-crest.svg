@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">Stemma Istituto Mirtillo</title>
+<desc id="desc">Emblema blu e bianco con due Poké Ball rosse sovrapposte, corona stellata e rami ornamentali.</desc>
+<defs>
+  <clipPath id="ring"><circle cx="256" cy="286" r="205"/></clipPath>
+  <linearGradient id="blue" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#173f80"/><stop offset="1" stop-color="#0b2d66"/></linearGradient>
+</defs>
+<circle cx="256" cy="286" r="216" fill="url(#blue)"/>
+<circle cx="256" cy="286" r="191" fill="#f7f8fc"/>
+<circle cx="256" cy="286" r="181" fill="none" stroke="#143a79" stroke-width="7"/>
+<path d="M256 8 282 42 323 30 316 70 354 89 323 116 335 153 294 147 256 174 218 147 177 153 189 116 158 89 196 70 189 30 230 42Z" fill="#143a79"/>
+<path d="M256 338 284 371 322 360 314 398 352 418 320 443 331 480 292 473 256 507 220 473 181 480 192 443 160 418 198 398 190 360 228 371Z" fill="#143a79"/>
+<g clip-path="url(#ring)" fill="#fff">
+  <path d="M135 120c-24-15-43-13-55 2 22 0 34 11 39 27-20-10-40-4-44 12 22-2 38 7 44 22-21-4-37 8-35 24 19-7 36-2 45 12-22 1-33 17-25 31 16-11 32-10 44 1-19 8-25 25-13 37 12-15 28-18 42-11-15 13-16 31-1 40 7-19 22-26 38-22-11 17-6 34 11 39 2-21 15-32 32-31-7 19 2 34 20 35" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M377 120c24-15 43-13 55 2-22 0-34 11-39 27 20-10 40-4 44 12-22-2-38 7-44 22 21-4 37 8 35 24-19-7-36-2-45 12 22 1 33 17 25 31-16-11-32-10-44 1 19 8 25 25 13 37-12-15-28-18-42-11 15 13 16 31 1 40-7-19-22-26-38-22 11 17 6 34-11 39-2-21-15-32-32-31 7 19-2 34-20 35" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g stroke="#123875" stroke-width="8" stroke-linejoin="round">
+  <path d="M165 218 193 163Q205 139 226 158L256 183 286 158Q307 139 319 163L347 218Z" fill="#f52c2c"/>
+  <path d="M165 218H347" stroke-width="8"/>
+  <path d="M165 218H347L321 245 347 272H165L191 245Z" fill="#f52c2c"/>
+  <path d="M165 272H347" stroke-width="8"/>
+  <path d="M165 272 191 299 165 326H347L321 299 347 272" fill="#f52c2c"/>
+  <path d="M165 326H347" stroke-width="8"/>
+  <circle cx="256" cy="218" r="34" fill="#f7f8fc"/>
+  <circle cx="256" cy="326" r="34" fill="#f7f8fc"/>
+</g>
+<path d="M275 166c17 5 27 18 30 34M275 274c17 5 27 18 30 34" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+</svg>
