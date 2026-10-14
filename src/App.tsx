@@ -367,10 +367,26 @@ export default function App() {
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
+    const subcategoryTarget = lessonTargets.get(targetId);
+    if (subcategoryTarget) {
+      const slots = lessonDeck.filter(entry => entry.subcategoryId === targetId);
+      const occupied = new Set(Object.values(categoryPlacements)
+        .filter(value => value.startsWith('category-slot:' + targetId + ':'))
+        .map(value => Number(value.split(':').pop())));
+      const firstFree = slots.findIndex((_, index) => !occupied.has(index));
+      if (firstFree >= 0) targetId = 'category-slot:' + targetId + ':' + firstFree;
+    }
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
     const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
-    if (categorySlotMatch) setCategoryPlacements(old => ({ ...old, [cardId]: targetId }));
+    if (categorySlotMatch) setCategoryPlacements(old => {
+      const next = { ...old };
+      for (const [existingId, existingTarget] of Object.entries(next)) {
+        if (existingId === cardId || existingTarget === targetId) delete next[existingId];
+      }
+      next[cardId] = targetId;
+      return next;
+    });
     const isCorrect = pokemonSlotMatch
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
       : card.subcategoryId === targetSubcategoryId;
@@ -794,7 +810,7 @@ export default function App() {
                         >
                           <strong>#{String(regionalNumber).padStart(3, '0')}</strong>
                           <small>N. {String(nationalId).padStart(4, '0')}</small>
-                          {isCompleted && <span aria-hidden="true">✓</span>}
+                          {isCompleted && (() => { const pokemon = lessonDeck.find(entry => entry.kind === 'pokemon' && entry.pokemonId === nationalId); return pokemon ? <img className="category-entity-image" src={pokemon.imageUrl} alt="" /> : <span aria-hidden="true">✓</span>; })()}
                           {Object.entries(misplacedCards).filter(([, targetId]) => targetId === slotId).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-slot-chip" title="Riprendi Pokémon" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
                         </button>;
                       })}
