@@ -48,6 +48,24 @@ const TOKEN_KEY = "poke-study-community-token-v1";
 const METADATA_FORMAT = "poke-study-community-account";
 const METADATA_VERSION = 1;
 
+export interface CommunityRankingEntry {
+  id: string;
+  rank: number;
+  nickname: string;
+  academy: CommunityAcademy;
+  avatarId: number | null;
+  points: number;
+  examPoints: number;
+  completedPokemon: number;
+  completedEntries: number;
+  updatedAt: string | null;
+}
+
+export interface CommunityRankingResponse {
+  entries: CommunityRankingEntry[];
+  totalPlayers: number;
+}
+
 export interface CommunityPlayerState {
   profile: Pick<StudentProfile, "matricola" | "avatarId"> | null;
   progress: SavedProgress | null;
@@ -211,4 +229,12 @@ export async function importCommunityMetadata(serialized: string): Promise<Commu
   }
   saveToken(record.token);
   return result.identity;
+}
+
+
+/** Fetches the public leaderboard through the server-verified community identity. */
+export async function listCommunityRanking(): Promise<CommunityRankingResponse> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community per consultare la classifica.");
+  return await call<CommunityRankingResponse>("list_leaderboard", {}, token);
 }

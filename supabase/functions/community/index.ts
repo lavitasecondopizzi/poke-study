@@ -135,6 +135,44 @@ Deno.serve(async request => {
 
     if (action === "whoami") return response(200, { identity });
 
+    if (action === "list_leaderboard") {
+      const { data, error, count } = await supabase
+        .from("community_identities")
+        .select("id,nickname,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
+        .order("created_at", { ascending: true })
+        .limit(1000);
+      if (error) return response(500, { error: "Non è stato possibile caricare la classifica." });
+
+      const entries = (data ?? []).map(row => {
+        const progress = row.player_progress === null ? null : normalizePlayerProgress(row.player_progress);
+        const profile = row.player_profile && typeof row.player_profile === "object" && !Array.isArray(row.player_profile)
+          ? row.player_profile as Record<string, unknown>
+          : null;
+        const completedPokemon = progress?.completedIds.length ?? 0;
+        const completedEntries = progress?.completedEntries.length ?? 0;
+        return {
+          id: row.id,
+          nickname: row.nickname,
+          academy: row.academy,
+          avatarId: typeof profile?.avatarId === "number" && STARTER_AVATAR_IDS.has(profile.avatarId) ? profile.avatarId : null,
+          // Recalculate the main score from recorded completions instead of trusting the client-supplied points total.
+          points: completedPokemon + completedEntries,
+          examPoints: progress?.examPoints ?? 0,
+          completedPokemon,
+          completedEntries,
+          updatedAt: row.player_state_updated_at,
+        };
+      }).sort((left, right) =>
+        right.points - left.points
+        || right.examPoints - left.examPoints
+        || right.completedPokemon - left.completedPokemon
+        || left.nickname.localeCompare(right.nickname, "it")
+      ).map((entry, index) => ({ ...entry, rank: index + 1 }));
+
+      return response(200, { entries, totalPlayers: count ?? entries.length });
+    }
+
+
     if (action === "load_player_state") {
       const { data, error } = await supabase
         .from("community_identities")
