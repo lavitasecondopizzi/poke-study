@@ -207,7 +207,7 @@ export default function Cartoleria({
           <span className="eyebrow"><ShoppingBag size={14} /> NEGOZIO DELL’ACCADEMIA</span>
           <h1>Cartoleria</h1>
           <p>Strumenti, aiuti e archivi per il tuo percorso di studio. Tutto il catalogo è disponibile in un’unica pagina e utilizza i Punti Poké.</p>
-          <div className="shop-hero-badges"><span><ShieldCheck size={14}/> Prezzi e progressi conservati</span><span><CheckCircle2 size={14}/> Nessuna valuta alternativa</span></div>
+          <div className="shop-hero-badges"><span><ShieldCheck size={14}/> Prezzi e progressi conservati</span><span><CheckCircle2 size={14}/> {availableShopCount} articoli acquistabili</span></div>
         </div>
         <div className="shop-wallets shop-wallets-refactor">
           <div className="shop-wallet shop-wallet-poke"><span className="shop-wallet-icon">₱</span><div><small>IL TUO SALDO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké disponibili</span></div></div>
