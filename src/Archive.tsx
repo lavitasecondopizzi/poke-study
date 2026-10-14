@@ -5,6 +5,18 @@ import type { CatalogCard, MacroId } from './catalog';
 
 const PAGE_SIZE = 24;
 
+const regions = [
+  { name: 'Kanto', start: 1, end: 151 },
+  { name: 'Johto', start: 152, end: 251 },
+  { name: 'Hoenn', start: 252, end: 386 },
+  { name: 'Sinnoh', start: 387, end: 493 },
+  { name: 'Unima', start: 494, end: 649 },
+  { name: 'Kalos', start: 650, end: 721 },
+  { name: 'Alola', start: 722, end: 809 },
+  { name: 'Galar', start: 810, end: 905 },
+  { name: 'Paldea', start: 906, end: 1025 },
+];
+
 type ArchiveProps = {
   species: PokemonSpecies[];
   items: ApiNamedResource[];
@@ -38,11 +50,15 @@ export default function Archive({
     return [
       ...species.map(pokemonCard),
       ...items.map(itemCard),
-    ].sort((a, b) =>
-      macroOrder[a.macroId] - macroOrder[b.macroId] ||
-      a.subcategoryName.localeCompare(b.subcategoryName, 'it') ||
-      a.name.localeCompare(b.name, 'it'),
-    );
+    ].sort((a, b) => {
+      const macroDifference = macroOrder[a.macroId] - macroOrder[b.macroId];
+      if (macroDifference !== 0) return macroDifference;
+      if (a.kind === 'pokemon' && b.kind === 'pokemon') {
+        return (a.pokemonId ?? 0) - (b.pokemonId ?? 0);
+      }
+      return a.subcategoryName.localeCompare(b.subcategoryName, 'it') ||
+        a.name.localeCompare(b.name, 'it');
+    });
   }, [species, items]);
 
   const normalizedSearch = search.trim().toLocaleLowerCase('it');
@@ -160,7 +176,9 @@ export default function Archive({
                     <span aria-hidden="true">✦</span>
                   </div>
                   <div className="archive-entity-copy">
-                    <small className="archive-entity-category">{categoryName}</small>
+                    <small className="archive-entity-category">{entry.kind === 'pokemon'
+                      ? `Pokémon · Regionale #${String((entry.pokemonId ?? 1) - (regions.find(region => (entry.pokemonId ?? 1) >= region.start && (entry.pokemonId ?? 1) <= region.end)?.start ?? 1) + 1).padStart(3, '0')} · Nazionale #${String(entry.pokemonId ?? 0).padStart(4, '0')}`
+                      : categoryName}</small>
                     <strong>{displayName(entry.name)}</strong>
                     <span className="archive-entity-subcategory">{entry.subcategoryName}</span>
                     <span className={done ? 'archive-entity-done' : 'archive-entity-pending'}>{done ? 'Catalogato' : 'Da catalogare'}</span>
