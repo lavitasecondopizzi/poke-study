@@ -61,6 +61,9 @@ export interface AcademyAttemptResult {
   questionCount: number;
   passed: boolean;
   submittedAt: string;
+  gradingRuleVersion?: string;
+  gradeMax?: number;
+  passThreshold?: number;
   attemptKind?: "lesson" | "grade_exam";
   lessonCode?: string | null;
   review: AcademyQuestionReview[];
