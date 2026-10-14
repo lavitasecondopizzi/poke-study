@@ -2,7 +2,7 @@
 
 ## Stato del rilascio
 
-Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft #3. La migrazione e la Edge Function sono versionate nel repository, ma **non sono state applicate o distribuite su un progetto Supabase remoto**. Non pubblicare il prototipo su produzione prima del collaudo in un progetto di test.
+Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft #3. La migrazione `20261014182830_academic_pilot` è stata applicata al progetto Supabase `pokè-study` (`hfcdiixfdxvefgyqhapy`) e la Edge Function `academy` è attiva alla versione 1. Il frontend non è stato unito a `main` né pubblicato tramite questo branch. Prima di aprire l'Accademia agli utenti, completare il collaudo HTTP autenticato con un token privato valido e la verifica manuale dell'interfaccia.
 
 ## Prerequisiti
 
@@ -10,13 +10,14 @@ Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft 
 - La configurazione frontend esistente deve valorizzare `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
 - La chiave `SUPABASE_SERVICE_ROLE_KEY` deve restare esclusivamente nell'ambiente server-side della Edge Function; non inserirla in variabili `VITE_*` né nel repository.
 
-## Sequenza consigliata in ambiente di test
+## Stato delle verifiche e passi rimanenti
 
-1. Verificare che lo schema community esistente sia applicato e che l'identità privata possa essere verificata.
-2. Applicare la migrazione `supabase/migrations/20261014182830_academic_pilot.sql` tramite il normale flusso di migrazione del progetto Supabase.
-3. Distribuire la funzione `academy` con la configurazione presente in `supabase/config.toml`. La funzione verifica il token privato dell'account esistente; per questo la verifica JWT automatica è disabilitata e l'autorizzazione viene applicata nel codice server.
-4. Pubblicare il frontend di test e aprire Accademia con un'identità online valida.
-5. Eseguire le verifiche di accettazione sotto riportate prima di promuovere migrazione o funzione a produzione.
+1. Confermato lo schema community esistente e la compatibilità del riferimento `community_identities.id/token_hash`.
+2. Applicata la migrazione `supabase/migrations/20261014182830_academic_pilot.sql`; la cronologia Supabase riporta la versione `20261014182830`.
+3. Distribuita la funzione `academy` (versione 1, `verify_jwt = false`); il codice valida il token privato dell'account e usa la chiave service-role esclusivamente lato server.
+4. Verificati via SQL le 8 tabelle accademiche, RLS abilitata, nessun privilegio `SELECT` per `anon/authenticated`, 3 lezioni pubblicate e 33 domande attive.
+5. Eseguito un test SQL transazionale della correzione, della media e del blocco del grado; la transazione è stata annullata e non ha lasciato dati di prova.
+6. Da completare: chiamata HTTP autenticata della Edge Function con un token valido, verifica end-to-end dall'interfaccia e test manuale mobile.
 
 ## Parametri provvisori
 
