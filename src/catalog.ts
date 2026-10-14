@@ -109,7 +109,7 @@ export function itemCard(item: ApiNamedResource): CatalogCard {
     id: `item:${name}`,
     name,
     kind: 'item',
-    imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`,
+    imageUrl: `${import.meta.env.BASE_URL}images/items/${name}.png`,
     macroId,
     macroName: MACRO_CATEGORIES.find(category => category.id === macroId)?.name ?? 'Strumenti e oggetti',
     subcategoryId,
