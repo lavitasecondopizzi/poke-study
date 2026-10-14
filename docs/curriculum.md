@@ -37,6 +37,29 @@ Questa è una specifica progettuale: non modifica ancora schermate o regole del 
 | 14 | Mercato e analisi dei prezzi | Prezzi richiesti e vendite concluse, andamento storico, domanda, liquidità, ristampe e rischi. |
 
 Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce quali materie sono attive e quali lezioni specifiche appartengono a ciascuna. Le cinque macrocategorie dell'archivio continuano a funzionare come categorie di catalogazione, ma non limitano il programma scolastico. Una lezione può collegare più ambiti, mantenendo una materia principale per la valutazione.
+
+## Pesi delle materie per grado
+
+La media del grado è ponderata in base al peso di ciascuna materia prevista. Il peso va da 1 a 3 e può aumentare nei gradi avanzati per le materie più specialistiche. Il peso stabilisce l'importanza relativa della materia, non modifica il limite massimo dei voti: la media resta sempre compresa tra 0 e 100.
+
+| Materia | Grado I — Fondamenti | Grado II — Conoscenza e relazioni | Grado III — Applicazione | Grado IV — Sintesi e approfondimento |
+|---|:---:|:---:|:---:|:---:|
+| Scienze Pokémon e Pokédex | 2 | 2 | 2 | 2 |
+| Regioni, personaggi e lore | 1 | 1 | 1 | 1 |
+| Storia del franchise e media | 1 | 1 | 1 | 1 |
+| Storia e generazioni dei videogiochi | 2 | 2 | 2 | 2 |
+| Meccaniche e progressione di gioco | 2 | 2 | 2 | 2 |
+| Lotte e strategie nei videogiochi | 2 | 3 | 3 | 3 |
+| Competitivo e metagame | 1 | 2 | 3 | 3 |
+| Strumenti, oggetti e risorse | 1 | 1 | 1 | 1 |
+| Anatomia e identificazione delle carte TCG | 2 | 2 | 2 | 2 |
+| Storia ed espansioni del TCG | 1 | 1 | 1 | 1 |
+| Regolamento e gioco TCG | 2 | 2 | 2 | 2 |
+| Deckbuilding e competitivo TCG | 1 | 2 | 3 | 3 |
+| Collezionismo, conservazione e autenticità | 1 | 2 | 2 | 2 |
+| Mercato e analisi dei prezzi | 1 | 2 | 3 | 3 |
+
+I pesi si applicano soltanto alle materie attive nel singolo grado. La somma dei pesi serve come denominatore della media ponderata e non si somma ai voti.
 ## Struttura indipendente per grado, materia e lezione
 
 Le **materie** sono aree di studio permanenti; i **gradi** stabiliscono quali materie sono attive e quali lezioni appartengono a ciascuna materia in quel grado. Una materia può essere presente in più gradi, con lezioni differenti per contenuto, difficoltà e competenze richieste.
@@ -91,7 +114,7 @@ Tutti i voti sono espressi su 100 punti, con una scala analoga a quella universi
 - Il voto effettivo di un test è la media aritmetica di **tutti i tentativi**, compresi quelli insufficienti.
 - La lezione è superata e la successiva si sblocca quando la media effettiva del test raggiunge almeno **60/100**.
 - Il voto della materia è la media dei voti effettivi delle lezioni superate assegnate a quella materia.
-- La media complessiva del grado è la media aritmetica dei voti delle materie, ciascuna con lo stesso peso.
+- La media complessiva del grado è la media ponderata dei voti delle materie attive, usando i pesi definiti nella tabella «Pesi delle materie per grado».
 - Per superare un grado occorre completare tutte le lezioni obbligatorie e ottenere una media complessiva di almeno **80/100**.
 - I calcoli usano valori non arrotondati; l'arrotondamento è solo visivo. Nessun tentativo o voto storico viene cancellato.
 
