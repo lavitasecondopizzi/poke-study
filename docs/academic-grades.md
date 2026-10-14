@@ -24,6 +24,29 @@ Il percorso non è suddiviso in anni scolastici: è organizzato in gradi accadem
 14. **Mercato e analisi dei prezzi** — prezzi richiesti e vendite concluse, andamento storico, domanda, liquidità, ristampe e rischi.
 
 Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce quali materie sono attive e quali lezioni specifiche appartengono a ciascuna. Ogni materia presente nel grado ha un voto autonomo in pagella.
+
+## Pesi delle materie per grado
+
+Il peso di una materia determina quanto incide sulla media del grado. La scala va da 1 a 3 ed è specifica per materia e grado: le materie più specialistiche possono pesare maggiormente nei gradi avanzati. Il peso non aumenta il voto massimo: ogni voto resta compreso tra 0 e 100 e la media ponderata resta compresa tra 0 e 100.
+
+| Materia | Grado I — Fondamenti | Grado II — Conoscenza e relazioni | Grado III — Applicazione | Grado IV — Sintesi e approfondimento |
+|---|:---:|:---:|:---:|:---:|
+| Scienze Pokémon e Pokédex | 2 | 2 | 2 | 2 |
+| Regioni, personaggi e lore | 1 | 1 | 1 | 1 |
+| Storia del franchise e media | 1 | 1 | 1 | 1 |
+| Storia e generazioni dei videogiochi | 2 | 2 | 2 | 2 |
+| Meccaniche e progressione di gioco | 2 | 2 | 2 | 2 |
+| Lotte e strategie nei videogiochi | 2 | 3 | 3 | 3 |
+| Competitivo e metagame | 1 | 2 | 3 | 3 |
+| Strumenti, oggetti e risorse | 1 | 1 | 1 | 1 |
+| Anatomia e identificazione delle carte TCG | 2 | 2 | 2 | 2 |
+| Storia ed espansioni del TCG | 1 | 1 | 1 | 1 |
+| Regolamento e gioco TCG | 2 | 2 | 2 | 2 |
+| Deckbuilding e competitivo TCG | 1 | 2 | 3 | 3 |
+| Collezionismo, conservazione e autenticità | 1 | 2 | 2 | 2 |
+| Mercato e analisi dei prezzi | 1 | 2 | 3 | 3 |
+
+I pesi sono applicati soltanto alle materie effettivamente previste nel singolo grado. La somma dei pesi è il denominatore della media ponderata, non un punteggio da aggiungere ai voti.
 ## Organizzazione indipendente delle materie e delle lezioni
 
 Le materie sono aree di studio permanenti, ma **ogni grado definisce quali materie comprende e quali lezioni offre per ciascuna di esse**. Una materia può ricomparire in più gradi: a cambiare saranno gli argomenti, la profondità e le competenze richieste dalle lezioni, non necessariamente il nome della materia.
@@ -73,7 +96,7 @@ La pagella mostra:
 - la media complessiva del grado;
 - lo stato: **In corso**, **Da completare** oppure **Superato**.
 
-Il voto di una materia è la media aritmetica dei voti effettivi delle lezioni superate di quella materia; ogni voto effettivo di lezione è già la media di tutti i tentativi del relativo test. La media complessiva del grado è la media aritmetica dei voti di tutte le materie del grado, con uguale peso per ciascuna materia.
+Il voto di una materia è la media aritmetica dei voti effettivi delle lezioni superate di quella materia; ogni voto effettivo di lezione è già la media di tutti i tentativi del relativo test. La media complessiva del grado è la media ponderata dei voti delle materie previste in quel grado, usando i pesi della tabella «Pesi delle materie per grado».
 
 Se una materia non ha voti registrati o rimangono lezioni obbligatorie incomplete, la pagella è provvisoria e il grado non può essere superato.
 
@@ -100,4 +123,4 @@ I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non pu
 
 ## Nota di implementazione
 
-Questa specifica definisce il comportamento desiderato, ma non implementa ancora schermate, salvataggi o calcolo dei voti. Restano da definire le regole per recuperare o migliorare voti quando il grado è completo ma la media complessiva è inferiore a 8/10, oltre al programma dettagliato di lezioni, prerequisiti e fonti per ogni materia.
+Questa specifica definisce il comportamento desiderato, ma non implementa ancora schermate, salvataggi o calcolo dei voti. Restano da definire le regole per recuperare o migliorare voti quando il grado è completo ma la media complessiva è inferiore a 80/100, oltre al programma dettagliato di lezioni, prerequisiti e fonti per ogni materia.
