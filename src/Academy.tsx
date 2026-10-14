@@ -88,7 +88,7 @@ function formatAnswer(options: Array<{ id: string; label: string; side?: string 
 export default function Academy({ configured, identityReady, onOpenProfile }: Props) {
   const [lessons, setLessons] = useState<AcademyLesson[]>([]);
   const [attempts, setAttempts] = useState<AcademyAttemptSummary[]>([]);
-  const [progressSummary, setProgressSummary] = useState<AcademyProgressSummary | null>(null);
+  const [, setProgressSummary] = useState<AcademyProgressSummary | null>(null);
   const [pointsSummary, setPointsSummary] = useState<AcademyPointsSummary | null>(null);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
