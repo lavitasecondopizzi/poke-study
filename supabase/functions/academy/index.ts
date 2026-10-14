@@ -140,7 +140,7 @@ Deno.serve(async request => {
       if (lessonError || !lesson) return response(404, { error: "Lezione non trovata o non pubblicata." });
 
       const { data: attempts, error: attemptsError } = await supabase.from("academy_attempts")
-        .select("id,lesson_code,attempt_kind,score,passed,correct_count,question_count,created_at,submitted_at")
+        .select("id,lesson_code,attempt_kind,status,score,passed,correct_count,question_count,created_at,submitted_at")
         .eq("identity_id", identity.id)
         .eq("attempt_kind", "lesson")
         .eq("lesson_code", lessonCode)
