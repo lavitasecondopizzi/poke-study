@@ -76,6 +76,9 @@ create table if not exists public.academy_attempts (
   lesson_code text references public.academy_lessons(lesson_code) on delete restrict,
   grade_number smallint not null default 1 references public.academy_grades(grade_number),
   attempt_kind text not null default 'lesson' check (attempt_kind in ('lesson', 'grade_exam')),
+  grading_rule_version text not null default 'thirtieths-v1',
+  grade_max smallint not null default 30 check (grade_max between 1 and 30),
+  pass_threshold smallint not null default 18 check (pass_threshold between 1 and 30),
   client_attempt_key text not null,
   status text not null default 'started' check (status in ('started', 'submitted')),
   question_snapshot jsonb not null check (jsonb_typeof(question_snapshot) = 'array'),
@@ -232,8 +235,8 @@ begin
   end loop;
 
   -- The application uses integer grades from 1 to 30; averages may be decimal.
-  v_score := greatest(1, least(30, round(30.0 * v_correct_count / v_total)::integer));
-  v_passed := case when v_attempt.attempt_kind = 'grade_exam' then v_score >= 26 else v_score >= 18 end;
+  v_score := greatest(1, least(v_attempt.grade_max, round(v_attempt.grade_max::numeric * v_correct_count / v_total)::integer));
+  v_passed := v_score >= v_attempt.pass_threshold;
 
   update public.academy_attempts
   set status = 'submitted',
@@ -246,6 +249,9 @@ begin
   return jsonb_build_object(
     'attemptId', v_attempt.id,
     'score', v_score,
+    'gradingRuleVersion', v_attempt.grading_rule_version,
+    'gradeMax', v_attempt.grade_max,
+    'passThreshold', v_attempt.pass_threshold,
     'correctCount', v_correct_count,
     'questionCount', v_total,
     'passed', v_passed,
