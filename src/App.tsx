@@ -728,7 +728,7 @@ export default function App() {
                       type="button"
                       key={folder.id}
                       className="category-target macro-folder"
-                      onClick={() => setOpenMacroId(folder.id)}
+                      onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); }}
                     >
                       <span className="folder-icon" aria-hidden="true">📁</span>
                       <span className="category-target-macro">MACROCATEGORIA</span>
@@ -736,9 +736,64 @@ export default function App() {
                       <small>{folder.solved} / {folder.total}</small>
                     </button>)}
                   </div>
+                ) : openMacroId === 'pokemon' && currentPokemonRegion ? (
+                  <>
+                    <div className="folder-toolbar">
+                      <button type="button" className="folder-back-button" onClick={() => setOpenPokemonRegionId(null)}>← Regioni</button>
+                      <span>{currentPokemonRegion.name} · scegli il numero corretto per la carta selezionata</span>
+                    </div>
+                    <div className="pokemon-number-grid" aria-label={'Posizioni Pokémon di ' + currentPokemonRegion.name}>
+                      {Array.from({ length: currentPokemonRegion.end - currentPokemonRegion.start + 1 }, (_, index) => {
+                        const nationalId = currentPokemonRegion.start + index;
+                        const regionalNumber = index + 1;
+                        const isCompleted = progress.completedIds.includes(nationalId);
+                        const slotId = 'pokemon-slot:' + nationalId;
+                        return <button
+                          type="button"
+                          key={nationalId}
+                          className={'pokemon-number-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')}
+                          aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')}
+                          disabled={isCompleted}
+                          onDragOver={event => event.preventDefault()}
+                          onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, slotId); }}
+                          onClick={() => { if (selectedCardId) placeCard(selectedCardId, slotId); else setMessage('Seleziona prima una carta Pokémon, poi scegli il numero in cui collocarla.'); }}
+                        >
+                          <strong>#{String(regionalNumber).padStart(3, '0')}</strong>
+                          <small>N. {String(nationalId).padStart(4, '0')}</small>
+                          {isCompleted && <span aria-hidden="true">✓</span>}
+                        </button>;
+                      })}
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div className="folder-toolbar">
+                      <button type="button" className="folder-back-button" onClick={() => { setOpenPokemonRegionId(null); setOpenMacroId(null); }}>← Indietro</button>
+                      <span>{openMacroId === 'pokemon' ? 'Seleziona una regione per aprire l’elenco numerato' : 'Apri la sottocartella corretta per la carta selezionata'}</span>
+                    </div>
+                    <div className="category-targets-grid subfolder-grid">
+                      {currentMacroTargets.map(target => <button
+                        type="button"
+                        key={target.id}
+                        className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '') + (wrongTargetId === target.id ? 'category-target-wrong' : '')}
+                        aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
+                        onDragOver={event => event.preventDefault()}
+                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId && openMacroId !== 'pokemon') placeCard(cardId, target.id); }}
+                        onClick={() => {
+                          if (openMacroId === 'pokemon') {
+                            setOpenPokemonRegionId(target.id);
+                            setWrongTargetId(null);
+                            setMessage('Regione ' + target.name + ' aperta. Seleziona una carta Pokémon e poi la sua posizione numerata.');
+                          } else if (selectedCardId) placeCard(selectedCardId, target.id);
+                          else setMessage('Seleziona prima una carta da classificare.');
+                        }}
+                      >
+                        <span className="folder-icon" aria-hidden="true">📂</span>
+                        <strong>{target.name}</strong>
+                        <small>{target.solved} / {target.total} {openMacroId === 'pokemon' ? 'posizioni completate' : 'classificate'}</small>
+                      </button>)}
+                    </div>
+                  </>
                       <button type="button" className="folder-back-button" onClick={() => setOpenMacroId(null)}>← Indietro</button>
                       <span>Apri la sottocartella corretta per la carta selezionata</span>
                     </div>
