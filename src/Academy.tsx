@@ -114,9 +114,34 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     return resultMap;
   }, [lessons, progressSummary]);
 
+  const gradeStatus = useMemo(() => {
+    const gradeNumbers = Array.from(new Set(lessons.map(item => item.grade_number))).sort((a, b) => a - b);
+    return new Map(gradeNumbers.map(gradeNumber => {
+      const gradeLessons = lessons.filter(item => item.grade_number === gradeNumber);
+      const lessonScores = gradeLessons.map(item => averageScore(attempts.filter(attempt => attempt.attempt_kind === "lesson" && attempt.lesson_code === item.lesson_code)));
+      const gradeAverage = lessonScores.length > 0 && lessonScores.every(score => score !== null)
+        ? lessonScores.reduce((sum, score) => sum + (score ?? 0), 0) / lessonScores.length
+        : null;
+      const gradeExamAverage = averageScore(attempts.filter(attempt => attempt.attempt_kind === "grade_exam" && attempt.grade_number === gradeNumber));
+      const lessonsPassed = gradeLessons.length > 0 && lessonScores.every(score => score !== null && score >= 18);
+      return [gradeNumber, {
+        lessonsPassed,
+        gradeAverage,
+        gradeExamAverage,
+        passed: lessonsPassed && gradeAverage !== null && gradeAverage >= 26 && gradeExamAverage !== null && gradeExamAverage >= 26,
+      }] as const;
+    }));
+  }, [lessons, attempts]);
+
+  const lastPublishedGrade = Math.max(0, ...lessons.map(item => item.grade_number));
+  let activeGradeNumber = 1;
+  while (activeGradeNumber <= Math.max(1, lastPublishedGrade) && gradeStatus.get(activeGradeNumber)?.passed) {
+    activeGradeNumber += 1;
+  }
+  const currentGradeLessons = lessons.filter(item => item.grade_number === activeGradeNumber);
   const subjectGroups = useMemo(() => {
     const groups = new Map<string, { code: string; title: string; description: string; lessons: AcademyLesson[] }>();
-    for (const item of lessons) {
+    for (const item of currentGradeLessons) {
       const code = item.subject_code;
       const existing = groups.get(code);
       if (existing) existing.lessons.push(item);
@@ -128,17 +153,17 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
       });
     }
     return Array.from(groups.values());
-  }, [lessons]);
+  }, [currentGradeLessons]);
 
   const selectedLesson = lessons.find(item => item.lesson_code === selectedCode);
-  const selectedSubjectLessons = selectedLesson ? lessons.filter(item => item.subject_code === selectedLesson.subject_code) : [];
+  const selectedSubjectLessons = selectedLesson ? lessons.filter(item => item.grade_number === activeGradeNumber && item.subject_code === selectedLesson.subject_code) : [];
   const selectedIndex = selectedSubjectLessons.findIndex(item => item.lesson_code === selectedCode);
   const selectedIsUnlocked = selectedIndex <= 0 || selectedSubjectLessons
     .slice(0, selectedIndex)
     .every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
   const answeredCount = questions.filter(question => isQuestionAnswered(question, answers[question.questionId])).length;
-  const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam");
-  const subjectExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "subject_exam");
+  const gradeExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "grade_exam" && attempt.grade_number === activeGradeNumber);
+  const subjectExamAttempts = attempts.filter(attempt => attempt.attempt_kind === "subject_exam" && attempt.grade_number === activeGradeNumber);
   const subjectExamAverage = subjectGroups.length > 0 && subjectGroups.every(group =>
     averageScore(subjectExamAttempts.filter(attempt => attempt.subject_code === group.code)) !== null
   )
@@ -147,13 +172,12 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const gradeExamUnlocked = subjectExamAverage !== null && subjectExamAverage >= 18;
   const selectedSubject = subjectGroups.find(group => group.code === selectedSubjectCode);
   const selectedSubjectLessonsPassed = Boolean(selectedSubject?.lessons.length) && selectedSubject!.lessons.every(item => (averages.get(item.lesson_code) ?? 0) >= 18);
-  const gradeExamAttemptCount = progressSummary?.gradeExamAttemptCount ?? gradeExamAttempts.length;
-  const totalAttemptCount = Object.values(progressSummary?.lessonAverages ?? {}).reduce((sum, item) => sum + item.attemptCount, 0) + gradeExamAttemptCount + subjectExamAttempts.length;
-  const gradeAverage = lessons.length > 0 && lessons.every(item => averages.get(item.lesson_code) !== null)
-    ? lessons.reduce((sum, item) => sum + (averages.get(item.lesson_code) ?? 0), 0) / lessons.length
-    : null;
-  const gradeExamAverage = progressSummary?.gradeExamAverage ?? averageScore(gradeExamAttempts);
-  const gradePassed = progressSummary?.gradePassed ?? false;
+  const gradeExamAttemptCount = gradeExamAttempts.length;
+  const totalAttemptCount = attempts.length;
+  const gradeAverage = gradeStatus.get(activeGradeNumber)?.gradeAverage ?? null;
+  const gradeExamAverage = gradeStatus.get(activeGradeNumber)?.gradeExamAverage ?? null;
+  const gradePassed = gradeStatus.get(activeGradeNumber)?.passed ?? false;
+  const gradeRoman = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][activeGradeNumber] ?? String(activeGradeNumber);
 
   async function refreshCurriculum() {
     const data = await loadAcademyCurriculum();
@@ -254,7 +278,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     }
   }
 
-  async function beginGradeExam() {
+  async function beginGradeExam(gradeNumber: number) {
     setLoading(true);
     setError("");
     setNotice("");
@@ -262,7 +286,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setReviewingHistory(false);
     setAnswers({});
     try {
-      const data = await startAcademyGradeExam(makeAttemptKey());
+      const data = await startAcademyGradeExam(makeAttemptKey(), gradeNumber);
       setSelectedCode("__grade_exam__");
       setAttemptKind("grade_exam");
       setAttemptId(data.attemptId);
@@ -364,7 +388,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
       <div className="academy-breadcrumb">Home / Area didattica / <strong>Accademia</strong></div>
       <header className="academy-hero">
         <div className="academy-hero-icon"><GraduationCap size={30} /></div>
-        <div><span className="academy-eyebrow">DIPARTIMENTO DIDATTICO</span><h1>Accademia Pokémon</h1><p>Grado I — Fondamenti · Scienze Pokémon e Pokédex</p></div>
+        <div><span className="academy-eyebrow">DIPARTIMENTO DIDATTICO</span><h1>Accademia Pokémon</h1><p>Grado {gradeRoman} — {currentGradeLessons.length ? "Percorso accademico" : "Programma in preparazione"}</p></div>
         <button type="button" className="academy-icon-button" aria-label="Aggiorna programma" disabled={loading} onClick={() => { setLoading(true); setError(""); refreshCurriculum().catch(reason => setError(reason instanceof Error ? reason.message : "Aggiornamento non riuscito.")).finally(() => setLoading(false)); }}><RefreshCw size={17} /></button>
       </header>
 
@@ -396,7 +420,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
           </section>
           <div className="academy-summary-grid">
             <article><span>LEZIONI</span><strong>{lessons.length}</strong><small>Programma pubblicato</small></article>
-            <article><span>SUPERATE</span><strong>{lessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
+            <article><span>SUPERATE</span><strong>{currentGradeLessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
             <article><span>STORICO</span><strong>{totalAttemptCount}</strong><small>Tentativi consegnati</small></article>
           </div>
           <div className="academy-subject-grid">
@@ -417,13 +441,13 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
           <section className="academy-content-card academy-grade-exam-card">
             <div>
               <span className="academy-eyebrow">ESAME FINALE DI GRADO</span>
-              <h3>Esame di grado — Fondamenti</h3>
+              <h3>Esame di grado — Grado {gradeRoman}</h3>
               <p>L'esame di grado si sblocca quando la media degli esami finali di tutte le materie è almeno 18/30. Per superare il Grado I restano necessari una media del grado di almeno 26/30 e una media di tutti i tentativi dell'esame di grado di almeno 26/30. Ogni tentativo contiene 25 domande uniche.</p>
               <div className="academy-grade-exam-stats"><span>Media esami materie <strong>{formatAverage(subjectExamAverage)}</strong></span><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame di grado <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi <strong>{gradeExamAttemptCount}</strong></span></div>
               {gradeExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi d’esame</strong>{gradeExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {gradeExamAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "grade_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado I superato.</p>}
             </div>
-            <button type="button" className="academy-primary-button" disabled={loading || !gradeExamUnlocked} onClick={() => void beginGradeExam()}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
+            <button type="button" className="academy-primary-button" disabled={loading || !gradeExamUnlocked} onClick={() => void beginGradeExam(activeGradeNumber)}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
             {!gradeExamUnlocked && <small className="academy-grade-exam-lock">Consegna l'esame finale di ogni materia e raggiungi una media complessiva di almeno 18/30 per sbloccare l'esame di grado.</small>}
           </section>
         </>
@@ -464,7 +488,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
         </section>
       ) : (
         <div className="academy-detail">
-          <button type="button" className="academy-back-button" onClick={() => { resetAttempt(); setSelectedCode(null); if (!selectedSubjectCode) setSelectedSubjectCode(null); }}><ArrowLeft size={16} /> {selectedSubjectCode ? "Torna alla materia" : "Tutte le materie"}</button>
+          <button type="button" className="academy-back-button" onClick={() => { resetAttempt(); setSelectedCode(null); }}><ArrowLeft size={16} /> {selectedSubjectCode ? "Torna alla materia" : "Tutte le materie"}</button>
           {(lesson || selectedCode === "__grade_exam__" || selectedCode === "__subject_exam__") && <>
             <header className="academy-detail-heading"><span className="academy-eyebrow">{selectedCode === "__grade_exam__" ? "ESAME FINALE DI GRADO" : selectedCode === "__subject_exam__" ? "ESAME FINALE DI MATERIA" : "LEZIONE " + (lesson?.order_index ?? "")}</span><h2>{selectedCode === "__grade_exam__" ? "Esame finale del Grado I" : selectedCode === "__subject_exam__" ? "Esame finale — " + (selectedSubject?.title ?? "Materia") : lesson?.title}</h2><p>{selectedCode === "__grade_exam__" ? "Rispondi alle domande estratte dal programma del Grado I. Il voto minimo per superare l’esame è 26/30." : selectedCode === "__subject_exam__" ? "Rispondi a 15 domande estratte dalle lezioni della materia. Il voto minimo è 18/30." : lesson?.summary}</p></header>
             {lesson && !selectedIsUnlocked && <div className="academy-alert academy-alert-error">Questa lezione è bloccata: completa la precedente con una media di almeno 18/30.</div>}
