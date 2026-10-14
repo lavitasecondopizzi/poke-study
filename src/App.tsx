@@ -846,7 +846,7 @@ export default function App() {
             <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per verificare l’identità e caricare i progressi salvati.</p></div>
             <label className="community-import-button enrollment-import-button">Importa salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
             <button type="button" className="enrollment-back" onClick={() => window.location.reload()}>Riprova caricamento</button>
-          </div>
+          </div>}
         </section>
       </main>
     );
