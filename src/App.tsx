@@ -129,6 +129,12 @@ function spriteUrl(id: number) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 }
 
+const STARTER_POKEMON_IDS = [1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912];
+
+function avatarPortraitUrl(id: number) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+}
+
 function itemSpriteUrl(name: string) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`;
 }
@@ -192,8 +198,6 @@ export default function App() {
   const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
   const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
   const [typeLoading, setTypeLoading] = useState(false);
-  const [avatarPage, setAvatarPage] = useState(0);
-  const [avatarSearch, setAvatarSearch] = useState('');
   const [notice, setNotice] = useState('');
   const [clockNow, setClockNow] = useState(() => Date.now());
 
@@ -340,9 +344,8 @@ export default function App() {
   useEffect(() => {
     if (gamePage !== safeGamePage) setGamePage(safeGamePage);
   }, [gamePage, safeGamePage]);
-  const filteredAvatars = species.filter(pokemon => pokemon.name.toLowerCase().includes(avatarSearch.trim().toLowerCase()) || String(pokemon.id).includes(avatarSearch.trim()));
-  const avatarPageCount = Math.max(1, Math.ceil(filteredAvatars.length / 15));
-  const visibleAvatars = filteredAvatars.slice(avatarPage * 15, avatarPage * 15 + 15);
+  const visibleAvatars = species.filter(pokemon => STARTER_POKEMON_IDS.includes(pokemon.id));
+  const currentProfileAvatarId = STARTER_POKEMON_IDS.includes(student?.avatarId ?? -1) ? student?.avatarId : STARTER_POKEMON_IDS[0];
   const inventory = progress.inventory ?? [];
   const completedExams = progress.completedExams ?? [];
   const shopProducts = useMemo(
@@ -840,7 +843,7 @@ export default function App() {
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Personalizza l’immagine profilo scegliendo tra i 1.025 Pokémon. Le immagini vengono caricate dalla CDN solo quando servono.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{student.avatarId?<img src={spriteUrl(student.avatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><label className="item-search-label">Cerca un Pokémon per nome o numero<input value={avatarSearch} onChange={event=>{setAvatarSearch(event.target.value);setAvatarPage(0);}} placeholder="Es. Pikachu oppure 0025"/></label><div className="avatar-grid">{visibleAvatars.map(pokemon=><button className={student.avatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><img src={spriteUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/><span>{titleCase(pokemon.name)}</span></button>)}</div><div className="game-pagination"><button disabled={avatarPage===0} onClick={()=>setAvatarPage(Math.max(0,avatarPage-1))}>‹ Indietro</button><span>Pagina {Math.min(avatarPage+1,avatarPageCount)} / {avatarPageCount}</span><button disabled={avatarPage>=avatarPageCount-1} onClick={()=>setAvatarPage(Math.min(avatarPageCount-1,avatarPage+1))}>Avanti ›</button></div></section></>}
+          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">PROFILO LOCALE</span><h2>{student.nickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>Accesso con account e sincronizzazione saranno aggiunti nell’ultima fase.</small></div></div><div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
 
           {view === 'forum' && <><div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div><div className="page-heading"><div><div className="eyebrow">COMUNITÀ SCOLASTICA</div><h1>Bacheca studenti</h1><p>Avvisi e appunti dell'archivio Pokémon.</p></div></div><section className="forum-post"><div className="post-icon">📌</div><div><span className="section-label">AVVISO DEL PRESIDE</span><h2>Benvenuto nel Archivio Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall'inizio. Catalogare è un'attività continua: ogni collocazione corretta aggiunge un Punto Poké e gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p><small>SEGRETERIA DIDATTICA</small></div></section><section className="forum-post"><div className="post-icon">📚</div><div><span className="section-label">GUIDA RAPIDA</span><h2>Come funziona la catalogazione</h2><p>Ogni lezione combina carte di macrocategorie diverse. Trascina una carta nella sottocategoria corretta oppure, su mobile, seleziona la carta e tocca la destinazione. Il nome viene rivelato dopo la risposta; gli errori non sottraggono punti.</p><small>MANUALE DELLO STUDENTE</small></div></section></>}
           <footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
