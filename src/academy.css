@@ -85,3 +85,14 @@
 .academy-review-list a{display:inline-block;margin-top:5px;color:var(--academy-accent-dark,#1d5d8f);font-size:11px;overflow-wrap:anywhere}
 @media(max-width:720px){.academy-hero{padding:18px;align-items:flex-start}.academy-hero-icon{width:46px;height:46px;flex-basis:46px}.academy-hero-icon svg{width:23px}.academy-summary-grid{gap:8px}.academy-summary-grid article{padding:12px}.academy-summary-grid strong{font-size:22px}.academy-summary-grid small{font-size:10px}.academy-lesson-card{grid-template-columns:38px minmax(0,1fr);gap:10px;padding:13px}.academy-lesson-number{width:36px;height:36px}.academy-lesson-result{grid-column:2;display:grid;grid-template-columns:auto 1fr auto;align-items:center;width:100%;gap:8px}.academy-lesson-result strong{text-align:right}.academy-options{grid-template-columns:1fr}.academy-test-intro{align-items:flex-start;flex-direction:column}.academy-test-intro .academy-primary-button{width:100%}}
 @media(max-width:430px){.academy-hero{gap:10px;padding:14px}.academy-hero h1{font-size:22px}.academy-hero p{font-size:12px}.academy-summary-grid article{padding:10px}.academy-summary-grid span{font-size:9px}.academy-summary-grid strong{font-size:20px}.academy-summary-grid small{font-size:9px}.academy-section-heading h2{font-size:20px}.academy-grade-pill{font-size:10px;padding:6px 8px}.academy-lesson-result{grid-template-columns:auto 1fr}.academy-lesson-result button{grid-column:1/-1;width:100%}.academy-test-actions{flex-direction:column-reverse}.academy-test-actions button{width:100%}}
+
+.academy-grade-exam-card{display:flex;align-items:center;justify-content:space-between;gap:20px;border-color:var(--academy-border,#c9e1f3);background:linear-gradient(115deg,#fff 0%,var(--academy-soft,#f3f9ff) 100%)}
+.academy-grade-exam-card>div{flex:1;min-width:0}
+.academy-grade-exam-card h3{margin:5px 0 8px}
+.academy-grade-exam-card p{margin:0 0 10px;max-width:780px}
+.academy-grade-exam-stats{display:flex;flex-wrap:wrap;gap:8px}
+.academy-grade-exam-stats span{display:flex;gap:6px;align-items:center;padding:7px 9px;border:1px solid var(--academy-border,#c9e1f3);border-radius:8px;background:#fff;color:var(--muted,#718197);font-size:10px}
+.academy-grade-exam-stats strong{color:var(--academy-accent-dark,#1d5d8f);font-size:12px}
+.academy-grade-complete{display:flex;align-items:center;gap:7px;margin-top:10px!important;color:#21834c!important;font-weight:800}
+.academy-grade-exam-lock{display:block;margin-top:8px;color:var(--muted,#718197);font-size:10px}
+@media(max-width:720px){.academy-grade-exam-card{align-items:stretch;flex-direction:column;gap:12px}.academy-grade-exam-card>.academy-primary-button{width:100%}}
