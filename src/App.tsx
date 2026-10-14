@@ -602,7 +602,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <div className="student-card"><div className="student-avatar">{student.avatarId ? <img src={spriteUrl(student.avatarId)} alt="Avatar" /> : '★'}</div><div><small>PROFILO ALLIEVO</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></div></div>
+        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{student?.nickname ?? 'Allenatore in formazione'}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></span></button>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
