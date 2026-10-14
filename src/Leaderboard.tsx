@@ -78,7 +78,6 @@ function PodiumCard({ entry, position, isCurrent }: { entry: CommunityRankingEnt
       <strong className="leaderboard-podium-name">{entry.nickname}</strong>
       <AcademyBadge academy={entry.academy} />
       <strong className="leaderboard-podium-score">{entry.points.toLocaleString('it-IT')} <small>PP</small></strong>
-      <span className="leaderboard-podium-exams">{entry.examPoints.toLocaleString('it-IT')} punti esame</span>
       {isCurrent && <span className="leaderboard-you-tag">LA TUA POSIZIONE</span>}
     </article>
   );
@@ -88,7 +87,7 @@ function RankingTable({ entries, currentIdentityId }: { entries: CommunityRankin
   return (
     <div className="leaderboard-table-wrap">
       <table className="leaderboard-table">
-        <thead><tr><th scope="col">Pos.</th><th scope="col">Allievo</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Punti esame</th><th scope="col">Pokémon</th></tr></thead>
+        <thead><tr><th scope="col">Pos.</th><th scope="col">Allievo</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Pokémon</th></tr></thead>
         <tbody>{entries.map(entry => (
           <tr key={entry.id} className={entry.id === currentIdentityId ? 'leaderboard-current-row' : undefined}>
             <td><span className={`leaderboard-rank-number leaderboard-rank-${entry.rank <= 3 ? entry.rank : 'other'}`}>{rankLabel(entry.rank)}</span></td>
@@ -101,7 +100,6 @@ function RankingTable({ entries, currentIdentityId }: { entries: CommunityRankin
             </td>
             <td><AcademyBadge academy={entry.academy} /></td>
             <td><strong>{entry.points.toLocaleString('it-IT')}</strong></td>
-            <td>{entry.examPoints.toLocaleString('it-IT')}</td>
             <td>{entry.completedPokemon.toLocaleString('it-IT')}/1025</td>
           </tr>
         ))}</tbody>
@@ -120,7 +118,7 @@ function LocalProgressPanel({ progress, onConnect }: { progress: SavedProgress; 
         <p>Collega l’identità online per entrare in classifica.</p>
         <div className="leaderboard-local-stats">
           <div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points.toLocaleString('it-IT')}</strong></div>
-          <div><span>PUNTI ESAME</span><strong>{progress.examPoints.toLocaleString('it-IT')}</strong></div>
+          <div><span>AIUTI SBLOCCATI</span><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong></div>
           <div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div>
         </div>
         <button type="button" className="leaderboard-primary-button" onClick={onConnect}>Vai al profilo <span aria-hidden="true">›</span></button>
@@ -262,7 +260,7 @@ export default function Leaderboard({
             <article className="leaderboard-stat-card"><span><Users size={15} aria-hidden="true" /> ALLIEVI REGISTRATI</span><strong>{totalPlayers.toLocaleString('it-IT')}</strong><small>Identità community</small></article>
             <article className="leaderboard-stat-card"><span><Trophy size={15} aria-hidden="true" /> IL TUO POSIZIONAMENTO</span><strong>{currentEntry ? `#${currentEntry.rank}` : '—'}</strong><small>{currentEntry ? `su ${totalPlayers} allievi` : 'In attesa di sincronizzazione'}</small></article>
             <article className="leaderboard-stat-card"><span><Medal size={15} aria-hidden="true" /> I TUOI PUNTI POKÉ</span><strong>{currentEntry?.points.toLocaleString('it-IT') ?? progress.points.toLocaleString('it-IT')}</strong><small>{currentEntry?.completedPokemon ?? progress.completedIds.length} Pokémon catalogati</small></article>
-            <article className="leaderboard-stat-card"><span><GraduationCap size={15} aria-hidden="true" /> PUNTI ESAME</span><strong>{currentEntry?.examPoints.toLocaleString('it-IT') ?? progress.examPoints.toLocaleString('it-IT')}</strong><small>Ricompense didattiche</small></article>
+            <article className="leaderboard-stat-card"><span><GraduationCap size={15} aria-hidden="true" /> AIUTI SBLOCCATI</span><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong><small>Strumenti e archivi</small></article>
           </section>
 
           <section className="leaderboard-content-panel" aria-labelledby="leaderboard-students-title">
