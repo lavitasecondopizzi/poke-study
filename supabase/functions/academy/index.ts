@@ -18,6 +18,7 @@ type QuestionSnapshot = {
   explanation: string;
   sourceTitle: string;
   sourceUrl: string;
+  sourceCheckedAt: string;
   difficulty: "facile" | "media" | "difficile";
 };
 
@@ -214,7 +215,7 @@ Deno.serve(async request => {
       }
 
       const { data: questionRows, error: questionsError } = await supabase.from("academy_questions")
-        .select("question_id,question_type,prompt,options,correct_answer,explanation,source_title,source_url,difficulty,version")
+        .select("question_id,question_type,prompt,options,correct_answer,explanation,source_title,source_url,source_checked_at,difficulty,version")
         .eq("lesson_code", lessonCode)
         .eq("is_active", true);
       if (questionsError) return response(500, { error: "Impossibile caricare le domande." });
@@ -251,6 +252,7 @@ Deno.serve(async request => {
         explanation: question.explanation,
         sourceTitle: question.source_title,
         sourceUrl: question.source_url,
+        sourceCheckedAt: question.source_checked_at,
         difficulty: question.difficulty,
       }));
 
@@ -460,6 +462,7 @@ Deno.serve(async request => {
         explanation: question.explanation,
         sourceTitle: question.sourceTitle,
         sourceUrl: question.sourceUrl,
+        sourceCheckedAt: question.sourceCheckedAt,
       }));
       return response(200, { ...result, review });
     }
