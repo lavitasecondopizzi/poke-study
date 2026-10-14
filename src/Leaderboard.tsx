@@ -56,11 +56,11 @@ function rankLabel(rank: number) {
   return rank <= 3 ? `${rank}°` : String(rank).padStart(2, '0');
 }
 
-function PlayerAvatar({ avatarId, nickname, large = false }: { avatarId: number | null; nickname: string; large?: boolean }) {
+function PlayerAvatar({ avatarId, matricola, large = false }: { avatarId: number | null; matricola: string; large?: boolean }) {
   return (
     <span className={large ? 'leaderboard-avatar leaderboard-avatar-large' : 'leaderboard-avatar'}>
       {avatarId
-        ? <img src={avatarUrl(avatarId)} alt={`Avatar di ${nickname}`} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
+        ? <img src={avatarUrl(avatarId)} alt={`Avatar dello studente ${matricola}`} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
         : <GraduationCap aria-hidden="true" size={large ? 27 : 17} />}
     </span>
   );
@@ -75,8 +75,8 @@ function PodiumCard({ entry, position, isCurrent, onOpenProfile }: { entry: Comm
   return (
     <article className={`leaderboard-podium-card leaderboard-podium-${position}${isCurrent ? ' is-current' : ''}`}>
       <div className="leaderboard-podium-position"><Icon size={17} aria-hidden="true" /><span>{rankLabel(position)} POSTO</span></div>
-      <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} large />
-      <button type="button" className="leaderboard-profile-link leaderboard-podium-name" onClick={() => onOpenProfile(entry.id)}>{entry.nickname}</button>
+      <PlayerAvatar avatarId={entry.avatarId} matricola={entry.matricola} large />
+      <button type="button" className="leaderboard-profile-link leaderboard-podium-name" onClick={() => onOpenProfile(entry.id)}>{entry.matricola}</button>
       <AcademyBadge academy={entry.academy} />
       <strong className="leaderboard-podium-score">{entry.points.toLocaleString('it-IT')} <small>PP</small></strong>
       {isCurrent && <span className="leaderboard-you-tag">LA TUA POSIZIONE</span>}
@@ -88,14 +88,14 @@ function RankingTable({ entries, currentIdentityId, onOpenProfile }: { entries: 
   return (
     <div className="leaderboard-table-wrap">
       <table className="leaderboard-table">
-        <thead><tr><th scope="col">Pos.</th><th scope="col">Allievo</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Pokémon</th></tr></thead>
+        <thead><tr><th scope="col">Pos.</th><th scope="col">Matricola</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Pokémon</th></tr></thead>
         <tbody>{entries.map(entry => (
           <tr key={entry.id} className={entry.id === currentIdentityId ? 'leaderboard-current-row' : undefined}>
             <td><span className={`leaderboard-rank-number leaderboard-rank-${entry.rank <= 3 ? entry.rank : 'other'}`}>{rankLabel(entry.rank)}</span></td>
             <td>
               <div className="leaderboard-player-cell">
-                <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} />
-                <button type="button" className="leaderboard-profile-link" onClick={() => onOpenProfile(entry.id)}>{entry.nickname}</button>
+                <PlayerAvatar avatarId={entry.avatarId} matricola={entry.matricola} />
+                <button type="button" className="leaderboard-profile-link" onClick={() => onOpenProfile(entry.id)}>{entry.matricola}</button>
                 {entry.id === currentIdentityId && <span className="leaderboard-you-tag">TU</span>}
               </div>
             </td>
@@ -190,7 +190,7 @@ export default function Leaderboard({
     const normalizedQuery = query.trim().toLocaleLowerCase('it');
     return entries.filter(entry =>
       (academyFilter === 'tutte' || entry.academy === academyFilter)
-      && (!normalizedQuery || entry.nickname.toLocaleLowerCase('it').includes(normalizedQuery))
+      && (!normalizedQuery || entry.matricola.toLocaleLowerCase('it').includes(normalizedQuery))
     );
   }, [entries, academyFilter, query]);
 
@@ -273,7 +273,7 @@ export default function Leaderboard({
             </div>
 
             <div className="leaderboard-filters" aria-label="Filtri della classifica">
-              <label className="leaderboard-search"><Search size={16} aria-hidden="true" /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca nickname…" aria-label="Cerca nickname" /></label>
+              <label className="leaderboard-search"><Search size={16} aria-hidden="true" /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca matricola…" aria-label="Cerca matricola" /></label>
               <label className="leaderboard-academy-filter"><span>Filtra per campus</span><select value={academyFilter} onChange={event => setAcademyFilter(event.target.value as AcademyFilter)}>{ACADEMIES.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
             </div>
 
