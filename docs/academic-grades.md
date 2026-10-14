@@ -24,10 +24,11 @@ I gradi sono una progressione interna al gioco, non corrispondono a una durata r
 
 - Ogni lezione obbligatoria termina con un test dedicato.
 - Il voto è espresso in decimi, da 1 a 10.
-- Per superare il test e sbloccare la lezione successiva è necessario ottenere almeno **6/10**.
-- Con un voto inferiore a 6/10 la lezione resta non superata e il test può essere ripetuto.
+- Il giocatore può ripetere lo stesso test tutte le volte che desidera; a ogni tentativo il sistema propone domande casuali selezionate dal database pertinente alla lezione.
+- Ogni tentativo riceve un voto in decimi e viene conservato nello storico.
+- Il voto effettivo della lezione è la media aritmetica di **tutti** i tentativi svolti per quel test, inclusi quelli insufficienti.
+- La lezione è superata e quella successiva si sblocca quando la media effettiva raggiunge almeno **6/10**. Finché la media è inferiore a 6/10, il test può essere ripetuto.
 - Le domande valutano gli obiettivi spiegati nella lezione e non introducono conoscenze mai presentate.
-- Il voto registrato per la lezione è quello del primo tentativo superato. I tentativi falliti restano nello storico, ma non abbassano il voto acquisito e non permettono di aumentarlo artificialmente.
 
 ## Pagella del grado
 
@@ -38,7 +39,7 @@ La pagella mostra:
 - la media complessiva del grado;
 - lo stato: **In corso**, **Da completare** oppure **Superato**.
 
-Il voto di una materia è la media aritmetica dei voti registrati nelle lezioni superate di quella materia. La media complessiva del grado è la media aritmetica dei cinque voti di materia, con uguale peso per ciascuna materia.
+Il voto di una materia è la media aritmetica dei voti effettivi delle lezioni superate di quella materia; ogni voto effettivo di lezione è già la media di tutti i tentativi del relativo test. La media complessiva del grado è la media aritmetica dei cinque voti di materia, con uguale peso per ciascuna materia.
 
 Se una materia non ha voti registrati o rimangono lezioni obbligatorie incomplete, la pagella è provvisoria e il grado non può essere superato.
 
@@ -49,7 +50,7 @@ Devono essere soddisfatte entrambe le condizioni:
 1. tutte le lezioni obbligatorie del grado sono state completate superando i test con almeno 6/10;
 2. la media complessiva della pagella è almeno **8/10**.
 
-Se tutte le lezioni sono completate ma la media è inferiore a 8/10, il grado resta in corso. Il giocatore potrà svolgere attività di recupero e sostenere nuovi test secondo regole da definire. La pagella deve aggiornarsi senza cancellare lo storico.
+Se tutte le lezioni sono completate ma la media è inferiore a 8/10, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
 
 I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non può trasformare una media inferiore a 8 in un grado superato.
 
@@ -63,4 +64,4 @@ I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non pu
 
 ## Nota di implementazione
 
-Questa specifica definisce il comportamento desiderato, ma non implementa ancora schermate, salvataggi o calcolo dei voti. Prima dello sviluppo vanno concordate le regole di recupero per migliorare una materia e la composizione precisa dei gradi.
+Questa specifica definisce il comportamento desiderato, ma non implementa ancora schermate, salvataggi o calcolo dei voti. Restano da definire le regole per recuperare o migliorare voti quando il grado è completo ma la media complessiva è inferiore a 8/10, oltre alla composizione precisa dei gradi.
