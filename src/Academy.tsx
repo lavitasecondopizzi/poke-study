@@ -3,6 +3,7 @@ import { ArrowLeft, BookOpen, CheckCircle2, CircleHelp, GraduationCap, LockKeyho
 import {
   loadAcademyCurriculum,
   loadAcademyLesson,
+  loadAcademyAttemptReview,
   startAcademyAttempt,
   startAcademyGradeExam,
   submitAcademyAttempt,
@@ -91,6 +92,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
   const [questions, setQuestions] = useState<AcademyQuestion[]>([]);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [attemptKind, setAttemptKind] = useState<"lesson" | "grade_exam" | null>(null);
+  const [reviewingHistory, setReviewingHistory] = useState(false);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [result, setResult] = useState<AcademyAttemptResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -182,6 +184,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setError("");
     setNotice("");
     setResult(null);
+    setReviewingHistory(false);
     setAnswers({});
     try {
       const data = await startAcademyAttempt(lesson.lesson_code, makeAttemptKey());
@@ -200,6 +203,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     setError("");
     setNotice("");
     setResult(null);
+    setReviewingHistory(false);
     setAnswers({});
     try {
       const data = await startAcademyGradeExam(makeAttemptKey());
@@ -247,9 +251,30 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
     }
   }
 
+  async function reviewAttempt(id: string, kind: "lesson" | "grade_exam", lessonCode?: string | null) {
+    setLoading(true);
+    setError("");
+    setNotice("");
+    try {
+      const historical = await loadAcademyAttemptReview(id);
+      setSelectedCode(kind === "grade_exam" ? "__grade_exam__" : (lessonCode ?? selectedCode));
+      setAttemptKind(kind);
+      setAttemptId(null);
+      setQuestions([]);
+      setAnswers({});
+      setResult(historical);
+      setReviewingHistory(true);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Impossibile caricare il tentativo storico.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   function resetAttempt() {
     setAttemptId(null);
     setAttemptKind(null);
+    setReviewingHistory(false);
     setQuestions([]);
     setAnswers({});
     setResult(null);
@@ -316,6 +341,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               <h3>Esame di grado — Fondamenti</h3>
               <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 20–30 domande uniche.</p>
               <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttemptCount}</strong></span></div>
+              {gradeExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi d’esame</strong>{gradeExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {gradeExamAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "grade_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado I superato.</p>}
             </div>
             <button type="button" className="academy-primary-button" disabled={loading || !allLessonsPassed} onClick={() => void beginGradeExam()}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
@@ -335,7 +361,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               </section>
               {(lesson.content ?? []).map((section, index) => <section className="academy-content-card" key={lesson.lesson_code + "-" + index}><h3>{section.title}</h3><p>{section.body}</p></section>)}
               <section className="academy-content-card academy-test-intro"><div><h3><CircleHelp size={18} /> Verifica della lezione</h3><p>Il test seleziona domande dal repertorio della lezione. Ogni tentativo viene registrato e la media comprende tutti i tentativi, anche quelli insufficienti.</p></div><button type="button" className="academy-primary-button" disabled={loading || !selectedIsUnlocked} onClick={() => void beginAttempt()}>Inizia il test</button></section>
-              {lessonAttemptCount > 0 && <section className="academy-content-card"><h3>Storico della lezione</h3><div className="academy-history-list">{lessonAttempts.map((attempt, index) => <div key={attempt.id}><span>Tentativo {lessonAttemptCount - index}</span><strong>{attempt.score}/30</strong><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div><p className="academy-average-note">Media di tutti i tentativi: <strong>{formatAverage(lessonAverage)}</strong></p></section>}
+              {lessonAttemptCount > 0 && <section className="academy-content-card"><h3>Storico della lezione</h3><div className="academy-history-list">{lessonAttempts.map((attempt, index) => <div key={attempt.id}><span>Tentativo {lessonAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "lesson", lesson?.lesson_code)}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div><p className="academy-average-note">Media di tutti i tentativi: <strong>{formatAverage(lessonAverage)}</strong></p></section>}
             </>}
             {attemptId && <section className="academy-test-panel">
               <div className="academy-test-progress"><span>{attemptKind === "grade_exam" ? "ESAME FINALE DEL GRADO" : "TEST DELLA LEZIONE"}</span><strong>{answeredCount} / {questions.length} risposte</strong></div>
@@ -359,7 +385,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               <span className="academy-eyebrow">RISULTATO DEL TENTATIVO</span><h3>{result.score}/30</h3><p>{result.correctCount} risposte corrette su {result.questionCount}. {attemptKind === "grade_exam" ? (result.passed ? "Questo tentativo raggiunge almeno 26/30." : "Questo tentativo è inferiore a 26/30 e verrà conteggiato nella media.") : (result.passed ? "Il voto di questo tentativo raggiunge almeno 18/30; la media di tutti i tentativi determina il superamento." : "Tentativo insufficiente: verrà comunque conteggiato nella media.")}</p>
               {attemptKind === "grade_exam" && <p>Media del grado: <strong>{formatAverage(gradeAverage)}</strong> · Media di tutti i tentativi d’esame: <strong>{formatAverage(gradeExamAverage)}</strong>. {gradePassed ? "Grado I superato." : "Il grado risulta superato solo quando entrambe le medie raggiungono 26/30."}</p>}
               <div className="academy-review-list">{result.review.map((item, index) => <article key={item.questionId} className={item.isCorrect ? "correct" : "incorrect"}><h4>{index + 1}. {item.prompt}</h4>{item.mediaUrl && <img className="academy-question-image academy-review-image" src={item.mediaUrl} alt="Immagine della domanda" loading="lazy" />}<p><strong>{item.isCorrect ? "Risposta corretta" : "Risposta corretta attesa"}:</strong> {formatAnswer(item.options, item.correctAnswer)}</p><p>{item.explanation}</p><a href={item.sourceUrl} target="_blank" rel="noreferrer">Fonte: {item.sourceTitle} · verificata il {item.sourceCheckedAt}</a></article>)}</div>
-              <button type="button" className="academy-primary-button" onClick={() => { resetAttempt(); setSelectedCode(null); }}>Torna al programma</button>
+              <button type="button" className="academy-primary-button" onClick={() => { const returnToLesson = reviewingHistory && attemptKind === "lesson"; resetAttempt(); if (!returnToLesson) setSelectedCode(null); }}>{reviewingHistory ? (attemptKind === "lesson" ? "Torna alla lezione" : "Torna al programma") : "Torna al programma"}</button>
             </section>}
           </>}
         </div>
