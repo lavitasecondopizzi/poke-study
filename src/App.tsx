@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
+import PersonalRegister from './PersonalRegister';
 import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
@@ -161,13 +162,13 @@ const regions = [
 function loadProgress(): SavedProgress {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? saved.completedIds : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? saved.completedExams : [], inventory: Array.isArray(saved.inventory) ? saved.inventory : [], completedEntries: Array.isArray(saved.completedEntries) ? saved.completedEntries : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {} }; }
+    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? [...new Set(saved.completedIds.filter(id => Number.isInteger(id) && id > 0 && id <= NATIONAL_DEX_SIZE))] : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? [...new Set(saved.completedExams.filter(id => typeof id === 'string'))] : [], inventory: Array.isArray(saved.inventory) ? [...new Set(saved.inventory.filter(id => typeof id === 'string'))] : [], completedEntries: Array.isArray(saved.completedEntries) ? [...new Set(saved.completedEntries.filter(id => typeof id === 'string'))] : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {}, errors: Math.max(0, Number(saved.errors) || 0), history: Array.isArray(saved.history) ? saved.history.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.timestamp === 'number').slice(-100) : [] }; }
   } catch { /* storage may be unavailable */ }
   return emptyProgress();
 }
 
 function emptyProgress(): SavedProgress {
-  return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} };
+  return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {}, errors: 0, history: [] };
 }
 
 function titleCase(name: string) {
@@ -516,7 +517,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if ((view !== 'shop' && view !== 'pokedex' && view !== 'game') || itemCatalog.length) return;
+    if ((view !== 'shop' && view !== 'pokedex' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
     setItemCatalogLoading(true);
@@ -665,6 +666,9 @@ export default function App() {
       : card.subcategoryId === targetSubcategoryId;
     if (!isCorrect) {
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
+      const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
+      const errorTimestamp = Date.now();
+      setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error', title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
       setSelectedCardId(null);
       setWrongTargetId(inventory.includes('subcategory-errors') ? targetId : null);
       setMessage('');
@@ -683,24 +687,21 @@ export default function App() {
         const pokemonId = card.pokemonId;
         if (!pokemonId || old.completedIds.includes(pokemonId)) return old;
         const completedIds = [...old.completedIds, pokemonId];
-        const examsBefore = regions.filter(region =>
-          Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i)
-            .every(id => old.completedIds.includes(id)),
-        ).length;
-        const examsAfter = regions.filter(region =>
-          Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i)
-            .every(id => completedIds.includes(id)),
-        ).length;
-        return {
-          ...old,
-          points: old.points + 1,
-          completedIds,
-          examPoints: old.examPoints + Math.max(0, examsAfter - examsBefore),
-        };
+        const newlyCompletedRegions = regions.filter(region =>
+          !Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => old.completedIds.includes(id))
+          && Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => completedIds.includes(id)),
+        );
+        const timestamp = Date.now();
+        const newEvents = [
+          { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Pokémon catalogato', detail: `${card.name} · numero nazionale #${pokemonId}` },
+          ...newlyCompletedRegions.map(region => ({ id: `region-${timestamp}-${region.name}`, timestamp, kind: 'exam' as const, title: 'Esame regionale superato', detail: `${region.name} · +1 Punto esame` })),
+        ];
+        return { ...old, points: old.points + 1, completedIds, examPoints: old.examPoints + newlyCompletedRegions.length, history: [...(old.history ?? []), ...newEvents].slice(-100) };
       }
       const completedEntries = old.completedEntries ?? [];
       if (completedEntries.includes(card.id)) return old;
-      return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id] };
+      const timestamp = Date.now();
+      return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog', title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
     });
     setSelectedCardId(null);
     setWrongTargetId(null);
@@ -812,9 +813,24 @@ export default function App() {
     setProgress(old => {
       const completed = old.completedExams ?? [];
       if (completed.includes(id)) return old;
-      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id] };
+      const timestamp = Date.now();
+      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id], history: [...(old.history ?? []), { id: `exam-${timestamp}-${id}`, timestamp, kind: 'exam', title: 'Ricompensa esame riscattata', detail: `${id} · +${reward} ${reward === 1 ? 'Punto esame' : 'Punti esame'}` }].slice(-100) };
     });
     setNotice('Prova completata: ricompensa aggiunta al Registro personale.');
+  }
+
+  function resetProgress() {
+    if (!window.confirm('Vuoi azzerare punti, catalogazione, esami, medaglie e storico? Il profilo studente e la matricola resteranno invariati.')) return;
+    setProgress(emptyProgress());
+    setLessonReady(false);
+    setLessonDeck([]);
+    setLessonSolved([]);
+    setSelectedCardId(null);
+    setMisplacedCards({});
+    setCategoryPlacements({});
+    setWrongTargetId(null);
+    setMessage('Progressi azzerati. Il profilo studente è rimasto invariato.');
+    setNotice('Registro personale azzerato. Profilo e matricola conservati.');
   }
 
   function buyItem(product: ShopProduct) {
@@ -1296,7 +1312,7 @@ export default function App() {
               </section>
             </section>
           </>}
-                    {view === 'registro' && <><div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div><div className="page-heading"><div><div className="eyebrow">SEGRETERIA DIDATTICA</div><h1>Registro personale</h1><p>Il riepilogo dei progressi nel catalogo Nazionale completo.</p></div></div><div className="dashboard-strip"><div><span>PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>SPECIE CATALOGATE</span><strong>{progress.completedIds.length} <small>/ 1025</small></strong></div></div><section className="archive-search"><h2>Avanzamento per regione</h2>{regions.map(region => { const count = progress.completedIds.filter(id => id >= region.start && id <= region.end).length; const total = region.end - region.start + 1; return <div className="region-progress" key={region.name}><div><b>{region.name}</b><span>{count} / {total}</span></div><div className="progress-track"><span style={{ width: `${count / total * 100}%` }} /></div>{count === total && <small className="exam-earned">Regione completata · Punto esame ottenuto</small>}</div>})}<button className="secondary-button reset-button" onClick={() => { if (window.confirm('Vuoi azzerare punteggio e progressi salvati su questo dispositivo?')) { setProgress({ points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {} }); setLessonReady(false); setLessonDeck([]); setLessonSolved([]); setSelectedCardId(null); setMessage('Progressi azzerati. Tutti gli elementi sono nuovamente disponibili.'); } }}>Azzera progressi</button></section></>}
+                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} onReset={resetProgress} />}
           {view === 'shop' && <>
             <div className="breadcrumb">Home / Servizi / <b>Cartoleria punti</b></div>
             <section className="shop-hero">
