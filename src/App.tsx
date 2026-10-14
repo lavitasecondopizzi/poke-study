@@ -303,9 +303,12 @@ export default function App() {
       }
     }
     const macroOrder: Record<string, number> = Object.fromEntries(MACRO_CATEGORIES.map((category, index) => [category.id, index]));
+    const regionOrder = new Map(regions.map((region, index) => [region.name, index]));
     return [...targets.values()].sort((a, b) =>
       (macroOrder[a.macroId] ?? 99) - (macroOrder[b.macroId] ?? 99) ||
-      a.name.localeCompare(b.name, 'it'),
+      (a.macroId === 'pokemon' && b.macroId === 'pokemon'
+        ? (regionOrder.get(a.name) ?? 99) - (regionOrder.get(b.name) ?? 99)
+        : a.name.localeCompare(b.name, 'it')),
     );
   }, [lessonDeck, lessonSolved]);
   const remainingLessonCards = useMemo(
