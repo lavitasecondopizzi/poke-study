@@ -42,11 +42,11 @@ create index academy_points_awards_academy_idx on public.academy_points_awards (
 
 create or replace function public.prevent_academic_points_award_mutation()
 returns trigger language plpgsql set search_path = ''
-as $
+as $$
 begin
   raise exception 'Lo storico dei punti accademici è immutabile.';
 end;
-$;
+$$;
 
 create trigger academy_points_awards_immutable
 before update or delete on public.academy_points_awards
