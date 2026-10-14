@@ -2,7 +2,7 @@
  * Thin client for the Supabase community Edge Function.
  * No service-role secret belongs in this browser bundle.
  */
-export type CommunityAcademy = "arancia" | "uva";
+export type CommunityAcademy = "arancia" | "uva" | "mirtillo";
 export type CommunityCategory = "generale" | "domande" | "strategie" | "annunci";
 
 export interface CommunityIdentity {
