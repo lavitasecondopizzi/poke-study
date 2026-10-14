@@ -2253,3 +2253,37 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
  .nav-lock-label{font-size:7px}
 }
 @media(prefers-reduced-motion:reduce){.portal-v2-primary,.portal-v2-secondary,.portal-v2-shortcut,.portal-v2-track>span{transition:none}}
+
+
+/* Stato della connessione nella barra superiore: contrasto AA e badge ben distinguibile. */
+.utility-bar .utility-right{display:flex;align-items:center;gap:10px;color:#f2f8ff;font-weight:700}
+.utility-bar .utility-right b.connection-online,
+.utility-bar .utility-right b.connection-offline{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-left:0;
+  padding:4px 8px;
+  border:1px solid transparent;
+  border-radius:999px;
+  font:800 9px/1 'DM Mono',monospace;
+  letter-spacing:.045em;
+  box-shadow:inset 0 1px #ffffff80;
+}
+.utility-bar .utility-right b.connection-online{
+  color:#14532d!important;
+  background:#d9fbe5;
+  border-color:#9ee6b4;
+}
+.utility-bar .utility-right b.connection-offline{
+  color:#842d24!important;
+  background:#ffebe7;
+  border-color:#ffc1b8;
+}
+.utility-bar .utility-right b.connection-online::first-letter,
+.utility-bar .utility-right b.connection-offline::first-letter{font-size:10px}
+@media(max-width:650px){
+  .utility-bar .utility-right{gap:6px}
+  .utility-bar .utility-right b.connection-online,
+  .utility-bar .utility-right b.connection-offline{padding:3px 6px;font-size:8px}
+}
