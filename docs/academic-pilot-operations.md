@@ -6,7 +6,7 @@ Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft 
 ## Riconciliazione della cronologia migrazioni
 - I file locali `player_state`, `server_matricola` e `blueberry_academy` usano ora le versioni registrate nel progetto remoto: `20261014131025`, `20261014131029` e `20261014131201`. La migrazione duplicata `add_blueberry_academy` è stata rimossa.
 - La migrazione locale `20261014090000_community_foundation.sql` non compariva nella cronologia remota. Dopo la verifica degli oggetti esistenti, la versione è stata riconciliata con `supabase migration repair 20261014090000 --status applied`; `supabase migration list` conferma ora che le versioni locali e remote corrispondono.
-- La migrazione `20261014195000_academic_question_counts.sql` registra la configurazione approvata: 5 domande per test lezione e 25 per esame finale. Il valore è stato aggiornato anche in `public.academy_settings` sul progetto Supabase.
+- La migrazione `20261014194346_academic_question_counts.sql` registra la configurazione approvata: 5 domande per test lezione e 25 per esame finale. Il valore è stato aggiornato anche in `public.academy_settings` sul progetto Supabase.
 - Non eseguire `supabase db push` senza prima controllare `supabase migration list`. Non modificare direttamente la cronologia interna delle migrazioni via SQL.
 
 ## Prerequisiti
