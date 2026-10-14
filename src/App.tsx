@@ -829,7 +829,7 @@ export default function App() {
                         className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '')}
                         aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
                         onDragOver={event => event.preventDefault()}
-                        onDrop={event => { event.preventDefault(); }}
+                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId && openMacroId !== 'pokemon') placeCard(cardId, target.id); }}
                         onClick={() => {
                           if (openMacroId === 'pokemon') {
                             setOpenPokemonRegionId(target.id);
