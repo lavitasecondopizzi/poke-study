@@ -1312,7 +1312,7 @@ export default function App() {
               </section>
             </section>
           </>}
-                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} onReset={resetProgress} />}
+                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} academy={academy} onReset={resetProgress} />}
           {view === 'shop' && <Cartoleria
             academy={academy}
             progress={progress}
