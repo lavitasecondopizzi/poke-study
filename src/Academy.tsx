@@ -501,7 +501,6 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
                 {subjectExamAttempts.filter(attempt => attempt.subject_code === selectedSubject.code).length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi</strong>{subjectExamAttempts.filter(attempt => attempt.subject_code === selectedSubject.code).slice(0, 5).map((attempt, index, list) => <div key={attempt.id}><span>Tentativo {list.length - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "subject_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
               </div>
               <button type="button" className="academy-primary-button" disabled={loading || !selectedSubjectLessonsPassed} onClick={() => void beginSubjectExam(selectedSubject.code)}>{subjectExamAttempts.some(attempt => attempt.subject_code === selectedSubject.code) ? "Ripeti l’esame di materia" : "Accedi all’esame di materia"}</button>
-              {!selectedSubjectLessonsPassed && <small className="academy-grade-exam-lock">Completa tutte le lezioni di questa materia con una media di almeno 18/30 per sbloccare l'esame.</small>}
             </section>
           </>}
         </section>
