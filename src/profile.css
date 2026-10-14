@@ -197,3 +197,19 @@
 .leaderboard-profile-link{display:inline;border:0;padding:0;background:transparent;color:var(--academy-accent-dark,#46529a);font:inherit;font-weight:850;text-align:left;cursor:pointer}
 .leaderboard-profile-link:hover{text-decoration:underline;text-underline-offset:3px}
 .leaderboard-podium-name{font-size:inherit}
+
+/* Profilo: salvataggio automatico e anteprima pubblica estesa */
+.student-profile-preview-open{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:34px;padding:7px 10px;border:1px solid var(--sp-border);border-radius:9px;background:var(--sp-soft);color:var(--sp-dark);font-size:10px;font-weight:850;white-space:nowrap;cursor:pointer}
+.student-profile-preview-backdrop{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:24px;background:rgba(17,27,43,.64);backdrop-filter:blur(5px)}
+.student-profile-preview-dialog{width:min(620px,100%);max-height:min(90vh,900px);overflow:auto;border:1px solid var(--sp-border);border-radius:18px;background:#fff;box-shadow:0 24px 80px rgba(10,20,35,.32)}
+.student-profile-preview-dialog>header{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 22px;border-bottom:1px solid #e5eaf1;background:rgba(255,255,255,.97);backdrop-filter:blur(10px)}
+.student-profile-preview-dialog>header h2{margin:5px 0;font-size:20px;line-height:1.25;color:#1f3048}
+.student-profile-preview-dialog>header p{margin:0;color:#748397;font-size:12px;line-height:1.5}
+.student-profile-preview-dialog>header button{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border:1px solid #dce3ed;border-radius:10px;background:#fff;color:#33445a;cursor:pointer}
+.student-profile-preview-dialog-body{padding:22px;display:grid;place-items:center;background:#f7f9fc}
+.student-profile-preview-dialog-body>.student-profile-public-card{width:min(100%,460px);min-height:260px;padding:30px 24px 24px}
+.student-profile-preview-dialog-body .student-profile-public-avatar{width:104px;height:104px}
+.student-profile-preview-dialog-body .student-profile-public-card h3{font-size:25px}
+.student-profile-preview-dialog-body .student-profile-public-card>p{font-size:13px}
+.student-profile-preview-dialog-body .student-profile-public-stats strong{font-size:16px}
+@media(max-width:600px){.student-profile-preview-backdrop{padding:8px}.student-profile-preview-dialog{max-height:96vh;border-radius:14px}.student-profile-preview-dialog>header{padding:15px}.student-profile-preview-dialog>header h2{font-size:17px}.student-profile-preview-dialog-body{padding:12px}.student-profile-preview-dialog-body>.student-profile-public-card{padding:25px 14px 16px}.student-profile-section-heading{gap:9px}.student-profile-preview-open{font-size:9px;padding:7px}}
