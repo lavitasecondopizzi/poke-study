@@ -2038,3 +2038,16 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .portal-campus-mark{flex-basis:36px;width:36px;height:36px}
   .community-identity-crest{flex-basis:32px;width:32px;height:32px}
 }
+
+/* Istituto Mirtillo: terzo campus ufficiale, in continuità con lo stile degli altri stemmi. */
+.academy-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px}
+.academy-blueberry{border-color:#b9cce9;background:linear-gradient(155deg,#fff 0%,#f7faff 60%,#e5efff 100%)}
+.academy-blueberry:hover{border-color:#4d75b5}
+.crest-blueberry{background:radial-gradient(circle at 35% 25%,#c6dcff,#4778c4 63%,#163e7e);color:#183e7c}
+.academy-blueberry:before{background:linear-gradient(90deg,#6e99d8,#d4e3fb)}
+.academy-blueberry .academy-game-tag{background:#edf4ff;color:#2d5794;border-color:#c7d8f1}
+.academy-blueberry h3{color:#244e8d}
+.academy-blueberry .academy-enroll{border-color:#315a9a;background:linear-gradient(#7ea6e5,#4b79c7 48%,#315a9a 52%,#416bb0);box-shadow:inset 0 1px #ffffffb5,0 2px 0 #c5d7f0;text-shadow:0 -1px #24477e}
+.academy-blueberry .academy-campus-status{border-color:#c4d8f4;color:#315a9a}
+@media(max-width:900px){.academy-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:850px}}
+@media(max-width:650px){.academy-choice-grid{grid-template-columns:1fr}}
