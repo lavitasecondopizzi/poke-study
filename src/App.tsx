@@ -829,7 +829,7 @@ export default function App() {
     setNotice('Immagine profilo aggiornata.');
   }
 
-  if (!identityCheckComplete || (communityIdentity && cloudStateIdentityId !== communityIdentity.id)) {
+  if (!identityCheckComplete || (communityIdentity && cloudStateIdentityId !== communityIdentity.id) || (Boolean(communityError) && hasCommunityToken() && !communityIdentity)) {
     return (
       <main className="academy-choice-shell enrollment-shell">
         <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>PORTALE DELLO STUDENTE</span></div>
@@ -841,7 +841,11 @@ export default function App() {
           <span className="academy-choice-label">{communityError ? 'ATTENZIONE' : 'SINCRONIZZAZIONE ACCOUNT'}</span>
           <h2>{communityError ? 'Impossibile caricare il profilo' : 'Recupero dei dati in corso'}</h2>
           <p>{communityError || 'Stiamo recuperando dal database il profilo, l’avatar e i progressi salvati. La scelta dell’accademia non verrà richiesta per un account già registrato.'}</p>
-          {communityError && <button type="button" className="enrollment-submit" onClick={() => window.location.reload()}>Riprova <ChevronRight size={18}/></button>}
+          {communityError && <div className="enrollment-recovery-panel">
+            <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per verificare l’identità e caricare i progressi salvati.</p></div>
+            <label className="community-import-button enrollment-import-button">Importa salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
+            <button type="button" className="enrollment-back" onClick={() => window.location.reload()}>Riprova caricamento</button>
+          </div>
         </section>
       </main>
     );
@@ -892,48 +896,38 @@ export default function App() {
           <div className="pokeball-mark" aria-hidden="true"><span /></div>
           <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Accademia Pokémon</h1><p>Portale dello studente · Nuova immatricolazione</p></div>
         </header>
-        <div className="enrollment-stepper" aria-label="Fase 1 di 3">
-          <div className="enrollment-step is-current"><span>1</span><small>Accademia</small></div><i />
-          <div className="enrollment-step"><span>2</span><small>Identità</small></div><i />
-          <div className="enrollment-step"><span>3</span><small>Conferma</small></div>
-        </div>
         <section className="academy-choice-intro admission-intro">
-          <span className="academy-choice-label">NUOVO ALLIEVO · ANNO ACCADEMICO 2026/27</span>
-          <h2>Seleziona la tua accademia</h2>
-          <p>La tua avventura di studio comincia qui. Scegli il campus ispirato alla tua versione di Pokémon: potrai iniziare subito a catalogare le specie e costruire il tuo registro personale.</p>
+          <h2>Scegli l’accademia</h2>
         </section>
+        <section className="enrollment-recovery-panel admission-recovery-panel" aria-label="Recupero salvataggio">
+          <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per caricare profilo e progressi salvati.</p></div>
+          <label className="community-import-button enrollment-import-button">{enrollmentBusy ? 'Caricamento…' : 'Importa salvataggio'}<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
+        </section>
+        {(enrollmentError || communityError) && <p className="community-account-error" role="alert">{enrollmentError || communityError}</p>}
         <div className="academy-choice-grid">
           <button type="button" className="academy-choice-card academy-orange" onClick={() => chooseAcademy('arancia')}>
             <div className="academy-choice-card-top"><span>01 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
             <div className="academy-crest crest-orange"><AcademyCrest academy="arancia" className="academy-crest-image" /></div>
             <span className="academy-game-tag">POKÉMON SCARLATTO</span>
             <h3>Accademia Arancia</h3>
-            <p>Un campus solare, tradizione di ricerca e spirito d'iniziativa.</p>
-            <span className="academy-enroll">SCEGLI ACCADEMIA <ChevronRight size={17}/></span>
+            <span className="academy-enroll">SCEGLI <ChevronRight size={17}/></span>
           </button>
           <button type="button" className="academy-choice-card academy-purple" onClick={() => chooseAcademy('uva')}>
             <div className="academy-choice-card-top"><span>02 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
             <div className="academy-crest crest-purple"><AcademyCrest academy="uva" className="academy-crest-image" /></div>
             <span className="academy-game-tag">POKÉMON VIOLETTO</span>
             <h3>Accademia Uva</h3>
-            <p>Un campus elegante, ricerca metodica e nuove prospettive.</p>
-            <span className="academy-enroll">SCEGLI ACCADEMIA <ChevronRight size={17}/></span>
+            <span className="academy-enroll">SCEGLI <ChevronRight size={17}/></span>
           </button>
           <button type="button" className="academy-choice-card academy-blueberry" onClick={() => chooseAcademy('mirtillo')}>
             <div className="academy-choice-card-top"><span>03 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
             <div className="academy-crest crest-blueberry"><AcademyCrest academy="mirtillo" className="academy-crest-image" /></div>
             <span className="academy-game-tag">IL DISCO INDACO</span>
             <h3>Istituto Mirtillo</h3>
-            <p>Un campus internazionale dedicato all'allenamento e alle lotte Pokémon.</p>
-            <span className="academy-enroll">SCEGLI ACCADEMIA <ChevronRight size={17}/></span>
+            <span className="academy-enroll">SCEGLI <ChevronRight size={17}/></span>
           </button>
         </div>
-        <section className="admission-info-grid" aria-label="Informazioni sull'immatricolazione">
-          <article><span>01</span><div><strong>Scegli il campus</strong><p>Arancia, Uva o Mirtillo: tutti i campus danno accesso allo stesso catalogo.</p></div></article>
-          <article><span>02</span><div><strong>Registra la tua identità</strong><p>Nickname ufficiale senza password o email. Puoi recuperare l'account con il file privato.</p></div></article>
-          <article><span>03</span><div><strong>Inizia a studiare</strong><p>La progressione e gli acquisti vengono salvati sul tuo account e si sincronizzano quando sei online.</p></div></article>
-        </section>
-        <p className="academy-choice-footnote">L'accademia modifica l'identità visiva del campus, non la disponibilità delle specie: tutti i 1.025 Pokémon sono previsti nel percorso.</p>
+
       </main>
     );
   }
