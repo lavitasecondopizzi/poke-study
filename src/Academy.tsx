@@ -415,26 +415,6 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
 
       {!selectedCode && !selectedSubjectCode ? (
         <>
-          <section className="academy-content-card academy-campus-points">
-            <div className="academy-campus-points-heading">
-              <div><span className="academy-eyebrow">PUNTI ACCADEMICI</span><h2>Classifica delle accademie</h2></div>
-              <div className="academy-student-points"><span>Il tuo saldo</span><strong>{pointsSummary?.studentPoints ?? 0}</strong></div>
-            </div>
-            <p>I punti di ogni prova consegnata si sommano al punteggio del campus dello studente.</p>
-            <ol className="academy-campus-ranking">
-              {(pointsSummary?.campusRanking ?? [
-                { academy: "arancia" as const, title: "Accademia Arancia", points: 0 },
-                { academy: "uva" as const, title: "Accademia Uva", points: 0 },
-                { academy: "mirtillo" as const, title: "Istituto Mirtillo", points: 0 },
-              ]).map((campus, index) => (
-                <li key={campus.academy} className={pointsSummary?.studentAcademy === campus.academy ? "is-own-campus" : ""}>
-                  <span className="academy-ranking-position">{index + 1}</span>
-                  <span className="academy-ranking-name">{campus.title}{pointsSummary?.studentAcademy === campus.academy && <small>Il tuo campus</small>}</span>
-                  <strong>{campus.points} pt</strong>
-                </li>
-              ))}
-            </ol>
-          </section>
           <div className="academy-summary-grid">
             <article><span>LEZIONI</span><strong>{currentGradeLessons.length}</strong><small>Programma del grado</small></article>
             <article><span>SUPERATE</span><strong>{currentGradeLessons.filter(item => (averages.get(item.lesson_code) ?? 0) >= 18).length}</strong><small>Media tentativi ≥ 18/30</small></article>
@@ -466,7 +446,6 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado {gradeRoman} superato.</p>}
             </div>
             <button type="button" className="academy-primary-button" disabled={loading || !gradeExamUnlocked} onClick={() => void beginGradeExam(activeGradeNumber)}>{gradeExamAttemptCount ? "Ripeti l’esame" : "Accedi all’esame"}</button>
-            {!gradeExamUnlocked && <small className="academy-grade-exam-lock">Consegna l'esame finale di ogni materia e raggiungi una media complessiva di almeno 18/30 per sbloccare l'esame di grado.</small>}
           </section>
           </>}
         </>
