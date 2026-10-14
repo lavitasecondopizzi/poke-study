@@ -244,7 +244,7 @@ Deno.serve(async request => {
     if (action === "list_leaderboard") {
       const { data, error, count } = await supabase
         .from("community_identities")
-        .select("id,nickname,matricola,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
+        .select("id,matricola,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
         .order("created_at", { ascending: true })
         .limit(1000);
       if (error) return response(500, { error: "Non è stato possibile caricare la classifica." });
