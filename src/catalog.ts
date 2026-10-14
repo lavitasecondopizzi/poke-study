@@ -117,6 +117,21 @@ export function itemCard(item: ApiNamedResource): CatalogCard {
   };
 }
 
+export function createFullCatalog(
+  species: PokemonSpecies[],
+  items: ApiNamedResource[],
+  completedIds: number[],
+  completedEntries: string[],
+): CatalogCard[] {
+  const completedPokemon = new Set(completedIds);
+  const completedOther = new Set(completedEntries);
+  const entries = [
+    ...species.filter(entry => !completedPokemon.has(entry.id)).map(pokemonCard),
+    ...items.map(itemCard).filter(card => !completedOther.has(card.id)),
+  ];
+  return shuffled(entries);
+}
+
 export function createMixedLesson(
   species: PokemonSpecies[],
   items: ApiNamedResource[],
