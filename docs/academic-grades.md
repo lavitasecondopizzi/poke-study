@@ -19,6 +19,16 @@ Il percorso non è suddiviso in anni scolastici: è organizzato in gradi accadem
 
 Queste materie sono una proposta di organizzazione didattica: la ripartizione definitiva e il numero delle lezioni vanno stabiliti prima dell'implementazione. Ogni materia deve avere obiettivi, lezioni, verifiche e un voto autonomo in pagella.
 
+## Organizzazione indipendente delle materie e delle lezioni
+
+Le materie sono aree di studio permanenti, ma **ogni grado definisce quali materie comprende e quali lezioni offre per ciascuna di esse**. Una materia può ricomparire in più gradi: a cambiare saranno gli argomenti, la profondità e le competenze richieste dalle lezioni, non necessariamente il nome della materia.
+
+Non esiste una sequenza unica che obblighi lo studente a completare prima tutte le lezioni di una materia. Lo studente può scegliere liberamente quale materia studiare e alternare, per esempio, una lezione di videogiochi a una di TCG o di mercato.
+
+Le lezioni di materie diverse non devono avere prerequisiti reciproci. All'interno della stessa materia può esistere una progressione didattica: superare il test di una lezione sblocca la successiva di quella materia, senza impedire allo studente di passare nel frattempo a un'altra materia. Eventuali eccezioni devono essere motivate e dichiarate esplicitamente nel programma.
+
+Per ogni grado va quindi definito un elenco di materie attive e, per ognuna, il relativo elenco di lezioni. Il grado si considera completato quando sono state superate tutte le lezioni obbligatorie previste per quel grado, indipendentemente dall'ordine in cui lo studente le ha affrontate.
+
 ## Gradi proposti
 
 ### Grado I — Fondamenti
