@@ -35,7 +35,7 @@ export default function Cartoleria({
                       <p>Investi i punti guadagnati per sbloccare strumenti, potenziamenti e nuovi archivi. Gli acquisti permanenti restano nel tuo profilo.</p>
                     </div>
                     <div className="shop-wallets">
-                      <div className="shop-wallet shop-wallet-poke"><span className="shop-wallet-icon">✦</span><div><small>IL TUO SALDO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></div>
+                      <div className="shop-wallet shop-wallet-poke"><span className="shop-wallet-icon">₱</span><div><small>IL TUO SALDO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></div>
                       <div className="shop-wallet shop-wallet-exam"><span className="shop-wallet-icon">★</span><div><small>IL TUO SALDO</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div></div>
                     </div>
                   </section>
