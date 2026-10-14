@@ -128,7 +128,7 @@ function AcademyCrest({ academy, className = '' }: { academy: string; className?
   const assets: Record<string, { file: string; label: string }> = {
     arancia: { file: 'naranja-academy-crest.svg', label: 'Stemma Accademia Arancia' },
     uva: { file: 'uva-academy-crest.svg', label: 'Stemma Accademia Uva' },
-    mirtillo: { file: 'blueberry-academy-crest.svg', label: 'Stemma Istituto Mirtillo' },
+    mirtillo: { file: 'blueberry-academy-crest.png', label: 'Stemma Istituto Mirtillo' },
   };
   const asset = assets[academy] ?? assets.uva;
   return <img className={className} src={`${import.meta.env.BASE_URL}images/academies/${asset.file}`} alt={asset.label} loading="eager" decoding="async" />;
