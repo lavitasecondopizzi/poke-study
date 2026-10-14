@@ -40,6 +40,18 @@ create table public.academy_points_awards (
 create index academy_points_awards_identity_created_idx on public.academy_points_awards (identity_id, created_at desc);
 create index academy_points_awards_academy_idx on public.academy_points_awards (academy);
 
+create or replace function public.prevent_academic_points_award_mutation()
+returns trigger language plpgsql set search_path = ''
+as $
+begin
+  raise exception 'Lo storico dei punti accademici è immutabile.';
+end;
+$;
+
+create trigger academy_points_awards_immutable
+before update or delete on public.academy_points_awards
+for each row execute function public.prevent_academic_points_award_mutation();
+
 create or replace function public.award_academic_points_on_submission()
 returns trigger language plpgsql security definer set search_path = ''
 as $$
