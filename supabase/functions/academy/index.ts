@@ -388,11 +388,13 @@ Deno.serve(async request => {
         version: question.version,
         type: question.question_type,
         prompt: question.prompt,
-        options: question.options,
+        options: question.question_type === "ordering" ? shuffle(question.options) : question.options,
+        mediaUrl: question.media_url ?? null,
         correctAnswer: question.correct_answer,
         explanation: question.explanation,
         sourceTitle: question.source_title,
         sourceUrl: question.source_url,
+        sourceCheckedAt: question.source_checked_at,
         difficulty: question.difficulty,
       }));
 
