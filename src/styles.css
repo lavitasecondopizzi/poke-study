@@ -1880,7 +1880,7 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .enrollment-submit:disabled{opacity:.65;cursor:wait}
 .enrollment-back{color:#447b9f;text-decoration:none}
 .enrollment-back:hover{text-decoration:underline}
-.enrollment-recovery-panel{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:12px;max-width:560px;margin:0 auto;padding:15px;border:1px solid #c3dff0;border-radius:8px;background:linear-gradient(120deg,#fff,#edf8ff);box-shadow:inset 0 1px #fff}
+.enrollment-recovery-panel{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:12px;max-width:560px;padding:15px;border:1px solid #c3dff0;border-radius:8px;background:linear-gradient(120deg,#fff,#edf8ff);box-shadow:inset 0 1px #fff}
 .enrollment-recovery-icon{display:grid;place-items:center;width:42px;height:42px;border:1px solid #c6e2f3;border-radius:8px;background:linear-gradient(#fff,#e2f3ff);color:#3987b8}
 .enrollment-recovery-copy strong{display:block;color:#2a638b;font-size:11px}
 .enrollment-recovery-copy p{margin:4px 0 0;color:#718da3;font-size:10px;line-height:1.55}
