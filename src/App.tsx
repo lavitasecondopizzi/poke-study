@@ -176,10 +176,12 @@ export default function App() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
   const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>({});
+  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>({});
   const [lessonReady, setLessonReady] = useState(false);
   const [gamePage, setGamePage] = useState(0);
   const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(null);
+  const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(null);
   const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -331,6 +333,8 @@ export default function App() {
   const currentMacroTargets = openMacroId ? lessonTargets.filter(target => target.macroId === openMacroId) : [];
   const currentMacro = MACRO_CATEGORIES.find(category => category.id === openMacroId);
   const currentPokemonRegion = openPokemonRegionId ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === openPokemonRegionId) : undefined;
+  const currentSubcategory = openSubcategoryId ? lessonTargets.find(target => target.id === openSubcategoryId) : undefined;
+  const currentSubcategoryCards = currentSubcategory ? lessonDeck.filter(card => card.subcategoryId === currentSubcategory.id) : [];
   const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
     ...category,
     total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
@@ -364,14 +368,17 @@ export default function App() {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
+    const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
+    const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
+    if (categorySlotMatch) setCategoryPlacements(old => ({ ...old, [cardId]: targetId }));
     const isCorrect = pokemonSlotMatch
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
-      : card.subcategoryId === targetId;
+      : card.subcategoryId === targetSubcategoryId;
     if (!isCorrect) {
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
       setSelectedCardId(null);
-      setWrongTargetId(targetId);
-      setMessage('Entità collocata nella posizione scelta. Classificazione errata: nessun Punto Poké assegnato. Seleziona la miniatura per riprenderla.');
+      setWrongTargetId(inventory.includes('subcategory-errors') ? targetId : null);
+      setMessage('');
       return;
     }
 
@@ -722,10 +729,31 @@ export default function App() {
             <section className="challenge-board game-board mixed-lesson-board">
               <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
                 <div className="game-zone-heading">
-                  <strong>{currentMacro ? `CARTELLA · ${currentMacro.name.toLocaleUpperCase('it')}` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
+                  <strong>{currentSubcategory ? `SOTTOCARTELLA · ${currentSubcategory.name.toLocaleUpperCase('it')}` : currentMacro ? `CARTELLA · ${currentMacro.name.toLocaleUpperCase('it')}` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
                   <span>{lessonSolved.length} / {lessonDeck.length} classificate</span>
                 </div>
-                {openMacroId === null ? (
+                {openSubcategoryId !== null && currentSubcategory ? (
+                  <>
+                    <div className="folder-toolbar">
+                      <button type="button" className="folder-back-button" onClick={() => setOpenSubcategoryId(null)}>← Sottocategorie</button>
+                      <span>{currentSubcategory.name} · scegli una posizione vuota</span>
+                    </div>
+                    <div className="pokemon-number-grid category-entity-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
+                      {currentSubcategoryCards.map((card, index) => {
+                        const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
+                        const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
+                        const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
+                        const isWrong = Boolean(placedCard && placedCard.subcategoryId !== currentSubcategory.id);
+                        return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isWrong && inventory.includes('subcategory-errors') ? 'pokemon-number-wrong' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
+                          if (placed) { setCategoryPlacements(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setMisplacedCards(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setLessonSolved(old => old.filter(id => id !== placed[0])); setWrongTargetId(null); return; }
+                          if (selectedCardId) placeCard(selectedCardId, slotId);
+                        }}>
+                          {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
+                        </button>;
+                      })}
+                    </div>
+                  </>
+                ) : openMacroId === null ? (
                   <div className="category-targets-grid macro-folder-grid">
                     {macroFolderCounts.map(folder => <button
                       type="button"
@@ -733,7 +761,7 @@ export default function App() {
                       className={'category-target macro-folder ' + (wrongTargetId === folder.id ? 'category-target-wrong' : '')}
                       onDragOver={event => event.preventDefault()}
                       onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, folder.id); }}
-                      onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); }}
+                      onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); setOpenSubcategoryId(null); }}
                     >
                       <span className="folder-icon" aria-hidden="true">📁</span>
                       <span className="category-target-macro">MACROCATEGORIA</span>
@@ -782,17 +810,19 @@ export default function App() {
                       {currentMacroTargets.map(target => <button
                         type="button"
                         key={target.id}
-                        className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '') + (wrongTargetId === target.id ? 'category-target-wrong' : '')}
+                        className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '')}
                         aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
                         onDragOver={event => event.preventDefault()}
-                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId && openMacroId !== 'pokemon') placeCard(cardId, target.id); }}
+                        onDrop={event => { event.preventDefault(); }}
                         onClick={() => {
                           if (openMacroId === 'pokemon') {
                             setOpenPokemonRegionId(target.id);
                             setWrongTargetId(null);
                             setMessage('Regione ' + target.name + ' aperta. Seleziona una carta Pokémon e poi la sua posizione numerata.');
-                          } else if (selectedCardId) placeCard(selectedCardId, target.id);
-                          else setMessage('Seleziona prima una carta da classificare.');
+                          } else {
+                            setOpenSubcategoryId(target.id);
+                            setWrongTargetId(null);
+                          }
                         }}
                       >
                         <span className="folder-icon" aria-hidden="true">📂</span>
@@ -805,7 +835,7 @@ export default function App() {
                 )}
                 {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
               </section>
-              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
+              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : message && wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
                 <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
