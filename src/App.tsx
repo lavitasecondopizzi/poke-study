@@ -3,6 +3,7 @@ import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
+import StudentProfilePage from './StudentProfilePage';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
 import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
@@ -426,6 +427,7 @@ export default function App() {
             nickname: communityIdentity.nickname,
             matricola: remote.profile.matricola,
             ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+            ...(remote.profile.profileSettings ? { profileSettings: remote.profile.profileSettings } : {}),
           };
           nextProgress = remote.progress;
         } else {
@@ -773,6 +775,7 @@ export default function App() {
           nickname: identity.nickname,
           matricola: remote.profile.matricola,
           ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+            ...(remote.profile.profileSettings ? { profileSettings: remote.profile.profileSettings } : {}),
         };
         restoredProgress = remote.progress;
       } else {
@@ -954,11 +957,14 @@ export default function App() {
     }
   }
 
-  function saveAvatar(id: number) {
-    if (!student) return;
-    const updated = { ...student, avatarId: id };
+  function updateStudentProfile(updated: StudentProfile) {
     try { localStorage.setItem(STUDENT_KEY, JSON.stringify(updated)); } catch { /* storage unavailable */ }
     setStudent(updated);
+  }
+
+  function saveAvatar(id: number) {
+    if (!student || !STARTER_POKEMON_IDS.includes(id)) return;
+    updateStudentProfile({ ...student, avatarId: id });
     setNotice('Immagine profilo aggiornata.');
   }
 
@@ -1328,17 +1334,22 @@ export default function App() {
             onConnect={() => navTo('profilo')}
           />}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-academy-crest"><AcademyCrest academy={academy} className="profile-academy-crest-image" /></div><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">{communityIdentity ? 'NICKNAME UFFICIALE' : 'NICKNAME LOCALE'}</span><h2>{displayNickname}</h2><p>{student.matricola}</p><p>{academyName(academy)}</p><small>{communityIdentity ? 'Nickname ufficiale verificato online.' : online ? 'Identità online non verificata: importa i metadati dell’account per recuperarla.' : 'Modalità offline: viene usato il nickname salvato su questo dispositivo.'}</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
-              <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
-              <p className="community-account-description">Il file di recupero permette di ripristinare l’identità online.</p>
-              {communityIdentity ? <div className="community-identity-summary"><AcademyCrest academy={communityIdentity.academy} className="community-identity-crest" /><strong>{communityIdentity.nickname}</strong><span>{academyName(communityIdentity.academy)}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
-              {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
-              {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
-              {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
-              {communityError && <p className="community-account-error" role="alert">{communityError}</p>}
-              <p className="community-account-warning">Il file esportato contiene una credenziale privata: chi lo possiede può usare questa identità. Non condividerlo e non pubblicarlo.</p>
-            </section>
-            <div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
+          {view === 'profilo' && <StudentProfilePage
+            academy={academy}
+            student={student}
+            progress={progress}
+            species={species}
+            communityIdentity={communityIdentity}
+            online={online}
+            configured={communityConfigured}
+            communityBusy={communityBusy}
+            communityNotice={communityNotice}
+            communityError={communityError}
+            onUpdateProfile={updateStudentProfile}
+            onChooseAvatar={saveAvatar}
+            onImportAccount={importCommunityAccount}
+            onExportAccount={() => void downloadCommunityAccount()}
+          />}
 
           {view === 'academia' && <Academy configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} onOpenProfile={() => navTo('profilo')} />}
 
