@@ -2,190 +2,160 @@
 
 ## Obiettivo
 
-Definire una progressione scolastica coerente per lezioni, esercitazioni, verifiche ed esami di Poke Study, riutilizzando dati Pokémon verificabili senza trasformare le lezioni in una semplice sequenza di quiz casuali.
+Poke Study deve essere un'accademia fan-made che porti lo studente a una conoscenza ampia e strutturata di **mondo Pokémon, videogiochi Pokémon, Pokémon Trading Card Game (TCG) e mercato del TCG**. Il completamento del percorso deve rappresentare una preparazione multidisciplinare, non soltanto la capacità di riconoscere Pokémon o rispondere a trivia.
 
-Questa è una specifica progettuale: non modifica ancora le schermate o le regole del gioco.
+Questa è una specifica progettuale: non modifica ancora schermate o regole del gioco.
 
 ## Principi da preservare
 
 - Mantenere il tema dell'accademia e lo stile visivo già presente nel portale.
-- Conservare le cinque macrocategorie dell'archivio:
-  1. Pokémon.
-  2. Strumenti e oggetti.
-  3. Bacche, ingredienti e materiali.
-  4. Tecniche e macchine (incluse MT e altre macchine didatticamente pertinenti).
-  5. Fossili, reperti e oggetti speciali.
-- Le lezioni possono contenere carte miste; il formato di classificazione già previsto supporta fino a 15 carte per sessione.
+- Il percorso è organizzato in **gradi accademici**, non in anni.
+- Distinguere le **materie didattiche** dalle cinque macrocategorie dell'archivio: Pokémon; strumenti e oggetti; bacche, ingredienti e materiali; tecniche e macchine; fossili, reperti e oggetti speciali.
+- Le lezioni possono includere carte miste; il formato di classificazione esistente supporta fino a 15 carte per sessione.
 - Una carta usata come domanda visiva non deve mostrare in anticipo la risposta che lo studente deve individuare.
-- La catalogazione e lo sblocco delle informazioni del catalogo restano sistemi distinti dall'apprendimento: catalogare non deve rivelare automaticamente le informazioni descrittive.
-- Non cambiare le valute, i costi degli sblocchi, il catalogo nazionale o i salvataggi esistenti in questa fase.
+- La catalogazione e lo sblocco delle informazioni del catalogo restano sistemi distinti dall'apprendimento.
+- Non cambiare valute, costi degli sblocchi, catalogo nazionale o salvataggi esistenti in questa fase.
 - I contenuti didattici devono poter essere revisionati e aggiornati senza duplicare dati canonici.
 
-## Fonti dati e affidabilità
+## Materie didattiche proposte
 
-### Fonti primarie per dati strutturati
-
-- **PokéAPI v2** — https://pokeapi.co/docs/v2
-  - Specie, forme, tipi, statistiche, abilità, mosse, strumenti, bacche, evoluzioni, generazioni, regioni, Pokédex e macchine.
-  - Usarla per importare dati strutturati e identificatori stabili, non come unica fonte per spiegazioni didattiche.
-- **Pokédex ufficiale Pokémon** — https://www.pokemon.com/it/pokedex
-  - Riferimento di controllo per le informazioni canoniche rivolte al giocatore.
-
-### Fonti secondarie per approfondimenti
-
-- **Bulbapedia** — https://bulbapedia.bulbagarden.net/
-  - Consultazione per meccaniche, eccezioni e differenze tra giochi/generazioni.
-  - Le informazioni importanti vanno confrontate con fonti primarie o con i giochi di riferimento.
-
-### Regole editoriali
-
-- Ogni fatto utilizzato in una domanda deve avere un riferimento alla fonte e, quando necessario, alla generazione o al gioco.
-- Separare i dati oggettivi importati dalle spiegazioni scritte appositamente per Poke Study.
-- Se una meccanica cambia tra generazioni, la domanda deve indicare la versione di riferimento oppure evitare l'ambiguità.
-- Non presumere che tutte le descrizioni o immagini esterne siano liberamente riutilizzabili: verificare licenze, attribuzione e diritti prima di incorporarle nel repository.
-- Prevedere stato editoriale: `draft`, `reviewed`, `published`, `deprecated`.
-- Non generare domande d'esame pubblicabili direttamente da dati non verificati.
-
-## Struttura del percorso
-
-Il percorso viene suddiviso in quattro livelli didattici. I livelli sono una progressione interna al gioco, non una corrispondenza con livelli scolastici reali.
-
-### Livello I — Osservazione e classificazione
-
-Obiettivo: riconoscere le categorie fondamentali e interpretare dati semplici.
-
-- **Pokémon:** riconoscimento visivo, nome, numero Pokédex, categoria, tipi e regione di appartenenza.
-- **Strumenti e oggetti:** distinguere strumenti tenuti, strumenti utilizzabili e oggetti evolutivi; associare oggetto e funzione di base.
-- **Bacche, ingredienti e materiali:** riconoscere bacche e materiali, categorie e usi principali documentati.
-- **Tecniche e macchine:** distinguere una mossa da una macchina che la insegna; riconoscere nome e tipo della mossa.
-- **Fossili, reperti e oggetti speciali:** distinguere fossili, reperti e oggetti con funzioni particolari.
-
-Verifica: riconoscimento, classificazione e abbinamento diretto. Nessuna domanda deve dipendere da conoscenze non ancora presentate.
-
-### Livello II — Relazioni e funzioni
-
-Obiettivo: comprendere come gli elementi sono collegati tra loro.
-
-- **Pokémon:** relazioni evolutive, tipi primari/secondari, abilità e differenze tra specie e forme.
-- **Strumenti e oggetti:** effetti, condizioni d'uso, compatibilità e differenze tra oggetti simili.
-- **Bacche, ingredienti e materiali:** effetti, sapori o proprietà quando supportati dai dati del gioco di riferimento, e usi nella serie.
-- **Tecniche e macchine:** potenza, precisione, PP, categoria di danno, tipo e compatibilità d'apprendimento, quando applicabili.
-- **Fossili, reperti e oggetti speciali:** relazione tra reperto, Pokémon ricostruito o funzione; condizioni necessarie per usarlo.
-
-Verifica: abbinamenti motivati, confronti a coppie e domande su relazioni esplicite.
-
-### Livello III — Applicazione
-
-Obiettivo: applicare le conoscenze a casi pratici, dichiarando sempre le regole del gioco di riferimento.
-
-- **Pokémon:** valutare efficacia dei tipi, interpretare statistiche di base e ricostruire una linea evolutiva.
-- **Strumenti e oggetti:** scegliere l'oggetto adatto a una situazione descritta.
-- **Bacche, ingredienti e materiali:** individuare il materiale o la bacca adatta allo scopo dichiarato.
-- **Tecniche e macchine:** scegliere una mossa in base a tipo, categoria, potenza, precisione o effetto, senza ridurre la valutazione al solo valore numerico.
-- **Fossili, reperti e oggetti speciali:** risolvere scenari che richiedono di collegare più indizi verificati.
-
-Verifica: casi pratici, scelta motivata e quesiti che combinano due o più concetti già studiati.
-
-### Livello IV — Sintesi e specializzazione
-
-Obiettivo: collegare conoscenze provenienti da più materie.
-
-- Confrontare Pokémon in base a tipi, statistiche e abilità.
-- Risolvere scenari che richiedono strumenti e oggetti appropriati.
-- Collegare mosse, tipi ed effetti a un contesto di gioco definito.
-- Distinguere informazioni universali da regole specifiche di una generazione.
-- Interpretare più indizi senza ricorrere a dettagli mai insegnati.
-
-Verifica: prove miste e cumulative. Le domande devono misurare ragionamento e conoscenze insegnate, non nozioni casuali o trivia non introdotti.
-
-## Materie e unità didattiche
-
-| Materia | Unità proposte |
+| Materia | Ambiti di studio |
 | --- | --- |
-| Pokémon | 1. Anatomia dei dati Pokédex; 2. Tipi; 3. Statistiche; 4. Abilità; 5. Evoluzioni e forme; 6. Regioni e generazioni; 7. Efficacia e confronti |
-| Strumenti e oggetti | 1. Classificazione; 2. Oggetti utilizzabili; 3. Strumenti tenuti; 4. Oggetti evolutivi; 5. Cura e status; 6. Effetti e compatibilità; 7. Scelta contestuale |
-| Bacche, ingredienti e materiali | 1. Riconoscimento; 2. Proprietà; 3. Effetti e utilizzi; 4. Raccolta e combinazioni quando supportate; 5. Scelta del materiale in uno scenario |
-| Tecniche e macchine | 1. Anatomia di una mossa; 2. Tipi e categorie; 3. Potenza e precisione; 4. PP ed effetti; 5. Macchine e compatibilità; 6. Efficacia in contesto; 7. Confronto tra alternative |
-| Fossili, reperti e oggetti speciali | 1. Classificazione; 2. Fossili e Pokémon associati; 3. Reperti; 4. Oggetti speciali; 5. Condizioni d'uso; 6. Casi di applicazione |
+| Scienze Pokémon e Pokédex | Specie, forme, tipi, statistiche, abilità, evoluzioni, habitat, regioni e lore verificata. |
+| Videogiochi Pokémon | Generazioni, titoli e versioni, regioni, personaggi, progressione, sistemi e meccaniche specifiche. |
+| Lotte e strategie nei videogiochi | Efficacia dei tipi, statistiche, abilità, mosse, composizione della squadra, strategie e regolamenti competitivi per generazione. |
+| Strumenti, bacche e risorse | Strumenti, oggetti tenuti ed evolutivi, bacche, materiali, MT/macchine e funzioni nei giochi di riferimento. |
+| Storia, fossili e reperti Pokémon | Fossili e Pokémon associati, reperti, oggetti speciali e contesto storico del franchise. |
+| Pokémon TCG: carte e collezione | Tipi di carte, struttura, espansioni, set, numerazione, rarità, varianti, ristampe e identificazione. |
+| Pokémon TCG: regole e gioco competitivo | Preparazione, turni, attacchi, abilità, condizioni, costruzione dei mazzi, formati, regolamenti e strategia. |
+| Mercato, autenticità e conservazione del TCG | Condizioni, autenticazione e falsi, grading, prezzi di riferimento, vendite concluse, liquidità, domanda, ristampe, tendenze e rischio. |
 
-L'ordine effettivo delle unità deve rispettare prerequisiti e disponibilità dei dati verificati. Non tutte le unità devono essere rese obbligatorie se il gioco di riferimento non offre informazioni sufficienti.
+Le cinque macrocategorie dell'archivio continuano a funzionare come categorie per catalogare elementi, ma non sono più il limite del programma scolastico. Una lezione può collegare più materie, mantenendo un obiettivo didattico chiaro e una materia principale per la valutazione.
 
-## Struttura standard di una lezione
+## Progressione per gradi
+
+### Grado I — Fondamenti
+- Riconoscere gli elementi fondamentali del mondo Pokémon e leggere i dati essenziali del Pokédex.
+- Orientarsi nei videogiochi, distinguendo titoli, generazioni e meccaniche di base.
+- Riconoscere le componenti di una carta Pokémon TCG e comprendere le regole essenziali di una partita.
+- Distinguere i dati stampati su una carta dalle informazioni variabili del mercato.
+
+### Grado II — Conoscenza e relazioni
+- Comprendere relazioni tra specie, tipi, abilità, evoluzioni e meccaniche dei giochi.
+- Confrontare titoli e versioni, dichiarando quando una regola è specifica di un gioco.
+- Leggere carte e regolamenti TCG; riconoscere set, rarità, varianti e ristampe.
+- Individuare i principali fattori che influenzano il prezzo di una carta.
+
+### Grado III — Applicazione
+- Risolvere scenari di gioco e applicare strategie a squadre e mazzi secondo regole dichiarate.
+- Identificare con precisione una carta, la sua espansione e la sua variante.
+- Confrontare prezzi usando condizioni, lingua, edizione, fonte e data comparabili.
+- Valutare in modo ragionato condizioni, autenticità e limiti del grading.
+
+### Grado IV — Sintesi e approfondimento
+- Collegare conoscenze tra mondo Pokémon, videogiochi, TCG e mercato.
+- Analizzare differenze tra generazioni, titoli, formati e regolamenti.
+- Valutare l'effetto di ristampe, domanda e liquidità senza presentare una quotazione come valore garantito.
+- Affrontare casi multidisciplinari basati su più fonti e indizi.
+
+I gradi non corrispondono a una durata reale. Il dettaglio delle lezioni, i prerequisiti e la quantità di contenuti devono essere definiti prima dell'implementazione.
+
+## Regole per test, tentativi e pagelle
+
+- Ogni lezione obbligatoria termina con un test dedicato.
+- Ogni tentativo genera domande casuali da un ampio database revisionato, coerenti con la lezione e con gli obiettivi già insegnati.
+- Il voto di ogni tentativo è espresso in decimi e resta nello storico.
+- Il voto effettivo di un test è la media aritmetica di **tutti i tentativi**, compresi quelli insufficienti.
+- La lezione è superata e la successiva si sblocca quando la media effettiva del test raggiunge almeno **6/10**.
+- Il voto della materia è la media dei voti effettivi delle lezioni superate assegnate a quella materia.
+- La media complessiva del grado è la media aritmetica dei voti delle materie, ciascuna con lo stesso peso.
+- Per superare un grado occorre completare tutte le lezioni obbligatorie e ottenere una media complessiva di almeno **8/10**.
+- I calcoli usano valori non arrotondati; l'arrotondamento è solo visivo. Nessun tentativo o voto storico viene cancellato.
+
+La pagella deve mostrare voti per materia, media complessiva, lezioni completate e mancanti, storico dei tentativi e stato del grado. Se ci sono lezioni obbligatorie incomplete, la pagella resta provvisoria e il grado non può essere superato. Le regole di recupero per migliorare una media di grado inferiore a 8/10 restano da definire.
+
+## Standard di una lezione
 
 Ogni lezione pubblicata deve includere:
 
-1. **Identità:** ID stabile, titolo, materia, livello e stato editoriale.
-2. **Obiettivi:** da uno a tre risultati osservabili che lo studente deve raggiungere.
+1. **Identità:** ID stabile, titolo, materia principale, grado e stato editoriale.
+2. **Obiettivi:** da uno a tre risultati osservabili.
 3. **Prerequisiti:** lezioni o concetti richiesti.
-4. **Spiegazione:** testo originale, breve e diviso in sezioni.
-5. **Esempi:** almeno un esempio concreto per ogni concetto centrale.
-6. **Esercitazione:** carte e domande di allenamento, separate dalla valutazione finale.
-7. **Riepilogo:** concetti da ricordare.
-8. **Fonti e versione:** riferimenti consultati e generazione/gioco applicabile.
+4. **Spiegazione:** contenuto originale, breve e suddiviso in sezioni.
+5. **Esempi:** esempi concreti per i concetti centrali.
+6. **Esercitazione:** attività di allenamento separate dalla valutazione.
+7. **Riepilogo:** concetti essenziali.
+8. **Fonti e ambito:** riferimenti consultati e, quando necessario, generazione, titolo, versione, formato TCG o data del dato di mercato.
 
-Le carte visive devono mantenere la regola di non mostrare la risposta prima della selezione. Le spiegazioni possono invece rivelare i dati pertinenti dopo che il concetto è stato introdotto.
+## Database delle domande
 
-## Struttura standard di verifica ed esame
+Ogni domanda deve avere ID stabile, materia, lezione/obiettivo, grado, formato, difficoltà, risposta corretta, spiegazione, fonte e stato editoriale. Le prove casuali devono rispettare una struttura di estrazione che bilanci argomenti e difficoltà, impedendo che un test sia composto per caso da domande quasi identiche o da un solo argomento.
 
-- **Esercitazione:** feedback immediato, ripetibile e a bassa pressione; serve a imparare, non a bloccare la progressione.
-- **Verifica di unità:** controlla gli obiettivi della singola lezione o di un piccolo gruppo di lezioni.
-- **Esame di materia:** prova cumulativa con domande estratte da un insieme revisionato, non soltanto dall'ultima lezione.
-- **Esame finale di livello:** integra più materie e include applicazione, oltre al riconoscimento.
+Formati ammessi: scelta multipla, abbinamento, classificazione, identificazione da immagine senza risposta anticipata, ordinamento, casi pratici e risposta breve soltanto quando la convalida è univoca.
 
-### Formati di domanda ammessi
+### Regole specifiche per il mercato TCG
 
-- Scelta multipla con una sola risposta corretta, salvo indicazione esplicita.
-- Abbinamento tra elementi.
-- Classificazione in categorie.
-- Identificazione da immagine, senza nome o risposta anticipata.
-- Ordinamento di passaggi o evoluzioni, quando non ambiguo.
-- Caso pratico con risposta selezionata.
-- Risposta breve soltanto quando è possibile validarla senza ambiguità.
+- I prezzi sono informazioni temporali: ogni dato mostrato deve includere fonte e data di consultazione.
+- Distinguere prezzo richiesto, vendita conclusa e stima indicativa; non trattarli come equivalenti.
+- I confronti devono considerare carta esatta, lingua, set, variante, condizione e, quando pertinente, grading.
+- Non promettere rendimenti o futuri aumenti di prezzo e non presentare i prezzi come valori garantiti.
+- L'autenticità non deve essere certificata in modo definitivo da una singola fotografia o da un singolo indizio.
+- Le lezioni devono spiegare i rischi di volatilità, liquidità, contraffazioni e differenze tra mercati.
 
-### Criteri di qualità
+## Fonti e affidabilità
 
-- Ogni domanda deve avere una risposta corretta verificata, una spiegazione della risposta e una fonte.
-- I distrattori devono essere plausibili, ma non corretti secondo la versione indicata.
-- Evitare domande doppie, formulazioni ingannevoli e risposte ricavabili da indizi grammaticali.
-- Bilanciare le domande per argomento e difficoltà.
-- Evitare di riproporre in serie lo stesso elemento o la stessa nozione.
-- Non usare una domanda d'esame se la fonte è in conflitto, il dato è incompleto o la risposta dipende da una versione non dichiarata.
+### Mondo Pokémon e videogiochi
+- PokéAPI v2 — https://pokeapi.co/docs/v2 — dati strutturati su specie, forme, tipi, statistiche, abilità, mosse, strumenti, bacche, evoluzioni e generazioni.
+- Pokédex ufficiale Pokémon — https://www.pokemon.com/it/pokedex — controllo delle informazioni canoniche.
+- Sito ufficiale Pokémon — https://www.pokemon.com/ — informazioni ufficiali su franchise e giochi.
+- Bulbapedia — https://bulbapedia.bulbagarden.net/ — fonte secondaria per meccaniche, eccezioni e differenze tra generazioni; verificare le informazioni importanti con fonti primarie o giochi di riferimento.
 
-### Soglia di superamento proposta
+### Pokémon TCG
+- Pokémon TCG ufficiale — https://tcg.pokemon.com/ — prodotti e informazioni ufficiali.
+- Pokémon TCG Live — https://tcg.pokemon.com/en-us/tcgl/ — riferimento per il gioco digitale e le sue regole implementate.
+- Regolamenti, carte e documenti ufficiali pubblicati da Pokémon per il formato e il mercato geografico pertinenti.
 
-Usare inizialmente una soglia del **70%** per verifiche ed esami, con possibilità di ripetizione. La soglia è una proposta di design da confermare durante il bilanciamento, non una regola già implementata. Il gioco deve registrare il tentativo e gli argomenti da ripassare; non deve cancellare progressi preesistenti.
+### Mercato
+- Marketplace e database di prezzo riconosciuti, per esempio Cardmarket per il mercato europeo, usando dati datati e verificando se si tratta di prezzi richiesti o vendite concluse.
+- Per ogni fonte registrare URL, data di consultazione, mercato/area geografica, valuta e metodologia quando disponibile.
+
+### Regole editoriali generali
+- Ogni fatto in una domanda deve avere una fonte verificabile e una spiegazione.
+- Se una meccanica cambia tra generazioni, giochi o formati, dichiarare il contesto.
+- Separare dati canonici, spiegazioni editoriali e informazioni temporanee di mercato.
+- Verificare licenze, attribuzione e diritti prima di incorporare testi o immagini esterne.
+- Usare gli stati editoriali `draft`, `reviewed`, `published`, `deprecated`; non pubblicare domande non verificate.
 
 ## Modello dati editoriale suggerito
 
-Separare le entità canoniche dalle lezioni e dalle domande.
-
-- `source_records`: URL, nome fonte, data di consultazione, tipo di fonte e note sui diritti.
-- `canonical_facts`: entità, proprietà, valore, identificatore esterno, generazione/gioco e riferimento alla fonte.
+- `source_records`: URL, nome fonte, data di consultazione, tipo, area geografica e note sui diritti.
+- `canonical_facts`: entità, proprietà, valore, identificatore esterno, gioco/generazione e fonte.
+- `market_observations`: carta identificata, condizione, lingua, variante, valuta, prezzo, tipo di prezzo, fonte e timestamp.
 - `subjects`: ID, titolo, descrizione e ordine.
-- `lessons`: ID stabile, materia, livello, titolo, contenuto, prerequisiti e stato editoriale.
-- `questions`: ID stabile, formato, testo, risposte possibili, risposta corretta, spiegazione, difficoltà e stato editoriale.
-- `question_facts`: collegamento tra domanda e fatti canonici che la sostengono.
-- `assessments`: ID, tipo, regole di selezione delle domande, soglia e numero di tentativi.
-- `assessment_blueprints`: quote per materia, unità e difficoltà, per evitare prove sbilanciate.
-- `student_progress`: lezioni completate, verifiche, tentativi, punteggi e argomenti da ripassare.
+- `lessons`: ID stabile, materia, grado, prerequisiti, contenuto e stato editoriale.
+- `questions`: ID stabile, formato, testo, risposte, risposta corretta, spiegazione, difficoltà e stato.
+- `question_facts`: collegamento tra domanda e fatti/fonti che la sostengono.
+- `assessments` e `assessment_blueprints`: regole di estrazione, numero di domande e bilanciamento per materia, obiettivo e difficoltà.
+- `student_progress`: lezioni, tentativi, punteggi, medie e argomenti da ripassare.
 
-Gli ID devono restare stabili tra le versioni. L'archivio editoriale non deve essere mescolato ai dati locali già usati per salvataggi, catalogazione, PP o acquisti. L'eventuale sincronizzazione online va progettata in una fase separata, compatibile con la fondazione Supabase già presente sul branch dedicato.
+Gli ID devono restare stabili tra versioni. Il sistema didattico non deve essere mescolato ai salvataggi locali già usati per catalogazione, PP, economie o acquisti. La sincronizzazione online va progettata separatamente, compatibilmente con la fondazione Supabase presente su un branch dedicato.
 
 ## Piano di realizzazione
 
-1. Approvare il programma e i prerequisiti.
-2. Definire lo schema editoriale e le regole di validazione.
-3. Creare un primo campione di lezioni e domande revisionate per una sola materia.
-4. Verificare difficoltà, chiarezza, bilanciamento e funzionamento degli esami.
-5. Estendere il catalogo didattico alle altre materie.
-6. Collegare il sistema all'interfaccia dell'accademia senza alterare catalogo, economie o salvataggi.
-7. Automatizzare i controlli sui dati importati e sulle domande prima della pubblicazione.
+1. Approvare materie, gradi e prerequisiti.
+2. Definire schema editoriale e validazione delle fonti.
+3. Creare un campione revisionato di lezioni e domande.
+4. Testare difficoltà, bilanciamento, casualità e calcolo dei voti.
+5. Estendere progressivamente il programma a tutte le materie.
+6. Integrare l'interfaccia dell'accademia senza alterare catalogo, economie o salvataggi.
+7. Automatizzare i controlli sui dati e sulle domande prima della pubblicazione.
 
 ## Riferimenti
 
 - PokéAPI v2: https://pokeapi.co/docs/v2
-- PokéAPI repository e licenza: https://github.com/PokeAPI/pokeapi
 - Pokédex ufficiale: https://www.pokemon.com/it/pokedex
+- Pokémon TCG: https://tcg.pokemon.com/
 - Bulbapedia: https://bulbapedia.bulbagarden.net/
+- Cardmarket: https://www.cardmarket.com/
 
-Poke Study è un progetto fan-made non ufficiale. Pokémon e i relativi nomi e contenuti appartengono ai rispettivi titolari.
+Poke Study è un progetto fan-made non ufficiale. Pokémon, il Pokémon TCG e i relativi nomi e contenuti appartengono ai rispettivi titolari.
