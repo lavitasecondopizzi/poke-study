@@ -2008,3 +2008,33 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .portal-stat-card,.portal-shortcuts,.portal-progress-panel{border-radius:7px}
   .portal-shortcut{border-radius:5px}
 }
+
+
+/* Shared academy crest assets: use the same local artwork in every student-facing area. */
+.academy-crest{
+  width:108px;height:108px;padding:0;margin:0 auto 12px;
+  display:grid;place-items:center;overflow:visible;
+  border:0;border-radius:0;background:transparent;box-shadow:none;
+  clip-path:none;
+}
+.academy-crest:before{display:none}
+.academy-crest-image{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 2px #1c46651c)}
+.student-card-crest{display:block;flex:0 0 38px;width:38px;height:38px;object-fit:contain}
+.profile-academy-crest{display:grid;place-items:center;flex:0 0 54px;width:54px;height:66px}
+.profile-academy-crest-image{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 2px #1c46651c)}
+.enrollment-completion-crest{display:block;flex:0 0 48px;width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 2px #1c46651c)}
+.portal-campus-mark{display:block;flex:0 0 42px;width:42px;height:42px;object-fit:contain;border:0;border-radius:0;box-shadow:none;background:transparent}
+.portal-campus-mark.campus-orange,.portal-campus-mark.campus-purple{background:transparent}
+.community-identity-summary{align-items:center;flex-direction:row;flex-wrap:wrap}
+.community-identity-crest{display:block;flex:0 0 38px;width:38px;height:38px;object-fit:contain;margin-right:4px}
+.community-identity-summary strong{min-width:0;overflow-wrap:anywhere}
+.community-identity-summary span,.community-identity-summary small{flex-basis:100%}
+@media(max-width:650px){
+  .academy-crest{grid-column:1;grid-row:2/5;width:58px;height:58px;margin:0}
+  .academy-crest-image{width:100%;height:100%}
+  .student-card-crest{flex-basis:32px;width:32px;height:32px}
+  .profile-academy-crest{flex-basis:37px;width:37px;height:49px}
+  .enrollment-completion-crest{flex-basis:35px;width:35px;height:42px}
+  .portal-campus-mark{flex-basis:36px;width:36px;height:36px}
+  .community-identity-crest{flex-basis:32px;width:32px;height:32px}
+}
