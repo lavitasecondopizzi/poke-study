@@ -1328,6 +1328,7 @@ export default function App() {
             communityConfigured={communityConfigured}
             progress={progress}
             onConnect={() => navTo('profilo')}
+            onOpenPublicProfile={setPublicProfileId}
           />}
 
           {view === 'profilo' && <StudentProfilePage
