@@ -860,7 +860,7 @@ export default function App() {
           <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>SEGRETERIA DIGITALE · IMMATRICOLAZIONE</span></div>
           <header className="academy-choice-brand">
             <div className="pokeball-mark" aria-hidden="true"><span /></div>
-            <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Completa l'immatricolazione</h1><p>Nuovo allievo · Anno accademico 2026/27</p></div>
+            <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Immatricolazione</h1><p>Anno accademico 2026/27</p></div>
           </header>
           <div className="enrollment-stepper" aria-label="Fase 2 di 3">
             <div className="enrollment-step is-complete"><span>✓</span><small>Accademia</small></div><i />
@@ -868,14 +868,17 @@ export default function App() {
             <div className="enrollment-step"><span>3</span><small>Conferma</small></div>
           </div>
           <section className="academy-choice-intro enrollment-intro">
-            <span className="academy-choice-label">ACCADEMIA SELEZIONATA</span>
-            <h2>{selectedAcademy}</h2>
-            <p>Scegli il nickname ufficiale che userai nel portale. La prima immatricolazione crea un'identità online; profilo e progressi vengono salvati sul tuo account e sincronizzati con il database.</p>
+            <span className="academy-choice-label">STEP 2 · IDENTITÀ DELLO STUDENTE</span>
+            <h2>Scegli il tuo nickname</h2>
+            <p>Sarà il nome con cui comparirai nel portale.</p>
+            <div className="enrollment-selected-academy">
+              <div className="enrollment-selected-crest"><AcademyCrest academy={academy} className="academy-crest-image" /></div>
+              <div><small>ACCADEMIA SELEZIONATA</small><strong>{selectedAcademy}</strong></div>
+            </div>
           </section>
           <form className="enrollment-form" onSubmit={completeEnrollment}>
-            <div className="enrollment-field-heading"><span>01</span><div><label htmlFor="student-nickname">Nickname allievo</label><small>Sarà il nome mostrato nella Bacheca e nel portale quando l'identità è verificata.</small></div></div>
+            <div className="enrollment-field-heading"><span>01</span><div><label htmlFor="student-nickname">Nickname</label><small>Da 1 a 24 caratteri.</small></div></div>
             <input id="student-nickname" name="nickname" type="text" value={nickname} onChange={event => setNickname(event.target.value)} placeholder="Es. AllenatorePikachu" maxLength={24} autoComplete="nickname" required />
-            <div className="enrollment-guidelines"><span>✓</span><p>Da 1 a 24 caratteri. Non serve una password né un indirizzo email; per creare l'identità la prima volta è necessaria una connessione Internet.</p></div>
             {enrollmentError && <p className="community-account-error" role="alert">{enrollmentError}</p>}
             {communityError && hasCommunityToken() && <div className="enrollment-recovery-alert"><strong>Identità online da verificare</strong><p>Il token presente nel browser non è stato verificato. Importa il file di recupero dell'account corretto per evitare di creare un'identità diversa.</p></div>}
             <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Verifica e registrazione…' : 'Crea identità e immatricolati'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
