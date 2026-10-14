@@ -121,12 +121,53 @@ Deno.serve(async request => {
 
     const action = input.action;
 
+    async function hasPassedGrade(gradeNumber: number): Promise<boolean> {
+      const { data: gradeLessons, error: gradeLessonsError } = await supabase.from("academy_lessons")
+        .select("lesson_code,subject_code")
+        .eq("grade_number", gradeNumber)
+        .eq("is_published", true);
+      if (gradeLessonsError || !gradeLessons?.length) return false;
+
+      const { data: history, error: historyError } = await supabase.from("academy_attempts")
+        .select("lesson_code,subject_code,attempt_kind,score")
+        .eq("identity_id", identity.id)
+        .eq("grade_number", gradeNumber)
+        .eq("status", "submitted");
+      if (historyError) return false;
+      const lessonAverages = gradeLessons.map(lesson => {
+        const scores = (history ?? [])
+          .filter(item => item.attempt_kind === "lesson" && item.lesson_code === lesson.lesson_code)
+          .map(item => Number(item.score ?? 0));
+        return scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : null;
+      });
+      if (lessonAverages.some(score => score === null || score < 18)) return false;
+      const gradeAverage = lessonAverages.reduce((sum, score) => sum + (score ?? 0), 0) / lessonAverages.length;
+      if (gradeAverage < 26) return false;
+
+      const subjectCodes = Array.from(new Set(gradeLessons.map(lesson => lesson.subject_code)));
+      const subjectAverages: number[] = [];
+      for (const subjectCode of subjectCodes) {
+        const scores = (history ?? [])
+          .filter(item => item.attempt_kind === "subject_exam" && item.subject_code === subjectCode)
+          .map(item => Number(item.score ?? 0));
+        if (!scores.length) return false;
+        subjectAverages.push(scores.reduce((sum, score) => sum + score, 0) / scores.length);
+      }
+      if (subjectAverages.reduce((sum, score) => sum + score, 0) / subjectAverages.length < 18) return false;
+
+      const gradeExamScores = (history ?? [])
+        .filter(item => item.attempt_kind === "grade_exam")
+        .map(item => Number(item.score ?? 0));
+      return gradeExamScores.length > 0
+        && gradeExamScores.reduce((sum, score) => sum + score, 0) / gradeExamScores.length >= 26;
+    }
+
     if (action === "get_curriculum") {
       const [{ data: lessons, error: lessonsError }, { data: subjects, error: subjectsError }, { data: attempts, error: attemptsError }, { data: progress, error: progressError }, { data: pointsSummary, error: pointsError }] = await Promise.all([
         supabase.from("academy_lessons")
           .select("lesson_code,grade_number,subject_code,order_index,title,summary,objectives,version")
           .eq("is_published", true)
-          .eq("grade_number", 1)
+          .order("grade_number", { ascending: true })
           .order("subject_code", { ascending: true })
           .order("order_index", { ascending: true }),
         supabase.from("academy_subjects").select("subject_code,title,description"),
@@ -211,6 +252,9 @@ Deno.serve(async request => {
         .eq("is_published", true)
         .maybeSingle();
       if (lessonError || !lesson) return response(404, { error: "Lezione non trovata o non pubblicata." });
+      if (lesson.grade_number > 1 && !(await hasPassedGrade(lesson.grade_number - 1))) {
+        return response(403, { error: "Completa il grado precedente prima di accedere a queste lezioni." });
+      }
 
       const { data: previousLessons, error: previousError } = await supabase.from("academy_lessons")
         .select("lesson_code,order_index")
@@ -319,6 +363,9 @@ Deno.serve(async request => {
 
     if (action === "start_grade_exam") {
       const clientAttemptKey = typeof input.clientAttemptKey === "string" ? input.clientAttemptKey : "";
+      const gradeNumber = Number(input.gradeNumber ?? 1);
+      if (!Number.isSafeInteger(gradeNumber) || gradeNumber < 1 || gradeNumber > 10) return response(400, { error: "Grado accademico non valido." });
+      if (gradeNumber > 1 && !(await hasPassedGrade(gradeNumber - 1))) return response(403, { error: "Devi superare il grado precedente prima di accedere a questo esame." });
       if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
         return response(400, { error: "Chiave del tentativo non valida." });
       }
@@ -336,7 +383,7 @@ Deno.serve(async request => {
 
       const { data: lessons, error: lessonsError } = await supabase.from("academy_lessons")
         .select("lesson_code,subject_code,order_index")
-        .eq("grade_number", 1)
+        .eq("grade_number", gradeNumber)
         .eq("is_published", true)
         .order("subject_code", { ascending: true })
         .order("order_index", { ascending: true });
@@ -347,6 +394,7 @@ Deno.serve(async request => {
       const { data: subjectExamHistory, error: subjectExamHistoryError } = await supabase.from("academy_attempts")
         .select("subject_code,score")
         .eq("identity_id", identity.id)
+        .eq("grade_number", gradeNumber)
         .eq("attempt_kind", "subject_exam")
         .eq("status", "submitted")
         .in("subject_code", subjectCodes);
@@ -422,7 +470,7 @@ Deno.serve(async request => {
         .insert({
           identity_id: identity.id,
           lesson_code: null,
-          grade_number: 1,
+          grade_number: gradeNumber,
           attempt_kind: "grade_exam",
           grading_rule_version: "thirtieths-v1",
           grade_max: 30,
@@ -458,6 +506,9 @@ Deno.serve(async request => {
     if (action === "start_subject_exam") {
       const clientAttemptKey = typeof input.clientAttemptKey === "string" ? input.clientAttemptKey : "";
       const subjectCode = typeof input.subjectCode === "string" ? input.subjectCode : "pokemon-sciences";
+      const gradeNumber = Number(input.gradeNumber ?? 1);
+      if (!Number.isSafeInteger(gradeNumber) || gradeNumber < 1 || gradeNumber > 10) return response(400, { error: "Grado accademico non valido." });
+      if (gradeNumber > 1 && !(await hasPassedGrade(gradeNumber - 1))) return response(403, { error: "Devi superare il grado precedente prima di accedere a questa materia." });
       if (!/^[0-9a-f-]{36}$/i.test(clientAttemptKey)) {
         return response(400, { error: "Chiave del tentativo non valida." });
       }
@@ -478,7 +529,7 @@ Deno.serve(async request => {
 
       const { data: lessons, error: lessonsError } = await supabase.from("academy_lessons")
         .select("lesson_code,order_index")
-        .eq("grade_number", 1)
+        .eq("grade_number", gradeNumber)
         .eq("subject_code", subjectCode)
         .eq("is_published", true)
         .order("order_index", { ascending: true });
@@ -553,7 +604,7 @@ Deno.serve(async request => {
           identity_id: identity.id,
           lesson_code: null,
           subject_code: subjectCode,
-          grade_number: 1,
+          grade_number: gradeNumber,
           attempt_kind: "subject_exam",
           grading_rule_version: "thirtieths-v1",
           grade_max: 30,
