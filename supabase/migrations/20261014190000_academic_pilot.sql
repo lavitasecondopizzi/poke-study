@@ -37,8 +37,9 @@ create table if not exists public.academy_lessons (
 create table if not exists public.academy_questions (
   question_id text primary key,
   lesson_code text not null references public.academy_lessons(lesson_code) on delete restrict,
-  question_type text not null check (question_type in ('multiple_choice', 'true_false')),
+  question_type text not null check (question_type in ('multiple_choice', 'true_false', 'matching', 'ordering', 'visual_identification', 'scenario')),
   prompt text not null,
+  media_url text check (media_url is null or media_url ~ '^https?://'),
   options jsonb not null check (jsonb_typeof(options) = 'array'),
   correct_answer jsonb not null,
   explanation text not null,
@@ -383,4 +384,39 @@ insert into public.academy_questions (
 ('psd1-q028','psd1-forme-evoluzioni','multiple_choice','Quale dettaglio va verificato prima di affermare che una forma cambia tipo?','[{"id":"a","label":"La forma esatta e il gioco di riferimento"},{"id":"b","label":"Il prezzo della console"},{"id":"c","label":"Il numero di lezioni completate"},{"id":"d","label":"Il nickname dello studente"}]'::jsonb,'"a"'::jsonb,'I tipi possono dipendere dalla forma e dalle regole del titolo considerato.','Pokémon Database — National Pokédex','https://pokemondb.net/pokedex/national',date '2026-10-14','difficile',1,true),
 ('psd1-q029','psd1-forme-evoluzioni','multiple_choice','Qual è il modo più affidabile per descrivere una linea evolutiva?','[{"id":"a","label":"Indicare le specie coinvolte e le condizioni rilevanti"},{"id":"b","label":"Elencare soltanto i colori"},{"id":"c","label":"Usare il prezzo di una carta"},{"id":"d","label":"Supporre che tutte le linee siano uguali"}]'::jsonb,'"a"'::jsonb,'Le linee evolutive e le relative condizioni possono variare; è utile indicare i passaggi e il contesto.','Pokémon Database — Evolution','https://pokemondb.net/evolution',date '2026-10-14','difficile',1,true),
 ('psd1-q030','psd1-forme-evoluzioni','true_false','Una forma alternativa può mantenere la stessa specie ma differire in alcune caratteristiche.','[{"id":"true","label":"Vero"},{"id":"false","label":"Falso"}]'::jsonb,'"true"'::jsonb,'Le forme possono rappresentare varianti della stessa specie con caratteristiche diverse.','Pokémon Database — National Pokédex','https://pokemondb.net/pokedex/national',date '2026-10-14','media',1,true)
+on conflict (question_id) do nothing;
+
+
+-- Additional formats used by the academic question engine.
+update public.academy_questions
+set question_type = 'visual_identification',
+    prompt = 'Quale specie Pokémon è mostrata nell’immagine?',
+    options = '[{"id":"bulbasaur","label":"Bulbasaur"},{"id":"ivysaur","label":"Ivysaur"},{"id":"venusaur","label":"Venusaur"},{"id":"charmander","label":"Charmander"}]'::jsonb,
+    correct_answer = '"bulbasaur"'::jsonb,
+    explanation = 'L’immagine mostra Bulbasaur, la specie numero 001 del Pokédex Nazionale. L’identificazione visiva va verificata insieme al numero e ai dati della specie.',
+    source_title = 'PokéAPI Sprites',
+    source_url = 'https://github.com/PokeAPI/sprites',
+    media_url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+    difficulty = 'media'
+where question_id = 'psd1-q007';
+
+insert into public.academy_questions (
+  question_id, lesson_code, question_type, prompt, options, correct_answer, explanation,
+  source_title, source_url, source_checked_at, difficulty, version, is_active
+) values
+('psd1-q031','psd1-tipi-classificazione','matching','Abbina ogni concetto alla descrizione corretta.',
+ '[{"id":"type","label":"Tipo","side":"left"},{"id":"category","label":"Categoria Pokédex","side":"left"},{"id":"evolution","label":"Evoluzione","side":"left"},{"id":"type-desc","label":"Attributo di gioco che influenza le interazioni con le mosse","side":"right"},{"id":"category-desc","label":"Etichetta descrittiva della specie","side":"right"},{"id":"evolution-desc","label":"Passaggio a una fase successiva della linea evolutiva","side":"right"}]'::jsonb,
+ '{"type":"type-desc","category":"category-desc","evolution":"evolution-desc"}'::jsonb,
+ 'Il tipo è un attributo di gioco, la categoria Pokédex è una descrizione e l’evoluzione è un passaggio della linea evolutiva.',
+ 'Pokémon Database — National Pokédex and type chart','https://pokemondb.net/pokedex/national',date '2026-10-14','media',1,true),
+('psd1-q032','psd1-forme-evoluzioni','ordering','Ordina le fasi della linea evolutiva dal primo stadio allo stadio finale.',
+ '[{"id":"bulbasaur","label":"Bulbasaur"},{"id":"ivysaur","label":"Ivysaur"},{"id":"venusaur","label":"Venusaur"}]'::jsonb,
+ '["bulbasaur","ivysaur","venusaur"]'::jsonb,
+ 'La linea evolutiva procede da Bulbasaur a Ivysaur e infine a Venusaur.',
+ 'Pokémon Database — Bulbasaur evolution chain','https://pokemondb.net/evolution',date '2026-10-14','facile',1,true),
+('psd1-q033','psd1-identita-specie','scenario','Uno studente confronta due voci Pokédex con descrizioni diverse. Qual è il passo più corretto?',
+ '[{"id":"a","label":"Verificare gioco, versione e fonte di ciascuna voce"},{"id":"b","label":"Considerare automaticamente una delle due falsa"},{"id":"c","label":"Scegliere la descrizione più lunga senza controlli"},{"id":"d","label":"Ignorare il contesto di gioco"}]'::jsonb,
+ '"a"'::jsonb,
+ 'Le descrizioni possono variare tra titoli e versioni: il contesto della fonte è essenziale per un confronto corretto.',
+ 'Pokémon Database — Pokédex entries','https://pokemondb.net/pokedex/national',date '2026-10-14','difficile',1,true)
 on conflict (question_id) do nothing;
