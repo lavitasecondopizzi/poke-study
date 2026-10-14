@@ -53,7 +53,7 @@ export function pokemonCard(pokemon: PokemonSpecies): CatalogCard {
     id: `pokemon:${pokemon.id}`,
     name: pokemon.name,
     kind: 'pokemon',
-    imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
+    imageUrl: `${import.meta.env.BASE_URL}images/pokemon/${pokemon.id}.png`,
     macroId: 'pokemon',
     macroName: 'Pokémon',
     subcategoryId: `pokemon-${region.name.toLowerCase()}`,
