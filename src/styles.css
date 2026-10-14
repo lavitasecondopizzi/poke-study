@@ -2073,7 +2073,7 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .academy-theme-uva{--academy-accent:#8060c2;--academy-accent-dark:#6548a2;--academy-soft:#f2edff;--academy-mid:#b9a2eb;--academy-border:#cbb9e7}
 .academy-theme-mirtillo{--academy-accent:#4778c7;--academy-accent-dark:#244e8d;--academy-soft:#edf4ff;--academy-mid:#7ea6e5;--academy-border:#b9cce9}
 .academy-theme-arancia .utility-bar,.academy-theme-uva .utility-bar,.academy-theme-mirtillo .utility-bar{background:linear-gradient(color-mix(in srgb,var(--academy-mid) 65%,#173e5e),var(--academy-accent-dark));border-bottom-color:var(--academy-accent-dark)}
-.academy-theme-arancia .site-shell,.academy-theme-uva .site-shell,.academy-theme-mirtillo .site-shell{border-color:var(--academy-border);box-shadow:0 5px 0 color-mix(in srgb,var(--academy-accent) 42%,white),0 12px 28px #386c9430}
+.site-shell.academy-theme-arancia,.site-shell.academy-theme-uva,.site-shell.academy-theme-mirtillo{border-color:var(--academy-border);box-shadow:0 5px 0 color-mix(in srgb,var(--academy-accent) 42%,white),0 12px 28px #386c9430}
 .academy-theme-arancia .masthead,.academy-theme-uva .masthead,.academy-theme-mirtillo .masthead{border-bottom-color:var(--academy-border)}
 .academy-theme-arancia .brand-name,.academy-theme-uva .brand-name,.academy-theme-mirtillo .brand-name,
 .academy-theme-arancia .page-heading h1,.academy-theme-uva .page-heading h1,.academy-theme-mirtillo .page-heading h1,
