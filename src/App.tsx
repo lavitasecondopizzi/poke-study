@@ -184,6 +184,7 @@ export default function App() {
   const [nickname, setNickname] = useState('');
   const [view, setView] = useState('home');
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
   const [itemCatalogLoading, setItemCatalogLoading] = useState(false);
@@ -413,10 +414,12 @@ export default function App() {
     if (next === 'pokedex' && !(progress.inventory ?? []).includes('national-catalog')) {
       setNotice('Archivio Nazionale bloccato: cataloga tutti i 1.025 Pokémon e acquista tutti i potenziamenti informativi usando i Punti Poké, poi sbloccalo con i Punti esame.');
       setMobileMenu(false);
+      setMobileMoreOpen(false);
       return;
     }
     setView(next);
     setMobileMenu(false);
+    setMobileMoreOpen(false);
     setNotice('');
   }
 
@@ -793,7 +796,25 @@ export default function App() {
           <footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
+      {mobileMoreOpen && <div className="mobile-more-backdrop" onClick={() => setMobileMoreOpen(false)}>
+        <section className="mobile-more-sheet" role="dialog" aria-modal="true" aria-label="Altre sezioni" onClick={event => event.stopPropagation()}>
+          <div className="mobile-more-heading"><div><span>AREA ALLIEVO</span><strong>Altre sezioni</strong></div><button type="button" aria-label="Chiudi menu" onClick={() => setMobileMoreOpen(false)}><X size={19}/></button></div>
+          <div className="mobile-more-grid">
+            <button type="button" onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio Nazionale</span>{!inventory.includes('national-catalog') && <small>Bloccato</small>}</button>
+            <button type="button" onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Cartoleria punti</span>{availableShopCount > 0 && <small>{availableShopCount} disponibili</small>}</button>
+            <button type="button" onClick={() => navTo('classifica')}><Trophy size={20}/><span>Classifica</span></button>
+            <button type="button" onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo allievo</span></button>
+            <button type="button" onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
+          </div>
+        </section>
+      </div>}
       <nav className="mobile-app-nav" aria-label="Navigazione principale">
+        <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={21}/><span>Portale</span></button>
+        <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={21}/><span>Gioca</span></button>
+        <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={21}/><span>Registro</span></button>
+        <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><GraduationCap size={21}/><span>Esami</span></button>
+        <button className={['pokedex','shop','classifica','profilo','forum'].includes(view) ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
+      </nav>
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={20}/><span>Portale</span></button>
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={20}/><span>Gioca</span></button>
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={20}/><span>Registro</span></button>
