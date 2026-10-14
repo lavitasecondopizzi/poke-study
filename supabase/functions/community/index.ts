@@ -167,6 +167,17 @@ Deno.serve(async request => {
 
     if (action === "whoami") return response(200, { identity });
 
+    if (action === "get_my_public_activity") {
+      const [threads, replies] = await Promise.all([
+        supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", identity.id),
+        supabase.from("forum_posts").select("id", { count: "exact", head: true }).eq("identity_id", identity.id),
+      ]);
+      if (threads.error || replies.error) {
+        return response(500, { error: "Non è stato possibile caricare le statistiche pubbliche della community." });
+      }
+      return response(200, { discussions: threads.count ?? 0, replies: replies.count ?? 0 });
+    }
+
     if (action === "list_leaderboard") {
       const { data, error, count } = await supabase
         .from("community_identities")
