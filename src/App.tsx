@@ -117,6 +117,12 @@ function cooldownLabel(until: number, now: number) {
 const SAVE_KEY = 'poke-study-progress-v1';
 const ACADEMY_KEY = 'poke-study-academy-v1';
 const STUDENT_KEY = 'poke-study-student-v1';
+function AcademyCrest({ academy, className = '' }: { academy: string; className?: string }) {
+  const file = academy === 'arancia' ? 'naranja-academy-crest.svg' : 'uva-academy-crest.svg';
+  const label = academy === 'arancia' ? 'Stemma Accademia Arancia' : 'Stemma Accademia Uva';
+  return <img className={className} src={`${import.meta.env.BASE_URL}images/academies/${file}`} alt={label} loading="eager" decoding="async" />;
+}
+
 
 
 
@@ -772,7 +778,7 @@ export default function App() {
         <div className="academy-choice-grid">
           <button type="button" className="academy-choice-card academy-orange" onClick={() => chooseAcademy('arancia')}>
             <div className="academy-choice-card-top"><span>01 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
-            <div className="academy-crest crest-orange"><span>A</span></div>
+            <div className="academy-crest crest-orange"><AcademyCrest academy="arancia" className="academy-crest-image" /></div>
             <span className="academy-game-tag">POKÉMON SCARLATTO</span>
             <h3>Accademia Arancia</h3>
             <p>Un campus solare, tradizione di ricerca e spirito d'iniziativa.</p>
@@ -780,7 +786,7 @@ export default function App() {
           </button>
           <button type="button" className="academy-choice-card academy-purple" onClick={() => chooseAcademy('uva')}>
             <div className="academy-choice-card-top"><span>02 / CAMPUS</span><span className="academy-campus-status">AMMISSIONI APERTE</span></div>
-            <div className="academy-crest crest-purple"><span>U</span></div>
+            <div className="academy-crest crest-purple"><AcademyCrest academy="uva" className="academy-crest-image" /></div>
             <span className="academy-game-tag">POKÉMON VIOLETTO</span>
             <h3>Accademia Uva</h3>
             <p>Un campus elegante, ricerca metodica e nuove prospettive.</p>
@@ -810,7 +816,7 @@ export default function App() {
           <div className="enrollment-step is-complete"><span>✓</span><small>Identità</small></div><i />
           <div className="enrollment-step is-current"><span>3</span><small>Conferma</small></div>
         </div>
-        <section className="enrollment-completion-banner"><span className="enrollment-completion-mark"><CheckCircle2 size={27}/></span><div><span>AMMISSIONE CONFERMATA</span><h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2><p>Il profilo locale è pronto e l'identità online è stata verificata.</p></div></section>
+        <section className="enrollment-completion-banner"><span className="enrollment-completion-mark"><CheckCircle2 size={27}/></span><AcademyCrest academy={academy} className="enrollment-completion-crest" /><div><span>AMMISSIONE CONFERMATA</span><h2>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</h2><p>Il profilo locale è pronto e l'identità online è stata verificata.</p></div></section>
         <section className="matricola-card" aria-label="Codice matricola assegnato">
           <span>CODICE MATRICOLA LOCALE</span>
           <strong>{student.matricola}</strong>
@@ -846,7 +852,7 @@ export default function App() {
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{displayNickname}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></span></button>
+        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><AcademyCrest academy={academy} className="student-card-crest" /><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{displayNickname}</strong><span>{student?.matricola ?? ''}</span><span>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span></span></button>
       </header>
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
@@ -904,7 +910,7 @@ export default function App() {
               </section>
 
               <section className="portal-student-strip" aria-label="Stato del profilo e dell'account">
-                <div className="portal-student-campus"><span className={academy === 'arancia' ? 'portal-campus-mark campus-orange' : 'portal-campus-mark campus-purple'}>{academy === 'arancia' ? 'A' : 'U'}</span><div><small>IL TUO CAMPUS</small><strong>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</strong><span>{student.matricola}</span></div></div>
+                <div className="portal-student-campus"><AcademyCrest academy={academy} className="portal-campus-mark" /><div><small>IL TUO CAMPUS</small><strong>{academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</strong><span>{student.matricola}</span></div></div>
                 <div className="portal-student-identity"><span className={communityIdentity ? 'portal-identity-dot is-verified' : hasCommunityToken() ? 'portal-identity-dot is-pending' : 'portal-identity-dot is-local'}></span><div><small>IDENTITÀ PORTALE</small><strong>{communityIdentity ? 'Online verificata' : hasCommunityToken() ? 'Da verificare' : 'Profilo locale'}</strong><span>{communityIdentity ? 'Nickname ufficiale attivo' : online ? 'Progressi salvati su questo browser' : 'Offline · dati locali disponibili'}</span></div></div>
                 <button type="button" onClick={() => navTo('profilo')}>Gestisci profilo <ChevronRight size={15}/></button>
               </section>
@@ -1192,10 +1198,10 @@ export default function App() {
 
           {view === 'classifica' && <><div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div><div className="page-heading"><div><div className="eyebrow">RISULTATI STUDENTI</div><h1>Classifica globale</h1><p>La graduatoria online verrà attivata quando saranno disponibili autenticazione e database condiviso.</p></div></div><section className="empty-service ranking-preview"><Trophy size={36}/><h2>Classifica online non ancora attiva</h2><p>Questa versione mantiene i tuoi risultati sul dispositivo. Senza database non è possibile confrontare in modo affidabile gli studenti o sincronizzare i risultati tra PC e smartphone.</p><div className="dashboard-strip"><div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points}</strong></div><div><span>I TUOI PUNTI ESAME</span><strong>{progress.examPoints}</strong></div><div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div></div></section></>}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">{communityIdentity ? 'NICKNAME UFFICIALE' : 'NICKNAME LOCALE'}</span><h2>{displayNickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>{communityIdentity ? 'Nickname ufficiale verificato online.' : online ? 'Identità online non verificata: importa i metadati dell’account per recuperarla.' : 'Modalità offline: viene usato il nickname salvato su questo dispositivo.'}</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
+          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-academy-crest"><AcademyCrest academy={academy} className="profile-academy-crest-image" /></div><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">{communityIdentity ? 'NICKNAME UFFICIALE' : 'NICKNAME LOCALE'}</span><h2>{displayNickname}</h2><p>{student.matricola}</p><p>{academy==='arancia'?'Accademia Arancia':'Accademia Uva'}</p><small>{communityIdentity ? 'Nickname ufficiale verificato online.' : online ? 'Identità online non verificata: importa i metadati dell’account per recuperarla.' : 'Modalità offline: viene usato il nickname salvato su questo dispositivo.'}</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
               <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
               <p className="community-account-description">Il nickname dell’identità online verificata viene usato in tutto il portale quando sei connesso. Offline viene mostrato il nickname locale. Esporta e conserva i metadati: se perdi la sessione, solo quel file permette di recuperare la stessa identità.</p>
-              {communityIdentity ? <div className="community-identity-summary"><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
+              {communityIdentity ? <div className="community-identity-summary"><AcademyCrest academy={communityIdentity.academy} className="community-identity-crest" /><strong>{communityIdentity.nickname}</strong><span>{communityIdentity.academy === 'arancia' ? 'Accademia Arancia' : 'Accademia Uva'}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
               {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
               {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
