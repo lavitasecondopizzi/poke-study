@@ -167,6 +167,69 @@ Deno.serve(async request => {
 
     if (action === "whoami") return response(200, { identity });
 
+    if (action === "get_public_profile") {
+      const targetId = typeof input.identityId === "string" ? input.identityId : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId)) {
+        return response(400, { error: "Identificativo profilo non valido." });
+      }
+      const { data: target, error: targetError } = await supabase
+        .from("community_identities")
+        .select("id,nickname,academy,matricola,player_profile,player_progress")
+        .eq("id", targetId)
+        .maybeSingle();
+      if (targetError || !target) return response(404, { error: "Profilo pubblico non trovato." });
+      const rawProfile = target.player_profile && typeof target.player_profile === "object" && !Array.isArray(target.player_profile)
+        ? target.player_profile as Record<string, unknown>
+        : {};
+      const settings = rawProfile.profileSettings === undefined
+        ? null
+        : normalizeProfileSettings(rawProfile.profileSettings);
+      if (rawProfile.profileSettings !== undefined && !settings) {
+        return response(500, { error: "Le preferenze pubbliche del profilo non sono valide." });
+      }
+      const visibility = settings?.visibility as Record<string, boolean> | undefined ?? {
+        bio: true, favoritePokemon: true, motto: true, activeTitle: true,
+        badges: true, catalogStats: true, communityStats: true, matricola: false,
+      };
+      const progress = target.player_progress === null ? null : normalizePlayerProgress(target.player_progress);
+      if (target.player_progress !== null && !progress) {
+        return response(500, { error: "Le statistiche del profilo non sono disponibili." });
+      }
+      let communityStats: { discussions: number; replies: number } | undefined;
+      if (visibility.communityStats) {
+        const [threads, replies] = await Promise.all([
+          supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", target.id),
+          supabase.from("forum_posts").select("id", { count: "exact", head: true }).eq("identity_id", target.id),
+        ]);
+        if (threads.error || replies.error) {
+          return response(500, { error: "Non è stato possibile caricare le statistiche pubbliche del profilo." });
+        }
+        communityStats = { discussions: threads.count ?? 0, replies: replies.count ?? 0 };
+      }
+      const profile: Record<string, unknown> = {
+        id: target.id,
+        nickname: target.nickname,
+        academy: target.academy,
+        avatarId: typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? rawProfile.avatarId : null,
+        frame: settings?.frame ?? "academy",
+      };
+      if (visibility.matricola) profile.matricola = target.matricola;
+      if (visibility.bio && settings?.bio) profile.bio = settings.bio;
+      if (visibility.favoritePokemon && settings?.favoritePokemon) profile.favoritePokemon = settings.favoritePokemon;
+      if (visibility.motto && settings?.motto) profile.motto = settings.motto;
+      if (visibility.activeTitle && settings?.activeTitle) profile.activeTitle = settings.activeTitle;
+      if (visibility.badges && settings?.badges?.length) profile.badges = settings.badges;
+      if (visibility.catalogStats && progress) {
+        profile.catalogStats = {
+          completedPokemon: progress.completedIds.length,
+          completedEntries: progress.completedEntries.length,
+          points: progress.points,
+        };
+      }
+      if (communityStats) profile.communityStats = communityStats;
+      return response(200, profile);
+    }
+
     if (action === "get_my_public_activity") {
       const [threads, replies] = await Promise.all([
         supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", identity.id),
@@ -300,7 +363,7 @@ Deno.serve(async request => {
     if (action === "list_threads") {
       const { data, error } = await supabase
         .from("forum_threads")
-        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(nickname,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(nickname,academy))")
+        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(id,nickname,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(id,nickname,academy))")
         .order("created_at", { ascending: false })
         .limit(50);
       if (error) return response(500, { error: "Non è stato possibile caricare le discussioni." });
