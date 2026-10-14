@@ -80,7 +80,8 @@ export default function PersonalRegister({ progress, species, items, loading, co
     const submitted = academyRecord.attempts.filter(attempt => attempt.status === 'submitted');
     const lessonScores = academyRecord.lessons.map(lesson => {
       const scores = submitted.filter(attempt => attempt.attempt_kind === 'lesson' && attempt.lesson_code === lesson.lesson_code && attempt.score !== null).map(attempt => attempt.score);
-      return { lesson, average: average(scores), attempts: scores.length, passed: scores.length > 0 && scores.every(score => (score ?? 0) >= 18) };
+      const lessonAverage = average(scores);
+      return { lesson, average: lessonAverage, attempts: scores.length, passed: lessonAverage !== null && lessonAverage >= 18 };
     });
     const overallAverage = average(lessonScores.map(item => item.average));
     const passedLessons = lessonScores.filter(item => item.passed).length;
