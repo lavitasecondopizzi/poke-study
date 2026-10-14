@@ -6,8 +6,8 @@ import {
   Sparkles, Trophy, Users,
 } from 'lucide-react';
 import { loadAcademyCurriculum } from './academy';
-import { listCommunityThreads } from './community';
-import type { CommunityIdentity, CommunityThread } from './community';
+import { getCommunityPublicActivity } from './community';
+import type { CommunityIdentity, CommunityPublicActivity } from './community';
 import type { PokemonSpecies, SavedProgress, StudentProfile, StudentProfileSettings } from './types';
 import './profile.css';
 
@@ -106,7 +106,7 @@ export default function StudentProfilePage({
   const savedSettings = useMemo(() => normalizeSettings(student.profileSettings), [student.profileSettings]);
   const [draft, setDraft] = useState<StudentProfileSettings>(savedSettings);
   const [savedNotice, setSavedNotice] = useState('');
-  const [communityThreads, setCommunityThreads] = useState<CommunityThread[] | null>(null);
+  const [communityActivity, setCommunityActivity] = useState<CommunityPublicActivity | null>(null);
   const [communityLoading, setCommunityLoading] = useState(false);
   const [academicGrade, setAcademicGrade] = useState(0);
   const [academicLoading, setAcademicLoading] = useState(false);
@@ -115,15 +115,15 @@ export default function StudentProfilePage({
   useEffect(() => {
     let active = true;
     if (!communityIdentity || !configured || !online) {
-      setCommunityThreads(null);
+      setCommunityActivity(null);
       setAcademicGrade(0);
       return () => { active = false; };
     }
     setCommunityLoading(true);
     setAcademicLoading(true);
-    listCommunityThreads()
-      .then(threads => { if (active) setCommunityThreads(threads); })
-      .catch(() => { if (active) setCommunityThreads(null); })
+    getCommunityPublicActivity()
+      .then(activity => { if (active) setCommunityActivity(activity); })
+      .catch(() => { if (active) setCommunityActivity(null); })
       .finally(() => { if (active) setCommunityLoading(false); });
     loadAcademyCurriculum()
       .then(data => {
@@ -143,12 +143,8 @@ export default function StudentProfilePage({
   const completedRegions = REGION_DATA.filter(region =>
     progress.completedIds.filter(id => id >= region.start && id <= region.end).length === region.end - region.start + 1,
   );
-  const ownThreads = communityThreads?.filter(thread =>
-    thread.author?.nickname === communityIdentity?.nickname && thread.author?.academy === communityIdentity?.academy,
-  ) ?? [];
-  const ownReplies = communityThreads?.reduce((sum, thread) => sum + (thread.posts ?? []).filter(post =>
-    post.author?.nickname === communityIdentity?.nickname && post.author?.academy === communityIdentity?.academy,
-  ).length, 0) ?? 0;
+  const ownThreads = communityActivity?.discussions ?? 0;
+  const ownReplies = communityActivity?.replies ?? 0;
 
   const titles = useMemo(() => {
     const result: Array<{ id: string; label: string; description: string }> = [];
@@ -215,7 +211,7 @@ export default function StudentProfilePage({
     setSavedNotice('Profilo salvato su questo dispositivo' + (communityIdentity && online ? '; sincronizzazione online in corso.' : '.'));
   }
   const favoritePokemonName = species.find(pokemon => String(pokemon.id) === draft.favoritePokemon)?.name;
-  const communityStatsAvailable = Boolean(communityIdentity && configured && online && communityThreads !== null);
+  const communityStatsAvailable = Boolean(communityIdentity && configured && online && communityActivity !== null);
   const publicTitle = draft.visibility.activeTitle ? activeTitle?.label : '';
   const publicBadgeList = draft.visibility.badges ? activeBadges : [];
 
