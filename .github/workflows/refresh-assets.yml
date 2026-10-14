@@ -1,0 +1,35 @@
+name: Refresh Pokémon image assets
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-pokemon-assets
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download missing image assets
+        run: npm run refresh:assets
+      - name: Commit newly downloaded assets
+        run: |
+          if [ -n "$(git status --porcelain public/images)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/images
+            git commit -m "Refresh local Pokémon image assets"
+            git push origin HEAD:main
+          else
+            echo "All local image assets are already up to date."
+          fi

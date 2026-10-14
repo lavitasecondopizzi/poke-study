@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/download-pokemon-images.mjs && node scripts/prepare-pokedex.mjs && tsc -b && vite build",
-    "preview": "vite preview"
+    "build": "node scripts/prepare-items.mjs && node scripts/prepare-pokedex.mjs && tsc -b && vite build",
+    "preview": "vite preview",
+    "refresh:assets": "node scripts/download-pokemon-images.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

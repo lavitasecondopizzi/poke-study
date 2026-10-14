@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -24,24 +24,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Cache npm downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-20-npm-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-20-npm-
       - name: Install dependencies
-        run: npm install
+        run: npm install --prefer-offline --no-audit --no-fund
       - name: Build
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
-      - name: Commit downloaded image assets
-        run: |
-          if [ -n "$(git status --porcelain public/images)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add public/images
-            git commit -m "Add local Pokémon and item image assets"
-            git push origin HEAD:main
-          else
-            echo "All local Pokémon and item images are already committed."
-          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
