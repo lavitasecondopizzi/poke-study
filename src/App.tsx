@@ -862,13 +862,7 @@ export default function App() {
             <div className="pokeball-mark" aria-hidden="true"><span /></div>
             <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Immatricolazione</h1><p>Anno accademico 2026/27</p></div>
           </header>
-          <div className="enrollment-stepper" aria-label="Fase 2 di 3">
-            <div className="enrollment-step is-complete"><span>✓</span><small>Accademia</small></div><i />
-            <div className="enrollment-step is-current"><span>2</span><small>Identità</small></div><i />
-            <div className="enrollment-step"><span>3</span><small>Conferma</small></div>
-          </div>
           <section className="academy-choice-intro enrollment-intro">
-            <span className="academy-choice-label">STEP 2 · IDENTITÀ DELLO STUDENTE</span>
             <h2>Scegli il tuo nickname</h2>
             <p>Sarà il nome con cui comparirai nel portale.</p>
             <div className="enrollment-selected-academy">
@@ -940,11 +934,6 @@ export default function App() {
           <div className="pokeball-mark" aria-hidden="true"><span /></div>
           <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>Immatricolazione completata</h1><p>Benvenuto nel portale, {displayNickname}.</p></div>
         </header>
-        <div className="enrollment-stepper" aria-label="Fase 3 di 3">
-          <div className="enrollment-step is-complete"><span>✓</span><small>Accademia</small></div><i />
-          <div className="enrollment-step is-complete"><span>✓</span><small>Identità</small></div><i />
-          <div className="enrollment-step is-current"><span>3</span><small>Conferma</small></div>
-        </div>
         <section className="enrollment-completion-banner"><span className="enrollment-completion-mark"><CheckCircle2 size={27}/></span><AcademyCrest academy={academy} className="enrollment-completion-crest" /><div><span>AMMISSIONE CONFERMATA</span><h2>{academyName(academy)}</h2><p>Il profilo locale è pronto e l'identità online è stata verificata.</p></div></section>
         <section className="matricola-card" aria-label="Codice matricola assegnato">
           <span>CODICE MATRICOLA LOCALE</span>
