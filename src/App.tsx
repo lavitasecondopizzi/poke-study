@@ -94,7 +94,8 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'custom-challenges') return 8;
     return 1;
   };
-  const purchasable = SHOP_PRODUCTS;
+  // Mantiene invariati i prezzi storici degli strumenti; i nuovi aiuti usano la stessa scala PP.
+  const purchasable = SHOP_PRODUCTS.filter(product => product.category === 'oggetti');
   const weights = purchasable.map(weightFor);
   const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
   const exactShares = purchasable.map((product, index) => ({
@@ -112,7 +113,11 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
       if (target) target.cost += 1;
     });
   const prices = new Map(exactShares.map(item => [item.id, item.cost]));
-  return SHOP_PRODUCTS.map(product => ({ ...product, cost: prices.get(product.id) ?? product.cost }));
+  const pointsPerWeight = totalEarnablePoints / weightTotal;
+  return SHOP_PRODUCTS.map(product => ({
+    ...product,
+    cost: prices.get(product.id) ?? Math.ceil(pointsPerWeight * weightFor(product)),
+  }));
 }
 
 function productUnlocked(product: ShopProduct, inventory: string[], completedPokemon: number) {
