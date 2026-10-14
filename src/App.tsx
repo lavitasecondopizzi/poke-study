@@ -668,7 +668,7 @@ export default function App() {
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
       const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
       const errorTimestamp = Date.now();
-      setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error', title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
+      setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error' as const, title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
       setSelectedCardId(null);
       setWrongTargetId(inventory.includes('subcategory-errors') ? targetId : null);
       setMessage('');
@@ -701,7 +701,7 @@ export default function App() {
       const completedEntries = old.completedEntries ?? [];
       if (completedEntries.includes(card.id)) return old;
       const timestamp = Date.now();
-      return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog', title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
+      return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
     });
     setSelectedCardId(null);
     setWrongTargetId(null);
@@ -814,7 +814,7 @@ export default function App() {
       const completed = old.completedExams ?? [];
       if (completed.includes(id)) return old;
       const timestamp = Date.now();
-      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id], history: [...(old.history ?? []), { id: `exam-${timestamp}-${id}`, timestamp, kind: 'exam', title: 'Ricompensa esame riscattata', detail: `${id} · +${reward} ${reward === 1 ? 'Punto esame' : 'Punti esame'}` }].slice(-100) };
+      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id], history: [...(old.history ?? []), { id: `exam-${timestamp}-${id}`, timestamp, kind: 'exam' as const, title: 'Ricompensa esame riscattata', detail: `${id} · +${reward} ${reward === 1 ? 'Punto esame' : 'Punti esame'}` }].slice(-100) };
     });
     setNotice('Prova completata: ricompensa aggiunta al Registro personale.');
   }
