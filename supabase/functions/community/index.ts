@@ -189,7 +189,7 @@ Deno.serve(async request => {
       }
       const visibility = settings?.visibility as Record<string, boolean> | undefined ?? {
         bio: true, favoritePokemon: true, motto: true, activeTitle: true,
-        badges: true, catalogStats: true, communityStats: true, matricola: false,
+        badges: true, catalogStats: true, communityStats: true, matricola: true,
       };
       const progress = target.player_progress === null ? null : normalizePlayerProgress(target.player_progress);
       if (target.player_progress !== null && !progress) {
@@ -208,12 +208,12 @@ Deno.serve(async request => {
       }
       const profile: Record<string, unknown> = {
         id: target.id,
-        nickname: target.nickname,
+        matricola: target.matricola,
         academy: target.academy,
         avatarId: typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? rawProfile.avatarId : null,
         frame: settings?.frame ?? "academy",
       };
-      if (visibility.matricola) profile.matricola = target.matricola;
+      profile.matricola = target.matricola;
       if (visibility.bio && settings?.bio) profile.bio = settings.bio;
       if (visibility.favoritePokemon && settings?.favoritePokemon) profile.favoritePokemon = settings.favoritePokemon;
       if (visibility.motto && settings?.motto) profile.motto = settings.motto;
@@ -244,7 +244,7 @@ Deno.serve(async request => {
     if (action === "list_leaderboard") {
       const { data, error, count } = await supabase
         .from("community_identities")
-        .select("id,nickname,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
+        .select("id,nickname,matricola,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
         .order("created_at", { ascending: true })
         .limit(1000);
       if (error) return response(500, { error: "Non è stato possibile caricare la classifica." });
@@ -258,7 +258,7 @@ Deno.serve(async request => {
         const completedEntries = progress?.completedEntries.length ?? 0;
         return {
           id: row.id,
-          nickname: row.nickname,
+          matricola: row.matricola,
           academy: row.academy,
           avatarId: typeof profile?.avatarId === "number" && STARTER_AVATAR_IDS.has(profile.avatarId) ? profile.avatarId : null,
           // Recalculate the main score from recorded completions instead of trusting the client-supplied points total.
@@ -272,7 +272,7 @@ Deno.serve(async request => {
         right.points - left.points
         || right.examPoints - left.examPoints
         || right.completedPokemon - left.completedPokemon
-        || left.nickname.localeCompare(right.nickname, "it")
+        || left.matricola.localeCompare(right.matricola, "it")
       ).map((entry, index) => ({ ...entry, rank: index + 1 }));
 
       return response(200, { entries, totalPlayers: count ?? entries.length });
@@ -363,7 +363,7 @@ Deno.serve(async request => {
     if (action === "list_threads") {
       const { data, error } = await supabase
         .from("forum_threads")
-        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(id,nickname,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(id,nickname,academy))")
+        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(id,matricola,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(id,matricola,academy))")
         .order("created_at", { ascending: false })
         .limit(50);
       if (error) return response(500, { error: "Non è stato possibile caricare le discussioni." });
