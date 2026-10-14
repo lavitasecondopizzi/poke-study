@@ -2051,3 +2051,5 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .academy-blueberry .academy-campus-status{border-color:#c4d8f4;color:#315a9a}
 @media(max-width:900px){.academy-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:850px}}
 @media(max-width:650px){.academy-choice-grid{grid-template-columns:1fr}}
+
+.forum-avatar-blueberry{background:#e5efff!important;color:#244e8d!important;border-color:#b9cce9!important}
