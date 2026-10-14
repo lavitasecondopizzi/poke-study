@@ -1,3 +1,4 @@
+import './student-card.css';
 import { ChevronRight } from 'lucide-react';
 
 type StudentCardProps = {
