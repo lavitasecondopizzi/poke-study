@@ -739,7 +739,7 @@ export default function App() {
                       <span>{currentSubcategory.name} · scegli una posizione vuota</span>
                     </div>
                     <div className="pokemon-number-grid category-entity-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
-                      {currentSubcategoryCards.map((card, index) => {
+                      {currentSubcategoryCards.map((_, index) => {
                         const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
                         const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
                         const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
