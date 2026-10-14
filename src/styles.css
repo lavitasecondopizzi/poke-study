@@ -1456,3 +1456,93 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 @media(max-width:650px) { .pokemon-number-slot.pokemon-number-entity-slot { min-height:74px; } .pokemon-number-slot.pokemon-number-entity-slot .category-entity-image { max-height:32px; max-width:44px; } }
 @media (min-width:651px) { .category-entity-grid { grid-template-columns:repeat(7,minmax(0,1fr)); } }
 @media (max-width:650px) { .category-entity-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } .category-entity-slot { min-height:58px; } }
+
+
+/* Desktop refactor phase 1: compact shell, consistent spacing, clearer content hierarchy.
+   Scoped to desktop so the established mobile layout remains unchanged. */
+@media (min-width: 1101px) {
+  body { font-size: 13px; }
+  .site-shell {
+    max-width: 1440px;
+    margin: 12px auto 24px;
+    border-radius: 14px;
+  }
+  .utility-bar { height: 25px; padding: 0 20px; }
+  .masthead { min-height: 88px; padding: 13px 22px; gap: 13px; }
+  .pokeball-mark { width: 48px; height: 48px; flex-basis: 48px; }
+  .brand-name { font-size: clamp(25px, 2.3vw, 31px); }
+  .brand-subtitle { font-size: 11px; }
+  .student-card { padding: 7px 10px; gap: 9px; }
+  .student-avatar { width: 32px; height: 32px; }
+  .main-nav { min-height: 42px; padding: 0 16px; gap: 3px; }
+  .main-nav button { padding: 0 12px; font-size: 11px; }
+  .page-layout {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 18px;
+    padding: 17px 20px 0;
+  }
+  .sidebar { gap: 12px; }
+  .side-box { border-radius: 9px; }
+  .side-box h2 { padding: 9px 11px; font-size: 9px; }
+  .side-box > button { padding: 8px 11px; font-size: 11px; }
+  .stat-row { padding: 9px 11px 0; font-size: 11px; }
+  .stat-row strong { font-size: 16px; }
+  .progress-track { margin: 10px 11px 7px; }
+  .muted { margin: 0 11px 10px; font-size: 9px; }
+  .notice-box { padding: 10px; }
+  .notice-box p { font-size: 10px; line-height: 1.5; }
+  .breadcrumb { margin: 0 0 13px; }
+  .page-heading { margin-bottom: 15px; }
+  .page-heading h1 { font-size: clamp(22px, 2vw, 28px); margin: 4px 0 6px; }
+  .page-heading p { font-size: 12px; }
+  .heading-stamp { flex-basis: 64px; height: 64px; }
+  .dashboard-strip { margin-bottom: 16px; }
+  .dashboard-strip > div { padding: 11px 14px; }
+  .dashboard-strip span { margin-bottom: 4px; font-size: 8px; }
+  .dashboard-strip strong { font-size: 20px; }
+  .instructions { padding: 9px 11px; margin-bottom: 13px; gap: 9px; }
+  .instructions p { font-size: 10px; line-height: 1.45; }
+  .lab-toolbar { margin-bottom: 9px; }
+  .challenge-board, .archive-search, .forum-post, .empty-service,
+  .home-progress-panel, .portal-menu-panel, .welcome-panel { border-radius: 9px; }
+  .board-header { padding: 12px 14px; }
+  .board-header h2, .archive-search h2 { font-size: 15px; }
+  .pokemon-cards { padding: 12px; gap: 8px; }
+  .slots-heading { padding: 12px 14px; }
+  .slots-grid { padding: 12px; gap: 8px; }
+  .dex-slot { min-height: 100px; padding: 7px; }
+  .archive-search { margin-top: 16px; padding: 14px; }
+  .site-footer, .content > .site-footer { margin-top: 20px; padding: 12px 0 15px; }
+  .welcome-panel { min-height: 210px; padding: 21px 23px; }
+  .welcome-panel h1 { margin: 10px 0 8px; }
+  .welcome-panel p { font-size: 12px; line-height: 1.6; margin-bottom: 13px; }
+  .currency-row { gap: 10px; margin: 12px 0; }
+  .currency-card { padding: 12px; gap: 10px; }
+  .currency-icon { width: 39px; height: 39px; flex-basis: 39px; }
+  .currency-card strong { font-size: 19px; }
+  .portal-menu-panel, .home-progress-panel { margin-top: 12px; }
+  .portal-panel-heading { padding: 12px 15px; }
+  .portal-panel-heading h2, .home-progress-panel h2 { font-size: 16px; }
+  .portal-menu-item { padding: 10px 14px; gap: 10px; }
+  .menu-item-icon { width: 36px; height: 36px; flex-basis: 36px; }
+  .menu-item-copy strong { font-size: 12px; }
+  .menu-item-copy small { font-size: 10px; }
+  .home-progress-panel { padding: 13px 15px; }
+  .game-layout .content > .challenge-board.mixed-lesson-board {
+    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) minmax(370px, .92fr);
+  }
+  .game-layout .game-zone-heading { padding-left: 12px; padding-right: 12px; }
+  .game-layout .folder-toolbar { padding: 5px 9px; }
+}
+
+@media (min-width: 651px) and (max-width: 1100px) {
+  .page-layout { gap: 14px; padding: 14px; }
+  .sidebar { gap: 10px; }
+  .side-box > button { padding: 8px 10px; }
+  .page-heading { margin-bottom: 15px; }
+  .dashboard-strip { margin-bottom: 15px; }
+  .dashboard-strip > div { padding: 10px 11px; }
+  .instructions { margin-bottom: 12px; padding: 9px 10px; }
+  .pokemon-cards, .slots-grid { padding: 10px; gap: 7px; }
+}
