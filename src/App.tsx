@@ -173,6 +173,7 @@ export default function App() {
   const [lessonReady, setLessonReady] = useState(false);
   const [gamePage, setGamePage] = useState(0);
   const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
+  const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(null);
   const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -303,6 +304,14 @@ export default function App() {
         });
       }
     }
+    for (const region of regions) {
+      const id = 'pokemon-' + region.name.toLowerCase();
+      targets.set(id, {
+        id, macroId: 'pokemon', macroName: 'Pokémon', name: region.name,
+        total: region.end - region.start + 1,
+        solved: progress.completedIds.filter(pokemonId => pokemonId >= region.start && pokemonId <= region.end).length,
+      });
+    }
     const macroOrder: Record<string, number> = Object.fromEntries(MACRO_CATEGORIES.map((category, index) => [category.id, index]));
     const regionOrder = new Map(regions.map((region, index) => [region.name, index]));
     return [...targets.values()].sort((a, b) =>
@@ -311,7 +320,7 @@ export default function App() {
         ? (regionOrder.get(a.name) ?? 99) - (regionOrder.get(b.name) ?? 99)
         : a.name.localeCompare(b.name, 'it')),
     );
-  }, [lessonDeck, lessonSolved]);
+  }, [lessonDeck, lessonSolved, progress.completedIds]);
   const remainingLessonCards = useMemo(
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id)),
     [lessonDeck, lessonSolved],
@@ -322,6 +331,7 @@ export default function App() {
   const visibleGameCards = remainingLessonCards.slice(safeGamePage * gamePageSize, safeGamePage * gamePageSize + gamePageSize);
   const currentMacroTargets = openMacroId ? lessonTargets.filter(target => target.macroId === openMacroId) : [];
   const currentMacro = MACRO_CATEGORIES.find(category => category.id === openMacroId);
+  const currentPokemonRegion = openPokemonRegionId ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === openPokemonRegionId) : undefined;
   const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
     ...category,
     total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
@@ -355,10 +365,14 @@ export default function App() {
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    if (card.subcategoryId !== targetId) {
+    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\\d+)$/);
+    const isCorrect = pokemonSlotMatch
+      ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
+      : card.subcategoryId === targetId;
+    if (!isCorrect) {
       setWrongTargetId(targetId);
       setSelectedCardId(null);
-      setMessage('Non corretto. Nessuna penalità: riprova oppure apri un’altra sottocategoria.');
+      setMessage('Posizione errata. Nessuna penalità: scegli un altro numero.');
       window.setTimeout(() => setWrongTargetId(current => current === targetId ? null : current), 650);
       return;
     }
@@ -390,7 +404,7 @@ export default function App() {
     });
     setSelectedCardId(null);
     setWrongTargetId(null);
-    setMessage('Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
+    setMessage(pokemonSlotMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
   }
 
   function chooseAcademy(next: string) {
