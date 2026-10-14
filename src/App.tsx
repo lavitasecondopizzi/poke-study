@@ -187,6 +187,133 @@ function resourceId(url: string) {
   return Number(parts[parts.length - 1] ?? 0);
 }
 
+
+type PortalDashboardProps = {
+  academy: string;
+  displayNickname: string;
+  student: StudentProfile;
+  communityIdentity: CommunityIdentity | null;
+  online: boolean;
+  progress: SavedProgress;
+  currentProfileAvatarId: number | undefined;
+  availableShopCount: number;
+  inventory: string[];
+  notice: string;
+  onNavigate: (next: string) => void;
+};
+
+function PortalDashboard({
+  academy, displayNickname, student, communityIdentity, online, progress,
+  currentProfileAvatarId, availableShopCount, inventory, notice, onNavigate,
+}: PortalDashboardProps) {
+  const completed = Math.min(progress.completedIds.length, NATIONAL_DEX_SIZE);
+  const remaining = Math.max(0, NATIONAL_DEX_SIZE - completed);
+  const percentage = Math.round(completed / NATIONAL_DEX_SIZE * 100);
+  const archiveUnlocked = inventory.includes('national-catalog');
+  const identityLabel = communityIdentity
+    ? 'Identità online verificata'
+    : hasCommunityToken()
+      ? 'Verifica da completare'
+      : 'Profilo locale';
+
+  const shortcuts = [
+    { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
+    { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
+    { id: 'registro', title: 'Registro personale', description: 'Rivedi i risultati e il tuo avanzamento.', icon: <Trophy size={21} />, className: 'portal-v2-record' },
+    { id: 'esami', title: 'Esami e prove', description: 'Completa regioni e obiettivi per ottenere Punti esame.', icon: <GraduationCap size={21} />, className: 'portal-v2-exams' },
+    { id: 'shop', title: 'Cartoleria punti', description: 'Acquista strumenti e potenziamenti.', icon: <ShoppingBag size={21} />, className: 'portal-v2-shop', status: availableShopCount > 0 ? availableShopCount + ' disponibili' : undefined },
+    { id: 'profilo', title: 'Profilo allievo', description: 'Gestisci avatar, nickname e matricola.', icon: <GraduationCap size={21} />, className: 'portal-v2-profile' },
+  ];
+
+  return (
+    <div className="portal-dashboard portal-dashboard-refactor">
+      {notice && <div className="notice-inline portal-notice" role="status">{notice}</div>}
+
+      <section className="portal-v2-hero" aria-labelledby="portal-welcome-title">
+        <div className="portal-v2-hero-copy">
+          <span className="portal-v2-eyebrow"><GraduationCap size={15} /> AREA PERSONALE · {academyName(academy).toLocaleUpperCase('it-IT')}</span>
+          <h1 id="portal-welcome-title">Bentornato, {displayNickname}.</h1>
+          <p>Il tuo percorso di ricerca è pronto. Continua a catalogare Pokémon, completa le prove regionali e usa i tuoi punti per sbloccare nuovi strumenti.</p>
+          <div className="portal-v2-actions">
+            <button type="button" className="portal-v2-primary" onClick={() => onNavigate('game')}><FlaskConical size={17} /> Continua a giocare <ChevronRight size={17} /></button>
+            <button type="button" className="portal-v2-secondary" onClick={() => onNavigate('esami')}>Vai agli esami</button>
+          </div>
+        </div>
+        <div className="portal-v2-campus-card">
+          <div className="portal-v2-campus-heading"><span>IL TUO CAMPUS</span><span className="portal-v2-status-dot" /></div>
+          <AcademyCrest academy={academy} className="portal-v2-crest" />
+          <strong>{academyName(academy)}</strong>
+          <span className="portal-v2-matricola">Matricola {student.matricola}</span>
+          <div className="portal-v2-mini-progress" aria-label={percentage + '% del catalogo completato'}>
+            <div><span>Catalogo Nazionale</span><strong>{percentage}%</strong></div>
+            <div className="portal-v2-track"><span style={{ width: percentage + '%' }} /></div>
+            <small>{completed.toLocaleString('it-IT')} di {NATIONAL_DEX_SIZE.toLocaleString('it-IT')} specie</small>
+          </div>
+        </div>
+        <span className="portal-v2-orbit portal-v2-orbit-one" aria-hidden="true" />
+        <span className="portal-v2-orbit portal-v2-orbit-two" aria-hidden="true" />
+      </section>
+
+      <section className="portal-v2-metrics" aria-label="Riepilogo del tuo account">
+        <article className="portal-v2-metric portal-v2-metric-points">
+          <span className="portal-v2-metric-icon">₱</span>
+          <div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div>
+          <button type="button" aria-label="Apri la Cartoleria punti" onClick={() => onNavigate('shop')}><ChevronRight size={18} /></button>
+        </article>
+        <article className="portal-v2-metric portal-v2-metric-exams">
+          <span className="portal-v2-metric-icon">★</span>
+          <div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div>
+          <button type="button" aria-label="Apri gli esami" onClick={() => onNavigate('esami')}><ChevronRight size={18} /></button>
+        </article>
+        <article className="portal-v2-metric portal-v2-metric-catalog">
+          <span className="portal-v2-metric-icon"><BookOpen size={21} /></span>
+          <div><small>CATALOGO NAZIONALE</small><strong>{completed.toLocaleString('it-IT')}<i> / 1.025</i></strong><span>Specie catalogate</span></div>
+          <button type="button" aria-label="Apri il Registro personale" onClick={() => onNavigate('registro')}><ChevronRight size={18} /></button>
+        </article>
+      </section>
+
+      <section className="portal-v2-section" aria-labelledby="portal-shortcuts-title">
+        <div className="portal-v2-section-heading">
+          <div><span>ACCESSO RAPIDO</span><h2 id="portal-shortcuts-title">Da dove vuoi iniziare?</h2></div>
+          <p>Le aree principali del tuo percorso, sempre a portata di mano.</p>
+        </div>
+        <div className="portal-v2-shortcut-grid">
+          {shortcuts.map(item => (
+            <button type="button" key={item.id} className={'portal-v2-shortcut ' + item.className} onClick={() => onNavigate(item.id)}>
+              <span className="portal-v2-shortcut-icon">{item.icon}</span>
+              <span className="portal-v2-shortcut-copy"><strong>{item.title}</strong><small>{item.description}</small></span>
+              {item.status && <span className={'portal-v2-shortcut-status' + (item.id === 'pokedex' && !archiveUnlocked ? ' is-locked' : '')}>{item.status}</span>}
+              <ChevronRight className="portal-v2-shortcut-arrow" size={17} />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="portal-v2-lower-grid">
+        <article className="portal-v2-progress-card">
+          <div className="portal-v2-section-heading portal-v2-progress-heading">
+            <div><span>IL TUO PERCORSO</span><h2>Avanzamento Pokédex</h2></div>
+            <strong>{percentage}%</strong>
+          </div>
+          <div className="portal-v2-track portal-v2-main-track"><span style={{ width: percentage + '%' }} /></div>
+          <div className="portal-v2-progress-foot"><span>{completed.toLocaleString('it-IT')} specie catalogate</span><span>{remaining.toLocaleString('it-IT')} da scoprire</span></div>
+          <div className="portal-v2-progress-note"><BookOpen size={17} /><p>Ogni collocazione corretta aggiunge Punti Poké. Completa una regione per ottenere un Punto esame.</p></div>
+        </article>
+        <article className="portal-v2-account-card">
+          <div className="portal-v2-section-heading"><div><span>STATO ACCOUNT</span><h2>La tua identità</h2></div></div>
+          <div className="portal-v2-account-person">
+            <span className="portal-v2-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span>
+            <div><strong>{displayNickname}</strong><small>{student.matricola}</small></div>
+          </div>
+          <div className="portal-v2-account-status"><span className={'portal-v2-identity-indicator ' + (communityIdentity ? 'is-verified' : hasCommunityToken() ? 'is-pending' : 'is-local')} /><div><strong>{identityLabel}</strong><small>{communityIdentity ? 'Il profilo online è attivo.' : hasCommunityToken() ? 'Controlla la connessione per verificare il profilo.' : 'I progressi restano salvati su questo browser.'}</small></div></div>
+          <div className="portal-v2-account-status"><span className={'portal-v2-identity-indicator ' + (online ? 'is-verified' : 'is-pending')} /><div><strong>{online ? 'Connessione disponibile' : 'Modalità offline'}</strong><small>{online ? 'I servizi online sono raggiungibili.' : 'Puoi continuare con i dati già salvati.'}</small></div></div>
+          <button type="button" className="portal-v2-account-link" onClick={() => onNavigate('profilo')}>Gestisci profilo <ChevronRight size={16} /></button>
+        </article>
+      </section>
+    </div>
+  );
+}
+
 export default function App() {
   const [species, setSpecies] = useState<PokemonSpecies[]>([]);
   const [progress, setProgress] = useState<SavedProgress>(loadProgress);
@@ -674,12 +801,7 @@ export default function App() {
   }
 
   function navTo(next: string) {
-    if (next === 'pokedex' && !(progress.inventory ?? []).includes('national-catalog')) {
-      setNotice('Archivio Nazionale bloccato: cataloga tutti i 1.025 Pokémon e acquista tutti i potenziamenti informativi usando i Punti Poké, poi sbloccalo con i Punti esame.');
-      setMobileMenu(false);
-      setMobileMoreOpen(false);
-      return;
-    }
+    // La voce Archivio resta raggiungibile: la schermata stessa spiega i requisiti di sblocco.
     setView(next);
     setMobileMenu(false);
     setMobileMoreOpen(false);
@@ -975,7 +1097,7 @@ export default function App() {
       <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'game' ? 'active' : ''} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
-        {view !== 'game' && <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale</button>}
+        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
         <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
@@ -1005,83 +1127,19 @@ export default function App() {
         </aside>
 
         <section className="content">
-          {view === 'home' && <>
-            <div className="portal-dashboard">
-              {notice && <div className="notice-inline portal-notice" role="status">{notice}</div>}
-              <section className="portal-hero">
-                <div className="portal-hero-copy">
-                  <span className="portal-eyebrow"><GraduationCap size={14}/> AREA PERSONALE · ACCADEMIA POKÉMON</span>
-                  <h1>Benvenuto{displayNickname ? `, ${displayNickname}` : ''}.</h1>
-                  <p>Il tuo percorso di ricerca è pronto. Classifica nuove carte, accumula Punti Poké e completa le prove regionali per ottenere Punti esame.</p>
-                  <div className="portal-hero-actions">
-                    <button className="portal-primary-action" onClick={() => navTo('game')}><FlaskConical size={17}/> Continua a giocare <ChevronRight size={17}/></button>
-                    <button className="portal-secondary-action" onClick={() => navTo('esami')}>Vai agli esami</button>
-                  </div>
-                </div>
-                <div className="portal-hero-progress" aria-label={`${progress.completedIds.length} Pokémon catalogati su ${NATIONAL_DEX_SIZE}`}>
-                  <div className="portal-progress-ring" style={{'--progress': `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%` } as CSSProperties}>
-                    <div><strong>{Math.round(progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%</strong><span>COMPLETATO</span></div>
-                  </div>
-                  <span className="portal-progress-caption">{progress.completedIds.length.toLocaleString('it-IT')} / {NATIONAL_DEX_SIZE.toLocaleString('it-IT')} Pokémon</span>
-                </div>
-                <div className="portal-hero-shine" aria-hidden="true"/>
-              </section>
-
-              <section className="portal-student-strip" aria-label="Stato del profilo e dell'account">
-                <div className="portal-student-campus"><AcademyCrest academy={academy} className="portal-campus-mark" /><div><small>IL TUO CAMPUS</small><strong>{academyName(academy)}</strong><span>{student.matricola}</span></div></div>
-                <div className="portal-student-identity"><span className={communityIdentity ? 'portal-identity-dot is-verified' : hasCommunityToken() ? 'portal-identity-dot is-pending' : 'portal-identity-dot is-local'}></span><div><small>IDENTITÀ PORTALE</small><strong>{communityIdentity ? 'Online verificata' : hasCommunityToken() ? 'Da verificare' : 'Profilo locale'}</strong><span>{communityIdentity ? 'Nickname ufficiale attivo' : online ? 'Progressi salvati su questo browser' : 'Offline · dati locali disponibili'}</span></div></div>
-                <button type="button" onClick={() => navTo('profilo')}>Gestisci profilo <ChevronRight size={15}/></button>
-              </section>
-
-              <section className="portal-stat-grid" aria-label="Riepilogo progressi">
-                <article className="portal-stat-card portal-stat-points">
-                  <span className="portal-stat-icon">₱</span>
-                  <div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div>
-                  <button aria-label="Apri Cartoleria" onClick={() => navTo('shop')}><ChevronRight size={17}/></button>
-                </article>
-                <article className="portal-stat-card portal-stat-exams">
-                  <span className="portal-stat-icon">★</span>
-                  <div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div>
-                  <button aria-label="Apri gli esami" onClick={() => navTo('esami')}><ChevronRight size={17}/></button>
-                </article>
-                <article className="portal-stat-card portal-stat-catalog">
-                  <span className="portal-stat-icon"><BookOpen size={20}/></span>
-                  <div><small>CATALOGO NAZIONALE</small><strong>{progress.completedIds.length.toLocaleString('it-IT')}<i> / 1.025</i></strong><span>Specie catalogate</span></div>
-                  <button aria-label="Apri il registro personale" onClick={() => navTo('registro')}><ChevronRight size={17}/></button>
-                </article>
-              </section>
-
-              <section className="portal-shortcuts">
-                <div className="portal-section-heading"><div><span>ACCESSO RAPIDO</span><h2>Da dove vuoi iniziare?</h2></div><span className="portal-section-note">IL TUO DESK</span></div>
-                <div className="portal-shortcut-grid">
-                  <button className="portal-shortcut portal-shortcut-game" onClick={() => navTo('game')}>
-                    <span className="portal-shortcut-icon"><FlaskConical size={22}/></span><span className="portal-shortcut-copy"><strong>Gioco di classificazione</strong><small>Classifica le carte e guadagna Punti Poké.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                  <button className="portal-shortcut portal-shortcut-record" onClick={() => navTo('registro')}>
-                    <span className="portal-shortcut-icon"><Trophy size={22}/></span><span className="portal-shortcut-copy"><strong>Registro personale</strong><small>Controlla risultati e avanzamento.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                  <button className="portal-shortcut portal-shortcut-exams" onClick={() => navTo('esami')}>
-                    <span className="portal-shortcut-icon"><GraduationCap size={22}/></span><span className="portal-shortcut-copy"><strong>Esami regionali</strong><small>Completa una regione per ottenere Punti esame.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                  <button className="portal-shortcut portal-shortcut-shop" onClick={() => navTo('shop')}>
-                    <span className="portal-shortcut-icon"><ShoppingBag size={22}/></span><span className="portal-shortcut-copy"><strong>Cartoleria punti</strong><small>Acquista strumenti e potenziamenti.</small></span>{availableShopCount > 0 && <span className="portal-shortcut-badge">{availableShopCount}</span>}<ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                  <button className="portal-shortcut portal-shortcut-archive" onClick={() => navTo('pokedex')}>
-                    <span className="portal-shortcut-icon"><BookOpen size={22}/></span><span className="portal-shortcut-copy"><strong>Archivio Nazionale</strong><small>{inventory.includes('national-catalog') ? 'Consulta Pokémon, strumenti e materiali.' : 'Si sblocca dopo la catalogazione completa e gli acquisti richiesti.'}</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                  <button className="portal-shortcut portal-shortcut-profile" onClick={() => navTo('profilo')}>
-                    <span className="portal-shortcut-icon"><GraduationCap size={22}/></span><span className="portal-shortcut-copy"><strong>Profilo allievo</strong><small>Personalizza il tuo avatar e consulta la matricola.</small></span><ChevronRight className="portal-shortcut-arrow" size={18}/>
-                  </button>
-                </div>
-              </section>
-
-              <section className="portal-progress-panel">
-                <div className="portal-progress-panel-heading"><div><span>IL TUO PERCORSO</span><h2>Avanzamento Pokédex</h2></div><strong>{Math.round(progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%</strong></div>
-                <div className="portal-progress-track"><span style={{width: `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%`}}/></div>
-                <div className="portal-progress-panel-footer"><span>{progress.completedIds.length.toLocaleString('it-IT')} specie catalogate</span><span>{(NATIONAL_DEX_SIZE - Math.min(NATIONAL_DEX_SIZE, progress.completedIds.length)).toLocaleString('it-IT')} ancora da scoprire</span></div>
-              </section>
-            </div>
-          </>}
+          {view === 'home' && <PortalDashboard
+            academy={academy}
+            displayNickname={displayNickname}
+            student={student}
+            communityIdentity={communityIdentity}
+            online={online}
+            progress={progress}
+            currentProfileAvatarId={currentProfileAvatarId}
+            availableShopCount={availableShopCount}
+            inventory={inventory}
+            notice={notice}
+            onNavigate={navTo}
+          />}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
             items={itemCatalog}
