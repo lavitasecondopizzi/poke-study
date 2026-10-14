@@ -50,6 +50,7 @@ export interface AcademyQuestionReview extends AcademyQuestion {
   explanation: string;
   sourceTitle: string;
   sourceUrl: string;
+  sourceCheckedAt: string;
 }
 
 export interface AcademyAttemptResult {
