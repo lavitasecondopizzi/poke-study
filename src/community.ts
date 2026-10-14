@@ -16,6 +16,7 @@ export interface CommunityIdentity {
 }
 
 export interface CommunityAuthor {
+  id?: string;
   nickname: string;
   academy: CommunityAcademy;
 }
@@ -47,6 +48,22 @@ interface CommunityResponse<T> {
 const TOKEN_KEY = "poke-study-community-token-v1";
 const METADATA_FORMAT = "poke-study-community-account";
 const METADATA_VERSION = 1;
+
+export interface PublicStudentProfile {
+  id: string;
+  nickname: string;
+  academy: CommunityAcademy;
+  avatarId: number | null;
+  matricola?: string;
+  bio?: string;
+  favoritePokemon?: string;
+  motto?: string;
+  activeTitle?: string;
+  badges?: string[];
+  frame: string;
+  catalogStats?: { completedPokemon: number; completedEntries: number; points: number };
+  communityStats?: { discussions: number; replies: number };
+}
 
 export interface CommunityPublicActivity {
   discussions: number;
@@ -165,6 +182,12 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   });
   pendingPlayerStateWrite = write.catch(() => undefined);
   await write;
+}
+
+export async function getPublicStudentProfile(identityId: string): Promise<PublicStudentProfile> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  return await call<PublicStudentProfile>("get_public_profile", { identityId }, token);
 }
 
 export async function getCommunityPublicActivity(): Promise<CommunityPublicActivity> {
