@@ -365,7 +365,7 @@ export default function App() {
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\\d+)$/);
+    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
     const isCorrect = pokemonSlotMatch
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
       : card.subcategoryId === targetId;
