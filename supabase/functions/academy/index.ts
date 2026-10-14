@@ -349,7 +349,7 @@ Deno.serve(async request => {
 
       const lessonCodes = lessons.map(lesson => lesson.lesson_code);
       const { data: questionRows, error: questionsError } = await supabase.from("academy_questions")
-        .select("question_id,lesson_code,question_type,prompt,options,correct_answer,explanation,source_title,source_url,difficulty,version")
+        .select("question_id,lesson_code,question_type,prompt,media_url,options,correct_answer,explanation,source_title,source_url,source_checked_at,difficulty,version")
         .in("lesson_code", lessonCodes)
         .eq("is_active", true);
       if (questionsError) return response(500, { error: "Impossibile caricare le domande dell'esame." });
