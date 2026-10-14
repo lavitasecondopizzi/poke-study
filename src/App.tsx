@@ -3,8 +3,8 @@ import type { ChangeEvent, CSSProperties, FormEvent } from 'react';
 import Archive from './Archive';
 import { BookOpen, ChevronRight, CircleHelp, FlaskConical, GraduationCap, Menu, ShoppingBag, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
-import { createCommunityIdentity, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured } from './community';
-import type { CommunityIdentity } from './community';
+import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads } from './community';
+import type { CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
@@ -208,6 +208,13 @@ export default function App() {
   const [communityBusy, setCommunityBusy] = useState(false);
   const [communityError, setCommunityError] = useState('');
   const [communityNotice, setCommunityNotice] = useState('');
+  const [communityThreads, setCommunityThreads] = useState<CommunityThread[]>([]);
+  const [communityForumLoading, setCommunityForumLoading] = useState(false);
+  const [communityForumError, setCommunityForumError] = useState('');
+  const [communityThreadTitle, setCommunityThreadTitle] = useState('');
+  const [communityThreadBody, setCommunityThreadBody] = useState('');
+  const [communityThreadCategory, setCommunityThreadCategory] = useState<CommunityCategory>('generale');
+  const [communityReplyDrafts, setCommunityReplyDrafts] = useState<Record<string, string>>({});
   const communityConfigured = isCommunityConfigured();
 
   useEffect(() => {
@@ -218,6 +225,18 @@ export default function App() {
       .catch(error => { if (active) setCommunityError(error instanceof Error ? error.message : 'Identità community non verificabile.'); });
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    if (view !== 'forum' || !communityIdentity || !communityConfigured) return;
+    let active = true;
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    listCommunityThreads()
+      .then(threads => { if (active) setCommunityThreads(threads); })
+      .catch(error => { if (active) setCommunityForumError(error instanceof Error ? error.message : 'Impossibile caricare la Bacheca.'); })
+      .finally(() => { if (active) setCommunityForumLoading(false); });
+    return () => { active = false; };
+  }, [view, communityIdentity, communityConfigured]);
 
   useEffect(() => {
     let active = true;
@@ -592,6 +611,40 @@ export default function App() {
     } finally {
       input.value = '';
       setCommunityBusy(false);
+    }
+  }
+
+  async function submitCommunityThread(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!communityIdentity) { setCommunityForumError('Crea o importa prima un’identità community dal Profilo.'); return; }
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    try {
+      await createCommunityThread({ title: communityThreadTitle, body: communityThreadBody, category: communityThreadCategory });
+      setCommunityThreadTitle('');
+      setCommunityThreadBody('');
+      setCommunityThreads(await listCommunityThreads());
+    } catch (error) {
+      setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la discussione.');
+    } finally {
+      setCommunityForumLoading(false);
+    }
+  }
+
+  async function submitCommunityReply(event: FormEvent<HTMLFormElement>, threadId: string) {
+    event.preventDefault();
+    const body = (communityReplyDrafts[threadId] ?? '').trim();
+    if (!body || !communityIdentity) return;
+    setCommunityForumLoading(true);
+    setCommunityForumError('');
+    try {
+      await createCommunityReply(threadId, body);
+      setCommunityReplyDrafts(old => ({ ...old, [threadId]: '' }));
+      setCommunityThreads(await listCommunityThreads());
+    } catch (error) {
+      setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la risposta.');
+    } finally {
+      setCommunityForumLoading(false);
     }
   }
 
@@ -1057,6 +1110,27 @@ export default function App() {
               <div><div className="eyebrow">COMUNITÀ SCOLASTICA</div><h1>Bacheca studenti</h1><p>Avvisi ufficiali, guide rapide e informazioni utili per l'Accademia.</p></div>
               <div className="forum-heading-mark"><CircleHelp size={25}/><span>AREA<br/>STUDENTI</span></div>
             </div>
+            <section className="community-forum-panel">
+              <div className="forum-section-heading"><div><span className="section-label">BACHECA CONDIVISA</span><h2>Discussioni degli studenti</h2></div><button type="button" className="secondary-button" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}>Aggiorna</button></div>
+              {!communityConfigured ? <p className="community-account-hint">La Bacheca online non è configurata in questa build. Dopo il rilascio della versione aggiornata, verifica le variabili Supabase nelle impostazioni GitHub Actions.</p> : !communityIdentity ? <div className="community-forum-empty"><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p><button type="button" className="secondary-button" onClick={() => navTo('profilo')}>Vai al Profilo e collega l’identità</button></div> : <>
+                <form className="community-thread-form" onSubmit={event => void submitCommunityThread(event)}>
+                  <h3>Apri una discussione</h3>
+                  <label>Titolo <input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Di cosa vuoi parlare?" /></label>
+                  <label>Categoria <select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Generale</option><option value="domande">Domande</option><option value="strategie">Strategie</option><option value="annunci">Annunci</option></select></label>
+                  <label>Messaggio <textarea required maxLength={5000} rows={4} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Scrivi il tuo messaggio…" /></label>
+                  <button type="submit" className="secondary-button" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>Pubblica discussione</button>
+                </form>
+                {communityForumError && <p className="community-account-error" role="alert">{communityForumError}</p>}
+                {communityForumLoading && <p role="status">Caricamento Bacheca…</p>}
+                {!communityForumLoading && communityThreads.length === 0 && <p className="community-forum-empty">Non ci sono ancora discussioni. Puoi aprire la prima qui sopra.</p>}
+                <div className="community-thread-list">{communityThreads.map(thread => <article className="community-thread-card" key={thread.id}>
+                  <div className="community-thread-meta"><span>{({ generale: 'Generale', domande: 'Domande', strategie: 'Strategie', annunci: 'Annunci' } as Record<CommunityCategory, string>)[thread.category]}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleString('it-IT')}</time></div>
+                  <h3>{thread.title}</h3><p className="community-thread-author">{thread.author?.nickname ?? 'Studente'} · {thread.author?.academy === 'uva' ? 'Accademia Uva' : 'Accademia Arancia'}</p><p className="community-thread-body">{thread.body}</p>
+                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small>{post.author?.nickname ?? 'Studente'} · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
+                  <form className="community-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>Rispondi</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={2} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({ ...old, [thread.id]: event.target.value }))} placeholder="Scrivi una risposta…"/><button type="submit" className="secondary-button" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>Invia risposta</button></form>
+                </article>)}</div>
+              </>}
+            </section>
             <section className="forum-featured">
               <div className="forum-featured-top"><span className="forum-pin">AVVISO IN EVIDENZA</span><span className="forum-date">SEGRETERIA DIDATTICA</span></div>
               <div className="forum-featured-body"><div className="forum-featured-icon"><GraduationCap size={25}/></div><div><h2>Benvenuto nell'Archivio Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall'inizio. Ogni collocazione corretta assegna un Punto Poké; gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p></div></div>
