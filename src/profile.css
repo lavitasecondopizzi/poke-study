@@ -229,3 +229,6 @@
 .student-profile-avatar-modal-option.is-selected{border:2px solid var(--sp-accent);padding:6px;background:var(--sp-soft);box-shadow:0 0 0 2px rgba(100,110,180,.08)}
 .student-profile-avatar-modal-option img{width:100%;height:100%;object-fit:contain}
 @media(max-width:600px){.student-profile-avatar-modal-backdrop{padding:8px}.student-profile-avatar-modal{max-height:94vh;border-radius:14px}.student-profile-avatar-modal-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:12px}}
+
+.student-profile-public-grade{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:9px;padding:6px 9px;border:1px solid var(--sp-border);border-radius:999px;background:rgba(255,255,255,.82);color:var(--sp-dark);font-size:10px;font-weight:800}
+.student-profile-public-grade svg{flex:0 0 auto}
