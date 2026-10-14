@@ -238,3 +238,27 @@ export async function listCommunityRanking(): Promise<CommunityRankingResponse> 
   if (!token) throw new Error("Registra o importa prima la tua identità community per consultare la classifica.");
   return await call<CommunityRankingResponse>("list_leaderboard", {}, token);
 }
+
+
+/** Calls the academic Edge Function with the existing verified private account token. */
+export async function callAcademyService<T>(
+  action: string,
+  payload: Record<string, unknown> = {},
+): Promise<T> {
+  const config = configuration();
+  if (!config) throw new Error("Servizio accademico non configurato: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.");
+  const token = readToken();
+  if (!token) throw new Error("Importa o verifica prima la tua identità online dal Profilo.");
+  const response = await fetch(`${config.url}/functions/v1/academy`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: config.anonKey,
+      Authorization: `Bearer ${config.anonKey}`,
+    },
+    body: JSON.stringify({ action, ...payload, token }),
+  });
+  const result = await response.json().catch(() => ({})) as CommunityResponse<T>;
+  if (!response.ok) throw new Error(result.error || `Errore accademico (${response.status}).`);
+  return result as T;
+}
