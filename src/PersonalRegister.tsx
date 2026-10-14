@@ -55,7 +55,7 @@ export default function PersonalRegister({ progress, species, items, loading, on
     ...stats.regions.map(r => ({ id: `region-${r.name}`, title: r.name, desc: `Completa il Pokédex di ${r.name}.`, earned: r.complete })),
     ...stats.macros.map(m => ({ id: `macro-${m.id}`, title: m.name, desc: 'Classifica tutte le entità della macrocategoria.', earned: m.total > 0 && m.done === m.total })),
   ], [stats]);
-  const history = [...(progress.history ?? [])].sort((a,b) => b.timestamp - a.timestamp).slice(0,12);
+  const history = [...(progress.history ?? [])].map(event => event.kind !== 'exam' ? event : ({ ...event, title: event.title.replace('Esame regionale superato', 'Regione completata').replace('Ricompensa esame riscattata', 'Traguardo registrato'), detail: event.detail.replace(/\s*·\s*\+\d+\s+Punti? esame/gi, '') })).sort((a,b) => b.timestamp - a.timestamp).slice(0,12);
   const earned = medals.filter(m => m.earned).length;
 
   return <>
@@ -67,13 +67,13 @@ export default function PersonalRegister({ progress, species, items, loading, on
     </header>
     <section className="pr-stats" aria-label="Riepilogo risultati">
       <article><i className="pr-icon">✦</i><div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></article>
-      <article className="pr-exam"><i className="pr-icon">★</i><div><small>RISULTATI DIDATTICI</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div></article>
+      <article><i className="pr-icon">✦</i><div><small>AIUTI SBLOCCATI</small><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong><span>Strumenti e archivi</span></div></article>
       <article><i className="pr-icon"><Medal size={21}/></i><div><small>TRAGUARDI</small><strong>{earned}<em> / {medals.length}</em></strong><span>Medaglie ottenute</span></div></article>
       <article className="pr-errors"><i className="pr-icon"><AlertTriangle size={20}/></i><div><small>ALLENAMENTO</small><strong>{(progress.errors ?? 0).toLocaleString('it-IT')}</strong><span>Errori registrati</span></div></article>
     </section>
     <section className="pr-section">
       <div className="pr-heading"><div><span className="eyebrow">PANORAMICA</span><h2>Avanzamento per regione</h2></div><b>{stats.regions.filter(r=>r.complete).length} / {REGIONS.length} completate</b></div>
-      <div className="pr-regions">{stats.regions.map(r=><article className={r.complete?'is-done':''} key={r.name}><div className="pr-region-head"><i>{r.complete?<CheckCircle2 size={17}/>:r.name.slice(0,2).toUpperCase()}</i><div><strong>{r.name}</strong><small>{r.done} / {r.total} specie</small></div><b>{Math.round(r.percent)}%</b></div><Bar value={r.percent}/><small className="pr-region-note">{r.complete?'Punto esame regionale ottenuto':`Ancora ${r.total-r.done} da catalogare`}</small></article>)}</div>
+      <div className="pr-regions">{stats.regions.map(r=><article className={r.complete?'is-done':''} key={r.name}><div className="pr-region-head"><i>{r.complete?<CheckCircle2 size={17}/>:r.name.slice(0,2).toUpperCase()}</i><div><strong>{r.name}</strong><small>{r.done} / {r.total} specie</small></div><b>{Math.round(r.percent)}%</b></div><Bar value={r.percent}/><small className="pr-region-note">{r.complete?'Regione completata':`Ancora ${r.total-r.done} da catalogare`}</small></article>)}</div>
     </section>
     <section className="pr-section">
       <div className="pr-heading"><div><span className="eyebrow">CLASSIFICAZIONE</span><h2>Macrocategorie e sottocategorie</h2></div><b>{stats.macros.filter(m=>m.total>0&&m.done===m.total).length} / {stats.macros.length} complete</b></div>
