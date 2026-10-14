@@ -108,17 +108,17 @@ export async function startAcademyAttempt(lessonCode: string, clientAttemptKey: 
   );
 }
 
-export async function startAcademySubjectExam(subjectCode: string, clientAttemptKey: string) {
+export async function startAcademySubjectExam(subjectCode: string, clientAttemptKey: string, gradeNumber = 1) {
   return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
     "start_subject_exam",
-    { subjectCode, clientAttemptKey },
+    { subjectCode, clientAttemptKey, gradeNumber },
   );
 }
 
-export async function startAcademyGradeExam(clientAttemptKey: string) {
+export async function startAcademyGradeExam(clientAttemptKey: string, gradeNumber = 1) {
   return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
     "start_grade_exam",
-    { clientAttemptKey },
+    { clientAttemptKey, gradeNumber },
   );
 }
 
