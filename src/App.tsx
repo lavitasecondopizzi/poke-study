@@ -884,12 +884,6 @@ export default function App() {
             <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Verifica e registrazione…' : 'Crea identità e immatricolati'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
             <button className="enrollment-back" type="button" disabled={enrollmentBusy} onClick={() => { setAcademy(''); setNickname(''); setEnrollmentError(''); }}>← Torna alla scelta dell'accademia</button>
           </form>
-          <section className="enrollment-recovery-panel">
-            <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
-            <div className="enrollment-recovery-copy"><strong>Hai già un account Poké Study?</strong><p>Recupera la stessa identità importando il file JSON esportato in precedenza. Il nickname e l'accademia saranno ripresi dall'account verificato.</p></div>
-            <label className="community-import-button enrollment-import-button">Importa account esistente<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
-          </section>
-          <p className="academy-choice-footnote">Il file di recupero contiene una credenziale privata: non condividerlo. La matricola identifica il profilo locale, mentre il file permette di recuperare la stessa identità online.</p>
         </main>
       );
     }

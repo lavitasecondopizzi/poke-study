@@ -2066,3 +2066,43 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 @media(max-width:650px){.academy-choice-grid{grid-template-columns:1fr}}
 
 .forum-avatar-blueberry{background:#e5efff!important;color:#244e8d!important;border-color:#b9cce9!important}
+
+
+/* Tema completo del portale applicato dopo la conferma dell'immatricolazione. */
+.academy-theme-arancia{--academy-accent:#df743b;--academy-accent-dark:#b95b2b;--academy-soft:#fff0e7;--academy-mid:#f7b07d;--academy-border:#efc5a8}
+.academy-theme-uva{--academy-accent:#8060c2;--academy-accent-dark:#6548a2;--academy-soft:#f2edff;--academy-mid:#b9a2eb;--academy-border:#cbb9e7}
+.academy-theme-mirtillo{--academy-accent:#4778c7;--academy-accent-dark:#244e8d;--academy-soft:#edf4ff;--academy-mid:#7ea6e5;--academy-border:#b9cce9}
+.academy-theme-arancia .utility-bar,.academy-theme-uva .utility-bar,.academy-theme-mirtillo .utility-bar{background:linear-gradient(color-mix(in srgb,var(--academy-mid) 65%,#173e5e),var(--academy-accent-dark));border-bottom-color:var(--academy-accent-dark)}
+.academy-theme-arancia .site-shell,.academy-theme-uva .site-shell,.academy-theme-mirtillo .site-shell{border-color:var(--academy-border);box-shadow:0 5px 0 color-mix(in srgb,var(--academy-accent) 42%,white),0 12px 28px #386c9430}
+.academy-theme-arancia .masthead,.academy-theme-uva .masthead,.academy-theme-mirtillo .masthead{border-bottom-color:var(--academy-border)}
+.academy-theme-arancia .brand-name,.academy-theme-uva .brand-name,.academy-theme-mirtillo .brand-name,
+.academy-theme-arancia .page-heading h1,.academy-theme-uva .page-heading h1,.academy-theme-mirtillo .page-heading h1,
+.academy-theme-arancia .welcome-panel h1,.academy-theme-uva .welcome-panel h1,.academy-theme-mirtillo .welcome-panel h1{color:var(--academy-accent-dark)}
+.academy-theme-arancia .brand-kicker,.academy-theme-uva .brand-kicker,.academy-theme-mirtillo .brand-kicker{color:var(--academy-accent-dark)}
+.academy-theme-arancia .main-nav,.academy-theme-uva .main-nav,.academy-theme-mirtillo .main-nav{background:linear-gradient(#fff,var(--academy-soft));border-bottom-color:var(--academy-border)}
+.academy-theme-arancia .main-nav button:hover,.academy-theme-arancia .main-nav button.active,
+.academy-theme-uva .main-nav button:hover,.academy-theme-uva .main-nav button.active,
+.academy-theme-mirtillo .main-nav button:hover,.academy-theme-mirtillo .main-nav button.active{background:linear-gradient(#fff,var(--academy-soft));color:var(--academy-accent-dark);border-bottom-color:var(--academy-accent)}
+.academy-theme-arancia .side-box h2,.academy-theme-uva .side-box h2,.academy-theme-mirtillo .side-box h2{background:linear-gradient(#fff,var(--academy-mid));color:var(--academy-accent-dark);border-bottom-color:var(--academy-border)}
+.academy-theme-arancia .side-box>button:hover,.academy-theme-arancia .side-box>button.side-active,
+.academy-theme-uva .side-box>button:hover,.academy-theme-uva .side-box>button.side-active,
+.academy-theme-mirtillo .side-box>button:hover,.academy-theme-mirtillo .side-box>button.side-active{background:linear-gradient(#fff,var(--academy-soft));color:var(--academy-accent-dark)}
+.academy-theme-arancia .primary-button,.academy-theme-arancia .enter-pokedex,
+.academy-theme-uva .primary-button,.academy-theme-uva .enter-pokedex,
+.academy-theme-mirtillo .primary-button,.academy-theme-mirtillo .enter-pokedex{background:linear-gradient(color-mix(in srgb,var(--academy-mid) 72%,white),var(--academy-accent) 48%,var(--academy-accent-dark));border-color:var(--academy-accent-dark);box-shadow:inset 0 1px #ffffffa6,0 2px 0 color-mix(in srgb,var(--academy-accent) 35%,white)}
+.academy-theme-arancia .instructions,.academy-theme-uva .instructions,.academy-theme-mirtillo .instructions{background:linear-gradient(#fff,var(--academy-soft));border-color:var(--academy-border)}
+.academy-theme-arancia .info-icon,.academy-theme-uva .info-icon,.academy-theme-mirtillo .info-icon{background:linear-gradient(#fff,var(--academy-mid));border-color:var(--academy-border);color:var(--academy-accent-dark)}
+.academy-theme-arancia .board-header,.academy-theme-arancia .slots-heading,
+.academy-theme-uva .board-header,.academy-theme-uva .slots-heading,
+.academy-theme-mirtillo .board-header,.academy-theme-mirtillo .slots-heading{background:linear-gradient(#fff,var(--academy-soft));border-color:var(--academy-border)}
+.academy-theme-arancia .board-header h2,.academy-theme-arancia .archive-search h2,.academy-theme-arancia .slots-heading h2,
+.academy-theme-uva .board-header h2,.academy-theme-uva .archive-search h2,.academy-theme-uva .slots-heading h2,
+.academy-theme-mirtillo .board-header h2,.academy-theme-mirtillo .archive-search h2,.academy-theme-mirtillo .slots-heading h2{color:var(--academy-accent-dark)}
+.academy-theme-arancia .pokemon-card.chosen,.academy-theme-uva .pokemon-card.chosen,.academy-theme-mirtillo .pokemon-card.chosen{border-color:var(--academy-accent);background:linear-gradient(#fff,var(--academy-soft));box-shadow:0 3px 8px color-mix(in srgb,var(--academy-accent) 20%,transparent)}
+.academy-theme-arancia .dex-slot:hover,.academy-theme-uva .dex-slot:hover,.academy-theme-mirtillo .dex-slot:hover{border-color:var(--academy-accent);background:linear-gradient(#fff,var(--academy-soft))}
+@media(max-width:650px){
+ .academy-theme-arancia .mobile-app-nav button.active,.academy-theme-arancia .mobile-app-nav button[aria-expanded="true"],
+ .academy-theme-uva .mobile-app-nav button.active,.academy-theme-uva .mobile-app-nav button[aria-expanded="true"],
+ .academy-theme-mirtillo .mobile-app-nav button.active,.academy-theme-mirtillo .mobile-app-nav button[aria-expanded="true"]{color:var(--academy-accent-dark);background:var(--academy-soft)}
+ .academy-theme-arancia .mobile-more-grid>button svg,.academy-theme-uva .mobile-more-grid>button svg,.academy-theme-mirtillo .mobile-more-grid>button svg{color:var(--academy-accent-dark)}
+}
