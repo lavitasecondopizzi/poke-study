@@ -13,7 +13,7 @@ Il prototipo è sviluppato nel branch `feature/academic-pilot` e nella PR draft 
 ## Sequenza consigliata in ambiente di test
 
 1. Verificare che lo schema community esistente sia applicato e che l'identità privata possa essere verificata.
-2. Applicare la migrazione `supabase/migrations/20261014190000_academic_pilot.sql` tramite il normale flusso di migrazione del progetto Supabase.
+2. Applicare la migrazione `supabase/migrations/20261014182830_academic_pilot.sql` tramite il normale flusso di migrazione del progetto Supabase.
 3. Distribuire la funzione `academy` con la configurazione presente in `supabase/config.toml`. La funzione verifica il token privato dell'account esistente; per questo la verifica JWT automatica è disabilitata e l'autorizzazione viene applicata nel codice server.
 4. Pubblicare il frontend di test e aprire Accademia con un'identità online valida.
 5. Eseguire le verifiche di accettazione sotto riportate prima di promuovere migrazione o funzione a produzione.
