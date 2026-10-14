@@ -295,3 +295,17 @@
   .academy-subject-card h2 { font-size: 18px; }
   .academy-subject-card-bottom { align-items: flex-start; flex-direction: column; }
 }
+
+
+.academy-next-grade-card {
+  margin-top: 8px;
+  border-style: dashed;
+  background: linear-gradient(115deg, #fff 0%, var(--academy-soft, #f3f9ff) 100%);
+}
+.academy-next-grade-card h2 {
+  margin: 0;
+  color: var(--academy-accent-dark, #1d5d8f);
+}
+.academy-next-grade-card p {
+  max-width: 560px;
+}
