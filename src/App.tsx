@@ -4,6 +4,7 @@ import Archive from './Archive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
+import PublicStudentProfile from './PublicStudentProfile';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
 import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
@@ -380,6 +381,7 @@ export default function App() {
   const [forumCategoryFilter, setForumCategoryFilter] = useState<'tutte' | CommunityCategory>('tutte');
   const [forumSort, setForumSort] = useState<'recenti' | 'attive'>('recenti');
   const [showThreadComposer, setShowThreadComposer] = useState(false);
+  const [publicProfileId, setPublicProfileId] = useState<string | null>(null);
   const communityConfigured = isCommunityConfigured();
   const displayNickname = communityIdentity?.nickname ?? student?.nickname ?? 'Allenatore in formazione';
 
@@ -1399,10 +1401,10 @@ export default function App() {
                 {!communityForumLoading && visibleCommunityThreads.length===0 && <div className="forum-empty-state"><div className="forum-empty-icon"><Search size={22}/></div><strong>{communityThreads.length===0?'La Bacheca è pronta per la prima discussione':'Nessun risultato'}</strong><p>{communityThreads.length===0?'Avvia una conversazione.':'Prova un’altra ricerca o categoria.'}</p>{communityThreads.length===0 ? <button type="button" className="secondary-button" onClick={() => setShowThreadComposer(true)}><Plus size={15}/> Crea la prima discussione</button> : <button type="button" className="forum-clear-filters" onClick={() => {setForumSearch('');setForumCategoryFilter('tutte');}}>Azzera filtri</button>}</div>}
                 <div className="community-thread-list forum-thread-list">{visibleCommunityThreads.map(thread => <article className="community-thread-card forum-thread-card" key={thread.id}>
                   <div className="community-thread-meta"><span>{({ generale: 'Generale', domande: 'Domande', strategie: 'Strategie', annunci: 'Annunci' } as Record<CommunityCategory, string>)[thread.category]}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleString('it-IT')}</time></div>
-                  <h3>{thread.title}</h3><p className="community-thread-author"><span className={thread.author?.academy==='uva'?'forum-author-avatar forum-avatar-grape':thread.author?.academy==='mirtillo'?'forum-author-avatar forum-avatar-blueberry':'forum-author-avatar'}>{(thread.author?.nickname??'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><strong>{thread.author?.nickname ?? 'Studente'}</strong><span className="forum-author-separator">·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span></p>
+                  <h3>{thread.title}</h3><p className="community-thread-author"><span className={thread.author?.academy==='uva'?'forum-author-avatar forum-avatar-grape':thread.author?.academy==='mirtillo'?'forum-author-avatar forum-avatar-blueberry':'forum-author-avatar'}>{(thread.author?.nickname??'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><button type="button" className="forum-author-profile-link" disabled={!thread.author?.id} onClick={() => { if (thread.author?.id) setPublicProfileId(thread.author.id); }}>{thread.author?.nickname ?? 'Studente'}</button><span className="forum-author-separator">·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span></p>
                   <p className="community-thread-body">{thread.body}</p>
                   <div className="forum-thread-footer"><span><MessageSquare size={14}/>{thread.posts?.length ?? 0} {(thread.posts?.length ?? 0)===1?'risposta':'risposte'}</span><button type="button" onClick={() => setCommunityReplyOpen(old => ({...old,[thread.id]:!old[thread.id]}))} className="forum-reply-action" aria-expanded={Boolean(communityReplyOpen[thread.id])} aria-label={`Rispondi a ${thread.title}`}>{communityReplyOpen[thread.id]?<X size={14}/>:<MessageSquare size={14}/>} {communityReplyOpen[thread.id]?'Annulla':'Rispondi'}</button></div>
-                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small>{post.author?.nickname ?? 'Studente'} · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
+                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small><button type="button" className="forum-author-profile-link" disabled={!post.author?.id} onClick={() => { if (post.author?.id) setPublicProfileId(post.author.id); }}>{post.author?.nickname ?? 'Studente'}</button> · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
                   {communityReplyOpen[thread.id] && <form className="community-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>La tua risposta</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={2} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({ ...old, [thread.id]: event.target.value }))} placeholder="Aggiungi un contributo…"/><div className="forum-reply-form-footer"><span>Max 2.000 caratteri</span><button type="submit" className="secondary-button" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>{communityForumLoading?'Invio…':'Invia risposta'}</button></div></form>}
                 </article>)}</div>
               </>}
@@ -1411,6 +1413,7 @@ export default function App() {
           </>}<footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
+      {publicProfileId && <PublicStudentProfile identityId={publicProfileId} species={species} onClose={() => setPublicProfileId(null)} />}
       {mobileMoreOpen && <div className="mobile-more-backdrop" onClick={() => setMobileMoreOpen(false)}>
         <section className="mobile-more-sheet" role="dialog" aria-modal="true" aria-label="Altre sezioni" onClick={event => event.stopPropagation()}>
           <div className="mobile-more-heading"><div><span>AREA ALLIEVO</span><strong>Altre sezioni</strong></div><button type="button" aria-label="Chiudi menu" onClick={() => setMobileMoreOpen(false)}><X size={19}/></button></div>
