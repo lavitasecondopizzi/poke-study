@@ -13,7 +13,7 @@ const REGIONS = [
   { name: 'Alola', start: 722, end: 809 }, { name: 'Galar', start: 810, end: 905 },
   { name: 'Paldea', start: 906, end: 1025 },
 ];
-type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; configured: boolean; identityReady: boolean; onReset: () => void };
+type Props = { progress: SavedProgress; species: PokemonSpecies[]; items: ApiNamedResource[]; loading: boolean; configured: boolean; identityReady: boolean; academy: string; onReset: () => void };
 type AcademyRecord = { lessons: AcademyLesson[]; attempts: AcademyAttemptSummary[] };
 type RegisterView = 'summary' | 'detail';
 
@@ -33,12 +33,22 @@ function answerLabel(attempt: AcademyAttemptResult['review'][number], answer: un
   return label(answer);
 }
 
+function academyDetails(academy: string) {
+  const entries: Record<string, { name: string; file: string; shortName: string }> = {
+    arancia: { name: 'Accademia Arancia', shortName: 'ARANCIA', file: 'naranja-academy-crest.svg' },
+    uva: { name: 'Accademia Uva', shortName: 'UVA', file: 'uva-academy-crest.svg' },
+    mirtillo: { name: 'Istituto Mirtillo', shortName: 'MIRTILLO', file: 'blueberry-academy-crest.png' },
+  };
+  return entries[academy] ?? { name: 'Accademia Pokémon', shortName: 'ACCADEMIA', file: 'uva-academy-crest.svg' };
+}
+
 function Bar({ value }: { value: number }) {
   const safe = Math.max(0, Math.min(100, value));
   return <div className="pr-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(safe)}><span style={{ width: `${safe}%` }} /></div>;
 }
 
-export default function PersonalRegister({ progress, species, items, loading, configured, identityReady, onReset }: Props) {
+export default function PersonalRegister({ progress, species, items, loading, configured, identityReady, academy, onReset }: Props) {
+  const academyInfo = academyDetails(academy);
   const [academyRecord, setAcademyRecord] = useState<AcademyRecord | null>(null);
   const [academyLoading, setAcademyLoading] = useState(false);
   const [academyError, setAcademyError] = useState('');
@@ -159,8 +169,8 @@ export default function PersonalRegister({ progress, species, items, loading, co
   const history = [...(progress.history ?? [])].map(event => event.kind !== 'exam' ? event : ({ ...event, title: event.title.replace('Esame regionale superato', 'Regione completata').replace('Ricompensa esame riscattata', 'Traguardo registrato'), detail: event.detail.replace(/\s*·\s*\+\d+\s+(?:Punto|Punti) esame/gi, '') })).sort((a,b) => b.timestamp - a.timestamp).slice(0,12);
   const earned = medals.filter(m => m.earned).length;
 
-  return <>
-    <div className="breadcrumb">Home / Area allievo / <b>Registro personale</b></div>
+  return <div className="personal-register-page">
+    <div className="breadcrumb pr-breadcrumb">Home / Area allievo / <b>Registro personale</b></div>
     <section className="pr-academic-record" aria-labelledby="pr-academic-title">
       <div className="pr-academic-heading">
         <div><span className="eyebrow">PERCORSO FORMATIVO</span><h2 id="pr-academic-title"><GraduationCap size={23}/> Pagella accademica</h2><p>Voti, medie ed esiti registrati nell’Accademia.</p></div>
@@ -212,12 +222,14 @@ export default function PersonalRegister({ progress, species, items, loading, co
     {reviewError && !reviewAttempt && !reviewLoading && <div className="pr-review-overlay" role="dialog" aria-modal="true" aria-label="Revisione non disponibile"><div className="pr-review-dialog"><div className="pr-review-dialog-heading"><h2>Revisione non disponibile</h2><button type="button" aria-label="Chiudi" onClick={() => setReviewError('')}><X size={18}/></button></div><p role="alert">{reviewError}</p></div></div>}
     {reviewAttempt && <div className="pr-review-overlay" role="dialog" aria-modal="true" aria-label="Revisione del tentativo" onClick={() => setReviewAttempt(null)}><div className="pr-review-dialog" onClick={event => event.stopPropagation()}><div className="pr-review-dialog-heading"><div><span className="eyebrow">ESITO {reviewAttempt.passed?'POSITIVO':'DA RIVEDERE'}</span><h2>Revisione del tentativo</h2><p>{formatGrade(reviewAttempt.score)} · {reviewAttempt.correctCount}/{reviewAttempt.questionCount} risposte corrette</p></div><button type="button" aria-label="Chiudi" onClick={() => setReviewAttempt(null)}><X size={18}/></button></div><div className="pr-review-questions">{reviewAttempt.review.map((question,index)=><article key={question.questionId} className={question.isCorrect?'is-correct':'is-wrong'}><div className="pr-review-question-title"><span>{index+1}</span><strong>{question.prompt}</strong><b>{question.isCorrect?'Corretta':'Da rivedere'}</b></div><p><small>La tua risposta</small><strong>{answerLabel(question,question.selectedAnswer)}</strong></p><p><small>Risposta corretta</small><strong>{answerLabel(question,question.correctAnswer)}</strong></p>{question.explanation && <p className="pr-review-explanation">{question.explanation}</p>}{question.sourceTitle && <small className="pr-review-source">Fonte: {question.sourceTitle}{question.sourceUrl ? <> · <a href={question.sourceUrl} target="_blank" rel="noreferrer">Apri fonte</a></> : null}</small>}</article>)}</div></div></div>}
     <header className="pr-hero">
-      <div><span className="eyebrow">CATALOGAZIONE · PROGRESSI PERSONALI</span><h1>Progressi di catalogazione</h1><p>Pokédex, collezioni e traguardi personali.</p>
-        <div className="pr-total"><strong>{Math.round(stats.percent)}%</strong><span>Pokédex nazionale completato</span></div><Bar value={stats.percent}/><small>{stats.pokemon.toLocaleString('it-IT')} / {DEX_SIZE.toLocaleString('it-IT')} specie</small>
+      <div className="pr-hero-copy">
+        <div className="pr-academy-identity"><img src={`${import.meta.env.BASE_URL}images/academies/${academyInfo.file}`} alt={`Stemma ${academyInfo.name}`} /><div><span>PORTALE ALLIEVI · {academyInfo.shortName}</span><strong>{academyInfo.name}</strong><small>Registro personale ufficiale</small></div></div>
+        <span className="eyebrow">CATALOGAZIONE · PROGRESSI PERSONALI</span><h1>Registro personale</h1><p>Il riepilogo del tuo percorso: Pokédex, collezioni, traguardi e attività recente.</p>
+        <div className="pr-total"><strong>{Math.round(stats.percent)}%</strong><span>Pokédex nazionale completato</span></div><Bar value={stats.percent}/><small>{stats.pokemon.toLocaleString('it-IT')} / {DEX_SIZE.toLocaleString('it-IT')} specie catalogate</small>
       </div><div className="pr-seal" aria-hidden="true"><Trophy size={32}/><span>REGISTRO</span><b>UFFICIALE</b></div>
     </header>
     <section className="pr-stats" aria-label="Riepilogo risultati">
-      <article><i className="pr-icon">✦</i><div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></article>
+      <article className="pr-points-stat"><i className="pr-icon pr-points-symbol">₱</i><div><small>PORTAFOGLIO</small><strong>{progress.points.toLocaleString('it-IT')}</strong><span>Punti Poké</span></div></article>
       <article><i className="pr-icon">✦</i><div><small>AIUTI SBLOCCATI</small><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong><span>Strumenti e archivi</span></div></article>
       <article><i className="pr-icon"><Medal size={21}/></i><div><small>TRAGUARDI</small><strong>{earned}<em> / {medals.length}</em></strong><span>Medaglie ottenute</span></div></article>
       <article className="pr-errors"><i className="pr-icon"><AlertTriangle size={20}/></i><div><small>ALLENAMENTO</small><strong>{(progress.errors ?? 0).toLocaleString('it-IT')}</strong><span>Errori registrati</span></div></article>
@@ -242,5 +254,5 @@ export default function PersonalRegister({ progress, species, items, loading, co
       {history.length?<ol className="pr-history">{history.map(event=><li className={`is-${event.kind}`} key={event.id}><i>{event.kind==='error'?<AlertTriangle size={16}/>:event.kind==='exam'?<Trophy size={16}/>:<CheckCircle2 size={16}/>}</i><div><strong>{event.title}</strong><p>{displayName(event.detail)}</p><small><Clock3 size={12}/>{new Date(event.timestamp).toLocaleString('it-IT',{dateStyle:'short',timeStyle:'short'})}</small></div></li>)}</ol>:<div className="pr-empty"><Clock3 size={25}/><strong>Nessuna attività registrata</strong></div>}
     </section>
     <footer className="pr-footer"><div><strong><RotateCcw size={16}/> Gestione progressi</strong></div><button type="button" className="secondary-button" onClick={onReset}>Azzera progressi</button></footer>
-  </>;
+  </div>;
 }
