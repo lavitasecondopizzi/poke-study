@@ -11,9 +11,10 @@ type QuestionSnapshot = {
   questionId: string;
   lessonCode?: string;
   version: number;
-  type: "multiple_choice" | "true_false";
+  type: "multiple_choice" | "true_false" | "matching" | "ordering" | "visual_identification" | "scenario";
   prompt: string;
-  options: Array<{ id: string; label: string }>;
+  options: Array<{ id: string; label: string; side?: string }>;
+  mediaUrl?: string | null;
   correctAnswer: unknown;
   explanation: string;
   sourceTitle: string;
@@ -39,7 +40,23 @@ async function hashToken(token: string): Promise<string> {
 function cleanAnswer(value: unknown): unknown {
   if (typeof value === "string") return value.slice(0, 300);
   if (typeof value === "boolean" || value === null) return value;
+  if (Array.isArray(value) && value.length <= 50
+    && value.every(item => typeof item === "string" && item.length <= 120)) return value;
+  if (isRecord(value)) {
+    const entries = Object.entries(value);
+    if (entries.length <= 50 && entries.every(([key, item]) =>
+      key.length <= 120 && typeof item === "string" && item.length <= 120
+    )) return value;
+  }
   return null;
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return "[" + value.map(stableJson).join(",") + "]";
+  if (isRecord(value)) return "{" + Object.keys(value).sort().map(key =>
+    JSON.stringify(key) + ":" + stableJson(value[key])
+  ).join(",") + "}";
+  return JSON.stringify(value);
 }
 
 function publicQuestion(question: QuestionSnapshot) {
@@ -215,7 +232,7 @@ Deno.serve(async request => {
       }
 
       const { data: questionRows, error: questionsError } = await supabase.from("academy_questions")
-        .select("question_id,question_type,prompt,options,correct_answer,explanation,source_title,source_url,source_checked_at,difficulty,version")
+        .select("question_id,question_type,prompt,media_url,options,correct_answer,explanation,source_title,source_url,source_checked_at,difficulty,version")
         .eq("lesson_code", lessonCode)
         .eq("is_active", true);
       if (questionsError) return response(500, { error: "Impossibile caricare le domande." });
@@ -247,7 +264,8 @@ Deno.serve(async request => {
         version: question.version,
         type: question.question_type,
         prompt: question.prompt,
-        options: question.options,
+        options: question.question_type === "ordering" ? shuffle(question.options) : question.options,
+        mediaUrl: question.media_url ?? null,
         correctAnswer: question.correct_answer,
         explanation: question.explanation,
         sourceTitle: question.source_title,
@@ -458,7 +476,7 @@ Deno.serve(async request => {
         difficulty: question.difficulty,
         selectedAnswer: answerMap.get(question.questionId) ?? null,
         correctAnswer: question.correctAnswer,
-        isCorrect: answerMap.get(question.questionId) === question.correctAnswer,
+        isCorrect: stableJson(answerMap.get(question.questionId) ?? null) === stableJson(question.correctAnswer),
         explanation: question.explanation,
         sourceTitle: question.sourceTitle,
         sourceUrl: question.sourceUrl,
