@@ -367,7 +367,7 @@ export default function App() {
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const subcategoryTarget = lessonTargets.get(targetId);
+    const subcategoryTarget = lessonTargets.find(target => target.id === targetId);
     if (subcategoryTarget) {
       const slots = lessonDeck.filter(entry => entry.subcategoryId === targetId);
       const occupied = new Set(Object.values(categoryPlacements)
