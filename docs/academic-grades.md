@@ -8,17 +8,22 @@ Il percorso non è suddiviso in anni scolastici: è organizzato in gradi accadem
 
 ## Materie proposte
 
-1. **Scienze Pokémon e Pokédex** — specie, forme, tipi, statistiche, abilità, evoluzioni, habitat, regioni e lore verificata.
-2. **Videogiochi Pokémon** — generazioni, titoli e versioni, regioni, progressione, personaggi, sistemi di gioco, differenze tra versioni e meccaniche specifiche.
-3. **Lotte e strategie nei videogiochi** — tipi ed efficacia, statistiche, abilità, mosse, composizione della squadra, ruoli, strategie e regole competitive, distinguendo le generazioni.
-4. **Strumenti, bacche e risorse** — strumenti, oggetti tenuti, oggetti evolutivi, bacche, materiali, MT/macchine e loro funzioni nei giochi di riferimento.
-5. **Storia, fossili e reperti Pokémon** — fossili e Pokémon associati, reperti, oggetti speciali, storia del franchise e contesto delle regioni e dei giochi.
-6. **Pokémon TCG: carte e collezione** — struttura delle carte, Pokémon/Allenatore/Energia, espansioni, set, numerazione, rarità, illustrazioni, varianti, ristampe e identificazione delle carte.
-7. **Pokémon TCG: regole e gioco competitivo** — preparazione della partita, turni, condizioni, attacchi, abilità, costruzione dei mazzi, formati, regolamenti e strategia, usando le regole della versione indicata.
-8. **Mercato, autenticità e conservazione del TCG** — condizioni delle carte, autenticazione e falsi, grading e suoi limiti, prezzi di riferimento, vendite concluse quando disponibili, liquidità, domanda, ristampe, tendenze, acquisto/vendita responsabile e gestione del rischio.
+1. **Scienze Pokémon e Pokédex** — specie, forme, tipi, statistiche, abilità, evoluzioni e classificazioni.
+2. **Regioni, personaggi e lore** — regioni, luoghi, personaggi, organizzazioni, leggende e universo narrativo.
+3. **Storia del franchise e media** — origini del brand, anime, film, manga, spin-off e tappe storiche.
+4. **Storia e generazioni dei videogiochi** — titoli, versioni, piattaforme, regioni e novità introdotte.
+5. **Meccaniche e progressione di gioco** — esplorazione, cattura, allevamento, palestre, Lega, sistemi e contenuti post-game.
+6. **Lotte e strategie nei videogiochi** — tipi, statistiche, mosse, abilità, sinergie e costruzione delle squadre.
+7. **Competitivo e metagame** — regolamenti, formati, strategie competitive e cambiamenti del metagame.
+8. **Strumenti, oggetti e risorse** — strumenti tenuti, oggetti evolutivi, bacche, MT, materiali, fossili e funzioni nei giochi.
+9. **Anatomia e identificazione delle carte TCG** — struttura, simboli, numerazione, lingue, rarità e varianti.
+10. **Storia ed espansioni del TCG** — serie, espansioni, set, ristampe e prodotti speciali.
+11. **Regolamento e gioco TCG** — preparazione, turni, condizioni, attacchi, abilità, carte Allenatore ed Energia.
+12. **Deckbuilding e competitivo TCG** — costruzione dei mazzi, sinergie, archetipi, formati e metagame.
+13. **Collezionismo, conservazione e autenticità** — condizioni, protezione, falsi, autenticazione, grading e limiti delle valutazioni.
+14. **Mercato e analisi dei prezzi** — prezzi richiesti e vendite concluse, andamento storico, domanda, liquidità, ristampe e rischi.
 
-Queste materie sono una proposta di organizzazione didattica: la ripartizione definitiva e il numero delle lezioni vanno stabiliti prima dell'implementazione. Ogni materia deve avere obiettivi, lezioni, verifiche e un voto autonomo in pagella.
-
+Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce quali materie sono attive e quali lezioni specifiche appartengono a ciascuna. Ogni materia presente nel grado ha un voto autonomo in pagella.
 ## Organizzazione indipendente delle materie e delle lezioni
 
 Le materie sono aree di studio permanenti, ma **ogni grado definisce quali materie comprende e quali lezioni offre per ciascuna di esse**. Una materia può ricomparire in più gradi: a cambiare saranno gli argomenti, la profondità e le competenze richieste dalle lezioni, non necessariamente il nome della materia.
@@ -45,14 +50,18 @@ Collegare conoscenze tra franchise, videogiochi, TCG e mercato; analizzare diffe
 
 I gradi sono una progressione interna al gioco e non corrispondono a una durata reale. Le lezioni devono includere fonti, versioni e date quando il contenuto è variabile. Il mercato è dinamico: un dato di prezzo deve essere datato e non va presentato come valore stabile o garantito.
 
+## Scala di valutazione
+
+Tutti i voti sono espressi su 100 punti. La soglia di superamento del test è **60/100**; la soglia per superare il grado è una media complessiva di **80/100**. Le medie sono calcolate sui valori numerici effettivi, senza arrotondamenti intermedi. L'interfaccia può mostrare anche eventuali decimali.
+
 ## Test al termine di ogni lezione
 
 - Ogni lezione obbligatoria termina con un test dedicato.
-- Il voto è espresso in decimi, da 1 a 10.
+- Il voto è espresso in centesimi, da 0 a 100, secondo una scala analoga a quella universitaria.
 - Il giocatore può ripetere lo stesso test tutte le volte che desidera; a ogni tentativo il sistema propone domande casuali selezionate dal database pertinente alla lezione.
-- Ogni tentativo riceve un voto in decimi e viene conservato nello storico.
+- Ogni tentativo riceve un voto in centesimi e viene conservato nello storico.
 - Il voto effettivo della lezione è la media aritmetica di **tutti** i tentativi svolti per quel test, inclusi quelli insufficienti.
-- La lezione è superata e quella successiva si sblocca quando la media effettiva raggiunge almeno **6/10**. Finché la media è inferiore a 6/10, il test può essere ripetuto.
+- La lezione è superata e quella successiva si sblocca quando la media effettiva raggiunge almeno **60/100**. Finché la media è inferiore a 60/100, il test può essere ripetuto.
 - Le domande valutano gli obiettivi spiegati nella lezione e non introducono conoscenze mai presentate.
 
 ## Pagella del grado
@@ -72,12 +81,12 @@ Se una materia non ha voti registrati o rimangono lezioni obbligatorie incomplet
 
 Devono essere soddisfatte entrambe le condizioni:
 
-1. tutte le lezioni obbligatorie del grado sono state completate superando i test con almeno 6/10;
-2. la media complessiva della pagella è almeno **8/10**.
+1. tutte le lezioni obbligatorie del grado sono state completate superando i test con almeno 60/100;
+2. la media complessiva della pagella è almeno **80/100**.
 
-Se tutte le lezioni sono completate ma la media è inferiore a 8/10, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
+Se tutte le lezioni sono completate ma la media è inferiore a 80/100, il grado resta in corso. Le regole per recuperare o migliorare i voti delle lezioni già superate saranno definite separatamente; in ogni caso, i nuovi tentativi devono essere aggiunti allo storico e concorrere alla media del test senza cancellare i risultati precedenti.
 
-I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non può trasformare una media inferiore a 8 in un grado superato.
+I calcoli usano i voti non arrotondati; l'arrotondamento è solo visivo e non può trasformare una media inferiore a 80 in un grado superato.
 
 ## Regole editoriali per test e pagelle
 
