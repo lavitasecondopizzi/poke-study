@@ -55,7 +55,7 @@ export default function PersonalRegister({ progress, species, items, loading, on
     ...stats.regions.map(r => ({ id: `region-${r.name}`, title: r.name, desc: `Completa il Pokédex di ${r.name}.`, earned: r.complete })),
     ...stats.macros.map(m => ({ id: `macro-${m.id}`, title: m.name, desc: 'Classifica tutte le entità della macrocategoria.', earned: m.total > 0 && m.done === m.total })),
   ], [stats]);
-  const history = [...(progress.history ?? [])].map(event => event.kind !== 'exam' ? event : ({ ...event, title: event.title.replace('Esame regionale superato', 'Regione completata').replace('Ricompensa esame riscattata', 'Traguardo registrato'), detail: event.detail.replace(/\s*·\s*\+\d+\s+Punti? esame/gi, '') })).sort((a,b) => b.timestamp - a.timestamp).slice(0,12);
+  const history = [...(progress.history ?? [])].map(event => event.kind !== 'exam' ? event : ({ ...event, title: event.title.replace('Esame regionale superato', 'Regione completata').replace('Ricompensa esame riscattata', 'Traguardo registrato'), detail: event.detail.replace(/\s*·\s*\+\d+\s+(?:Punto|Punti) esame/gi, '') })).sort((a,b) => b.timestamp - a.timestamp).slice(0,12);
   const earned = medals.filter(m => m.earned).length;
 
   return <>
