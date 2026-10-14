@@ -143,3 +143,30 @@
 .academy-campus-ranking li>strong{font-size:14px;white-space:nowrap;color:var(--academy-accent-dark,#1d5d8f)}
 .academy-points-awarded{padding:10px 12px;border-radius:10px;background:var(--academy-soft,#f3f9ff);color:var(--academy-accent-dark,#1d5d8f)!important}
 @media(max-width:560px){.academy-campus-points-heading{align-items:flex-start}.academy-campus-points-heading h2{font-size:18px}.academy-campus-ranking li{grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:9px}.academy-campus-ranking li>strong{font-size:12px}}
+
+
+/* Academy curriculum grouped by subject */
+.academy-subject-block {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.academy-subject-heading {
+  align-items: flex-end;
+  margin-bottom: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--academy-border, #d8e2ef);
+  border-left: 4px solid var(--academy-accent, #3976b8);
+  border-radius: 12px;
+  background: var(--academy-surface, #fff);
+}
+.academy-subject-heading h2 {
+  margin: .2rem 0;
+}
+.academy-subject-heading p {
+  margin: .35rem 0 0;
+  max-width: 60ch;
+}
+.academy-subject-exam-card {
+  margin-top: .25rem;
+}
