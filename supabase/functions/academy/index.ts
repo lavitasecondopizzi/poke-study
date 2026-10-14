@@ -56,7 +56,7 @@ function stableJson(value: unknown): string {
   if (isRecord(value)) return "{" + Object.keys(value).sort().map(key =>
     JSON.stringify(key) + ":" + stableJson(value[key])
   ).join(",") + "}";
-  return JSON.stringify(value);
+  return JSON.stringify(value) ?? "undefined";
 }
 
 function publicQuestion(question: QuestionSnapshot) {
