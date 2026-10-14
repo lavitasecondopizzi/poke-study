@@ -39,4 +39,27 @@ export interface StudentProfile {
   nickname: string;
   matricola: string;
   avatarId?: number;
+  profileSettings?: StudentProfileSettings;
+}
+
+
+export interface StudentProfileVisibility {
+  bio: boolean;
+  favoritePokemon: boolean;
+  motto: boolean;
+  activeTitle: boolean;
+  badges: boolean;
+  catalogStats: boolean;
+  communityStats: boolean;
+  matricola: boolean;
+}
+
+export interface StudentProfileSettings {
+  bio: string;
+  favoritePokemon: string;
+  motto: string;
+  activeTitle: string;
+  badges: string[];
+  frame: string;
+  visibility: StudentProfileVisibility;
 }
