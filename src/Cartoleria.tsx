@@ -107,7 +107,7 @@ function ProductCard({
     });
   }
   const requirementProgress = requirements.length
-    ? requirements.reduce((sum, item) => sum + ('ratio' in item ? item.ratio : item.done ? 1 : 0), 0) / requirements.length
+    ? requirements.reduce((sum, item) => sum + (typeof item.ratio === 'number' ? item.ratio : item.done ? 1 : 0), 0) / requirements.length
     : unlocked ? 1 : 0;
   const displayDescription = owned && nextUpgrade ? nextUpgrade.description : product.description;
   const displayCost = owned && nextUpgrade ? nextUpgrade.cost : product.cost;
