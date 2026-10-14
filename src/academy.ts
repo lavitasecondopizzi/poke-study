@@ -15,7 +15,9 @@ export interface AcademyLesson {
 
 export interface AcademyAttemptSummary {
   id: string;
-  lesson_code: string;
+  lesson_code: string | null;
+  attempt_kind: "lesson" | "grade_exam";
+  grade_number?: number;
   status: "started" | "submitted";
   score: number | null;
   passed: boolean | null;
@@ -65,6 +67,13 @@ export async function startAcademyAttempt(lessonCode: string, clientAttemptKey: 
   return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
     "start_attempt",
     { lessonCode, clientAttemptKey },
+  );
+}
+
+export async function startAcademyGradeExam(clientAttemptKey: string) {
+  return callAcademyService<{ attemptId: string; questions: AcademyQuestion[]; questionCount: number }>(
+    "start_grade_exam",
+    { clientAttemptKey },
   );
 }
 
