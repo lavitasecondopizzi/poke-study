@@ -23,53 +23,44 @@ type ShopProduct = {
   kind: 'active' | 'upgrade' | 'passive' | 'archive' | 'cosmetic' | 'mode';
 };
 
+const SCANNER_LEVELS = 20;
+const RESEARCH_LEVELS = 12;
 const SHOP_PRODUCTS: ShopProduct[] = [
-  { id: 'notebook', name: 'Quaderno di ricerca', description: 'Sblocca il registro personale degli strumenti e degli archivi acquistati.', cost: 250, currency: 'poke', category: 'oggetti', kind: 'passive' },
-  { id: 'scanner', name: 'Scanner', description: 'Usalo su una carta selezionata per rivelarne la macro categoria. Cooldown iniziale: 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'scanner-upgrade-2', name: 'Scanner · Livello 2', description: 'Riduce il cooldown dello Scanner da 5 a 3 minuti.', cost: 250, currency: 'poke', category: 'oggetti', requires: ['scanner'], requirementLabel: 'Acquista prima lo Scanner', kind: 'upgrade' },
-  { id: 'profile-background', name: 'Sfondo profilo', description: 'Sblocca un elemento cosmetico per il profilo.', cost: 600, currency: 'poke', category: 'oggetti', kind: 'cosmetic' },
-  { id: 'research', name: 'Ricerca', description: 'Fornisce un indizio sulla sottocategoria della carta. Cooldown iniziale: 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
-  { id: 'research-upgrade-2', name: 'Ricerca · Livello 2', description: 'Riduce il cooldown della Ricerca da 10 a 7 minuti.', cost: 600, currency: 'poke', category: 'oggetti', requires: ['research'], requirementLabel: 'Acquista prima Ricerca', kind: 'upgrade' },
-  { id: 'research-upgrade-3', name: 'Ricerca · Livello 3', description: 'Riduce il cooldown della Ricerca da 7 a 5 minuti. Livello massimo.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['research-upgrade-2'], requirementLabel: 'Acquista prima Ricerca · Livello 2', kind: 'upgrade' },
+  { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1)))); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'research', name: 'Ricerca', description: 'Rivela la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
+  ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(600 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1)))); return { id: `research-upgrade-${level}`, name: `Ricerca · Livello ${level}`, description: `Cooldown della Ricerca: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'research' : `research-upgrade-${level - 1}`], requirementLabel: `Acquista prima Ricerca livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'direct-region', name: 'Inserimento regionale rapido', description: 'Consente di inserire un Pokémon nella sua regione senza scegliere il numero esatto.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'number-check', name: 'Controllo numerazione', description: 'Segnala esclusivamente se un Pokémon è nel numero sbagliato.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'auto-sort', name: 'Smistamento automatico', description: 'Inserisci un’entità nella macrocategoria e falla smistare automaticamente nella sottocategoria corretta.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'reveal-name', name: 'Rivelazione del nome', description: 'Mostra il nome dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: 8 }, (_, i) => { const level = i + 1; return { id: `multi-select-${level}`, name: `Selezione multipla · Livello ${level}`, description: `Consente di selezionare fino a ${level + 2} entità contemporaneamente, anche tra pagine diverse.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: level === 1 ? [] : [`multi-select-${level - 1}`], requirementLabel: level === 1 ? 'Nessun requisito aggiuntivo' : `Acquista prima Selezione multipla livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'subcategory-errors', name: 'Evidenziazione errori', description: 'Evidenzia in rosso solo le entità nella sottocategoria sbagliata. Non controlla la numerazione.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'digital-assistant', name: 'Assistente digitale', description: 'Sblocca un supporto passivo permanente per lo studio.', cost: 2, currency: 'exam', category: 'super-aiuti', kind: 'passive' },
   { id: 'evolution-archive', name: 'Archivio delle evoluzioni', description: 'Sblocca l’accesso permanente alle informazioni sulle evoluzioni.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'evolution-tools-archive', name: 'Archivio degli strumenti evolutivi', description: 'Sblocca una raccolta dedicata agli strumenti evolutivi.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'machines-archive', name: 'Archivio MT e tecniche', description: 'Sblocca una raccolta dedicata alle macchine e alle tecniche.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'fossils-archive', name: 'Archivio fossili e reperti', description: 'Sblocca una raccolta dedicata a fossili e reperti.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
   { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca una raccolta dedicata agli strumenti tenuti.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile di Pokémon, strumenti e materiali. Richiede tutti i 1.025 Pokémon catalogati e tutti i potenziamenti informativi acquistati.', cost: 10, currency: 'exam', category: 'super-aiuti', requires: ['scanner', 'scanner-upgrade-2', 'research', 'research-upgrade-2', 'research-upgrade-3'], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista Scanner, Scanner livello 2 e tutti i livelli di Ricerca', kind: 'archive' },
+  { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile. Richiede tutti i 1.025 Pokémon e tutti i livelli di Scanner e Ricerca.', cost: 10, currency: 'exam', category: 'super-aiuti', requires: ['scanner', ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => `scanner-upgrade-${i + 2}`), 'research', ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => `research-upgrade-${i + 2}`)], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista tutti i livelli di Scanner e Ricerca', kind: 'archive' },
   { id: 'academy-theme', name: 'Tema Accademia', description: 'Sblocca un tema grafico alternativo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
   { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca un titolo personale da mostrare nel profilo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
   { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
   { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
 ];
-
-
 function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
-  const weights: Record<string, number> = {
-    notebook: 5,
-    scanner: 5,
-    'scanner-upgrade-2': 10,
-    'profile-background': 15,
-    research: 20,
-    'research-upgrade-2': 15,
-    'research-upgrade-3': 30,
-  };
-  const pokeProducts = SHOP_PRODUCTS.filter(product => product.currency === 'poke');
-  let allocated = 0;
-  const costs = new Map<string, number>();
-  pokeProducts.forEach((product, index) => {
-    const cost = index === pokeProducts.length - 1
-      ? totalEarnablePoints - allocated
-      : Math.floor(totalEarnablePoints * (weights[product.id] ?? 0) / 100);
-    costs.set(product.id, cost);
-    allocated += cost;
+  const weights: Record<string, number> = { scanner: 3, research: 7, 'direct-region': 4, 'number-check': 5, 'auto-sort': 15, 'reveal-name': 4, 'reveal-subcategory': 6, 'subcategory-errors': 8 };
+  const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
+  return SHOP_PRODUCTS.map(product => {
+    if (product.currency !== 'poke') return product;
+    let cost = weights[product.id] ? Math.round(totalEarnablePoints * weights[product.id] / totalWeight) : 1;
+    if (product.id.startsWith('scanner-upgrade-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.10 / 19 * (1 + (level - 2) / 18)); }
+    else if (product.id.startsWith('research-upgrade-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.20 / 11 * (1 + (level - 2) / 10)); }
+    else if (product.id.startsWith('multi-select-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.12 / 8 * level); }
+    return { ...product, cost: Math.max(1, cost) };
   });
-  return SHOP_PRODUCTS.map(product => product.currency === 'poke'
-    ? { ...product, cost: costs.get(product.id) ?? product.cost }
-    : product);
 }
-
 function productUnlocked(product: ShopProduct, inventory: string[], completedPokemon: number) {
   return (product.requires ?? []).every(requiredId => inventory.includes(requiredId))
     && completedPokemon >= (product.requiredPokemon ?? 0);
