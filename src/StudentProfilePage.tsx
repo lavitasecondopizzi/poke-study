@@ -3,7 +3,7 @@ import type { ChangeEvent } from 'react';
 import {
   Award, BookOpen, Check, CheckCircle2, Crown, Eye, EyeOff, FileText,
   GraduationCap, LockKeyhole, MessageSquare, Palette, Save, ShieldCheck,
-  Sparkles, Trophy, Users,
+  Sparkles, Trophy, Users, X,
 } from 'lucide-react';
 import { loadAcademyCurriculum } from './academy';
 import { getCommunityPublicActivity } from './community';
@@ -105,7 +105,7 @@ export default function StudentProfilePage({
 }: Props) {
   const savedSettings = useMemo(() => normalizeSettings(student.profileSettings), [student.profileSettings]);
   const [draft, setDraft] = useState<StudentProfileSettings>(savedSettings);
-  const [savedNotice, setSavedNotice] = useState('');
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [communityActivity, setCommunityActivity] = useState<CommunityPublicActivity | null>(null);
   const [communityLoading, setCommunityLoading] = useState(false);
   const [academicGrade, setAcademicGrade] = useState(0);
@@ -180,9 +180,30 @@ export default function StudentProfilePage({
   const activeBadges = badges.filter(badge => draft.badges.includes(badge.id)).slice(0, 3);
   const dirty = JSON.stringify(draft) !== JSON.stringify(savedSettings);
 
+  useEffect(() => {
+    if (!dirty) return;
+    const timeout = window.setTimeout(() => {
+      const allowedTitles = new Set(titles.map(title => title.id));
+      const allowedBadges = new Set(badges.map(badge => badge.id));
+      const next: StudentProfileSettings = {
+        ...draft,
+        bio: draft.bio.trim().slice(0, 180),
+        favoritePokemon: draft.favoritePokemon.slice(0, 60),
+        motto: draft.motto.trim().slice(0, 90),
+        activeTitle: allowedTitles.has(draft.activeTitle) ? draft.activeTitle : '',
+        badges: draft.badges.filter(id => allowedBadges.has(id)).slice(0, 3),
+        frame: unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy',
+        visibility: { ...DEFAULT_VISIBILITY, ...draft.visibility },
+      };
+      if (JSON.stringify(next) !== JSON.stringify(savedSettings)) {
+        onUpdateProfile({ ...student, profileSettings: next });
+      }
+    }, 400);
+    return () => window.clearTimeout(timeout);
+  }, [draft, dirty, titles, badges, unlockedFrames, savedSettings, student, onUpdateProfile]);
+
   function updateDraft<K extends keyof StudentProfileSettings>(key: K, value: StudentProfileSettings[K]) {
     setDraft(old => ({ ...old, [key]: value }));
-    setSavedNotice('');
   }
   function toggleBadge(id: string) {
     setDraft(old => {
@@ -191,24 +212,6 @@ export default function StudentProfilePage({
       if (current.length >= 3) return old;
       return { ...old, badges: [...current, id] };
     });
-    setSavedNotice('');
-  }
-  function saveSettings() {
-    const allowedTitles = new Set(titles.map(title => title.id));
-    const allowedBadges = new Set(badges.map(badge => badge.id));
-    const next: StudentProfileSettings = {
-      ...draft,
-      bio: draft.bio.trim().slice(0, 180),
-      favoritePokemon: draft.favoritePokemon.slice(0, 60),
-      motto: draft.motto.trim().slice(0, 90),
-      activeTitle: allowedTitles.has(draft.activeTitle) ? draft.activeTitle : '',
-      badges: draft.badges.filter(id => allowedBadges.has(id)).slice(0, 3),
-      frame: unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy',
-      visibility: { ...DEFAULT_VISIBILITY, ...draft.visibility },
-    };
-    onUpdateProfile({ ...student, profileSettings: next });
-    setDraft(next);
-    setSavedNotice('Profilo salvato su questo dispositivo' + (communityIdentity && online ? '; sincronizzazione online in corso.' : '.'));
   }
   const favoritePokemonName = species.find(pokemon => String(pokemon.id) === draft.favoritePokemon)?.name;
   const communityStatsAvailable = Boolean(communityIdentity && configured && online && communityActivity !== null);
@@ -277,7 +280,7 @@ export default function StudentProfilePage({
 
         <aside className="student-profile-side">
           <section className="student-profile-card student-profile-public-preview">
-            <div className="student-profile-section-heading"><div><span className="student-profile-kicker">ANTEPRIMA</span><h2>Profilo pubblico</h2></div><Eye size={20}/></div>
+            <div className="student-profile-section-heading"><div><span className="student-profile-kicker">ANTEPRIMA</span><h2>Profilo pubblico</h2><p>Si aggiorna automaticamente con le tue modifiche.</p></div><button type="button" className="student-profile-preview-open" onClick={() => setPreviewOpen(true)}><Eye size={15}/> Anteprima completa</button></div>
             <div className={'student-profile-public-card profile-frame-' + (unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy')}>
               <img className="student-profile-public-crest" src={import.meta.env.BASE_URL + 'images/academies/' + crestFile(academy)} alt=""/>
               <img className="student-profile-public-avatar" src={avatarUrl(currentAvatar)} alt=""/>
@@ -292,7 +295,7 @@ export default function StudentProfilePage({
               {draft.visibility.catalogStats && <div className="student-profile-public-stats"><div><strong>{pokemonCount.toLocaleString('it-IT')}</strong><small>Pokémon</small></div><div><strong>{completedEntries.toLocaleString('it-IT')}</strong><small>Altre entità</small></div><div><strong>{progress.points.toLocaleString('it-IT')} ₱</strong><small>Punti Poké</small></div></div>}
               {draft.visibility.communityStats && <div className="student-profile-public-community"><strong><MessageSquare size={14}/> Attività pubblica</strong>{communityLoading || communityStatsAvailable ? <span>{ownThreads} discussioni · {ownReplies} risposte</span> : <span>{communityIdentity ? 'Statistiche non disponibili offline' : 'Collega un account community per mostrarle'}</span>}</div>}
             </div>
-            <p className="student-profile-preview-note">Le modifiche non salvate sono mostrate qui in anteprima. Le opzioni di visibilità vengono conservate nel profilo.</p>
+            <p className="student-profile-preview-note">Questa anteprima rispetta le opzioni di visibilità selezionate. Le modifiche vengono salvate automaticamente.</p>
           </section>
 
           <section className="student-profile-card student-profile-stats-card">
@@ -314,7 +317,7 @@ export default function StudentProfilePage({
         </aside>
       </div>
 
-      <footer className="student-profile-savebar"><div><span className={dirty ? 'student-profile-save-dot is-dirty' : 'student-profile-save-dot'}/><div><strong>{dirty ? 'Modifiche non salvate' : 'Profilo aggiornato'}</strong><small>{savedNotice || 'Salva le informazioni, i distintivi e le preferenze di visibilità.'}</small></div></div><button type="button" onClick={saveSettings} disabled={!dirty}><Save size={16}/>{dirty ? 'Salva modifiche' : 'Tutto salvato'}</button></footer>
+      {previewOpen && <div className="student-profile-preview-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setPreviewOpen(false); }}><section className="student-profile-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="student-profile-preview-title"><header><div><span className="student-profile-kicker">POKÉ STUDY · ANTEPRIMA</span><h2 id="student-profile-preview-title">Così appare il tuo profilo pubblico</h2><p>Questa vista riflette le modifiche attuali e le impostazioni di privacy.</p></div><button type="button" onClick={() => setPreviewOpen(false)} aria-label="Chiudi anteprima"><X size={20}/></button></header><div className="student-profile-preview-dialog-body"><div className={'student-profile-public-card profile-frame-' + (unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy')}><img className="student-profile-public-crest" src={import.meta.env.BASE_URL + 'images/academies/' + crestFile(academy)} alt=""/><img className="student-profile-public-avatar" src={avatarUrl(currentAvatar)} alt=""/><h3>{communityIdentity?.nickname ?? student.nickname}</h3><span className="student-profile-public-academy">{academyName(academy)}</span>{draft.visibility.matricola && <small>Matricola {student.matricola}</small>}{draft.visibility.activeTitle && activeTitle && <span className="student-profile-title-pill"><Crown size={13}/>{activeTitle.label}</span>}{draft.visibility.bio && draft.bio.trim() && <p>{draft.bio.trim()}</p>}{draft.visibility.favoritePokemon && favoritePokemonName && <div className="student-profile-public-favorite"><Sparkles size={14}/> Pokémon preferito: {titleCase(favoritePokemonName)}</div>}{draft.visibility.motto && draft.motto.trim() && <blockquote>“{draft.motto.trim()}”</blockquote>}{publicBadgeList.length > 0 && <div className="student-profile-public-badges">{publicBadgeList.map(badge => <span key={badge.id}><Award size={14}/>{badge.label}</span>)}</div>}{draft.visibility.catalogStats && <div className="student-profile-public-stats"><div><strong>{pokemonCount.toLocaleString('it-IT')}</strong><small>Pokémon</small></div><div><strong>{completedEntries.toLocaleString('it-IT')}</strong><small>Altre entità</small></div><div><strong>{progress.points.toLocaleString('it-IT')} ₱</strong><small>Punti Poké</small></div></div>}{draft.visibility.communityStats && <div className="student-profile-public-community"><strong><MessageSquare size={14}/> Attività pubblica</strong>{communityLoading || communityStatsAvailable ? <span>{ownThreads} discussioni · {ownReplies} risposte</span> : <span>{communityIdentity ? 'Statistiche non disponibili offline' : 'Collega un account community per mostrarle'}</span>}</div>}</div></div></section></div>}
     </div>
   );
 }
