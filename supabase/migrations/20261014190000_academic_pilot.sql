@@ -117,7 +117,7 @@ language sql
 stable
 security definer
 set search_path = ''
-as $
+as $$
   select jsonb_build_object(
     'lessonAverages',
     coalesce((
