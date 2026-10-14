@@ -1184,3 +1184,92 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
     padding: 7px;
   }
 }
+
+
+/* Desktop gameplay repair: keep each item fully visible and prevent clipped rows. */
+@media (min-width: 651px) {
+  .game-layout .content > .challenge-board.mixed-lesson-board {
+    overflow: visible;
+    grid-template-columns: minmax(0, 1.02fr) minmax(390px, .98fr);
+    align-items: stretch;
+  }
+
+  .game-layout .game-pokemon-zone {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .game-layout .game-pokemon-zone .game-zone-heading {
+    flex: 0 0 42px;
+  }
+
+  .game-layout .game-pokemon-zone .ability-toolbar:empty {
+    display: none;
+  }
+
+  .game-layout .game-pokemon-zone .pokemon-cards {
+    flex: 1 1 0;
+    height: 0;
+    min-height: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(4, minmax(58px, 1fr));
+    align-content: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .game-layout .game-pokemon-zone .mixed-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px !important;
+    aspect-ratio: auto;
+    overflow: hidden;
+    padding: 4px;
+  }
+
+  .game-layout .game-pokemon-zone .mixed-card img {
+    display: block;
+    flex: 0 1 auto;
+    width: 100%;
+    height: auto;
+    max-width: 64px !important;
+    max-height: 52px !important;
+    object-fit: contain;
+    object-position: center;
+    image-rendering: pixelated;
+  }
+
+  .game-layout .game-pagination-cards {
+    flex: 0 0 34px;
+    min-height: 34px;
+  }
+
+  .game-layout .game-pagination-cards button {
+    min-height: 27px;
+    padding: 3px 9px;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 1050px) {
+  .game-layout .content > .challenge-board.mixed-lesson-board {
+    grid-template-columns: minmax(0, .95fr) minmax(340px, 1.05fr);
+  }
+
+  .game-layout .game-pokemon-zone .pokemon-cards {
+    grid-template-rows: repeat(4, minmax(54px, 1fr));
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .game-layout .game-pokemon-zone .mixed-card {
+    min-height: 54px !important;
+  }
+
+  .game-layout .game-pokemon-zone .mixed-card img {
+    max-height: 46px !important;
+  }
+}
