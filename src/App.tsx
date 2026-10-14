@@ -189,10 +189,6 @@ function emptyProgress(): SavedProgress {
   return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {}, errors: 0, history: [] };
 }
 
-function titleCase(name: string) {
-  return name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
-}
-
 const STARTER_POKEMON_IDS = [1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912];
 
 function avatarPortraitUrl(id: number) {
@@ -632,7 +628,6 @@ export default function App() {
   useEffect(() => {
     if (gamePage !== safeGamePage) setGamePage(safeGamePage);
   }, [gamePage, safeGamePage]);
-  const visibleAvatars = species.filter(pokemon => STARTER_POKEMON_IDS.includes(pokemon.id));
   const currentProfileAvatarId = STARTER_POKEMON_IDS.includes(student?.avatarId ?? -1) ? student?.avatarId : STARTER_POKEMON_IDS[0];
   const inventory = progress.inventory ?? [];
   const shopProducts = useMemo(
