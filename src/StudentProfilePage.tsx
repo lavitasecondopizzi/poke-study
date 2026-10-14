@@ -105,6 +105,7 @@ export default function StudentProfilePage({
   const savedSettings = useMemo(() => normalizeSettings(student.profileSettings), [student.profileSettings]);
   const [draft, setDraft] = useState<StudentProfileSettings>(savedSettings);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
   const [communityActivity, setCommunityActivity] = useState<CommunityPublicActivity | null>(null);
   const [communityLoading, setCommunityLoading] = useState(false);
   const [academicGrade, setAcademicGrade] = useState(0);
@@ -174,6 +175,10 @@ export default function StudentProfilePage({
 
   const unlockedFrames = useMemo(() => FRAME_OPTIONS.filter(frame => pokemonCount >= frame.unlock), [pokemonCount]);
   const visibleAvatars = species.filter(pokemon => STARTER_IDS.includes(pokemon.id));
+  const alphabetizedSpecies = useMemo(
+    () => [...species].sort((a, b) => titleCase(a.name).localeCompare(titleCase(b.name), 'it')),
+    [species],
+  );
   const currentAvatar = STARTER_IDS.includes(student.avatarId ?? -1) ? student.avatarId! : STARTER_IDS[0];
   const activeTitle = titles.find(title => title.id === draft.activeTitle);
   const activeBadges = badges.filter(badge => draft.badges.includes(badge.id)).slice(0, 3);
@@ -239,7 +244,7 @@ export default function StudentProfilePage({
           <section className="student-profile-card student-profile-identity">
             <div className="student-profile-section-heading"><div><span className="student-profile-kicker">IDENTITÀ</span><h2>La tua scheda allievo</h2><p>Nickname, avatar e Accademia restano collegati al tuo account.</p></div><span className="student-profile-status"><CheckCircle2 size={14}/> Attiva</span></div>
             <div className={'student-profile-identity-preview profile-frame-' + (unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy')}>
-              <div className="student-profile-avatar-wrap"><img src={avatarUrl(currentAvatar)} alt="Avatar Pokémon selezionato"/><span className="student-profile-avatar-check"><Check size={13}/></span></div>
+              <button type="button" className="student-profile-avatar-wrap student-profile-avatar-trigger" onClick={() => setAvatarPickerOpen(true)} aria-label="Modifica avatar"><img src={avatarUrl(currentAvatar)} alt="Avatar attuale"/><span className="student-profile-avatar-check"><Check size={13}/></span></button>
               <div className="student-profile-identity-copy"><span className="student-profile-kicker">{academyName(academy).toLocaleUpperCase('it-IT')}</span><h3>{communityIdentity?.nickname ?? student.nickname}</h3>{publicTitle && <span className="student-profile-title-pill"><Crown size={13}/>{publicTitle}</span>}<p>{draft.motto.trim() || 'Il tuo percorso di ricerca comincia qui.'}</p><div className="student-profile-identity-meta"><span><GraduationCap size={14}/>{academyName(academy)}</span><span><FileText size={14}/>{student.matricola}</span></div></div>
               {draft.visibility.badges && <div className="student-profile-active-badges">{activeBadges.map(badge => <span key={badge.id} title={badge.description}><Award size={16}/><small>{badge.label}</small></span>)}</div>}
             </div>
@@ -251,7 +256,7 @@ export default function StudentProfilePage({
             <div className="student-profile-section-heading"><div><span className="student-profile-kicker">PRESENTAZIONE</span><h2>Informazioni facoltative</h2><p>Puoi lasciarle vuote e scegliere se mostrarle nell’anteprima pubblica.</p></div><FileText size={22}/></div>
             <div className="student-profile-fields">
               <label className="student-profile-field student-profile-field-wide"><span>Presentazione <small>{draft.bio.length}/180</small></span><textarea value={draft.bio} maxLength={180} rows={3} onChange={event => updateDraft('bio', event.target.value)} placeholder="Racconta cosa ti interessa studiare…"/></label>
-              <label className="student-profile-field"><span>Pokémon preferito</span><select value={draft.favoritePokemon} onChange={event => updateDraft('favoritePokemon', event.target.value)}><option value="">Non specificato</option>{species.map(pokemon => <option value={String(pokemon.id)} key={pokemon.id}>#{String(pokemon.id).padStart(4,'0')} · {titleCase(pokemon.name)}</option>)}</select></label>
+              <label className="student-profile-field"><span>Pokémon preferito</span><select value={draft.favoritePokemon} onChange={event => updateDraft('favoritePokemon', event.target.value)}><option value="">Non specificato</option>{alphabetizedSpecies.map(pokemon => <option value={String(pokemon.id)} key={pokemon.id}>{titleCase(pokemon.name)}</option>)}</select></label>
               <label className="student-profile-field"><span>Motto personale <small>{draft.motto.length}/90</small></span><input value={draft.motto} maxLength={90} onChange={event => updateDraft('motto', event.target.value)} placeholder="Una frase che ti rappresenta"/></label>
             </div>
           </section>
@@ -313,6 +318,8 @@ export default function StudentProfilePage({
           </section>
         </aside>
       </div>
+
+      {avatarPickerOpen && <div className="student-profile-avatar-modal-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setAvatarPickerOpen(false); }}><section className="student-profile-avatar-modal" role="dialog" aria-modal="true" aria-labelledby="student-profile-avatar-modal-title"><header><h2 id="student-profile-avatar-modal-title">Scegli avatar</h2><button type="button" onClick={() => setAvatarPickerOpen(false)} aria-label="Chiudi selezione avatar"><X size={20}/></button></header><div className="student-profile-avatar-modal-grid">{visibleAvatars.map(pokemon => <button type="button" key={pokemon.id} className={currentAvatar === pokemon.id ? 'student-profile-avatar-modal-option is-selected' : 'student-profile-avatar-modal-option'} onClick={() => { onChooseAvatar(pokemon.id); setAvatarPickerOpen(false); }} aria-label="Seleziona avatar" aria-pressed={currentAvatar === pokemon.id}><img src={avatarUrl(pokemon.id)} alt="" loading="lazy"/></button>)}</div></section></div>}
 
       {previewOpen && <div className="student-profile-preview-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setPreviewOpen(false); }}><section className="student-profile-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="student-profile-preview-title"><header><div><span className="student-profile-kicker">POKÉ STUDY · ANTEPRIMA</span><h2 id="student-profile-preview-title">Così appare il tuo profilo pubblico</h2><p>Questa vista riflette le modifiche attuali e le impostazioni di privacy.</p></div><button type="button" onClick={() => setPreviewOpen(false)} aria-label="Chiudi anteprima"><X size={20}/></button></header><div className="student-profile-preview-dialog-body"><div className={'student-profile-public-card profile-frame-' + (unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy')}><img className="student-profile-public-crest" src={import.meta.env.BASE_URL + 'images/academies/' + crestFile(academy)} alt=""/><img className="student-profile-public-avatar" src={avatarUrl(currentAvatar)} alt=""/><h3>{student.matricola}</h3><span className="student-profile-public-academy">{academyName(academy)}</span>{draft.visibility.activeTitle && activeTitle && <span className="student-profile-title-pill"><Crown size={13}/>{activeTitle.label}</span>}{draft.visibility.bio && draft.bio.trim() && <p>{draft.bio.trim()}</p>}{draft.visibility.favoritePokemon && favoritePokemonName && <div className="student-profile-public-favorite"><Sparkles size={14}/> Pokémon preferito: {titleCase(favoritePokemonName)}</div>}{draft.visibility.motto && draft.motto.trim() && <blockquote>“{draft.motto.trim()}”</blockquote>}{publicBadgeList.length > 0 && <div className="student-profile-public-badges">{publicBadgeList.map(badge => <span key={badge.id}><Award size={14}/>{badge.label}</span>)}</div>}{draft.visibility.catalogStats && <div className="student-profile-public-stats"><div><strong>{pokemonCount.toLocaleString('it-IT')}</strong><small>Pokémon</small></div><div><strong>{completedEntries.toLocaleString('it-IT')}</strong><small>Altre entità</small></div><div><strong>{progress.points.toLocaleString('it-IT')} ₱</strong><small>Punti Poké</small></div></div>}{draft.visibility.communityStats && <div className="student-profile-public-community"><strong><MessageSquare size={14}/> Attività pubblica</strong>{communityLoading || communityStatsAvailable ? <span>{ownThreads} discussioni · {ownReplies} risposte</span> : <span>{communityIdentity ? 'Statistiche non disponibili offline' : 'Collega un account community per mostrarle'}</span>}</div>}</div></div></section></div>}
     </div>
