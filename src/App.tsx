@@ -576,7 +576,6 @@ export default function App() {
     return () => { active = false; };
   }, [view, typeCatalog.length, online]);
 
-  const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const lessonTargets = useMemo(() => {
     const targets = new Map<string, { id: string; macroId: string; macroName: string; name: string; total: number; solved: number }>();
     for (const card of lessonDeck) {
