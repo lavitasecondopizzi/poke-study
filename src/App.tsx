@@ -50,17 +50,56 @@ const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
 ];
 function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
-  const weights: Record<string, number> = { scanner: 3, research: 7, 'direct-region': 4, 'number-check': 5, 'auto-sort': 15, 'reveal-name': 4, 'reveal-subcategory': 6, 'subcategory-errors': 8 };
-  const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
-  return SHOP_PRODUCTS.map(product => {
-    if (product.currency !== 'poke') return product;
-    let cost = weights[product.id] ? Math.round(totalEarnablePoints * weights[product.id] / totalWeight) : 1;
-    if (product.id.startsWith('scanner-upgrade-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.10 / 19 * (1 + (level - 2) / 18)); }
-    else if (product.id.startsWith('research-upgrade-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.20 / 11 * (1 + (level - 2) / 10)); }
-    else if (product.id.startsWith('multi-select-')) { const level = Number(product.id.split('-').at(-1)); cost = Math.round(totalEarnablePoints * 0.12 / 8 * level); }
-    return { ...product, cost: Math.max(1, cost) };
-  });
+  // Il budget complessivo del negozio coincide con tutti i PP ottenibili:
+  // 1 per ciascuno dei 1.025 Pokémon e 1 per ogni altra voce catalogabile.
+  // I pesi esprimono l'impatto dell'aiuto; i potenziamenti costano progressivamente di più.
+  const weightFor = (product: ShopProduct): number => {
+    const id = product.id;
+    if (id === 'direct-region') return 1;
+    if (id === 'reveal-name') return 1;
+    if (id === 'number-check') return 2;
+    if (id === 'subcategory-errors') return 2;
+    if (id === 'scanner') return 3;
+    if (id === 'reveal-subcategory') return 4;
+    if (id === 'research') return 7;
+    if (id === 'auto-sort') return 12;
+    if (id.startsWith('scanner-upgrade-')) {
+      const level = Number(id.split('-').at(-1));
+      return 1.5 + (level - 2) * 0.55;
+    }
+    if (id.startsWith('research-upgrade-')) {
+      const level = Number(id.split('-').at(-1));
+      return 3 + (level - 2) * 1.15;
+    }
+    if (id.startsWith('multi-select-')) {
+      const level = Number(id.split('-').at(-1));
+      return 1 + level * 0.45;
+    }
+    return 0;
+  };
+  const purchasable = SHOP_PRODUCTS.filter(product => product.currency === 'poke');
+  const weights = purchasable.map(weightFor);
+  const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
+  const exactShares = purchasable.map((product, index) => ({
+    id: product.id,
+    raw: totalEarnablePoints * weights[index] / weightTotal,
+    cost: Math.floor(totalEarnablePoints * weights[index] / weightTotal),
+  }));
+  let remainder = totalEarnablePoints - exactShares.reduce((sum, item) => sum + item.cost, 0);
+  [...exactShares]
+    .map(item => ({ ...item, fraction: item.raw - item.cost }))
+    .sort((left, right) => right.fraction - left.fraction)
+    .slice(0, remainder)
+    .forEach(item => {
+      const target = exactShares.find(entry => entry.id === item.id);
+      if (target) target.cost += 1;
+    });
+  const prices = new Map(exactShares.map(item => [item.id, item.cost]));
+  return SHOP_PRODUCTS.map(product => product.currency === 'poke'
+    ? { ...product, cost: prices.get(product.id) ?? product.cost }
+    : product);
 }
+
 function productUnlocked(product: ShopProduct, inventory: string[], completedPokemon: number) {
   return (product.requires ?? []).every(requiredId => inventory.includes(requiredId))
     && completedPokemon >= (product.requiredPokemon ?? 0);
@@ -819,7 +858,7 @@ export default function App() {
             {notice && <div className="notice-inline" role="status">{notice}</div>}
             <div className="shop-catalog-intro"><div><strong>{shopTab === 'oggetti' ? 'Strumenti per la tua ricerca' : 'Premi per i tuoi progressi'}</strong><p>{shopTab === 'oggetti' ? 'Gli strumenti attivi aiutano durante la classificazione; i livelli successivi migliorano quelli già acquistati.' : 'Usa i Punti esame ottenuti completando le prove per sbloccare archivi, modalità e personalizzazioni.'}</p></div><span>{shopProducts.filter(product => product.category === shopTab).length} articoli</span></div>
             <div className="shop-grid shop-grid-refactor">
-              {shopProducts.filter(product => product.category === shopTab && product.kind !== 'upgrade').map(product => {
+              {shopProducts.filter(product => product.category === shopTab && product.kind !== 'upgrade').sort((left, right) => left.cost - right.cost || left.name.localeCompare(right.name, 'it')).map(product => {
                 const owned = inventory.includes(product.id);
                 const unlocked = productUnlocked(product, inventory, progress.completedIds.length);
                 const balance = product.currency === 'poke' ? progress.points : progress.examPoints;
