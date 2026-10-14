@@ -67,7 +67,7 @@ export interface CommunityRankingResponse {
 }
 
 export interface CommunityPlayerState {
-  profile: Pick<StudentProfile, "matricola" | "avatarId"> | null;
+  profile: Pick<StudentProfile, "matricola" | "avatarId" | "profileSettings"> | null;
   progress: SavedProgress | null;
   updatedAt: string | null;
 }
@@ -152,7 +152,7 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   const token = readToken();
   if (!token) throw new Error("Nessuna identità community disponibile per salvare i progressi.");
   const snapshot = {
-    profile: { avatarId: profile.avatarId ?? null },
+    profile: { avatarId: profile.avatarId ?? null, ...(profile.profileSettings ? { profileSettings: profile.profileSettings } : {}) },
     progress,
   };
   const write = pendingPlayerStateWrite.then(async () => {
