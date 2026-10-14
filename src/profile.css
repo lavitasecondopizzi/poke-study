@@ -213,3 +213,19 @@
 .student-profile-preview-dialog-body .student-profile-public-card>p{font-size:13px}
 .student-profile-preview-dialog-body .student-profile-public-stats strong{font-size:16px}
 @media(max-width:600px){.student-profile-preview-backdrop{padding:8px}.student-profile-preview-dialog{max-height:96vh;border-radius:14px}.student-profile-preview-dialog>header{padding:15px}.student-profile-preview-dialog>header h2{font-size:17px}.student-profile-preview-dialog-body{padding:12px}.student-profile-preview-dialog-body>.student-profile-public-card{padding:25px 14px 16px}.student-profile-section-heading{gap:9px}.student-profile-preview-open{font-size:9px;padding:7px}}
+
+
+/* Selettore avatar: immagini senza etichette o metadati Pokémon */
+.student-profile-avatar-trigger{padding:0;cursor:pointer;color:inherit;font:inherit;transition:transform .15s,border-color .15s}
+.student-profile-avatar-trigger:hover{border-color:var(--sp-accent);transform:scale(1.03)}
+.student-profile-avatar-modal-backdrop{position:fixed;inset:0;z-index:1300;display:grid;place-items:center;padding:18px;background:rgba(17,27,43,.68);backdrop-filter:blur(5px)}
+.student-profile-avatar-modal{width:min(560px,100%);max-height:min(88vh,760px);overflow:auto;border:1px solid var(--sp-border);border-radius:17px;background:#fff;box-shadow:0 24px 80px rgba(10,20,35,.34)}
+.student-profile-avatar-modal>header{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid #e5eaf1;background:rgba(255,255,255,.97);backdrop-filter:blur(10px)}
+.student-profile-avatar-modal>header h2{margin:0;color:#24344a;font-size:17px}
+.student-profile-avatar-modal>header button{display:grid;place-items:center;width:34px;height:34px;border:1px solid #dce3ed;border-radius:9px;background:#fff;color:#42536b;cursor:pointer}
+.student-profile-avatar-modal-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding:18px}
+.student-profile-avatar-modal-option{display:grid;place-items:center;aspect-ratio:1;min-width:0;padding:7px;border:1px solid #e1e7ef;border-radius:12px;background:#fff;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.student-profile-avatar-modal-option:hover{border-color:var(--sp-accent);background:var(--sp-soft);transform:translateY(-2px)}
+.student-profile-avatar-modal-option.is-selected{border:2px solid var(--sp-accent);padding:6px;background:var(--sp-soft);box-shadow:0 0 0 2px rgba(100,110,180,.08)}
+.student-profile-avatar-modal-option img{width:100%;height:100%;object-fit:contain}
+@media(max-width:600px){.student-profile-avatar-modal-backdrop{padding:8px}.student-profile-avatar-modal{max-height:94vh;border-radius:14px}.student-profile-avatar-modal-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:12px}}
