@@ -342,7 +342,7 @@ export default function Academy({ configured, identityReady, onOpenProfile }: Pr
             <div>
               <span className="academy-eyebrow">ESAME FINALE</span>
               <h3>Esame di grado — Fondamenti</h3>
-              <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 20–30 domande uniche.</p>
+              <p>Per superare il Grado I servono tutte le lezioni completate, una media del grado di almeno 26/30 e una media di tutti i tentativi dell’esame finale di almeno 26/30. Ogni tentativo d’esame contiene 25 domande uniche.</p>
               <div className="academy-grade-exam-stats"><span>Media del grado <strong>{formatAverage(gradeAverage)}</strong></span><span>Media esame <strong>{formatAverage(gradeExamAverage)}</strong></span><span>Tentativi esame <strong>{gradeExamAttemptCount}</strong></span></div>
               {gradeExamAttempts.length > 0 && <div className="academy-exam-history"><strong>Ultimi tentativi d’esame</strong>{gradeExamAttempts.slice(0, 5).map((attempt, index) => <div key={attempt.id}><span>Tentativo {gradeExamAttemptCount - index}</span><strong>{attempt.score}/30</strong><button type="button" className="academy-review-button" onClick={() => void reviewAttempt(attempt.id, "grade_exam")}>Rivedi</button><small>{new Date(attempt.created_at).toLocaleString("it-IT")}</small></div>)}</div>}
               {gradePassed && <p className="academy-grade-complete"><CheckCircle2 size={16} /> Grado I superato.</p>}
