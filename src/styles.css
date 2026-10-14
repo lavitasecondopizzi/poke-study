@@ -2970,3 +2970,72 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .personal-register-page .pr-type-grid article.is-done .pr-region-note{color:var(--pr-accent-dark);font-weight:800}
 @media(max-width:850px){.personal-register-page .pr-type-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.personal-register-page .pr-type-grid{grid-template-columns:1fr;gap:8px}.personal-register-page .pr-type-grid article{padding:12px}}
+
+
+/* Profilo: il grado di studi è un dato accademico distinto dall'Accademia di appartenenza. */
+.student-profile-grade{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid var(--sp-border);border-radius:10px;background:var(--sp-soft);color:var(--sp-dark)}
+.student-profile-grade>span{display:flex;flex-direction:column;gap:1px}
+.student-profile-grade small{font-size:8px;font-weight:850;letter-spacing:.08em;line-height:1.2}
+.student-profile-grade strong{font-size:11px;font-weight:850;line-height:1.35}
+@media(max-width:650px){.student-profile-grade{width:100%;justify-content:flex-start}.student-profile-grade strong{font-size:12px}}
+
+/* Cartoleria: layout unico, ricerca leggibile e stati d'acquisto con contrasto esplicito. */
+.cartoleria-page .shop-hero-refactor{grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:28px;padding:30px}
+.cartoleria-page .shop-hero-refactor .eyebrow{display:inline-flex;align-items:center;gap:7px}
+.shop-hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.shop-hero-badges span{display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border:1px solid var(--academy-border,#d1e2ef);border-radius:8px;background:#fff;color:var(--academy-accent-dark,#245e88);font-size:10px;font-weight:800}
+.shop-wallets-refactor{grid-template-columns:1fr;gap:9px}
+.shop-wallets-refactor .shop-wallet{min-height:78px;border-color:var(--academy-border,#d1e2ef)}
+.shop-wallets-refactor .shop-wallet-icon{background:var(--academy-soft,#eaf5ff);color:var(--academy-accent-dark,#2b76a7)}
+.shop-wallet-owned .shop-wallet-icon{font-size:18px}
+.shop-refactor-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) minmax(200px,.35fr) auto;gap:12px;align-items:center;margin:0 0 24px;padding:13px;border:1px solid #d7e4ed;border-radius:14px;background:#fff;box-shadow:0 3px 12px #235d8608}
+.shop-refactor-search{display:flex;align-items:center;gap:10px;min-width:0;min-height:44px;padding:0 12px;border:1px solid #c9dbe8;border-radius:9px;background:#fafdff;color:var(--academy-accent-dark,#245e88)}
+.shop-refactor-search:focus-within{border-color:var(--academy-accent,#347da9);box-shadow:0 0 0 3px color-mix(in srgb,var(--academy-accent,#347da9) 15%,transparent)}
+.shop-refactor-search input{width:100%;min-width:0;min-height:42px;border:0;outline:0;background:transparent;color:#203b52;font:600 12px 'Nunito Sans',Arial,sans-serif}
+.shop-refactor-search input::placeholder{color:#788da0;opacity:1}
+.shop-refactor-filter{display:flex;align-items:center;gap:9px;min-width:0;color:#4d687d;font-size:11px;font-weight:850}
+.shop-refactor-filter select{width:100%;min-width:0;min-height:44px;padding:8px 30px 8px 10px;border:1px solid #c9dbe8;border-radius:9px;background:#fff;color:#203b52;font:700 11px 'Nunito Sans',Arial,sans-serif}
+.shop-refactor-filter select:focus-visible,.shop-refactor-search input:focus-visible{outline:2px solid var(--academy-accent,#347da9);outline-offset:2px}
+.shop-refactor-summary{display:flex;flex-direction:column;align-items:flex-end;gap:2px;min-width:70px;color:#657d90;font-size:9px}
+.shop-refactor-summary strong{color:var(--academy-accent-dark,#245e88);font:700 22px 'Libre Baskerville',Georgia,serif}
+.shop-refactor-section{margin:0 0 28px}
+.shop-refactor-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--academy-border,#dbe8f2)}
+.shop-refactor-section-eyebrow{color:var(--academy-accent,#3d83ad);font-size:9px;font-weight:900;letter-spacing:.14em}
+.shop-refactor-section-heading h2{margin:5px 0;color:var(--academy-accent-dark,#244b6d);font:700 clamp(18px,2vw,23px) 'Libre Baskerville',Georgia,serif}
+.shop-refactor-section-heading p{margin:0;color:#637c90;font-size:11px;line-height:1.5}
+.shop-refactor-section-count{flex:0 0 auto;padding:6px 9px;border:1px solid var(--academy-border,#dbe8f2);border-radius:999px;background:var(--academy-soft,#f3f9ff);color:var(--academy-accent-dark,#245e88);font-size:10px;font-weight:850}
+.cartoleria-page .shop-grid-refactor{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:13px;margin:14px 0 0}
+.cartoleria-page .shop-card-refactor{align-items:flex-start;gap:12px;padding:17px;border-color:#d8e4ec;border-radius:13px;box-shadow:0 3px 12px rgba(35,65,90,.045);transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}
+.cartoleria-page .shop-card-refactor:hover{border-color:var(--academy-border,#b8d8eb);box-shadow:0 7px 18px rgba(35,65,90,.08);transform:translateY(-1px)}
+.cartoleria-page .shop-product-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border:1px solid var(--academy-border,#d8e8f3);border-radius:11px;background:var(--academy-soft,#f2f8fd);color:var(--academy-accent-dark,#286d9c)}
+.cartoleria-page .shop-product-content{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:9px;min-width:0;height:100%}
+.cartoleria-page .shop-product-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cartoleria-page .shop-product-type{color:#6d8496;font-size:8px;font-weight:900;letter-spacing:.1em}
+.cartoleria-page .shop-product-status{display:inline-flex;align-items:center;min-height:22px;padding:4px 7px;border:1px solid #d8e4ec;border-radius:6px;background:#f2f5f7;color:#516a7e;font-size:9px;font-weight:850;line-height:1.25}
+.cartoleria-page .shop-product-ready{border-color:#b7d9c1;background:#edf8f0;color:#216a3b}
+.cartoleria-page .shop-product-owned{border-color:#b7d9c1;background:#edf8f0;color:#216a3b}
+.cartoleria-page .shop-product-locked-status{border-color:#e1d7bd;background:#fff8e8;color:#765b22}
+.cartoleria-page .shop-card-refactor h3{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0;color:#203e58;font-size:15px;line-height:1.35}
+.cartoleria-page .shop-card-refactor p{margin:0;color:#526c80;font-size:11px;line-height:1.6}
+.cartoleria-page .shop-level-count{flex:0 0 auto;padding:3px 6px;border:1px solid var(--academy-border,#c9dfef);border-radius:6px;background:var(--academy-soft,#eef7ff);color:var(--academy-accent-dark,#286d9c);font:800 9px 'DM Mono',monospace}
+.cartoleria-page .shop-requirement-progress{gap:8px;border-color:#dbe6ed;background:#f8fbfd}
+.cartoleria-page .shop-requirement-progress li{color:#526a7d;font-size:10px}
+.cartoleria-page .shop-requirement-progress li.requirement-done{color:#216a3b}
+.cartoleria-page .shop-product-requirement{font-size:10px;line-height:1.45}
+.cartoleria-page .shop-product-footer{margin-top:auto;padding-top:12px}
+.cartoleria-page .shop-price strong{color:var(--academy-accent-dark,#234f74);font-size:19px}
+.cartoleria-page .shop-price span{font-size:10px;color:#617a8e}
+.cartoleria-page .shop-buy-button{min-height:40px;min-width:108px;max-width:100%;padding:9px 14px;border-radius:8px;font-size:11px;font-weight:900}
+.cartoleria-page .shop-buy-button:focus-visible,.shop-refactor-empty button:focus-visible{outline:3px solid color-mix(in srgb,var(--academy-accent,#347da9) 35%,transparent);outline-offset:2px}
+.cartoleria-page .shop-buy-button:disabled{border-color:#d5dee5;background:#e9eef2;color:#4e6272;opacity:1}
+.cartoleria-page .shop-requirements-waiting{max-width:170px;color:#4e6272;font-size:10px}
+.shop-refactor-notice{margin:0 0 18px}
+.shop-refactor-empty{display:flex;flex-direction:column;align-items:center;gap:9px;margin:20px 0 30px;padding:38px 20px;border:1px dashed #c7d8e5;border-radius:14px;background:#fff;text-align:center;color:#4d687d}
+.shop-refactor-empty>svg{color:var(--academy-accent,#347da9)}
+.shop-refactor-empty strong{color:#244b6d;font-size:16px}
+.shop-refactor-empty p{margin:0;font-size:12px;line-height:1.6}
+.shop-refactor-empty button{min-height:38px;margin-top:5px;padding:8px 13px;border:1px solid var(--academy-accent-dark,#245e88);border-radius:8px;background:#fff;color:var(--academy-accent-dark,#245e88);font-size:11px;font-weight:850;cursor:pointer}
+.shop-refactor-empty button:hover{background:var(--academy-soft,#f3f9ff)}
+@media(max-width:1000px){.cartoleria-page .shop-hero-refactor{grid-template-columns:1fr}.shop-wallets-refactor{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none}.shop-refactor-toolbar{grid-template-columns:minmax(0,1fr) minmax(200px,.7fr)}.shop-refactor-summary{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:flex-end;gap:6px}.cartoleria-page .shop-grid-refactor{grid-template-columns:1fr}}
+@media(max-width:650px){.cartoleria-page .shop-hero-refactor{padding:18px 15px;gap:17px}.shop-hero-badges{gap:6px}.shop-hero-badges span{font-size:9px}.shop-wallets-refactor{grid-template-columns:1fr}.shop-refactor-toolbar{grid-template-columns:1fr;gap:9px;padding:10px}.shop-refactor-filter{justify-content:space-between}.shop-refactor-filter select{max-width:72%}.shop-refactor-summary{grid-column:auto;justify-content:flex-start}.shop-refactor-section-heading{align-items:flex-start}.shop-refactor-section-heading h2{font-size:18px}.shop-refactor-section-heading p{max-width:250px}.shop-refactor-section-count{font-size:9px;padding:5px 7px}.cartoleria-page .shop-card-refactor{padding:12px;gap:9px}.cartoleria-page .shop-product-icon{width:36px;height:36px;flex-basis:36px}.cartoleria-page .shop-product-topline{align-items:flex-start}.cartoleria-page .shop-product-type{max-width:140px;line-height:1.5}.cartoleria-page .shop-product-footer{align-items:flex-end}.cartoleria-page .shop-buy-button{min-width:96px;padding:8px 10px}.cartoleria-page .shop-price strong{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.cartoleria-page .shop-card-refactor{transition:none}.cartoleria-page .shop-card-refactor:hover{transform:none}}
