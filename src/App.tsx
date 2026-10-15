@@ -716,7 +716,7 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id) && !Object.prototype.hasOwnProperty.call(misplacedCards, card.id)),
     [lessonDeck, lessonSolved, misplacedCards],
   );
-  const gamePageSize = 15;
+  const gamePageSize = 25;
   const gamePageCount = Math.max(1, Math.ceil(remainingLessonCards.length / gamePageSize));
   const safeGamePage = Math.min(gamePage, gamePageCount - 1);
   const visibleGameCards = remainingLessonCards.slice(safeGamePage * gamePageSize, safeGamePage * gamePageSize + gamePageSize);
@@ -737,10 +737,18 @@ export default function App() {
     }
     return false;
   }), [lessonDeck, misplacedCards, lessonSolved, activeFolderId, openSubcategoryId, openPokemonRegionId, openMacroId, currentPokemonRegion, lessonTargets]);
-  const folderPageCount = Math.max(1, Math.ceil(folderAssignedCards.length / 15));
+  const folderPageSize = 25;
+  const folderPageCount = Math.max(1, Math.ceil(folderAssignedCards.length / folderPageSize));
   const safeFolderPage = Math.min(folderPage, folderPageCount - 1);
-  const visibleFolderCards = folderAssignedCards.slice(safeFolderPage * 15, safeFolderPage * 15 + 15);
+  const visibleFolderCards = folderAssignedCards.slice(safeFolderPage * folderPageSize, safeFolderPage * folderPageSize + folderPageSize);
 
+  const activeFolderSolvedCount = openSubcategoryId
+    ? (currentSubcategory?.solved ?? 0)
+    : openPokemonRegionId
+      ? (lessonTargets.find(target => target.id === openPokemonRegionId)?.solved ?? 0)
+      : openMacroId
+        ? currentMacroTargets.reduce((sum, target) => sum + target.solved, 0)
+        : lessonSolved.length;
   const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
     ...category,
     total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
@@ -1466,7 +1474,7 @@ export default function App() {
               <section className="game-zone folder-context-zone" aria-label="Area di lavoro delle entità">
                 <div className="game-zone-heading">
                   <strong>{!openMacroId ? 'TUTTE LE ENTITÀ' : openSubcategoryId && currentSubcategory ? currentSubcategory.name.toLocaleUpperCase('it') : openPokemonRegionId && currentPokemonRegion ? currentPokemonRegion.name.toLocaleUpperCase('it') : currentMacro ? currentMacro.name.toLocaleUpperCase('it') : 'CARTELLA'}</strong>
-                  <span>{!activeFolderId ? `${remainingLessonCards.length} disponibili` : `${folderAssignedCards.length} qui · ${lessonSolved.length} completate`}</span>
+                  <span>{!activeFolderId ? `${remainingLessonCards.length} disponibili` : `${folderAssignedCards.length} qui · ${activeFolderSolvedCount} completate`}</span>
                 </div>
                 <div className="folder-context-toolbar">
                   <button type="button" className="folder-mobile-toggle" onClick={() => setMobileFolderTreeOpen(true)}>☰ Cartelle</button>
@@ -1543,7 +1551,7 @@ export default function App() {
                           <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
                         </div>)}
                       </div>
-                      {folderAssignedCards.length > 15 && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
+                      {folderAssignedCards.length > folderPageSize && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
                     </div>}
                     {folderAssignedCards.length === 0 && !openSubcategoryId && !openPokemonRegionId && <div className="folder-empty-hint">Questa cartella non contiene ancora entità provvisorie. Seleziona una o più entità da <strong>Tutte le entità</strong>, poi torna qui e premi <strong>Sposta qui</strong>; oppure trascina una carta direttamente sulla cartella.</div>}
                   </>
