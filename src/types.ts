@@ -32,6 +32,8 @@ export interface SavedProgress {
     openSubcategoryId?: string | null;
     openPokemonRegionId?: string | null;
     gamePage?: number;
+    /** Macrocategorie rivelate dallo Scanner, persistenti per ciascuna carta. */
+    revealedMacroCategories?: Record<string, string>;
   };
 }
 
