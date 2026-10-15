@@ -529,7 +529,7 @@ export default function App() {
         setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
         setFolderPage(nextProgress.gameState?.folderPage ?? 0);
-         setRevealedMacroCategories(nextProgress.gameState?.revealedMacroCategories ?? {});
+         setRevealedMacroCategories(old => ({ ...(nextProgress.gameState?.revealedMacroCategories ?? {}), ...old }));
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -1062,8 +1062,9 @@ export default function App() {
     const currentInventory = progress.inventory ?? [];
     const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
     const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
-    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs } }));
-    setRevealedMacroCategories(old => ({ ...old, ...Object.fromEntries(cards.map(card => [card.id, card.macroName])) }));
+    const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.macroName]));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedMacroCategories: { ...(old.gameState?.revealedMacroCategories ?? {}), ...revealedNow } } }));
+    setRevealedMacroCategories(old => ({ ...old, ...revealedNow }));
   }
 
   function handleResearchSearch(event: FormEvent<HTMLFormElement>) {
