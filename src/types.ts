@@ -38,6 +38,8 @@ export interface SavedProgress {
     revealedMacroCategories?: Record<string, string>;
     /** Sottocategorie rivelate da Ricerca, persistenti per ciascuna carta. */
     revealedSubcategories?: Record<string, string>;
+    /** Numeri nazionali rivelati dal Controllo numerazione, persistenti per carta. */
+    revealedPokemonNumbers?: Record<string, number>;
   };
 }
 
