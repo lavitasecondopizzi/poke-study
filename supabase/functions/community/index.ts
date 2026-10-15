@@ -8,6 +8,7 @@ const corsHeaders = {
 };
 
 const categories = new Set(["generale", "domande", "strategie", "annunci"]);
+const communityRoles = new Set(["utente", "collaboratore_autorizzato", "moderatore", "amministratore"]);
 type Academy = "arancia" | "uva" | "mirtillo";
 
 const STARTER_AVATAR_IDS = new Set([1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912]);
@@ -147,7 +148,7 @@ Deno.serve(async request => {
       const { data: identity, error } = await supabase
         .from("community_identities")
         .insert({ nickname, academy: academy as Academy, matricola: newMatricola(), token_hash: tokenHash })
-        .select("id,nickname,academy,matricola,created_at")
+        .select("id,nickname,academy,matricola,created_at,role")
         .single();
 
       if (error || !identity) {
@@ -164,13 +165,64 @@ Deno.serve(async request => {
     const tokenHash = await hashToken(token);
     const { data: identity, error: identityError } = await supabase
       .from("community_identities")
-      .select("id,nickname,academy,matricola,created_at")
+      .select("id,nickname,academy,matricola,created_at,role")
       .eq("token_hash", tokenHash)
       .maybeSingle();
 
     if (identityError || !identity) return response(401, { error: "Identità community non riconosciuta." });
 
     if (action === "whoami") return response(200, { identity });
+
+    // Role checks are performed against the database identity resolved from the private token.
+    // Client-provided roles and identity IDs are never treated as proof of privilege.
+    if (action === "admin_list_users") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const { data, error } = await supabase
+        .from("community_identities")
+        .select("id,nickname,matricola,academy,role,created_at")
+        .order("created_at", { ascending: true })
+        .limit(1000);
+      if (error) return response(500, { error: "Non è stato possibile caricare gli utenti." });
+      return response(200, { users: data ?? [] });
+    }
+
+    if (action === "admin_list_audit") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const { data, error } = await supabase
+        .from("community_admin_audit_log")
+        .select("id,actor_id,target_id,old_role,new_role,created_at")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) return response(500, { error: "Non è stato possibile caricare il registro delle operazioni." });
+      return response(200, { entries: data ?? [] });
+    }
+
+    if (action === "admin_set_role") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const targetId = typeof input.targetId === "string" ? input.targetId : "";
+      const role = typeof input.role === "string" ? input.role : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId)) {
+        return response(400, { error: "Identificativo utente non valido." });
+      }
+      if (!communityRoles.has(role)) return response(400, { error: "Ruolo non valido." });
+      if (targetId === identity.id) return response(400, { error: "Non puoi modificare il tuo stesso ruolo." });
+      const { data, error } = await supabase.rpc("admin_set_community_role", {
+        p_actor_id: identity.id,
+        p_target_id: targetId,
+        p_new_role: role,
+      });
+      if (error) {
+        const message = error.message.includes("ultimo amministratore")
+          ? "Non è possibile rimuovere l’ultimo amministratore."
+          : error.message.includes("non trovata")
+            ? "Utente non trovato."
+            : error.message.includes("riservata agli amministratori")
+              ? "Operazione riservata agli amministratori."
+              : "Non è stato possibile modificare il ruolo.";
+        return response(409, { error: message });
+      }
+      return response(200, { updated: true, result: Array.isArray(data) ? data[0] : data });
+    }
 
     if (action === "get_public_profile") {
       const targetId = typeof input.identityId === "string" ? input.identityId : "";
