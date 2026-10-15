@@ -42,7 +42,7 @@ const DEFAULT_VISIBILITY = {
   badges: true, catalogStats: true, communityStats: true, academicGrade: true, matricola: true,
 };
 const DEFAULT_SETTINGS: StudentProfileSettings = {
-  bio: '', favoritePokemon: '', motto: '', activeTitle: '', customTitle: '', badges: [],
+  bio: '', favoritePokemon: '', motto: '', activeTitle: '', badges: [],
   frame: 'academy', visibility: DEFAULT_VISIBILITY,
 };
 const FRAME_OPTIONS = [
@@ -90,7 +90,6 @@ function normalizeSettings(value?: StudentProfileSettings): StudentProfileSettin
     favoritePokemon: typeof raw.favoritePokemon === 'string' ? raw.favoritePokemon.slice(0, 60) : '',
     motto: typeof raw.motto === 'string' ? raw.motto.slice(0, 90) : '',
     activeTitle: typeof raw.activeTitle === 'string' ? raw.activeTitle.slice(0, 80) : '',
-    customTitle: typeof raw.customTitle === 'string' ? raw.customTitle.slice(0, 40) : '',
     badges: Array.isArray(raw.badges) ? raw.badges.filter((id): id is string => typeof id === 'string').slice(0, 3) : [],
     frame: typeof raw.frame === 'string' && validFrames.includes(raw.frame) ? raw.frame : 'academy',
     visibility: { ...DEFAULT_VISIBILITY, ...visibility },
@@ -160,9 +159,9 @@ export default function StudentProfilePage({
     if (academicGrade > 0) result.push({ id: 'title-grade-' + academicGrade, label: 'Allievo di Grado ' + academicGrade, description: 'Hai superato l’esame di grado ' + academicGrade + '.' });
     if (ownThreads > 0) result.push({ id: 'title-community-author', label: 'Voce della Bacheca', description: 'Hai pubblicato una discussione pubblica.' });
     if (ownReplies > 0) result.push({ id: 'title-community-helper', label: 'Compagno di Studio', description: 'Hai contribuito con una risposta pubblica.' });
-    if (hasExclusiveTitle && draft.customTitle.trim()) result.push({ id: 'custom-title:' + draft.customTitle.trim(), label: draft.customTitle.trim(), description: 'Titolo personale creato con Titolo esclusivo.' });
+    if (hasExclusiveTitle) result.push({ id: 'title-exclusive-archivista-pokemon', label: 'Archivista Pokémon', description: 'Titolo esclusivo sbloccato nella Cartoleria.' });
     return result;
-  }, [pokemonCount, completedRegions, academicGrade, ownThreads, ownReplies, hasExclusiveTitle, draft.customTitle]);
+  }, [pokemonCount, completedRegions, academicGrade, ownThreads, ownReplies, hasExclusiveTitle]);
 
   const badges = useMemo(() => {
     const result: Array<{ id: string; label: string; description: string; icon: string }> = [];
@@ -199,7 +198,6 @@ export default function StudentProfilePage({
         favoritePokemon: draft.favoritePokemon.slice(0, 60),
         motto: draft.motto.trim().slice(0, 90),
         activeTitle: allowedTitles.has(draft.activeTitle) ? draft.activeTitle : '',
-        customTitle: draft.customTitle.trim().slice(0, 40),
         badges: draft.badges.filter(id => allowedBadges.has(id)).slice(0, 3),
         frame: unlockedFrames.some(frame => frame.id === draft.frame) ? draft.frame : 'academy',
         visibility: { ...DEFAULT_VISIBILITY, ...draft.visibility },
@@ -268,8 +266,7 @@ export default function StudentProfilePage({
 
           <section className="student-profile-card">
             <div className="student-profile-section-heading"><div><span className="student-profile-kicker">TITOLI E DISTINTIVI</span><h2>Il tuo percorso</h2><p>I titoli e i distintivi si sbloccano con i risultati; puoi mostrarne un titolo e fino a tre distintivi.</p></div><Trophy size={23}/></div>
-            {hasExclusiveTitle && <label className="student-profile-field student-profile-field-wide"><span>Titolo personalizzato <small>{draft.customTitle.length}/40</small></span><input value={draft.customTitle} maxLength={40} onChange={event => { const value = event.target.value; setDraft(old => ({ ...old, customTitle: value, activeTitle: old.activeTitle.startsWith('custom-title:') ? (value.trim() ? 'custom-title:' + value.trim() : '') : old.activeTitle })); }} placeholder="Es. Custode di Paldea"/><small>Scrivi un titolo personale. Sarà disponibile nell’elenco dei titoli attivabili e nel profilo pubblico se ne abiliti la visibilità.</small></label>}
-          {!hasExclusiveTitle && <div className="student-profile-empty-unlocks"><LockKeyhole size={18}/><span>Acquista <strong>Titolo esclusivo</strong> nella Cartoleria per creare e attivare un titolo personale.</span></div>}
+            {!hasExclusiveTitle && <div className="student-profile-empty-unlocks"><LockKeyhole size={18}/><span>Acquista <strong>Titolo esclusivo</strong> nella Cartoleria per sbloccare il titolo <strong>Archivista Pokémon</strong>.</span></div>}
           <label className="student-profile-field"><span>Titolo attivo</span><select value={draft.activeTitle} onChange={event => updateDraft('activeTitle', event.target.value)}><option value="">Nessun titolo attivo</option>{titles.map(title => <option value={title.id} key={title.id}>{title.label}</option>)}</select></label>
             {titles.length > 0 ? <div className="student-profile-unlocked-list"><strong><Crown size={15}/> Titoli sbloccati ({titles.length})</strong>{titles.map(title => <div key={title.id} className={draft.activeTitle === title.id ? 'is-active' : ''}><span><strong>{title.label}</strong><small>{title.description}</small></span><button type="button" onClick={() => updateDraft('activeTitle', title.id)}>{draft.activeTitle === title.id ? <><Check size={14}/> Attivo</> : 'Attiva'}</button></div>)}</div> : <div className="student-profile-empty-unlocks"><LockKeyhole size={18}/><span>Completa qualche attività per sbloccare il primo titolo.</span></div>}
             <div className="student-profile-badge-heading"><strong>Distintivi da mostrare</strong><span>{draft.badges.filter(id => badges.some(badge => badge.id === id)).length}/3 selezionati</span></div>
