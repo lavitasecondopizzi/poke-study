@@ -336,6 +336,7 @@ export default function App() {
   const [lessonDeck, setLessonDeck] = useState<CatalogCard[]>([]);
   const [lessonSolved, setLessonSolved] = useState<string[]>([]);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [selectedCardIds, setSelectedCardIds] = useState<string[]>([]);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
   const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>(() => progress.gameState?.misplacedCards ?? {});
   const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => progress.gameState?.categoryPlacements ?? {});
@@ -741,6 +742,25 @@ export default function App() {
     setLessonReady(true);
   }, [species, itemCatalog, lessonReady, progress.completedIds, progress.completedEntries]);
 
+  function toggleCardSelection(cardId: string) {
+    const multiLevel = Math.max(0, ...(progress.inventory ?? []).map(id => /^multi-select-([1-8])$/.test(id) ? Number(id.match(/[1-8]$/)?.[0] ?? 0) : 0));
+    const maxSelected = multiLevel > 0 ? multiLevel + 2 : 1;
+    setSelectedCardIds(current => {
+      if (current.includes(cardId)) {
+        const next = current.filter(id => id !== cardId);
+        setSelectedCardId(primary => primary === cardId ? (next[next.length - 1] ?? null) : primary);
+        return next;
+      }
+      if (current.length >= maxSelected) {
+        setMessage(`Puoi selezionare al massimo ${maxSelected} entità con il potenziamento acquistato.`);
+        return current;
+      }
+      setSelectedCardId(cardId);
+      setMessage(maxSelected > 1 ? `Selezionate ${current.length + 1} di ${maxSelected} entità. Seleziona una destinazione per classificare la carta principale; le altre selezioni resteranno attive.` : 'Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.');
+      return [...current, cardId];
+    });
+  }
+
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
@@ -807,7 +827,11 @@ export default function App() {
       const timestamp = Date.now();
       return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
     });
-    setSelectedCardId(null);
+    setSelectedCardIds(current => {
+      const next = current.filter(id => id !== cardId);
+      setSelectedCardId(primary => primary === cardId ? (next[next.length - 1] ?? null) : primary);
+      return next;
+    });
     setWrongTargetId(null);
     setMessage(pokemonSlotMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
   }
@@ -1457,12 +1481,12 @@ export default function App() {
                       {visibleGameCards.map(card => <button
                         key={card.id}
                         type="button"
-                        aria-label={selectedCardId === card.id ? 'Carta selezionata' : 'Seleziona carta da classificare'}
+                        aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'}
                         title="Seleziona carta"
-                        className={`pokemon-card mixed-card ${selectedCardId === card.id ? 'chosen' : ''}`}
+                        className={`pokemon-card mixed-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`}
                         draggable
                         onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
-                        onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.'); }}
+                        onClick={() => toggleCardSelection(card.id)}
                       >
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {inventory.includes('reveal-name') && <span className="revealed-card-name">{displayName(card.name)}</span>}
