@@ -350,6 +350,7 @@ export default function App() {
   });
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
+  const [abilityHint, setAbilityHint] = useState('');
   const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -1015,7 +1016,7 @@ export default function App() {
       ...old,
       abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: Date.now() + cooldownMs },
     }));
-    setMessage(hint);
+    setAbilityHint(hint);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
   }
 
@@ -1499,7 +1500,7 @@ export default function App() {
               </section>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
+                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>{abilityHint && <div className="ability-hint" role="status" aria-live="polite">{abilityHint}</div>}
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
