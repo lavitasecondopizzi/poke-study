@@ -3620,6 +3620,9 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .fossil-archive-done,.fossil-archive-pending{font-size:9px;font-weight:900}
 .fossil-archive-done{color:#21804a}
 .fossil-archive-pending{color:#8796a2}
+.fossil-archive-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:13px;border-top:1px solid var(--academy-border,#d6e4ee)}
+.fossil-archive-pagination>span{color:var(--academy-text-muted,#647b8d);font-size:11px;text-align:center}
+.fossil-archive-pagination button:disabled{opacity:.45;cursor:not-allowed}
 .fossil-archive-empty{padding:28px 14px;border:1px dashed var(--academy-border,#d6e4ee);border-radius:10px;background:#fff;text-align:center;color:var(--academy-text-muted,#647b8d);font-size:12px;line-height:1.6}
 .fossil-archive-empty strong{color:var(--academy-accent-dark,#24445d);font:700 17px 'Libre Baskerville',Georgia,serif}
 .fossil-archive-empty p{margin:6px 0 0}
