@@ -352,7 +352,6 @@ export default function App() {
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
-  const [researchSearchOpen, setResearchSearchOpen] = useState(false);
   const [researchQuery, setResearchQuery] = useState('');
   const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
   const [researchHasSearched, setResearchHasSearched] = useState(false);
@@ -1034,7 +1033,6 @@ export default function App() {
     });
     setResearchResults(matches);
     setResearchHasSearched(true);
-    setResearchSearchOpen(false);
     const currentInventory = progress.inventory ?? [];
     const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
     const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1))));
@@ -1376,24 +1374,16 @@ export default function App() {
           /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon e acquistare con i Punti Poké lo Scanner, tutti i livelli di Ricerca e l’Archivio Nazionale.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
-            {(inventory.includes('scanner') || inventory.includes('research') || inventory.includes('direct-region') || inventory.includes('number-check') || inventory.includes('auto-sort') || inventory.includes('reveal-name') || inventory.includes('reveal-subcategory') || inventory.some(id => /^multi-select-[1-8]$/.test(id)) || inventory.includes('subcategory-errors')) && <section className="unlocked-abilities-shell" aria-label="Strumenti sbloccati">
+            {(inventory.includes('scanner') || inventory.includes('research')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
               <div className="ability-toolbar">
-                {inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
-                {inventory.includes('research') && <button type="button" disabled={(progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => { setResearchSearchOpen(open => !open); setResearchResults([]); setResearchHasSearched(false); setResearchQuery(''); }}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : researchSearchOpen ? 'Chiudi' : 'Cerca'}</small></button>}
-                {inventory.includes('direct-region') && <span className="ability-status-chip" title="Puoi inserire un Pokémon direttamente nella sua regione">Inserimento regionale rapido</span>}
-                {inventory.includes('number-check') && <span className="ability-status-chip" title="Controllo numerazione sbloccato">Controllo numerazione</span>}
-                {inventory.includes('auto-sort') && <span className="ability-status-chip" title="Smistamento automatico sbloccato">Smistamento automatico</span>}
-                {inventory.includes('reveal-name') && <span className="ability-status-chip" title="I nomi delle entità sono visibili">Rivelazione nome</span>}
-                {inventory.includes('reveal-subcategory') && <span className="ability-status-chip" title="Rivelazione sottocategoria sbloccata">Rivelazione sottocategoria</span>}
-                {inventory.some(id => /^multi-select-[1-8]$/.test(id)) && <span className="ability-status-chip" title="Selezione multipla sbloccata">Selezione multipla</span>}
-                {inventory.includes('subcategory-errors') && <span className="ability-status-chip" title="Gli errori di sottocategoria vengono evidenziati">Evidenziazione errori</span>}
+                {inventory.includes('scanner') && <button type="button" className="scanner-ability-button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
+                {inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
+                  <label htmlFor="research-entity-query">Ricerca</label>
+                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
+                </form>}
               </div>
-              {researchSearchOpen && inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
-                <label htmlFor="research-entity-query">Cerca un’entità per nome</label>
-                <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Nome Pokémon o oggetto…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>Cerca</button></div>
-              </form>}
               {researchHasSearched && inventory.includes('research') && <div className="research-result-strip" role="status">
-                {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchResults([]); setResearchHasSearched(false); setResearchSearchOpen(false); }}>Vai</button></li>)}</ul> : <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p>}
+                {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchResults([]); setResearchHasSearched(false); }}>Vai</button></li>)}</ul> : <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p>}
                 <button type="button" className="research-results-close" aria-label="Chiudi risultati" onClick={() => { setResearchResults([]); setResearchHasSearched(false); }}>×</button>
               </div>}
             </section>}
