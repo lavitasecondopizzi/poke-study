@@ -55,7 +55,7 @@ export default function SpecialModes({ mode, cards, showNames, onCatalogCard, on
     source.forEach(card => unique.set(card.subcategoryId, { id: card.subcategoryId, name: card.subcategoryName, macroName: card.macroName }));
     return [...unique.values()].sort((a, b) => a.macroName.localeCompare(b.macroName, 'it') || a.name.localeCompare(b.name, 'it'));
   }, [sessionCards, eligibleCards]);
-  const activeCard = remainingCards[0] ?? null;
+  const activeCard = remainingCards.find(card => card.id === selectedCardId) ?? remainingCards[0] ?? null;
   const timeLeft = deadline === null ? durationMinutes * 60 : Math.max(0, Math.ceil((deadline - now) / 1000));
   const sessionEnded = finished || (isTimed && deadline !== null && timeLeft <= 0) || (sessionCards !== null && remainingCards.length === 0);
 
