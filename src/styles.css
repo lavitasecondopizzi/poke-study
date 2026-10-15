@@ -3587,3 +3587,42 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   gap: 3px;
   padding-bottom: 5px;
 }
+
+
+/* Archivio paleontologico: usa sempre gli accenti dell'accademia selezionata. */
+.fossil-archive{margin:0;padding:clamp(14px,2vw,24px);border:1px solid var(--academy-border,#d6e4ee);border-radius:16px;background:linear-gradient(145deg,#fff,var(--academy-soft,#f4f8fb));color:var(--academy-text,#24445d)}
+.fossil-archive-hero{display:flex;align-items:center;gap:15px;margin-bottom:18px}
+.fossil-archive-emblem{display:grid;place-items:center;flex:0 0 58px;width:58px;height:58px;border:1px solid var(--academy-border,#d6e4ee);border-radius:14px;background:var(--academy-soft,#f4f8fb);color:var(--academy-accent,#376e9b)}
+.fossil-archive-heading{min-width:0;flex:1}
+.fossil-archive-heading h1{margin:5px 0 7px;color:var(--academy-accent-dark,#24445d);font:700 clamp(21px,2.6vw,29px) 'Libre Baskerville',Georgia,serif;line-height:1.25}
+.fossil-archive-heading p{margin:0;color:var(--academy-text-muted,#647b8d);font-size:12px;line-height:1.6}
+.fossil-archive-count{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 64px;min-height:64px;border:1px solid var(--academy-border,#d6e4ee);border-radius:12px;background:#fff;color:var(--academy-accent,#376e9b)}
+.fossil-archive-count strong{font:700 24px 'Libre Baskerville',Georgia,serif}
+.fossil-archive-count span{font-size:10px}
+.fossil-archive-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0 0 15px}
+.fossil-archive-stats>div{display:flex;align-items:center;gap:9px;min-width:0;padding:11px 12px;border:1px solid var(--academy-border,#d6e4ee);border-radius:10px;background:#fff;color:var(--academy-accent,#376e9b)}
+.fossil-archive-stats span{flex:1;min-width:0;font-size:11px;color:var(--academy-text-muted,#647b8d)}
+.fossil-archive-stats strong{font:700 17px 'Libre Baskerville',Georgia,serif;color:var(--academy-accent-dark,#24445d)}
+.fossil-archive-search{display:flex;align-items:center;gap:9px;min-height:46px;margin:0 0 15px;padding:0 12px;border:1px solid var(--academy-border,#d6e4ee);border-radius:10px;background:#fff;color:var(--academy-accent,#376e9b)}
+.fossil-archive-search input{flex:1;min-width:0;height:44px;border:0;outline:0;background:transparent;color:var(--academy-text,#24445d);font:500 13px 'Nunito Sans',Arial,sans-serif}
+.fossil-archive-search input:focus-visible{outline:2px solid var(--academy-accent,#376e9b);outline-offset:2px}
+.fossil-archive-search button{padding:7px 9px;border:1px solid var(--academy-border,#d6e4ee);border-radius:7px;background:var(--academy-soft,#f4f8fb);color:var(--academy-accent-dark,#24445d);font-size:10px;font-weight:800}
+.fossil-archive-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fossil-archive-card{display:flex;align-items:center;gap:10px;min-width:0;min-height:92px;padding:10px;border:1px solid var(--academy-border,#d6e4ee);border-radius:11px;background:#fff;box-shadow:0 2px 0 var(--academy-soft,#f4f8fb)}
+.fossil-archive-art{position:relative;display:grid;place-items:center;flex:0 0 58px;width:58px;height:58px;overflow:hidden;border:1px solid var(--academy-border,#d6e4ee);border-radius:9px;background:var(--academy-soft,#f4f8fb)}
+.fossil-archive-art img{display:block;width:100%;height:100%;object-fit:contain}
+.fossil-archive-art>span{display:none;color:var(--academy-accent,#376e9b);font-size:22px}
+.fossil-archive-art.is-missing img{display:none}
+.fossil-archive-art.is-missing>span{display:block}
+.fossil-archive-copy{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.fossil-archive-copy small{color:var(--academy-accent,#376e9b);font-size:8px;font-weight:900;line-height:1.4;overflow-wrap:anywhere}
+.fossil-archive-copy strong{color:var(--academy-accent-dark,#24445d);font-size:12px;line-height:1.35;overflow-wrap:anywhere}
+.fossil-archive-done,.fossil-archive-pending{font-size:9px;font-weight:900}
+.fossil-archive-done{color:#21804a}
+.fossil-archive-pending{color:#8796a2}
+.fossil-archive-empty{padding:28px 14px;border:1px dashed var(--academy-border,#d6e4ee);border-radius:10px;background:#fff;text-align:center;color:var(--academy-text-muted,#647b8d);font-size:12px;line-height:1.6}
+.fossil-archive-empty strong{color:var(--academy-accent-dark,#24445d);font:700 17px 'Libre Baskerville',Georgia,serif}
+.fossil-archive-empty p{margin:6px 0 0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:850px){.fossil-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.fossil-archive{padding:12px;border-radius:12px}.fossil-archive-hero{align-items:flex-start;gap:9px}.fossil-archive-emblem{flex-basis:42px;width:42px;height:42px}.fossil-archive-emblem svg{width:22px}.fossil-archive-heading h1{font-size:21px}.fossil-archive-heading p{font-size:11px}.fossil-archive-count{flex-basis:48px;min-height:48px}.fossil-archive-count strong{font-size:19px}.fossil-archive-stats{gap:6px}.fossil-archive-stats>div{gap:5px;padding:9px 7px}.fossil-archive-stats span{font-size:9px}.fossil-archive-stats strong{font-size:14px}.fossil-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.fossil-archive-card{flex-direction:column;align-items:flex-start;gap:7px;padding:8px;min-height:0}.fossil-archive-art{align-self:center;width:100%;height:auto;aspect-ratio:1;flex-basis:auto}.fossil-archive-copy strong{font-size:11px}}
