@@ -798,7 +798,7 @@ export default function App() {
       const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
       const errorTimestamp = Date.now();
       setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error' as const, title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
-      setSelectedCardId(null);
+      setSelectedCardId(cardId);
       setWrongTargetId(inventory.includes('subcategory-errors') ? targetId : null);
       setMessage('');
       return;
@@ -945,6 +945,7 @@ export default function App() {
     setLessonDeck([]);
     setLessonSolved([]);
     setSelectedCardId(null);
+    setSelectedCardIds([]);
     setMisplacedCards({});
     setCategoryPlacements({});
     setWrongTargetId(null);
