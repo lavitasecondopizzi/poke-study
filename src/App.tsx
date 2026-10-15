@@ -352,7 +352,9 @@ export default function App() {
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
-  const [revealedSubcategories, setRevealedSubcategories] = useState<Record<string, string>>(() => progress.gameState?.revealedSubcategories ?? {});
+  const [researchSearchOpen, setResearchSearchOpen] = useState(false);
+  const [researchQuery, setResearchQuery] = useState('');
+  const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
   const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -525,7 +527,6 @@ export default function App() {
         setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
          setRevealedMacroCategories(nextProgress.gameState?.revealedMacroCategories ?? {});
-        setRevealedSubcategories(nextProgress.gameState?.revealedSubcategories ?? {});
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -610,12 +611,11 @@ export default function App() {
         openPokemonRegionId,
         gamePage,
         revealedMacroCategories,
-        revealedSubcategories,
       };
       if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
       return { ...old, gameState: nextGameState };
     });
-  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, revealedMacroCategories, revealedSubcategories]);
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, revealedMacroCategories]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -1002,41 +1002,40 @@ export default function App() {
     setNotice(`Acquisto registrato: ${product.name}.`);
   }
 
-  function useAbility(abilityId: 'scanner' | 'research') {
-    const selectedIds = selectedCardIds.length > 1
-      ? selectedCardIds
-      : selectedCardId ? [selectedCardId] : [];
+  function useAbility(abilityId: 'scanner') {
+    const selectedIds = selectedCardIds.length > 1 ? selectedCardIds : selectedCardId ? [selectedCardId] : [];
     if (selectedIds.length === 0) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     if (!(progress.inventory ?? []).includes(abilityId)) return;
-    const cards = selectedIds
-      .map(id => lessonDeck.find(entry => entry.id === id))
+    const cards = selectedIds.map(id => lessonDeck.find(entry => entry.id === id))
       .filter((card): card is CatalogCard => card !== undefined && !lessonSolved.includes(card.id));
     if (cards.length === 0) { setNotice('Seleziona almeno un’entità ancora da classificare.'); return; }
-    const until = progress.abilityCooldowns?.[abilityId] ?? 0;
-    if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
+    const now = Date.now();
+    const until = progress.abilityCooldowns?.scanner ?? 0;
+    if (until > now) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, now)}.`); return; }
     const currentInventory = progress.inventory ?? [];
-    const scannerLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const researchLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const cooldownMs = abilityId === 'scanner'
-      ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
-      : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
-    const usedAt = Date.now();
-    setProgress(old => ({
-      ...old,
-      abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: usedAt + cooldownMs },
-    }));
-    if (abilityId === 'scanner') {
-      setRevealedMacroCategories(old => ({
-        ...old,
-        ...Object.fromEntries(cards.map(card => [card.id, card.macroName])),
-      }));
-    } else {
-      setRevealedSubcategories(old => ({
-        ...old,
-        ...Object.fromEntries(cards.map(card => [card.id, card.subcategoryName])),
-      }));
-    }
-    setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato su ${cards.length} entità. Cooldown: ${cooldownLabel(usedAt + cooldownMs, usedAt)}.`);
+    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs } }));
+    setRevealedMacroCategories(old => ({ ...old, ...Object.fromEntries(cards.map(card => [card.id, card.macroName])) }));
+  }
+
+  function handleResearchSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const query = researchQuery.trim().toLocaleLowerCase('it-IT');
+    if (!query || !(progress.inventory ?? []).includes('research')) return;
+    const now = Date.now();
+    if ((progress.abilityCooldowns?.research ?? 0) > now) return;
+    const matches = remainingLessonCards.flatMap((card, index) => {
+      const name = displayName(card.name);
+      return name.toLocaleLowerCase('it-IT').includes(query)
+        ? [{ id: card.id, name, page: Math.floor(index / gamePageSize) + 1 }]
+        : [];
+    });
+    setResearchResults(matches);
+    const currentInventory = progress.inventory ?? [];
+    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1))));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), research: now + cooldownMs } }));
   }
 
   async function downloadCommunityAccount() {
@@ -1522,7 +1521,15 @@ export default function App() {
               </section>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
+                <div className="ability-toolbar">
+                {inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
+                {inventory.includes('research') && <button type="button" disabled={(progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => { setResearchSearchOpen(open => !open); setResearchResults([]); }}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : researchSearchOpen ? 'Chiudi ricerca' : 'Cerca un’entità'}</small></button>}
+                </div>
+                {researchSearchOpen && inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
+                  <label htmlFor="research-entity-query">Cerca un’entità per nome</label>
+                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => setResearchQuery(event.target.value)} placeholder="Es. Pikachu, Pozione…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>Cerca</button></div>
+                  {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchSearchOpen(false); }}>Vai alla pagina</button></li>)}</ul> : researchQuery.trim() && (progress.abilityCooldowns?.research ?? 0) > clockNow ? <p className="research-search-hint">Ricerca effettuata. Potrai cercare di nuovo quando il cooldown sarà terminato.</p> : researchQuery.trim() ? <p className="research-search-hint">Invia la ricerca per trovare la pagina dell’entità.</p> : null}
+                </form>}
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
@@ -1545,7 +1552,6 @@ export default function App() {
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
                          {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
-                        {revealedSubcategories[card.id] && <span className="scanner-revealed-category research-revealed-subcategory">Sottocategoria: {revealedSubcategories[card.id]}</span>}
                       </button>)}
                     </div>
                     <div className="game-pagination game-pagination-cards">
