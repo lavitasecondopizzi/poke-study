@@ -43,6 +43,38 @@ const RESEARCH_LEVELS = 12;
 const NUMBER_CHECK_LEVELS = 10;
 const REVEAL_SUBCATEGORY_LEVELS = 12;
 const AUTO_SORT_LEVELS = 10;
+
+type CooldownAbility = 'scanner' | 'research' | 'number-check' | 'reveal-subcategory' | 'auto-sort';
+const COOLDOWN_CONFIG: Record<CooldownAbility, { baseSeconds: number; levels: number }> = {
+  scanner: { baseSeconds: 300, levels: SCANNER_LEVELS },
+  research: { baseSeconds: 600, levels: RESEARCH_LEVELS },
+  'number-check': { baseSeconds: 300, levels: NUMBER_CHECK_LEVELS },
+  'reveal-subcategory': { baseSeconds: 600, levels: REVEAL_SUBCATEGORY_LEVELS },
+  'auto-sort': { baseSeconds: 300, levels: AUTO_SORT_LEVELS },
+};
+
+function abilityLevelFromInventory(abilityId: CooldownAbility, inventory: string[]) {
+  const prefix = `${abilityId}-upgrade-`;
+  return inventory.reduce((level, id) => {
+    if (!id.startsWith(prefix)) return level;
+    const parsed = Number(id.slice(prefix.length));
+    return Number.isInteger(parsed) && parsed >= 2 && parsed <= COOLDOWN_CONFIG[abilityId].levels
+      ? Math.max(level, parsed)
+      : level;
+  }, 1);
+}
+
+function abilityCooldownDurationMs(abilityId: CooldownAbility, level: number) {
+  const { baseSeconds, levels } = COOLDOWN_CONFIG[abilityId];
+  const safeLevel = Math.min(levels, Math.max(1, Math.floor(level) || 1));
+  return Math.max(10_000, Math.round(baseSeconds * 1000 * Math.pow(10 / baseSeconds, (safeLevel - 1) / (levels - 1))));
+}
+
+function abilityForUpgrade(productId: string): CooldownAbility | null {
+  const match = (['scanner', 'research', 'number-check', 'reveal-subcategory', 'auto-sort'] as const)
+    .find(abilityId => productId.startsWith(`${abilityId}-upgrade-`));
+  return match ?? null;
+}
 const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1)))); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
@@ -644,8 +676,15 @@ export default function App() {
   }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories, revealedSubcategories, revealedPokemonNumbers]);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
-    return () => window.clearInterval(timer);
+    const refreshClock = () => setClockNow(Date.now());
+    const timer = window.setInterval(refreshClock, 1000);
+    window.addEventListener('focus', refreshClock);
+    document.addEventListener('visibilitychange', refreshClock);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refreshClock);
+      document.removeEventListener('visibilitychange', refreshClock);
+    };
   }, []);
 
   useEffect(() => {
@@ -1083,14 +1122,31 @@ export default function App() {
       return;
     }
     if (progress.points < product.cost) { setNotice('Punti Poké insufficienti per questo acquisto.'); return; }
+    const purchaseTime = Date.now();
     setProgress(old => {
       const oldInventory = old.inventory ?? [];
       if (oldInventory.includes(product.id) || old.points < product.cost
         || !productUnlocked(product, oldInventory, old.completedIds.length)) return old;
+      const nextInventory = [...oldInventory, product.id];
+      const abilityId = product.kind === 'upgrade' ? abilityForUpgrade(product.id) : null;
+      let nextCooldowns = old.abilityCooldowns ?? {};
+      if (abilityId) {
+        const until = Number(nextCooldowns[abilityId]) || 0;
+        if (until > purchaseTime) {
+          const oldLevel = abilityLevelFromInventory(abilityId, oldInventory);
+          const newLevel = abilityLevelFromInventory(abilityId, nextInventory);
+          const oldDuration = abilityCooldownDurationMs(abilityId, oldLevel);
+          const newDuration = abilityCooldownDurationMs(abilityId, newLevel);
+          const startedAt = until - oldDuration;
+          const adjustedUntil = Math.min(until, startedAt + newDuration);
+          nextCooldowns = { ...nextCooldowns, [abilityId]: Math.max(purchaseTime, adjustedUntil) };
+        }
+      }
       return {
         ...old,
         points: old.points - product.cost,
-        inventory: [...oldInventory, product.id],
+        inventory: nextInventory,
+        abilityCooldowns: nextCooldowns,
       };
     });
     setNotice(`Acquisto registrato: ${product.name}.`);
@@ -1109,8 +1165,8 @@ export default function App() {
     if (until > now) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, now)}.`); return; }
     const currentInventory = progress.inventory ?? [];
     if (abilityId === 'auto-sort') {
-      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('auto-sort-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-      const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (AUTO_SORT_LEVELS - 1))));
+      const level = abilityLevelFromInventory('auto-sort', currentInventory);
+      const cooldownMs = abilityCooldownDurationMs('auto-sort', level);
       setMisplacedCards(old => { const next = { ...old }; cards.forEach(card => { next[card.id] = card.subcategoryId; }); return next; });
       setCategoryPlacements(old => { const next = { ...old }; cards.forEach(card => { delete next[card.id]; }); return next; });
       setSelectedCardIds(old => old.filter(id => !cards.some(card => card.id === id)));
@@ -1120,23 +1176,23 @@ export default function App() {
       return;
     }
     if (abilityId === 'reveal-subcategory') {
-      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('reveal-subcategory-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-      const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (REVEAL_SUBCATEGORY_LEVELS - 1))));
+      const level = abilityLevelFromInventory('reveal-subcategory', currentInventory);
+      const cooldownMs = abilityCooldownDurationMs('reveal-subcategory', level);
       const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.subcategoryName]));
       setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'reveal-subcategory': now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedSubcategories: { ...(old.gameState?.revealedSubcategories ?? {}), ...revealedNow } } }));
       setRevealedSubcategories(old => ({ ...old, ...revealedNow }));
       return;
     }
     if (abilityId === 'scanner') {
-      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-      const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
+      const level = abilityLevelFromInventory('scanner', currentInventory);
+      const cooldownMs = abilityCooldownDurationMs('scanner', level);
       const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.macroName]));
       setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedMacroCategories: { ...(old.gameState?.revealedMacroCategories ?? {}), ...revealedNow } } }));
       setRevealedMacroCategories(old => ({ ...old, ...revealedNow }));
       return;
     }
-    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('number-check-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1))));
+    const level = abilityLevelFromInventory('number-check', currentInventory);
+    const cooldownMs = abilityCooldownDurationMs('number-check', level);
     const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.pokemonId as number]));
     setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'number-check': now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedPokemonNumbers: { ...(old.gameState?.revealedPokemonNumbers ?? {}), ...revealedNow } } }));
     setRevealedPokemonNumbers(old => ({ ...old, ...revealedNow }));
@@ -1157,8 +1213,8 @@ export default function App() {
     setResearchResults(matches);
     setResearchHasSearched(true);
     const currentInventory = progress.inventory ?? [];
-    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1))));
+    const level = abilityLevelFromInventory('research', currentInventory);
+    const cooldownMs = abilityCooldownDurationMs('research', level);
     setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), research: now + cooldownMs } }));
   }
 
