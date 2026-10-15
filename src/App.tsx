@@ -3,6 +3,7 @@ import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
 import EvolutionArchive from './EvolutionArchive';
 import FossilArchive from './FossilArchive';
+import EvolutionToolsArchive from './EvolutionToolsArchive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
@@ -246,6 +247,7 @@ function PortalDashboard({
     { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
     { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
     ...(inventory.includes('evolution-archive') ? [{ id: 'evolutions', title: 'Archivio delle evoluzioni', description: 'Consulta le linee evolutive e le condizioni di evoluzione.', icon: <GitBranch size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
+    ...(inventory.includes('evolution-tools-archive') ? [{ id: 'evolution-tools', title: 'Archivio degli strumenti evolutivi', description: 'Consulta pietre e strumenti usati per far evolvere i Pokémon.', icon: <Sparkles size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
     { id: 'registro', title: 'Registro personale', description: 'Rivedi i risultati e il tuo avanzamento.', icon: <Trophy size={21} />, className: 'portal-v2-record' },
     { id: 'academia', title: 'Accademia', description: 'Segui le lezioni, sostieni i test e consulta la pagella.', icon: <BookOpen size={21} />, className: 'portal-v2-academy' },
     { id: 'shop', title: 'Cartoleria', description: 'Acquista strumenti e potenziamenti.', icon: <ShoppingBag size={21} />, className: 'portal-v2-shop', status: availableShopCount > 0 ? availableShopCount + ' disponibili' : undefined },
@@ -1382,6 +1384,7 @@ export default function App() {
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
         {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
+        {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}><Sparkles size={16} /> Archivio degli strumenti evolutivi</button>}
         {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}><Bone size={16} /> Archivio fossili e reperti</button>}
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
@@ -1398,6 +1401,7 @@ export default function App() {
             <h2>AREA ALLIEVO</h2>
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
             {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
+            {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'side-active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}>▸ Archivio degli strumenti evolutivi</button>}
             {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'side-active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}>▸ Archivio fossili e reperti</button>}
             <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
             <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
@@ -1428,6 +1432,7 @@ export default function App() {
             onNavigate={navTo}
           />}
           {view === 'evolutions' && (inventory.includes('evolution-archive') ? <EvolutionArchive species={species} items={itemCatalog} online={online} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio delle evoluzioni bloccato</h1><p>Acquista l’Archivio delle evoluzioni nella Cartoleria per consultare le linee evolutive.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          {view === 'evolution-tools' && (inventory.includes('evolution-tools-archive') ? <EvolutionToolsArchive items={itemCatalog} loading={itemCatalogLoading} completedEntries={progress.completedEntries ?? []} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio degli strumenti evolutivi bloccato</h1><p>Acquista questo archivio nella Cartoleria per consultare gli strumenti evolutivi.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'fossils' && (inventory.includes('fossils-archive') ? <FossilArchive species={species} items={itemCatalog} loadingSpecies={loading} loadingItems={itemCatalogLoading} completedPokemon={progress.completedIds} completedEntries={progress.completedEntries ?? []} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio fossili e reperti bloccato</h1><p>Acquista l’Archivio fossili e reperti nella Cartoleria per consultare Pokémon fossili e reperti paleontologici.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
