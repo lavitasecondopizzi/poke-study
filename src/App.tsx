@@ -1368,7 +1368,7 @@ export default function App() {
                         const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
                         const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
                         const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
-                        const isWrong = Boolean(placedCard && (placedCard.subcategoryId !== currentSubcategory.id || Boolean(misplacedCards[placed[0]])));
+                        const isWrong = Boolean(placedCard && (placedCard.subcategoryId !== currentSubcategory.id || Boolean(misplacedCards[placedCard.id])));
                         return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isWrong && inventory.includes('subcategory-errors') ? 'pokemon-number-wrong' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
                           if (placedCard && lessonSolved.includes(placedCard.id)) {
                             setMessage('Questa entità è corretta e bloccata: non può essere rimossa.');
