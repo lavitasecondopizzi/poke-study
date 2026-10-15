@@ -77,11 +77,6 @@ function abilityCooldownDurationMs(abilityId: CooldownAbility, level: number) {
   return abilityCooldownSeconds(abilityId, level) * 1000;
 }
 
-function abilityForUpgrade(productId: string): CooldownAbility | null {
-  const match = (['scanner', 'research', 'number-check', 'reveal-subcategory', 'auto-sort'] as const)
-    .find(abilityId => productId.startsWith(`${abilityId}-upgrade-`));
-  return match ?? null;
-}
 const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('scanner', level); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
@@ -1129,7 +1124,6 @@ export default function App() {
       return;
     }
     if (progress.points < product.cost) { setNotice('Punti Poké insufficienti per questo acquisto.'); return; }
-    const purchaseTime = Date.now();
     setProgress(old => {
       const oldInventory = old.inventory ?? [];
       if (oldInventory.includes(product.id) || old.points < product.cost
