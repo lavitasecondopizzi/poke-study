@@ -1,3 +1,4 @@
+// Catalog generator intentionally reads only the versioned local database.
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
