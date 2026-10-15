@@ -350,7 +350,6 @@ export default function App() {
   });
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
-  const [abilityHint, setAbilityHint] = useState('');
   const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
   const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
@@ -1017,9 +1016,6 @@ export default function App() {
     const cooldownMs = abilityId === 'scanner'
       ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
       : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
-    const hints = cards.map(card => abilityId === 'scanner'
-      ? `${displayName(card.name)}: macrocategoria “${card.macroName}”.`
-      : `${displayName(card.name)}: sottocategoria “${card.subcategoryName}”.`);
     const usedAt = Date.now();
     setProgress(old => ({
       ...old,
@@ -1031,7 +1027,6 @@ export default function App() {
         ...Object.fromEntries(cards.map(card => [card.id, card.macroName])),
       }));
     }
-    setAbilityHint(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} · ${cards.length} entità analizzate\n${hints.join('\n')}`);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato su ${cards.length} entità. Cooldown: ${cooldownLabel(usedAt + cooldownMs, usedAt)}.`);
   }
 
@@ -1515,7 +1510,7 @@ export default function App() {
               </section>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>{abilityHint && <div className="ability-hint" role="status" aria-live="polite">{abilityHint}</div>}
+                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
