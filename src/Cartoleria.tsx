@@ -9,6 +9,8 @@ import type { ShopProduct } from './App';
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
 const NUMBER_CHECK_LEVELS = 10;
+const REVEAL_SUBCATEGORY_LEVELS = 12;
+const AUTO_SORT_LEVELS = 10;
 type ShopFilter = 'all' | 'available' | 'owned' | 'locked';
 
 type CartoleriaProps = {
@@ -60,7 +62,11 @@ function ProductCard({
       ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => 'research-upgrade-' + (index + 2))
       : product.id === 'number-check'
         ? Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, index) => 'number-check-upgrade-' + (index + 2))
-        : product.id === 'multi-select-1'
+        : product.id === 'reveal-subcategory'
+          ? Array.from({ length: REVEAL_SUBCATEGORY_LEVELS - 1 }, (_, index) => 'reveal-subcategory-upgrade-' + (index + 2))
+          : product.id === 'auto-sort'
+            ? Array.from({ length: AUTO_SORT_LEVELS - 1 }, (_, index) => 'auto-sort-upgrade-' + (index + 2))
+            : product.id === 'multi-select-1'
           ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
           : [];
   const upgrades = upgradeIds.map(id => products.find(entry => entry.id === id)).filter((entry): entry is ShopProduct => Boolean(entry));
@@ -193,8 +199,12 @@ export default function Cartoleria({
             : product.id === 'research'
               ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => 'research-upgrade-' + (index + 2))
               : product.id === 'number-check'
-              ? Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, index) => 'number-check-upgrade-' + (index + 2))
-              : product.id === 'multi-select-1'
+                ? Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, index) => 'number-check-upgrade-' + (index + 2))
+                : product.id === 'reveal-subcategory'
+                  ? Array.from({ length: REVEAL_SUBCATEGORY_LEVELS - 1 }, (_, index) => 'reveal-subcategory-upgrade-' + (index + 2))
+                  : product.id === 'auto-sort'
+                    ? Array.from({ length: AUTO_SORT_LEVELS - 1 }, (_, index) => 'auto-sort-upgrade-' + (index + 2))
+                    : product.id === 'multi-select-1'
                 ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
                 : [];
           const nextUpgrade = upgradeIds.map(id => shopProducts.find(entry => entry.id === id))
