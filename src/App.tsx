@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
+import EvolutionArchive from './EvolutionArchive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
@@ -9,7 +10,7 @@ import PublicStudentProfile from './PublicStudentProfile';
 import AdminPanel from './AdminPanel';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
-import { Bell, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
+import { Bell, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GitBranch, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
@@ -237,6 +238,7 @@ function PortalDashboard({
   const shortcuts = [
     { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
     { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
+    ...(inventory.includes('evolution-archive') ? [{ id: 'evolutions', title: 'Archivio delle evoluzioni', description: 'Consulta le linee evolutive e le condizioni di evoluzione.', icon: <GitBranch size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
     { id: 'registro', title: 'Registro personale', description: 'Rivedi i risultati e il tuo avanzamento.', icon: <Trophy size={21} />, className: 'portal-v2-record' },
     { id: 'academia', title: 'Accademia', description: 'Segui le lezioni, sostieni i test e consulta la pagella.', icon: <BookOpen size={21} />, className: 'portal-v2-academy' },
     { id: 'shop', title: 'Cartoleria', description: 'Acquista strumenti e potenziamenti.', icon: <ShoppingBag size={21} />, className: 'portal-v2-shop', status: availableShopCount > 0 ? availableShopCount + ' disponibili' : undefined },
@@ -621,7 +623,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if ((view !== 'shop' && view !== 'pokedex' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
+    if ((view !== 'shop' && view !== 'pokedex' && view !== 'evolutions' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
     setItemCatalogLoading(true);
@@ -1293,6 +1295,7 @@ export default function App() {
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
+        {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
@@ -1307,6 +1310,7 @@ export default function App() {
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
+            {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
             <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
             <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
             <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
@@ -1335,6 +1339,7 @@ export default function App() {
             notice={notice}
             onNavigate={navTo}
           />}
+          {view === 'evolutions' && (inventory.includes('evolution-archive') ? <EvolutionArchive species={species} items={itemCatalog} online={online} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio delle evoluzioni bloccato</h1><p>Acquista l’Archivio delle evoluzioni nella Cartoleria per consultare le linee evolutive.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
             items={itemCatalog}
