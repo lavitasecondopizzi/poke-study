@@ -1325,6 +1325,21 @@ export default function App() {
                             setMessage('Questa entità è corretta e bloccata: non può essere rimossa.');
                             return;
                           }
+                          if (placedCard) {
+                            setCategoryPlacements(old => {
+                              const next = { ...old };
+                              delete next[placedCard.id];
+                              return next;
+                            });
+                            setMisplacedCards(old => {
+                              const next = { ...old };
+                              delete next[placedCard.id];
+                              return next;
+                            });
+                            setWrongTargetId(null);
+                            setMessage('Entità errata rimossa dallo slot e restituita al catalogo.');
+                            return;
+                          }
                           if (selectedCardId) placeCard(selectedCardId, currentSubcategory.id);
                         }}>
                           {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
