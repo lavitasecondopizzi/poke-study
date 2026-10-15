@@ -1442,7 +1442,7 @@ export default function App() {
                   <>
                     <div className="folder-toolbar">
                       <button type="button" className="folder-back-button" onClick={() => { setOpenPokemonRegionId(null); setOpenMacroId(null); }}>← Indietro</button>
-                      <span>{openMacroId === 'pokemon' ? 'Seleziona una regione per aprire l’elenco numerato' : 'Apri la sottocartella corretta per la carta selezionata'}</span>
+                      <span>{openMacroId === 'pokemon' ? (inventory.includes('direct-region') ? 'Seleziona un Pokémon e tocca la sua regione, oppure trascinalo nella regione senza scegliere il numero' : 'Seleziona una regione per aprire l’elenco numerato') : 'Apri la sottocartella corretta per la carta selezionata'}</span>
                     </div>
                     <div className="category-targets-grid subfolder-grid">
                       {currentMacroTargets.map(target => <button
@@ -1451,12 +1451,31 @@ export default function App() {
                         className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '')}
                         aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
                         onDragOver={event => event.preventDefault()}
-                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId && openMacroId !== 'pokemon') placeCard(cardId, target.id); }}
+                        onDrop={event => {
+                          event.preventDefault();
+                          const cardId = event.dataTransfer.getData('text/plain');
+                          if (!cardId) return;
+                          if (openMacroId !== 'pokemon') {
+                            placeCard(cardId, target.id);
+                            return;
+                          }
+                          const draggedCard = lessonDeck.find(card => card.id === cardId);
+                          if (inventory.includes('direct-region') && draggedCard?.kind === 'pokemon') {
+                            placeCard(cardId, target.id);
+                            setWrongTargetId(null);
+                          }
+                        }}
                         onClick={() => {
                           if (openMacroId === 'pokemon') {
+                            const selectedCard = selectedCardId ? lessonDeck.find(card => card.id === selectedCardId) : undefined;
+                            if (inventory.includes('direct-region') && selectedCard?.kind === 'pokemon') {
+                              placeCard(selectedCard.id, target.id);
+                              setWrongTargetId(null);
+                              return;
+                            }
                             setOpenPokemonRegionId(target.id);
                             setWrongTargetId(null);
-                            setMessage('Regione ' + target.name + ' aperta. Seleziona una carta Pokémon e poi la sua posizione numerata.');
+                            setMessage('Regione ' + target.name + ' aperta. Seleziona un Pokémon e poi il suo numero, oppure trascinalo qui con Inserimento regionale rapido.');
                           } else {
                             setOpenSubcategoryId(target.id);
                             setWrongTargetId(null);
