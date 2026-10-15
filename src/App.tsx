@@ -997,10 +997,15 @@ export default function App() {
   }
 
   function useAbility(abilityId: 'scanner' | 'research') {
-    if (!selectedCardId) { setNotice('Seleziona prima una carta da analizzare.'); return; }
-    const card = lessonDeck.find(entry => entry.id === selectedCardId);
-    if (!card || lessonSolved.includes(card.id)) { setNotice('Seleziona una carta ancora da classificare.'); return; }
+    const selectedIds = selectedCardIds.length > 1
+      ? selectedCardIds
+      : selectedCardId ? [selectedCardId] : [];
+    if (selectedIds.length === 0) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     if (!(progress.inventory ?? []).includes(abilityId)) return;
+    const cards = selectedIds
+      .map(id => lessonDeck.find(entry => entry.id === id))
+      .filter((card): card is CatalogCard => Boolean(card) && !lessonSolved.includes(card.id));
+    if (cards.length === 0) { setNotice('Seleziona almeno un’entità ancora da classificare.'); return; }
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
     const currentInventory = progress.inventory ?? [];
@@ -1009,15 +1014,16 @@ export default function App() {
     const cooldownMs = abilityId === 'scanner'
       ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
       : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
-    const hint = abilityId === 'scanner'
-      ? `Scanner: questa carta appartiene alla macro categoria “${card.macroName}”.`
-      : `Ricerca: la sottocategoria corretta è “${card.subcategoryName}”.`;
+    const hints = cards.map(card => abilityId === 'scanner'
+      ? `${displayName(card.name)}: macrocategoria “${card.macroName}”.`
+      : `${displayName(card.name)}: sottocategoria “${card.subcategoryName}”.`);
+    const usedAt = Date.now();
     setProgress(old => ({
       ...old,
-      abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: Date.now() + cooldownMs },
+      abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: usedAt + cooldownMs },
     }));
-    setAbilityHint(hint);
-    setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
+    setAbilityHint(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} · ${cards.length} entità analizzate\n${hints.join('\n')}`);
+    setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato su ${cards.length} entità. Cooldown: ${cooldownLabel(usedAt + cooldownMs, usedAt)}.`);
   }
 
   async function downloadCommunityAccount() {
