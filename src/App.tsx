@@ -1135,25 +1135,14 @@ export default function App() {
       if (oldInventory.includes(product.id) || old.points < product.cost
         || !productUnlocked(product, oldInventory, old.completedIds.length)) return old;
       const nextInventory = [...oldInventory, product.id];
-      const abilityId = product.kind === 'upgrade' ? abilityForUpgrade(product.id) : null;
-      let nextCooldowns = old.abilityCooldowns ?? {};
-      if (abilityId) {
-        const until = Number(nextCooldowns[abilityId]) || 0;
-        if (until > purchaseTime) {
-          const oldLevel = abilityLevelFromInventory(abilityId, oldInventory);
-          const newLevel = abilityLevelFromInventory(abilityId, nextInventory);
-          const oldDuration = abilityCooldownDurationMs(abilityId, oldLevel);
-          const newDuration = abilityCooldownDurationMs(abilityId, newLevel);
-          const startedAt = until - oldDuration;
-          const adjustedUntil = Math.min(until, startedAt + newDuration);
-          nextCooldowns = { ...nextCooldowns, [abilityId]: Math.max(purchaseTime, adjustedUntil) };
-        }
-      }
+      // Un potenziamento acquistato durante una ricarica si applica al prossimo utilizzo.
+      // Non ricostruiamo l'istante di avvio dal solo timestamp finale: dopo più upgrade
+      // questa stima poteva diventare errata e produrre timer incoerenti.
       return {
         ...old,
         points: old.points - product.cost,
         inventory: nextInventory,
-        abilityCooldowns: nextCooldowns,
+        abilityCooldowns: old.abilityCooldowns ?? {},
       };
     });
     setNotice(`Acquisto registrato: ${product.name}.`);
