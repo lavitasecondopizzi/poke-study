@@ -345,6 +345,8 @@ export default function App() {
   const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => progress.gameState?.categoryPlacements ?? {});
   const [lessonReady, setLessonReady] = useState(false);
   const [gamePage, setGamePage] = useState(() => progress.gameState?.gamePage ?? 0);
+  const [folderPage, setFolderPage] = useState(() => progress.gameState?.folderPage ?? 0);
+  const [mobileFolderTreeOpen, setMobileFolderTreeOpen] = useState(false);
   const [openMacroId, setOpenMacroId] = useState<MacroId | null>(() => {
     const value = progress.gameState?.openMacroId;
     return value === 'pokemon' || value === 'items' || value === 'berries' || value === 'machines' || value === 'special' ? value : null;
@@ -526,6 +528,7 @@ export default function App() {
         setOpenSubcategoryId(nextProgress.gameState?.openSubcategoryId ?? null);
         setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
+        setFolderPage(nextProgress.gameState?.folderPage ?? 0);
          setRevealedMacroCategories(nextProgress.gameState?.revealedMacroCategories ?? {});
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
@@ -610,12 +613,13 @@ export default function App() {
         openSubcategoryId,
         openPokemonRegionId,
         gamePage,
+        folderPage,
         revealedMacroCategories,
       };
       if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
       return { ...old, gameState: nextGameState };
     });
-  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, revealedMacroCategories]);
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -721,6 +725,26 @@ export default function App() {
   const currentPokemonRegion = openPokemonRegionId ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === openPokemonRegionId) : undefined;
   const currentSubcategory = openSubcategoryId ? lessonTargets.find(target => target.id === openSubcategoryId) : undefined;
   const currentSubcategoryCards = currentSubcategory ? lessonDeck.filter(card => card.subcategoryId === currentSubcategory.id) : [];
+  const activeFolderId = openSubcategoryId ?? openPokemonRegionId ?? openMacroId;
+  const folderAssignedCards = useMemo(() => lessonDeck.filter(card => {
+    const destination = misplacedCards[card.id];
+    if (!destination || lessonSolved.includes(card.id) || !activeFolderId) return false;
+    if (destination === activeFolderId) return true;
+    if (openSubcategoryId && destination.startsWith('category-slot:' + openSubcategoryId + ':')) return true;
+    if (openPokemonRegionId && destination.startsWith('pokemon-slot:')) {
+      const nationalId = Number(destination.slice('pokemon-slot:'.length));
+      return Boolean(currentPokemonRegion && nationalId >= currentPokemonRegion.start && nationalId <= currentPokemonRegion.end);
+    }
+    if (openMacroId && !openSubcategoryId && !openPokemonRegionId) {
+      const target = lessonTargets.find(entry => entry.id === destination);
+      return target?.macroId === openMacroId;
+    }
+    return false;
+  }), [lessonDeck, misplacedCards, lessonSolved, activeFolderId, openSubcategoryId, openPokemonRegionId, openMacroId, currentPokemonRegion, lessonTargets]);
+  const folderPageCount = Math.max(1, Math.ceil(folderAssignedCards.length / 15));
+  const safeFolderPage = Math.min(folderPage, folderPageCount - 1);
+  const visibleFolderCards = folderAssignedCards.slice(safeFolderPage * 15, safeFolderPage * 15 + 15);
+
   const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
     ...category,
     total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
@@ -729,6 +753,9 @@ export default function App() {
   useEffect(() => {
     if (gamePage !== safeGamePage) setGamePage(safeGamePage);
   }, [gamePage, safeGamePage]);
+  useEffect(() => {
+    if (folderPage !== safeFolderPage) setFolderPage(safeFolderPage);
+  }, [folderPage, safeFolderPage]);
   const currentProfileAvatarId = STARTER_POKEMON_IDS.includes(student?.avatarId ?? -1) ? student?.avatarId : STARTER_POKEMON_IDS[0];
   const inventory = progress.inventory ?? [];
   const shopProducts = useMemo(
@@ -768,6 +795,14 @@ export default function App() {
       setMessage(maxSelected > 1 ? `Selezionate ${current.length + 1} di ${maxSelected} entità. Seleziona una destinazione per classificare la carta principale; le altre selezioni resteranno attive.` : 'Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.');
       return [...current, cardId];
     });
+  }
+
+  function moveCardToFolder(cardId: string, destinationId: string) {
+    if (lessonSolved.includes(cardId)) return;
+    setMisplacedCards(old => ({ ...old, [cardId]: destinationId }));
+    setCategoryPlacements(old => { const next = { ...old }; delete next[cardId]; return next; });
+    setSelectedCardIds(old => old.filter(id => id !== cardId));
+    setSelectedCardId(old => old === cardId ? null : old);
   }
 
   function placeCard(cardId: string, targetId: string) {
@@ -822,6 +857,7 @@ export default function App() {
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
       : card.subcategoryId === targetSubcategoryId;
     if (!isCorrect) {
+      setCategoryPlacements(old => { const next = { ...old }; delete next[cardId]; return next; });
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
       const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
       const errorTimestamp = Date.now();
@@ -1386,185 +1422,136 @@ export default function App() {
                 </form>}
               </div>
             </section>}
-            <section className="challenge-board game-board mixed-lesson-board">
-              <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
-                <div className="game-zone-heading">
-                  <strong>{currentSubcategory ? `SOTTOCARTELLA · ${currentSubcategory.name.toLocaleUpperCase('it')}` : currentMacro ? `CARTELLA · ${currentMacro.name.toLocaleUpperCase('it')}` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
-                  <span>{lessonSolved.length} / {lessonDeck.length} classificate</span>
-                </div>
-                {openSubcategoryId !== null && currentSubcategory ? (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => setOpenSubcategoryId(null)}>← Sottocategorie</button>
-                      <span>{currentSubcategory.name} · scegli una posizione vuota</span>
-                    </div>
-                    <div className="pokemon-number-grid category-entity-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
-                      {currentSubcategoryCards.map((_, index) => {
-                        const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
-                        const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
-                        const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
-                        const isWrong = Boolean(placedCard && (placedCard.subcategoryId !== currentSubcategory.id || Boolean(misplacedCards[placedCard.id])));
-                        return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isWrong && inventory.includes('subcategory-errors') ? 'pokemon-number-wrong' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
-                          if (placedCard && lessonSolved.includes(placedCard.id)) {
-                            setMessage('Questa entità è corretta e bloccata: non può essere rimossa.');
-                            return;
-                          }
-                          if (placedCard) {
-                            setCategoryPlacements(old => {
-                              const next = { ...old };
-                              delete next[placedCard.id];
-                              return next;
-                            });
-                            setMisplacedCards(old => {
-                              const next = { ...old };
-                              delete next[placedCard.id];
-                              return next;
-                            });
-                            setWrongTargetId(null);
-                            setMessage('Entità errata rimossa dallo slot e restituita al catalogo.');
-                            return;
-                          }
-                          if (selectedCardId) placeCard(selectedCardId, currentSubcategory.id);
-                        }}>
-                          {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
-                        </button>;
-                      })}
-                    </div>
-                  </>
-                ) : openMacroId === null ? (
-                  <div className="category-targets-grid macro-folder-grid">
-                    {macroFolderCounts.map(folder => <button
-                      type="button"
-                      key={folder.id}
-                      className={'category-target macro-folder ' + (wrongTargetId === folder.id ? 'category-target-wrong' : '')}
-                      onDragOver={event => event.preventDefault()}
-                      onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, folder.id); }}
-                      onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); setOpenSubcategoryId(null); }}
-                    >
-                      <span className="folder-icon" aria-hidden="true">📁</span>
-                      <span className="category-target-macro">MACROCATEGORIA</span>
-                      <strong>{folder.name}</strong>
-                      <small>{folder.solved} / {folder.total}</small>
-                      {Object.entries(misplacedCards).filter(([, targetId]) => targetId === folder.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                    </button>)}
-                  </div>
-                ) : openMacroId === 'pokemon' && currentPokemonRegion ? (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => setOpenPokemonRegionId(null)}>← Regioni</button>
-                      <span>{currentPokemonRegion.name} · scegli il numero corretto per la carta selezionata</span>
-                    </div>
-                    <div className="pokemon-number-grid" aria-label={'Posizioni Pokémon di ' + currentPokemonRegion.name}>
-                      {Array.from({ length: currentPokemonRegion.end - currentPokemonRegion.start + 1 }, (_, index) => {
-                        const nationalId = currentPokemonRegion.start + index;
-                        const regionalNumber = index + 1;
-                        const isCompleted = progress.completedIds.includes(nationalId);
-                        const slotId = 'pokemon-slot:' + nationalId;
-                        return <button
-                          type="button"
-                          key={nationalId}
-                          className={'pokemon-number-slot pokemon-number-entity-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')}
-                          aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')}
-                          disabled={isCompleted}
-                          onDragOver={event => event.preventDefault()}
-                          onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, slotId); }}
-                          onClick={() => { if (selectedCardId) placeCard(selectedCardId, slotId); else setMessage('Seleziona prima una carta Pokémon, poi scegli il numero in cui collocarla.'); }}
-                        >
-                          <strong>#{String(regionalNumber).padStart(3, '0')}</strong>
-                          <small>N. {String(nationalId).padStart(4, '0')}</small>
-                          {isCompleted && (() => { const pokemon = lessonDeck.find(entry => entry.kind === 'pokemon' && entry.pokemonId === nationalId); return pokemon ? <img className="category-entity-image" src={pokemon.imageUrl} alt="" /> : <span aria-hidden="true">✓</span>; })()}
-                          {Object.entries(misplacedCards).filter(([, targetId]) => targetId === slotId).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-slot-chip" title="Riprendi Pokémon" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                        </button>;
-                      })}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => { setOpenPokemonRegionId(null); setOpenMacroId(null); }}>← Indietro</button>
-                      <span>{openMacroId === 'pokemon' ? (inventory.includes('direct-region') ? 'Seleziona un Pokémon e tocca la sua regione, oppure trascinalo nella regione senza scegliere il numero' : 'Seleziona una regione per aprire l’elenco numerato') : 'Apri la sottocartella corretta per la carta selezionata'}</span>
-                    </div>
-                    <div className="category-targets-grid subfolder-grid">
-                      {currentMacroTargets.map(target => <button
+            <section className={\`challenge-board game-board mixed-lesson-board folder-workspace \${mobileFolderTreeOpen ? 'mobile-tree-open' : ''}\`}>
+              <aside className={\`game-zone folder-tree-zone \${mobileFolderTreeOpen ? 'is-mobile-open' : ''}\`} aria-label="Albero delle cartelle">
+                <div className="game-zone-heading"><strong>CARTELLE E SOTTOCARTELLE</strong><span>{lessonSolved.length} / {lessonDeck.length}</span></div>
+                <div className="folder-tree-scroll">
+                  <button type="button" className={\`folder-tree-all \${!openMacroId ? 'is-active' : ''}\`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>
+                    <span aria-hidden="true">▦</span><strong>Tutte le entità</strong><small>{remainingLessonCards.length}</small>
+                  </button>
+                  {macroFolderCounts.map(folder => (
+                    <div className="folder-tree-group" key={folder.id}>
+                      <button
                         type="button"
-                        key={target.id}
-                        className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '')}
-                        aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
+                        className={\`folder-tree-node folder-tree-macro \${openMacroId === folder.id ? 'is-active' : ''}\`}
+                        aria-expanded={openMacroId === folder.id}
                         onDragOver={event => event.preventDefault()}
-                        onDrop={event => {
-                          event.preventDefault();
-                          const cardId = event.dataTransfer.getData('text/plain');
-                          if (!cardId) return;
-                          if (openMacroId !== 'pokemon') {
-                            placeCard(cardId, target.id);
-                            return;
-                          }
-                          const draggedCard = lessonDeck.find(card => card.id === cardId);
-                          if (inventory.includes('direct-region') && draggedCard?.kind === 'pokemon') {
-                            placeCard(cardId, target.id);
-                            setWrongTargetId(null);
-                          }
-                        }}
-                        onClick={() => {
-                          if (openMacroId === 'pokemon') {
-                            const selectedCard = selectedCardId ? lessonDeck.find(card => card.id === selectedCardId) : undefined;
-                            if (inventory.includes('direct-region') && selectedCard?.kind === 'pokemon') {
-                              placeCard(selectedCard.id, target.id);
-                              setWrongTargetId(null);
-                              return;
-                            }
-                            setOpenPokemonRegionId(target.id);
-                            setWrongTargetId(null);
-                            setMessage('Regione ' + target.name + ' aperta. Seleziona un Pokémon e poi il suo numero, oppure trascinalo qui con Inserimento regionale rapido.');
-                          } else {
-                            setOpenSubcategoryId(target.id);
-                            setWrongTargetId(null);
-                          }
-                        }}
+                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, folder.id); }}
+                        onClick={() => { setOpenMacroId(folder.id); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setFolderPage(0); setMobileFolderTreeOpen(false); }}
                       >
-                        <span className="folder-icon" aria-hidden="true">📂</span>
-                        <strong>{target.name}</strong>
-                        <small>{target.solved} / {target.total} {openMacroId === 'pokemon' ? 'posizioni completate' : 'classificate'}</small>
-                        {Object.entries(misplacedCards).filter(([, targetId]) => targetId === target.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                      </button>)}
+                        <span className="folder-tree-chevron">{openMacroId === folder.id ? '▾' : '▸'}</span><span aria-hidden="true">📁</span><strong>{folder.name}</strong><small>{folder.solved}/{folder.total}</small>
+                      </button>
+                      {openMacroId === folder.id && <div className="folder-tree-children">
+                        {currentMacroTargets.map(target => {
+                          const selected = openSubcategoryId === target.id || openPokemonRegionId === target.id;
+                          return <button
+                            type="button"
+                            key={target.id}
+                            className={\`folder-tree-node folder-tree-child \${selected ? 'is-active' : ''}\`}
+                            aria-current={selected ? 'location' : undefined}
+                            onDragOver={event => event.preventDefault()}
+                            onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, target.id); }}
+                            onClick={() => {
+                              if (folder.id === 'pokemon') { setOpenPokemonRegionId(target.id); setOpenSubcategoryId(null); }
+                              else { setOpenSubcategoryId(target.id); setOpenPokemonRegionId(null); }
+                              setFolderPage(0);
+                              setMobileFolderTreeOpen(false);
+                            }}
+                          >
+                            <span aria-hidden="true">{selected ? '📂' : '📁'}</span><strong>{target.name}</strong><small>{target.solved}/{target.total}</small>
+                          </button>;
+                        })}
+                      </div>}
                     </div>
-                  </>
-                )}
-                {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
-              </section>
-              <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
-                <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
+                  ))}
+                </div>
+              </aside>
+
+              <section className="game-zone folder-context-zone" aria-label="Area di lavoro delle entità">
+                <div className="game-zone-heading">
+                  <strong>{!openMacroId ? 'TUTTE LE ENTITÀ' : openSubcategoryId && currentSubcategory ? currentSubcategory.name.toLocaleUpperCase('it') : openPokemonRegionId && currentPokemonRegion ? currentPokemonRegion.name.toLocaleUpperCase('it') : currentMacro ? currentMacro.name.toLocaleUpperCase('it') : 'CARTELLA'}</strong>
+                  <span>{!activeFolderId ? \`\${remainingLessonCards.length} disponibili\` : \`\${folderAssignedCards.length} qui · \${lessonSolved.length} completate\`}</span>
+                </div>
+                <div className="folder-context-toolbar">
+                  <button type="button" className="folder-mobile-toggle" onClick={() => setMobileFolderTreeOpen(true)}>☰ Cartelle</button>
+                  <button type="button" className={\`folder-all-button \${!activeFolderId ? 'is-active' : ''}\`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>← Tutte le entità</button>
+                  {activeFolderId && selectedCardIds.length > 0 && <button type="button" className="folder-move-selected" onClick={() => {
+                    selectedCardIds.forEach(cardId => moveCardToFolder(cardId, activeFolderId));
+                    setSelectedCardIds([]);
+                    setSelectedCardId(null);
+                  }}>Sposta qui {selectedCardIds.length > 1 ? \`le \${selectedCardIds.length} selezionate\` : 'la selezionata'}</button>}
+                </div>
+
+                {!activeFolderId ? (
+                  loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
-                    <div className="game-pagination game-pagination-cards">
-                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
-                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
-                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
-                    </div>
-                    <div className="pokemon-cards mixed-card-grid">
-                      {visibleGameCards.map(card => <button
-                        key={card.id}
-                        type="button"
-                        aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'}
-                        title="Seleziona carta"
-                        className={`pokemon-card mixed-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`}
-                        draggable
-                        onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
-                        onClick={() => toggleCardSelection(card.id)}
-                      >
+                    <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
+                    <div className="pokemon-cards mixed-card-grid folder-entity-grid">
+                      {visibleGameCards.map(card => <button key={card.id} type="button" aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'} title="Seleziona carta" className={\`pokemon-card mixed-card \${selectedCardIds.includes(card.id) ? 'chosen' : ''}\`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)} onClick={() => toggleCardSelection(card.id)}>
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
-                         {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
+                        {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
                       </button>)}
                     </div>
-                    <div className="game-pagination game-pagination-cards">
-                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
-                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
-                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
-                    </div>
+                    <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
+                  </> : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>
+                ) : (
+                  <>
+                    {openMacroId && !openSubcategoryId && !openPokemonRegionId && <div className="folder-subfolder-shortcuts">
+                      <p>Apri una sottocartella per consultare le posizioni corrette. Puoi anche spostare qui le entità selezionate.</p>
+                      {currentMacroTargets.map(target => <button type="button" key={target.id} onClick={() => { if (openMacroId === 'pokemon') setOpenPokemonRegionId(target.id); else setOpenSubcategoryId(target.id); setFolderPage(0); }}><span aria-hidden="true">📂</span><strong>{target.name}</strong><small>{target.solved}/{target.total}</small></button>)}
+                    </div>}
+
+                    {openSubcategoryId && currentSubcategory && <div className="folder-correct-slots">
+                      <div className="folder-section-caption"><strong>Posizioni corrette</strong><span>Seleziona un'entità e poi la posizione</span></div>
+                      <div className="category-entity-grid folder-slot-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
+                        {currentSubcategoryCards.map((_, index) => {
+                          const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
+                          const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
+                          const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
+                          const isComplete = Boolean(placedCard && lessonSolved.includes(placedCard.id));
+                          return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isComplete ? 'pokemon-number-complete' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
+                            if (placedCard && isComplete) return;
+                            if (placedCard) {
+                              setCategoryPlacements(old => { const next = { ...old }; delete next[placedCard.id]; return next; });
+                              setMisplacedCards(old => { const next = { ...old }; delete next[placedCard.id]; return next; });
+                              return;
+                            }
+                            if (selectedCardId) placeCard(selectedCardId, slotId);
+                          }}>
+                            {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
+                          </button>;
+                        })}
+                      </div>
+                    </div>}
+
+                    {openPokemonRegionId && currentPokemonRegion && <div className="folder-correct-slots">
+                      <div className="folder-section-caption"><strong>Numeri regionali</strong><span>Seleziona un Pokémon e poi il numero corretto</span></div>
+                      <div className="pokemon-number-grid folder-pokemon-number-grid" aria-label={'Posizioni Pokémon di ' + currentPokemonRegion.name}>
+                        {Array.from({ length: currentPokemonRegion.end - currentPokemonRegion.start + 1 }, (_, index) => {
+                          const nationalId = currentPokemonRegion.start + index;
+                          const regionalNumber = index + 1;
+                          const isCompleted = progress.completedIds.includes(nationalId);
+                          const slotId = 'pokemon-slot:' + nationalId;
+                          return <button type="button" key={nationalId} className={'pokemon-number-slot pokemon-number-entity-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')} aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')} disabled={isCompleted} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, slotId); }} onClick={() => { if (selectedCardId) placeCard(selectedCardId, slotId); }}><strong>#{String(regionalNumber).padStart(3, '0')}</strong><small>N. {String(nationalId).padStart(4, '0')}</small>{isCompleted && (() => { const pokemon = lessonDeck.find(entry => entry.kind === 'pokemon' && entry.pokemonId === nationalId); return pokemon ? <img className="category-entity-image" src={pokemon.imageUrl} alt="" /> : <span aria-hidden="true">✓</span>; })()}</button>;
+                        })}
+                      </div>
+                    </div>}
+
+                    {folderAssignedCards.length > 0 && <div className="folder-assigned-section">
+                      <div className="folder-section-caption"><strong>Entità provvisorie in questa cartella</strong><span>Puoi spostarle ancora o riprenderle</span></div>
+                      <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
+                        {visibleFolderCards.map(card => <div key={card.id} className={\`folder-entity-card \${selectedCardIds.includes(card.id) ? 'chosen' : ''}\`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
+                          <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}><img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}</button>
+                          <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
+                        </div>)}
+                      </div>
+                      {folderAssignedCards.length > 15 && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
+                    </div>}
+                    {folderAssignedCards.length === 0 && !openSubcategoryId && !openPokemonRegionId && <div className="folder-empty-hint">Questa cartella non contiene ancora entità provvisorie. Seleziona una o più entità da <strong>Tutte le entità</strong>, poi torna qui e premi <strong>Sposta qui</strong>; oppure trascina una carta direttamente sulla cartella.</div>}
                   </>
-                  : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>}
+                )}
               </section>
             </section>
           </>}
