@@ -12,6 +12,7 @@ import StudentCard from './StudentCard';
 import PublicStudentProfile from './PublicStudentProfile';
 import AdminPanel from './AdminPanel';
 import Cartoleria from './Cartoleria';
+import SpecialModes from './SpecialModes';
 import Academy from './Academy';
 import { Bell, Bone, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GitBranch, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Target, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
@@ -248,6 +249,8 @@ function PortalDashboard({
 
   const shortcuts = [
     { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
+    ...(inventory.includes('timed-training') ? [{ id: 'timed-training', title: 'Allenamento a tempo', description: 'Metti alla prova la tua velocità di catalogazione.', icon: <Clock3 size={21} />, className: 'portal-v2-game', status: 'Disponibile' }] : []),
+    ...(inventory.includes('custom-challenges') ? [{ id: 'custom-challenges', title: 'Sfide personalizzate', description: 'Crea esercitazioni per le aree del catalogo che vuoi allenare.', icon: <Target size={21} />, className: 'portal-v2-game', status: 'Disponibile' }] : []),
     { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
     ...(inventory.includes('evolution-archive') ? [{ id: 'evolutions', title: 'Archivio delle evoluzioni', description: 'Consulta le linee evolutive e le condizioni di evoluzione.', icon: <GitBranch size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
     ...(inventory.includes('evolution-tools-archive') ? [{ id: 'evolution-tools', title: 'Archivio degli strumenti evolutivi', description: 'Consulta pietre e strumenti usati per far evolvere i Pokémon.', icon: <Sparkles size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
@@ -1024,6 +1027,31 @@ export default function App() {
     }
   }
 
+  const specialModeCards = useMemo(() => lessonDeck.filter(card => !lessonSolved.includes(card.id)
+    && (card.kind === 'pokemon' ? !progress.completedIds.includes(card.pokemonId ?? -1) : !(progress.completedEntries ?? []).includes(card.id))), [lessonDeck, lessonSolved, progress.completedIds, progress.completedEntries]);
+
+  function catalogSpecialModeCard(card: CatalogCard) {
+    setLessonSolved(old => old.includes(card.id) ? old : [...old, card.id]);
+    setMisplacedCards(old => { if (!(card.id in old)) return old; const next = { ...old }; delete next[card.id]; return next; });
+    setCategoryPlacements(old => { if (!(card.id in old)) return old; const next = { ...old }; delete next[card.id]; return next; });
+    setProgress(old => {
+      if (card.kind === 'pokemon') {
+        const id = card.pokemonId;
+        if (!id || old.completedIds.includes(id)) return old;
+        const timestamp = Date.now();
+        return { ...old, points: old.points + 1, completedIds: [...old.completedIds, id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Pokémon catalogato', detail: `${card.name} · numero nazionale #${id}` }].slice(-100) };
+      }
+      if ((old.completedEntries ?? []).includes(card.id)) return old;
+      const timestamp = Date.now();
+      return { ...old, points: old.points + 1, completedEntries: [...(old.completedEntries ?? []), card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
+    });
+  }
+
+  function registerSpecialModeError(card: CatalogCard) {
+    const timestamp = Date.now();
+    setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${timestamp}-${card.id}`, timestamp, kind: 'error' as const, title: 'Tentativo non corretto', detail: `${card.name} · modalità di allenamento` }].slice(-100) }));
+  }
+
   function navTo(next: string) {
     // La voce Archivio resta raggiungibile: la schermata stessa spiega i requisiti di sblocco.
     setView(next);
@@ -1409,6 +1437,8 @@ export default function App() {
       <nav id="main-navigation" aria-label="Navigazione principale" className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
+        {inventory.includes('timed-training') && <button className={view === 'timed-training' ? 'active' : ''} aria-current={view === 'timed-training' ? 'page' : undefined} onClick={() => navTo('timed-training')}><Clock3 size={16}/> Allenamento a tempo</button>}
+        {inventory.includes('custom-challenges') && <button className={view === 'custom-challenges' ? 'active' : ''} aria-current={view === 'custom-challenges' ? 'page' : undefined} onClick={() => navTo('custom-challenges')}><Target size={16}/> Sfide personalizzate</button>}
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
         {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
         {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}><Sparkles size={16} /> Archivio degli strumenti evolutivi</button>}
@@ -1428,6 +1458,8 @@ export default function App() {
         <aside className="sidebar">
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
+            {inventory.includes('timed-training') && <button className={view === 'timed-training' ? 'side-active' : ''} onClick={() => navTo('timed-training')}>▸ Allenamento a tempo</button>}
+            {inventory.includes('custom-challenges') && <button className={view === 'custom-challenges' ? 'side-active' : ''} onClick={() => navTo('custom-challenges')}>▸ Sfide personalizzate</button>}
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
             {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
             {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'side-active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}>▸ Archivio degli strumenti evolutivi</button>}
@@ -1632,6 +1664,9 @@ export default function App() {
             </section>
           </>}
                     {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} academy={academy} typeCatalog={typeCatalog} typeLoading={typeLoading} online={online} onReset={resetProgress} />}
+          {view === 'timed-training' && (inventory.includes('timed-training') ? <SpecialModes mode="timed-training" cards={specialModeCards} showNames={inventory.includes('reveal-name')} onCatalogCard={catalogSpecialModeCard} onWrongAnswer={registerSpecialModeError} onExit={() => navTo('game')} /> : <section className="archive-search"><h1>Allenamento a tempo bloccato</h1><p>Acquista Allenamento a tempo nella Cartoleria per accedere a questa modalità.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          {view === 'custom-challenges' && (inventory.includes('custom-challenges') ? <SpecialModes mode="custom-challenges" cards={specialModeCards} showNames={inventory.includes('reveal-name')} onCatalogCard={catalogSpecialModeCard} onWrongAnswer={registerSpecialModeError} onExit={() => navTo('game')} /> : <section className="archive-search"><h1>Sfide personalizzate bloccate</h1><p>Acquista Sfide personalizzate nella Cartoleria per creare esercitazioni su misura.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+
           {view === 'shop' && <Cartoleria
             academy={academy}
             progress={progress}
@@ -1759,6 +1794,8 @@ export default function App() {
         <section className="mobile-more-sheet" role="dialog" aria-modal="true" aria-label="Altre sezioni" onClick={event => event.stopPropagation()}>
           <div className="mobile-more-heading"><div><span>AREA ALLIEVO</span><strong>Altre sezioni</strong></div><button type="button" aria-label="Chiudi menu" onClick={() => setMobileMoreOpen(false)}><X size={19}/></button></div>
           <div className="mobile-more-grid">
+            {inventory.includes('timed-training') && <button type="button" className={view === 'timed-training' ? 'active' : ''} onClick={() => navTo('timed-training')}><Clock3 size={20}/><span>Allenamento a tempo</span></button>}
+            {inventory.includes('custom-challenges') && <button type="button" className={view === 'custom-challenges' ? 'active' : ''} onClick={() => navTo('custom-challenges')}><Target size={20}/><span>Sfide personalizzate</span></button>}
             <button type="button" className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio Nazionale</span>{!inventory.includes('national-catalog') && <small>Bloccato</small>}</button>
             {inventory.includes('machines-archive') && <button type="button" className={view === 'machines' ? 'active' : ''} aria-current={view === 'machines' ? 'page' : undefined} onClick={() => navTo('machines')}><BookOpen size={20}/><span>Archivio MT e tecniche</span></button>}
             {inventory.includes('held-items-archive') && <button type="button" className={view === 'held-items' ? 'active' : ''} aria-current={view === 'held-items' ? 'page' : undefined} onClick={() => navTo('held-items')}><ShieldCheck size={20}/><span>Archivio strumenti tenuti</span></button>}
