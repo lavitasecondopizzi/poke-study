@@ -26,11 +26,11 @@ function titleLabel(id: string) {
     'title-archive-master': 'Maestro dell’Archivio',
     'title-community-author': 'Voce della Bacheca',
     'title-community-helper': 'Compagno di Studio',
+    'title-exclusive-archivista-pokemon': 'Archivista Pokémon',
   };
   if (labels[id]) return labels[id];
   if (id.startsWith('title-region-')) return 'Custode di ' + id.slice('title-region-'.length).replace(/^\w/, letter => letter.toUpperCase());
   if (id.startsWith('title-grade-')) return 'Allievo di Grado ' + id.slice('title-grade-'.length);
-  if (id.startsWith('custom-title:')) return id.slice('custom-title:'.length);
   return id;
 }
 function badgeLabel(id: string) {
