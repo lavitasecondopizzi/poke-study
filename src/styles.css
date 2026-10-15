@@ -3681,4 +3681,4 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 @media(max-width:650px){.research-autocomplete-overlay{left:0;width:min(320px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:200px}.research-autocomplete-overlay .research-search-results li{padding:7px 6px}}
 
 
-/* Trigger a fresh GitHub Pages deployment after a stalled Pages publish. */
+/* Trigger another GitHub Pages deployment attempt after the stalled Pages publish. */
