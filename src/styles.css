@@ -3566,3 +3566,19 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .site-shell .category-entity-slot.pokemon-number-wrong .category-entity-image {
   filter:drop-shadow(0 0 2px #e9a0a0);
 }
+
+
+/* Suggerimenti degli aiuti: mantengono i colori dell'accademia selezionata. */
+.ability-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--academy-border);
+  border-left: 4px solid var(--academy-accent);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fff, var(--academy-soft));
+  color: var(--academy-accent-dark);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
