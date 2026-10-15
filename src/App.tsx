@@ -949,6 +949,18 @@ export default function App() {
     setNotice(`Acquisto registrato: ${product.name}.`);
   }
 
+  function useRevealName() {
+    if (!selectedCardId) { setNotice('Seleziona prima una carta da identificare.'); return; }
+    const card = lessonDeck.find(entry => entry.id === selectedCardId);
+    if (!card || lessonSolved.includes(card.id)) { setNotice('Seleziona una carta ancora da classificare.'); return; }
+    if (!(progress.inventory ?? []).includes('reveal-name')) {
+      setNotice('Acquista Rivelazione del nome nella Cartoleria per usare questo aiuto.');
+      return;
+    }
+    setMessage(`Rivelazione del nome: ${card.name}.`);
+    setNotice('Nome dell’entità rivelato.');
+  }
+
   function useAbility(abilityId: 'scanner' | 'research') {
     if (!selectedCardId) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     const card = lessonDeck.find(entry => entry.id === selectedCardId);
@@ -1432,7 +1444,7 @@ export default function App() {
               <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : message && wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
               <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
+                <div className="ability-toolbar">{inventory.includes('reveal-name') && <button type="button" disabled={!selectedCardId} onClick={useRevealName}><strong>Rivelazione del nome</strong><small>{selectedCardId ? 'Rivela il nome della carta selezionata' : 'Seleziona una carta'}</small></button>}{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
