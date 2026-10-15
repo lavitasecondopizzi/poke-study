@@ -1626,6 +1626,7 @@ export default function App() {
             communityBusy={communityBusy}
             communityNotice={communityNotice}
             communityError={communityError}
+            hasExclusiveTitle={inventory.includes('exclusive-title')}
             onUpdateProfile={updateStudentProfile}
             onChooseAvatar={saveAvatar}
             onImportAccount={importCommunityAccount}
