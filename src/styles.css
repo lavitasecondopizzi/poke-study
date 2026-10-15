@@ -3273,3 +3273,146 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .admin-spinning{animation:admin-spin .9s linear infinite}
 @keyframes admin-spin{to{transform:rotate(360deg)}}
 @media(max-width:650px){.admin-panel-heading{align-items:flex-start;flex-wrap:wrap;padding:17px}.admin-panel-icon{flex-basis:43px;width:43px;height:43px}.admin-panel-heading>div{width:calc(100% - 60px)}.admin-refresh{margin-left:auto}.admin-panel-summary{gap:8px}.admin-panel-summary article{padding:12px;gap:8px}.admin-panel-summary article strong{font-size:22px}.admin-users-section,.admin-audit-section{padding:14px}.admin-user-row{align-items:flex-start;flex-wrap:wrap;gap:9px}.admin-user-details{flex-basis:calc(100% - 55px)}.admin-role-control{flex:1 1 100%;padding-left:48px}.admin-user-saving{margin-left:48px}.admin-section-title h2{font-size:18px}}
+
+
+/* Tema coerente per Bacheca e Amministrazione: riusa i colori del campus attivo. */
+.site-shell[class*="academy-theme-"] .forum-v2-hero,
+.site-shell[class*="academy-theme-"] .forum-v2-announcement,
+.site-shell[class*="academy-theme-"] .forum-v2-workspace,
+.site-shell[class*="academy-theme-"] .forum-v2-composer,
+.site-shell[class*="academy-theme-"] .forum-v2-thread-card,
+.site-shell[class*="academy-theme-"] .admin-panel-heading,
+.site-shell[class*="academy-theme-"] .admin-users-section,
+.site-shell[class*="academy-theme-"] .admin-audit-section {
+  border-color:var(--academy-border);
+  box-shadow:inset 0 1px #fff,0 3px 0 color-mix(in srgb,var(--academy-accent) 17%,white);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-hero {
+  background:linear-gradient(125deg,#fff 0%,color-mix(in srgb,var(--academy-soft) 45%,white) 55%,var(--academy-soft) 100%);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-eyebrow,
+.site-shell[class*="academy-theme-"] .forum-v2-hero h1,
+.site-shell[class*="academy-theme-"] .forum-v2-section-heading h2,
+.site-shell[class*="academy-theme-"] .forum-v2-announcement h2,
+.site-shell[class*="academy-theme-"] .forum-v2-composer-heading h3,
+.site-shell[class*="academy-theme-"] .forum-v2-empty h3,
+.site-shell[class*="academy-theme-"] .forum-v2-thread-card h3,
+.site-shell[class*="academy-theme-"] .admin-panel-heading h1,
+.site-shell[class*="academy-theme-"] .admin-section-title h2 {
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-crest,
+.site-shell[class*="academy-theme-"] .forum-v2-announcement-ribbon,
+.site-shell[class*="academy-theme-"] .forum-v2-stat-grid>div,
+.site-shell[class*="academy-theme-"] .forum-v2-avatar,
+.site-shell[class*="academy-theme-"] .forum-v2-empty>span,
+.site-shell[class*="academy-theme-"] .admin-panel-icon,
+.site-shell[class*="academy-theme-"] .admin-user-avatar {
+  border-color:var(--academy-border);
+  background:linear-gradient(#fff,var(--academy-soft));
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-announcement-ribbon {
+  border-bottom-color:var(--academy-border);
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-primary-action {
+  border-color:var(--academy-accent-dark);
+  background:linear-gradient(color-mix(in srgb,var(--academy-mid) 72%,white),var(--academy-accent) 48%,var(--academy-accent-dark));
+  color:#fff;
+  box-shadow:inset 0 1px #ffffffa6,0 2px 0 color-mix(in srgb,var(--academy-accent) 30%,white);
+  text-shadow:0 1px 1px #0003;
+}
+.site-shell[class*="academy-theme-"] .forum-v2-primary-action:hover:not(:disabled) {
+  background:linear-gradient(var(--academy-accent),var(--academy-accent-dark));
+}
+.site-shell[class*="academy-theme-"] .forum-v2-quiet-action,
+.site-shell[class*="academy-theme-"] .forum-v2-action-button,
+.site-shell[class*="academy-theme-"] .forum-v2-filters button {
+  border-color:var(--academy-border);
+  background:linear-gradient(#fff,var(--academy-soft));
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-filters button.is-active,
+.site-shell[class*="academy-theme-"] .forum-v2-thread-card:target {
+  border-color:var(--academy-accent);
+  background:linear-gradient(#fff,var(--academy-soft));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--academy-accent) 20%,transparent),0 2px 0 color-mix(in srgb,var(--academy-accent) 18%,white);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-category-tag {
+  border-color:var(--academy-border);
+  background:var(--academy-soft);
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-category-tag.category-domande {
+  border-color:#e8d9a8;background:#fff8df;color:#765a18;
+}
+.site-shell[class*="academy-theme-"] .forum-v2-category-tag.category-annunci {
+  border-color:#e5c9a8;background:#fff2e6;color:#895324;
+}
+.site-shell[class*="academy-theme-"] .forum-v2-search:focus-within,
+.site-shell[class*="academy-theme-"] .forum-v2-composer input:focus,
+.site-shell[class*="academy-theme-"] .forum-v2-composer select:focus,
+.site-shell[class*="academy-theme-"] .forum-v2-composer textarea:focus,
+.site-shell[class*="academy-theme-"] .forum-v2-reply-form textarea:focus {
+  outline-color:var(--academy-accent);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-thread-card {
+  background:linear-gradient(145deg,#fff 0%,color-mix(in srgb,var(--academy-soft) 22%,white) 100%);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-composer {
+  background:linear-gradient(145deg,#fff,color-mix(in srgb,var(--academy-soft) 58%,white));
+}
+.site-shell[class*="academy-theme-"] .forum-v2-reply {
+  border-left-color:var(--academy-mid);
+  background:color-mix(in srgb,var(--academy-soft) 68%,white);
+}
+.site-shell[class*="academy-theme-"] .admin-panel-heading {
+  background:linear-gradient(135deg,#fff 0%,color-mix(in srgb,var(--academy-soft) 60%,white) 58%,var(--academy-soft) 100%);
+}
+.site-shell[class*="academy-theme-"] .admin-panel-summary article,
+.site-shell[class*="academy-theme-"] .admin-user-row {
+  border-color:var(--academy-border);
+  box-shadow:0 2px 0 color-mix(in srgb,var(--academy-accent) 15%,white);
+}
+.site-shell[class*="academy-theme-"] .admin-panel-summary article>svg,
+.site-shell[class*="academy-theme-"] .admin-audit-dot {
+  color:var(--academy-accent);
+}
+.site-shell[class*="academy-theme-"] .admin-refresh,
+.site-shell[class*="academy-theme-"] .admin-count,
+.site-shell[class*="academy-theme-"] .admin-role-control select {
+  border-color:var(--academy-border);
+  background:linear-gradient(#fff,var(--academy-soft));
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .admin-user-avatar {
+  background:linear-gradient(#fff,var(--academy-soft));
+}
+.site-shell[class*="academy-theme-"] .admin-role-control select:focus,
+.site-shell[class*="academy-theme-"] .admin-search input:focus {
+  outline:2px solid var(--academy-accent);
+  outline-offset:1px;
+}
+.site-shell[class*="academy-theme-"] .admin-audit-dot {
+  background:var(--academy-accent);
+  box-shadow:0 0 0 4px var(--academy-soft);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-loading-pulse {
+  background:var(--academy-accent);
+  box-shadow:0 0 0 4px var(--academy-soft);
+}
+.site-shell[class*="academy-theme-"] .forum-v2-filters button:focus-visible,
+.site-shell[class*="academy-theme-"] .forum-v2-primary-action:focus-visible,
+.site-shell[class*="academy-theme-"] .forum-v2-quiet-action:focus-visible,
+.site-shell[class*="academy-theme-"] .forum-v2-action-button:focus-visible,
+.site-shell[class*="academy-theme-"] .admin-refresh:focus-visible {
+  outline:3px solid var(--academy-accent);
+  outline-offset:2px;
+}
+@media(max-width:650px) {
+  .site-shell[class*="academy-theme-"] .forum-v2-hero,
+  .site-shell[class*="academy-theme-"] .admin-panel-heading {
+    background:linear-gradient(145deg,#fff,var(--academy-soft));
+  }
+}
