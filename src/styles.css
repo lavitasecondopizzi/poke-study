@@ -3587,3 +3587,22 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .ability-hint {
   white-space: pre-line;
 }
+
+/* Categoria rivelata dallo Scanner: sempre visibile sotto il nome, in grigio. */
+.scanner-revealed-category {
+  display: block;
+  width: 100%;
+  padding: 0 2px 2px;
+  color: #777;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.mixed-card:has(.scanner-revealed-category) {
+  height: auto;
+  min-height: 96px !important;
+  gap: 3px;
+  padding-bottom: 5px;
+}
