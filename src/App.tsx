@@ -379,9 +379,11 @@ export default function App() {
   const [communityReplyDrafts, setCommunityReplyDrafts] = useState<Record<string, string>>({});
   const [communityReplyOpen, setCommunityReplyOpen] = useState<Record<string, boolean>>({});
   const [forumSearch, setForumSearch] = useState('');
-  const [forumCategoryFilter, setForumCategoryFilter] = useState<'tutte' | CommunityCategory>('tutte');
+  const [forumCategoryFilter, setForumCategoryFilter] = useState<'tutte' | 'discussioni' | 'domande' | 'annunci' | 'preferiti'>('tutte');
   const [forumSort, setForumSort] = useState<'recenti' | 'attive'>('recenti');
   const [showThreadComposer, setShowThreadComposer] = useState(false);
+  const [forumFavorites, setForumFavorites] = useState<string[]>([]);
+  const [forumDraftSaved, setForumDraftSaved] = useState(false);
   const [publicProfileId, setPublicProfileId] = useState<string | null>(null);
   const communityConfigured = isCommunityConfigured();
   const displayNickname = communityIdentity?.nickname ?? student?.nickname ?? 'Allenatore in formazione';
@@ -389,12 +391,57 @@ export default function App() {
   const visibleCommunityThreads = useMemo(() => {
     const query = forumSearch.trim().toLocaleLowerCase('it-IT');
     return communityThreads
-      .filter(thread => forumCategoryFilter === 'tutte' || thread.category === forumCategoryFilter)
+      .filter(thread => {
+        if (forumCategoryFilter === 'tutte') return true;
+        if (forumCategoryFilter === 'discussioni') return thread.category === 'generale' || thread.category === 'strategie';
+        if (forumCategoryFilter === 'preferiti') return forumFavorites.includes(thread.id);
+        return thread.category === forumCategoryFilter;
+      })
       .filter(thread => !query || [thread.title, thread.body, thread.author?.matricola ?? '', ...(thread.posts ?? []).map(post => post.body), ...(thread.posts ?? []).map(post => post.author?.matricola ?? '')].join(' ').toLocaleLowerCase('it-IT').includes(query))
       .sort((a, b) => forumSort === 'attive'
         ? new Date(b.updated_at || b.created_at).getTime() - new Date(a.updated_at || a.created_at).getTime()
         : new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  }, [communityThreads, forumSearch, forumCategoryFilter, forumSort]);
+  }, [communityThreads, forumSearch, forumCategoryFilter, forumSort, forumFavorites]);
+
+  useEffect(() => {
+    if (!communityIdentity) {
+      setForumFavorites([]);
+      return;
+    }
+    const key = `poke-study-forum-favorites-v1-${communityIdentity.id}`;
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) ?? '[]') as unknown;
+      setForumFavorites(Array.isArray(saved) ? saved.filter((id): id is string => typeof id === 'string') : []);
+      const rawDraft = localStorage.getItem(`poke-study-forum-draft-v1-${communityIdentity.id}`);
+      if (rawDraft) {
+        const draft = JSON.parse(rawDraft) as { title?: unknown; body?: unknown; category?: unknown };
+        setCommunityThreadTitle(current => current || (typeof draft.title === 'string' ? draft.title : ''));
+        setCommunityThreadBody(current => current || (typeof draft.body === 'string' ? draft.body : ''));
+        if (draft.category === 'generale' || draft.category === 'domande' || draft.category === 'strategie' || draft.category === 'annunci') {
+          setCommunityThreadCategory(draft.category);
+        }
+        setForumDraftSaved(true);
+      }
+    } catch {
+      setForumFavorites([]);
+    }
+  }, [communityIdentity]);
+
+  useEffect(() => {
+    if (!communityIdentity) return;
+    const key = `poke-study-forum-draft-v1-${communityIdentity.id}`;
+    if (!communityThreadTitle.trim() && !communityThreadBody.trim()) {
+      try { localStorage.removeItem(key); } catch { /* local storage is optional */ }
+      setForumDraftSaved(false);
+      return;
+    }
+    try {
+      localStorage.setItem(key, JSON.stringify({ title: communityThreadTitle, body: communityThreadBody, category: communityThreadCategory, savedAt: new Date().toISOString() }));
+      setForumDraftSaved(true);
+    } catch {
+      setForumDraftSaved(false);
+    }
+  }, [communityIdentity, communityThreadTitle, communityThreadBody, communityThreadCategory]);
 
   useEffect(() => {
     let active = true;
@@ -929,6 +976,8 @@ export default function App() {
       setCommunityThreadTitle('');
       setCommunityThreadBody('');
       setShowThreadComposer(false);
+      if (communityIdentity) { try { localStorage.removeItem(`poke-study-forum-draft-v1-${communityIdentity.id}`); } catch { /* local storage is optional */ } }
+      setForumDraftSaved(false);
       setCommunityThreads(await listCommunityThreads());
     } catch (error) {
       setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la discussione.');
@@ -1390,66 +1439,80 @@ export default function App() {
           {view === 'academia' && <Academy configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} onOpenProfile={() => navTo('profilo')} />}
 
           {view === 'forum' && <>
-            <div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div>
-            <div className="page-heading forum-heading forum-hero">
-              <div className="forum-hero-copy">
-                <div className="eyebrow"><span className="forum-live-dot" /> COMUNITÀ SCOLASTICA · POKÉ STUDY</div>
-                <h1>Bacheca studenti</h1>
-                <p>Discussioni e strategie della community.</p>
-                <div className="forum-hero-tags"><span><MessageSquare size={13}/> Discussioni</span><span><GraduationCap size={13}/> Comunità d’Accademia</span></div>
+            <div className="breadcrumb">Home / Comunità / <b>Bacheca</b></div>
+            <header className="forum-v2-hero">
+              <div className="forum-v2-hero-copy">
+                <span className="forum-v2-eyebrow"><GraduationCap size={14}/> PORTALE STUDENTI · POKÉ STUDY</span>
+                <h1>Bacheca</h1>
+                <p>Domande, idee e avvisi della comunità scolastica.</p>
+                <div className="forum-v2-hero-meta"><span><MessageSquare size={14}/>{communityThreads.length} discussioni</span><span><MessageCircle size={14}/>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)} risposte</span></div>
               </div>
-              <div className="forum-heading-mark forum-hero-emblem"><GraduationCap size={28}/><span>AREA<br/>STUDENTI</span></div>
-            </div>
+              <div className="forum-v2-crest" aria-hidden="true"><GraduationCap size={28}/><span>AREA<br/>STUDENTI</span></div>
+            </header>
 
-            <section className="forum-featured forum-featured-notice">
-              <div className="forum-featured-top"><span className="forum-pin"><Bell size={12}/> AVVISO IN EVIDENZA</span><span className="forum-date">SEGRETERIA DIDATTICA</span></div>
-              <div className="forum-featured-body"><div className="forum-featured-icon"><GraduationCap size={25}/></div><div><h2>Benvenuto nell’Archivio Nazionale</h2><p>Ogni collocazione corretta assegna 1 Punto Poké. Completa regioni e obiettivi per monitorare i tuoi progressi.</p></div><span className="forum-notice-check"><CheckCircle2 size={16}/> UFFICIALE</span></div>
+            <section className="forum-v2-announcement" aria-label="Avviso della segreteria">
+              <div className="forum-v2-announcement-ribbon"><Megaphone size={14}/> AVVISO DEL PORTALE <span>SEGRETERIA DIDATTICA</span></div>
+              <div className="forum-v2-announcement-body"><span className="forum-v2-announcement-icon"><BookOpen size={23}/></span><div><h2>Benvenuto nella Bacheca</h2><p>Condividi dubbi e strategie, rispondi agli altri allievi e consulta gli annunci. Mantieni le conversazioni pertinenti e rispettose.</p></div><span className="forum-v2-official"><CheckCircle2 size={15}/> UFFICIALE</span></div>
             </section>
 
-            <section className="community-forum-panel forum-workspace">
-              <div className="forum-workspace-heading">
-                <div><span className="section-label">SPAZIO CONDIVISO</span><h2>Discussioni</h2><p>Le novità e le conversazioni della comunità.</p></div>
-                <div className="forum-workspace-actions">
-                  <button type="button" className="forum-refresh-button" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}><Clock3 size={15}/> Aggiorna</button>
-                  {communityIdentity && <button type="button" className="secondary-button forum-new-thread-button" onClick={() => setShowThreadComposer(open => !open)}>{showThreadComposer ? <X size={15}/> : <Plus size={16}/>} {showThreadComposer ? 'Chiudi' : 'Nuova discussione'}</button>}
+            <section className="forum-v2-workspace" aria-labelledby="forum-v2-discussions-title">
+              <div className="forum-v2-section-heading">
+                <div><span className="section-label">SPAZIO CONDIVISO</span><h2 id="forum-v2-discussions-title">Conversazioni</h2><p>Trova una discussione o aprine una nuova.</p></div>
+                <div className="forum-v2-actions">
+                  <button type="button" className="forum-v2-quiet-action" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}><RefreshCw size={15}/> Aggiorna</button>
+                  {communityIdentity && <button type="button" className="forum-v2-primary-action" onClick={() => setShowThreadComposer(open => !open)}>{showThreadComposer ? <X size={15}/> : <Plus size={16}/>} {showThreadComposer ? 'Chiudi' : 'Nuova discussione'}</button>}
                 </div>
               </div>
 
-              {!communityConfigured ? <div className="community-forum-empty"><strong>Bacheca in configurazione</strong><p>Il servizio online non è disponibile in questa versione. Riprova dopo il rilascio della build aggiornata.</p></div> : !communityIdentity ? <div className="forum-login-prompt"><div className="forum-prompt-icon"><GraduationCap size={24}/></div><div><strong>Accedi alla comunità</strong><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p></div><button type="button" className="secondary-button" onClick={() => navTo('profilo')}>Vai al Profilo <ChevronRight size={15}/></button></div> : <>
-                <div className="forum-community-stats">
-                  <div><span>DISCUSSIONI</span><strong>{communityThreads.length}</strong></div>
-                  <div><span>RISPOSTE</span><strong>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)}</strong></div>
-                  <div><span>LA TUA ACCADEMIA</span><strong>{communityIdentity.academy === 'arancia' ? 'Arancia' : communityIdentity.academy === 'uva' ? 'Uva' : 'Mirtillo'}</strong></div>
+              {!communityConfigured ? <div className="forum-v2-state-card"><Database size={24}/><div><strong>Bacheca in configurazione</strong><p>Il servizio online non è disponibile. Riprova dopo il rilascio della configurazione aggiornata.</p></div></div> : !communityIdentity ? <div className="forum-v2-state-card"><ShieldCheck size={24}/><div><strong>Accedi alla comunità</strong><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p></div><button type="button" className="forum-v2-primary-action" onClick={() => navTo('profilo')}>Vai al Profilo <ChevronRight size={15}/></button></div> : <>
+                <div className="forum-v2-stat-grid">
+                  <div><span>DISCUSSIONI</span><strong>{communityThreads.length}</strong><small>nella Bacheca</small></div>
+                  <div><span>RISPOSTE</span><strong>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)}</strong><small>contributi degli allievi</small></div>
+                  <div><span>PREFERITI</span><strong>{forumFavorites.length}</strong><small>salvati per il tuo account</small></div>
                 </div>
-                {showThreadComposer && <form className="community-thread-form forum-composer" onSubmit={event => void submitCommunityThread(event)}>
-                  <div className="forum-composer-heading"><div><span className="section-label">CONTRIBUISCI ALLA BACHECA</span><h3>Apri una discussione</h3></div><button type="button" className="forum-icon-button" aria-label="Chiudi composizione" onClick={() => setShowThreadComposer(false)}><X size={17}/></button></div>
-                  <label>Titolo <input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Es. Consigli per completare Paldea"/></label>
-                  <div className="forum-form-row"><label>Area tematica <select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Generale</option><option value="domande">Domande</option><option value="strategie">Strategie</option><option value="annunci">Annunci</option></select></label><div className="forum-compose-hint"><Sparkles size={15}/><span>Inserisci un titolo pertinente.</span></div></div>
-                  <label>Messaggio <textarea required maxLength={5000} rows={4} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Condividi la tua domanda o esperienza…"/></label>
-                  <div className="forum-composer-footer"><span>{communityThreadBody.length}/5000 caratteri</span><button type="submit" className="secondary-button" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>{communityForumLoading ? 'Pubblicazione…' : <><Plus size={15}/> Pubblica discussione</>}</button></div>
+
+                {showThreadComposer && <form className="forum-v2-composer" onSubmit={event => void submitCommunityThread(event)}>
+                  <div className="forum-v2-composer-heading"><div><span className="section-label">CONTRIBUISCI ALLA COMUNITÀ</span><h3>Nuova discussione</h3><p>Scrivi un titolo chiaro e aggiungi il contesto necessario.</p></div><button type="button" className="forum-v2-icon-button" aria-label="Chiudi composizione" onClick={() => setShowThreadComposer(false)}><X size={17}/></button></div>
+                  <label>Titolo della discussione<input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Es. Come completare il Pokédex di Paldea"/></label>
+                  <div className="forum-v2-form-row"><label>Sezione<select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Discussioni</option><option value="domande">Domande</option><option value="annunci">Annunci</option></select></label><span className="forum-v2-draft-status"><CheckCircle2 size={14}/>{forumDraftSaved ? 'Bozza salvata su questo dispositivo' : 'Bozza in preparazione'}</span></div>
+                  <label>Messaggio<textarea required maxLength={5000} rows={5} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Condividi la tua domanda, esperienza o strategia…"/></label>
+                  <div className="forum-v2-composer-footer"><span>{communityThreadBody.length.toLocaleString('it-IT')} / 5.000 caratteri · La bozza viene salvata automaticamente.</span><button type="submit" className="forum-v2-primary-action" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>{communityForumLoading ? <><RefreshCw size={15} className="forum-v2-spinning"/> Pubblicazione…</> : <><Plus size={15}/> Pubblica discussione</>}</button></div>
                 </form>}
 
-                <div className="forum-discovery">
-                  <div className="forum-search-box"><Search size={17}/><input aria-label="Cerca nella Bacheca" type="search" value={forumSearch} onChange={event => setForumSearch(event.target.value)} placeholder="Cerca titoli, messaggi o matricole…"/>{forumSearch && <button type="button" aria-label="Cancella ricerca" onClick={() => setForumSearch('')}><X size={15}/></button>}</div>
-                  <label className="forum-sort-control"><SlidersHorizontal size={15}/><span>Ordina</span><select aria-label="Ordina discussioni" value={forumSort} onChange={event => setForumSort(event.target.value as 'recenti' | 'attive')}><option value="recenti">Più recenti</option><option value="attive">Ultima attività</option></select></label>
+                <div className="forum-v2-discovery">
+                  <label className="forum-v2-search"><Search size={18}/><input aria-label="Cerca nella Bacheca" type="search" value={forumSearch} onChange={event => setForumSearch(event.target.value)} placeholder="Cerca titoli, messaggi, risposte o matricole…"/>{forumSearch && <button type="button" aria-label="Cancella ricerca" onClick={() => setForumSearch('')}><X size={15}/></button>}</label>
+                  <label className="forum-v2-sort"><SlidersHorizontal size={15}/><span>Ordina per</span><select aria-label="Ordina discussioni" value={forumSort} onChange={event => setForumSort(event.target.value as 'recenti' | 'attive')}><option value="recenti">Più recenti</option><option value="attive">Ultima attività</option></select></label>
                 </div>
-                <div className="forum-category-tabs" aria-label="Filtra per area tematica">
-                  {([{id:'tutte',label:'Tutte',icon:<Sparkles size={14}/>},{id:'generale',label:'Generale',icon:<MessageSquare size={14}/>},{id:'domande',label:'Domande',icon:<CircleHelp size={14}/>},{id:'strategie',label:'Strategie',icon:<Trophy size={14}/>},{id:'annunci',label:'Annunci',icon:<Bell size={14}/>} ] as {id:'tutte'|CommunityCategory;label:string;icon:ReactNode}[]).map(category => <button type="button" key={category.id} className={forumCategoryFilter===category.id?'active':''} aria-pressed={forumCategoryFilter===category.id} onClick={() => setForumCategoryFilter(category.id)}>{category.icon}{category.label}{category.id!=='tutte' && <span>{communityThreads.filter(thread=>thread.category===category.id).length}</span>}</button>)}
+
+                <div className="forum-v2-filters" aria-label="Filtra le discussioni">
+                  {([
+                    {id:'tutte',label:'Tutte',count:communityThreads.length,icon:<Sparkles size={15}/>},
+                    {id:'discussioni',label:'Discussioni',count:communityThreads.filter(thread => thread.category === 'generale' || thread.category === 'strategie').length,icon:<MessageSquare size={15}/>},
+                    {id:'domande',label:'Domande',count:communityThreads.filter(thread => thread.category === 'domande').length,icon:<CircleHelp size={15}/>},
+                    {id:'annunci',label:'Annunci',count:communityThreads.filter(thread => thread.category === 'annunci').length,icon:<Bell size={15}/>},
+                    {id:'preferiti',label:'Preferiti',count:forumFavorites.length,icon:<Bookmark size={15}/>}
+                  ] as {id:'tutte'|'discussioni'|'domande'|'annunci'|'preferiti';label:string;count:number;icon:ReactNode}[]).map(category => <button type="button" key={category.id} className={forumCategoryFilter === category.id ? 'is-active' : ''} aria-pressed={forumCategoryFilter === category.id} onClick={() => setForumCategoryFilter(category.id)}>{category.icon}<span>{category.label}</span><small>{category.count}</small></button>)}
                 </div>
-                {communityForumError && <p className="community-account-error" role="alert">{communityForumError}</p>}
-                {communityForumLoading && <p className="forum-loading" role="status"><span className="forum-loading-pulse"/> Aggiornamento della Bacheca…</p>}
-                {!communityForumLoading && visibleCommunityThreads.length===0 && <div className="forum-empty-state"><div className="forum-empty-icon"><Search size={22}/></div><strong>{communityThreads.length===0?'La Bacheca è pronta per la prima discussione':'Nessun risultato'}</strong><p>{communityThreads.length===0?'Avvia una conversazione.':'Prova un’altra ricerca o categoria.'}</p>{communityThreads.length===0 ? <button type="button" className="secondary-button" onClick={() => setShowThreadComposer(true)}><Plus size={15}/> Crea la prima discussione</button> : <button type="button" className="forum-clear-filters" onClick={() => {setForumSearch('');setForumCategoryFilter('tutte');}}>Azzera filtri</button>}</div>}
-                <div className="community-thread-list forum-thread-list">{visibleCommunityThreads.map(thread => <article className="community-thread-card forum-thread-card" key={thread.id}>
-                  <div className="community-thread-meta"><span>{({ generale: 'Generale', domande: 'Domande', strategie: 'Strategie', annunci: 'Annunci' } as Record<CommunityCategory, string>)[thread.category]}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleString('it-IT')}</time></div>
-                  <h3>{thread.title}</h3><p className="community-thread-author"><span className={thread.author?.academy==='uva'?'forum-author-avatar forum-avatar-grape':thread.author?.academy==='mirtillo'?'forum-author-avatar forum-avatar-blueberry':'forum-author-avatar'}>{(thread.author?.matricola??'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><button type="button" className="forum-author-profile-link" disabled={!thread.author?.id} onClick={() => { if (thread.author?.id) setPublicProfileId(thread.author.id); }}>{thread.author?.matricola ?? 'Matricola non disponibile'}</button><span className="forum-author-separator">·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span></p>
-                  <p className="community-thread-body">{thread.body}</p>
-                  <div className="forum-thread-footer"><span><MessageSquare size={14}/>{thread.posts?.length ?? 0} {(thread.posts?.length ?? 0)===1?'risposta':'risposte'}</span><button type="button" onClick={() => setCommunityReplyOpen(old => ({...old,[thread.id]:!old[thread.id]}))} className="forum-reply-action" aria-expanded={Boolean(communityReplyOpen[thread.id])} aria-label={`Rispondi a ${thread.title}`}>{communityReplyOpen[thread.id]?<X size={14}/>:<MessageSquare size={14}/>} {communityReplyOpen[thread.id]?'Annulla':'Rispondi'}</button></div>
-                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small><button type="button" className="forum-author-profile-link" disabled={!post.author?.id} onClick={() => { if (post.author?.id) setPublicProfileId(post.author.id); }}>{post.author?.matricola ?? 'Matricola non disponibile'}</button> · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
-                  {communityReplyOpen[thread.id] && <form className="community-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>La tua risposta</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={2} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({ ...old, [thread.id]: event.target.value }))} placeholder="Aggiungi un contributo…"/><div className="forum-reply-form-footer"><span>Max 2.000 caratteri</span><button type="submit" className="secondary-button" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>{communityForumLoading?'Invio…':'Invia risposta'}</button></div></form>}
-                </article>)}</div>
+
+                {communityForumError && <div className="forum-v2-error" role="alert"><CircleHelp size={18}/><div><strong>Operazione non riuscita</strong><p>{communityForumError}</p></div><button type="button" onClick={() => setCommunityForumError('')} aria-label="Chiudi messaggio"><X size={16}/></button></div>}
+                {communityForumLoading && <div className="forum-v2-loading" role="status"><span className="forum-v2-loading-pulse"/><span>Aggiornamento delle conversazioni…</span></div>}
+                {!communityForumLoading && visibleCommunityThreads.length === 0 && <div className="forum-v2-empty"><span><Search size={24}/></span><h3>{forumCategoryFilter === 'preferiti' ? 'Nessun preferito salvato' : communityThreads.length === 0 ? 'La Bacheca è pronta' : 'Nessuna discussione trovata'}</h3><p>{forumCategoryFilter === 'preferiti' ? 'Salva una discussione con il segnalibro per ritrovarla rapidamente.' : communityThreads.length === 0 ? 'Apri la prima conversazione e avvia lo scambio con gli altri allievi.' : 'Prova a cambiare ricerca o sezione.'}</p>{communityThreads.length === 0 && <button type="button" className="forum-v2-primary-action" onClick={() => setShowThreadComposer(true)}><Plus size={15}/> Crea la prima discussione</button>}{communityThreads.length > 0 && <button type="button" className="forum-v2-quiet-action" onClick={() => {setForumSearch('');setForumCategoryFilter('tutte');}}>Azzera filtri</button>}</div>}
+
+                <div className="forum-v2-thread-list">{visibleCommunityThreads.map(thread => {
+                  const isFavorite = forumFavorites.includes(thread.id);
+                  const categoryLabel = thread.category === 'domande' ? 'Domande' : thread.category === 'annunci' ? 'Annunci' : 'Discussioni';
+                  return <article className="forum-v2-thread-card" id={`discussione-${thread.id}`} key={thread.id}>
+                    <div className="forum-v2-thread-top"><span className={`forum-v2-category-tag category-${thread.category}`}>{thread.category === 'annunci' ? <Megaphone size={13}/> : thread.category === 'domande' ? <CircleHelp size={13}/> : <MessageSquare size={13}/>} {categoryLabel}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleDateString('it-IT', {day:'2-digit',month:'short',year:'numeric'})} · {new Date(thread.created_at).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'})}</time></div>
+                    <h3>{thread.title}</h3>
+                    <div className="forum-v2-author"><span className={`forum-v2-avatar ${thread.author?.academy === 'uva' ? 'academy-uva' : thread.author?.academy === 'mirtillo' ? 'academy-mirtillo' : 'academy-arancia'}`}>{(thread.author?.matricola ?? 'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><button type="button" disabled={!thread.author?.id} onClick={() => {if (thread.author?.id) setPublicProfileId(thread.author.id);}}>{thread.author?.matricola ?? 'Matricola non disponibile'}</button><span>·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span><span className="forum-v2-author-dot">·</span><span>{thread.posts?.length ?? 0} {(thread.posts?.length ?? 0) === 1 ? 'risposta' : 'risposte'}</span></div>
+                    <p className="forum-v2-thread-body">{thread.body}</p>
+                    <div className="forum-v2-thread-actions"><span><MessageCircle size={15}/>{thread.posts?.length ?? 0} risposte</span><div><button type="button" className={`forum-v2-action-button ${isFavorite ? 'is-saved' : ''}`} aria-pressed={isFavorite} onClick={() => setForumFavorites(current => {const next = current.includes(thread.id) ? current.filter(id => id !== thread.id) : [...current, thread.id]; try {localStorage.setItem(`poke-study-forum-favorites-v1-${communityIdentity.id}`, JSON.stringify(next));} catch {/* local storage is optional */} return next;})}>{isFavorite ? <BookmarkCheck size={15}/> : <Bookmark size={15}/>} {isFavorite ? 'Salvata' : 'Salva'}</button><a className="forum-v2-action-button" href={`#discussione-${thread.id}`} aria-label={`Link diretto a: ${thread.title}`}><Link2 size={15}/> Link diretto</a><button type="button" className="forum-v2-action-button forum-v2-reply-button" onClick={() => setCommunityReplyOpen(old => ({...old,[thread.id]:!old[thread.id]}))} aria-expanded={Boolean(communityReplyOpen[thread.id])}>{communityReplyOpen[thread.id] ? <X size={15}/> : <MessageSquare size={15}/>} {communityReplyOpen[thread.id] ? 'Chiudi risposte' : 'Rispondi'}</button></div></div>
+                    {(thread.posts ?? []).map(post => <div className="forum-v2-reply" key={post.id}><p>{post.body}</p><small><button type="button" disabled={!post.author?.id} onClick={() => {if (post.author?.id) setPublicProfileId(post.author.id);}}>{post.author?.matricola ?? 'Matricola non disponibile'}</button><span>·</span>{new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
+                    {communityReplyOpen[thread.id] && <form className="forum-v2-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>La tua risposta</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={3} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({...old,[thread.id]:event.target.value}))} placeholder="Aggiungi un contributo utile…"/><div><span>Massimo 2.000 caratteri</span><button type="submit" className="forum-v2-primary-action" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>{communityForumLoading ? 'Invio…' : 'Invia risposta'}</button></div></form>}
+                  </article>;
+                })}</div>
               </>}
             </section>
-
           </>}<footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
