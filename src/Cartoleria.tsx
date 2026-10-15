@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import {
-  BookOpen, CheckCircle2, ChevronRight, FlaskConical, GraduationCap,
+  BookOpen, CheckCircle2, ChevronRight, Clock3, FlaskConical, GraduationCap,
   Search, ShieldCheck, ShoppingBag, Sparkles, Trophy,
 } from 'lucide-react';
 import type { SavedProgress } from './types';
 import type { ShopProduct } from './App';
+import { abilityCooldownSeconds, cooldownAbilityForProductId, formatCooldownTime } from './abilityCooldowns';
 
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
@@ -118,7 +119,10 @@ function ProductCard({
   const requirementProgress = requirements.length
     ? requirements.reduce((sum, item) => sum + (typeof item.ratio === 'number' ? item.ratio : item.done ? 1 : 0), 0) / requirements.length
     : unlocked ? 1 : 0;
-  const displayDescription = owned && nextUpgrade ? nextUpgrade.description : product.description;
+  const displayDescription = product.description;
+  const cooldownAbility = cooldownAbilityForProductId(product.id);
+  const currentCooldownSeconds = cooldownAbility ? abilityCooldownSeconds(cooldownAbility, Math.max(1, currentLevel)) : undefined;
+  const nextCooldownSeconds = cooldownAbility && nextUpgrade ? abilityCooldownSeconds(cooldownAbility, currentLevel + 1) : undefined;
   const displayCost = owned && nextUpgrade ? nextUpgrade.cost : product.cost;
   const status = owned && !nextUpgrade
     ? 'Livello massimo'
@@ -144,6 +148,7 @@ function ProductCard({
         </div>
         <h3>{product.name}{upgrades.length > 0 && <span className="shop-level-count">{Math.max(owned ? 1 : 0, currentLevel)}/{upgrades.length + 1}</span>}</h3>
         <p>{displayDescription}</p>
+        {currentCooldownSeconds !== undefined && <div className="shop-cooldown-info"><Clock3 size={13}/><span>Cooldown livello attuale: <strong>{formatCooldownTime(currentCooldownSeconds)}</strong></span></div>}
         {upgrades.length > 0 && (
           <div className="shop-level-track" role="progressbar" aria-label={'Livello di ' + product.name} aria-valuemin={0} aria-valuemax={upgrades.length + 1} aria-valuenow={Math.max(owned ? 1 : 0, currentLevel)}>
             <span style={{ width: (currentLevel / (upgrades.length + 1) * 100) + '%' }} />
@@ -157,7 +162,7 @@ function ProductCard({
           </div>
         )}
         {owned && nextUpgrade && (
-          <div className="shop-next-upgrade"><strong>Livello successivo · {currentLevel + 1}/{upgrades.length + 1}</strong><span>{nextUpgrade.name}: {nextUpgrade.description}</span></div>
+          <div className="shop-next-upgrade"><strong>Prossimo livello · {currentLevel + 1}/{upgrades.length + 1}</strong><span>{nextUpgrade.name}</span>{nextCooldownSeconds !== undefined && <span>Cooldown al livello successivo: <strong>{formatCooldownTime(nextCooldownSeconds)}</strong></span>}</div>
         )}
         {!owned && requirements.length === 0 && <div className="shop-product-requirement requirement-met"><span aria-hidden="true">✓</span>{requirement}</div>}
         <div className="shop-product-footer">

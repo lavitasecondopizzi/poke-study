@@ -20,6 +20,7 @@ import { createCommunityIdentity, createCommunityReply, createCommunityThread, e
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
+import { SCANNER_LEVELS, RESEARCH_LEVELS, NUMBER_CHECK_LEVELS, REVEAL_SUBCATEGORY_LEVELS, AUTO_SORT_LEVELS, abilityLevelFromInventory, abilityCooldownSeconds, abilityCooldownDurationMs } from './abilityCooldowns';
 
 const NATIONAL_DEX_SIZE = 1025;
 
@@ -38,57 +39,18 @@ export type ShopProduct = {
   kind: 'active' | 'upgrade' | 'passive' | 'archive' | 'cosmetic' | 'mode';
 };
 
-const SCANNER_LEVELS = 20;
-const RESEARCH_LEVELS = 12;
-const NUMBER_CHECK_LEVELS = 10;
-const REVEAL_SUBCATEGORY_LEVELS = 12;
-const AUTO_SORT_LEVELS = 10;
-
-type CooldownAbility = 'scanner' | 'research' | 'number-check' | 'reveal-subcategory' | 'auto-sort';
-const COOLDOWN_CONFIG: Record<CooldownAbility, { baseSeconds: number; levels: number }> = {
-  scanner: { baseSeconds: 300, levels: SCANNER_LEVELS },
-  research: { baseSeconds: 600, levels: RESEARCH_LEVELS },
-  'number-check': { baseSeconds: 300, levels: NUMBER_CHECK_LEVELS },
-  'reveal-subcategory': { baseSeconds: 600, levels: REVEAL_SUBCATEGORY_LEVELS },
-  'auto-sort': { baseSeconds: 300, levels: AUTO_SORT_LEVELS },
-};
-
-function abilityLevelFromInventory(abilityId: CooldownAbility, inventory: string[]) {
-  const prefix = `${abilityId}-upgrade-`;
-  return inventory.reduce((level, id) => {
-    if (!id.startsWith(prefix)) return level;
-    const parsed = Number(id.slice(prefix.length));
-    return Number.isInteger(parsed) && parsed >= 2 && parsed <= COOLDOWN_CONFIG[abilityId].levels
-      ? Math.max(level, parsed)
-      : level;
-  }, 1);
-}
-
-function abilityCooldownSeconds(abilityId: CooldownAbility, level: number) {
-  const { baseSeconds, levels } = COOLDOWN_CONFIG[abilityId];
-  const safeLevel = Math.min(levels, Math.max(1, Math.floor(level) || 1));
-  // Una sola formula alimenta sia i testi della Cartoleria sia il timer effettivo.
-  // Il livello massimo di ogni abilità raggiunge esattamente 10 secondi.
-  if (safeLevel >= levels) return 10;
-  return Math.max(10, Math.round(baseSeconds * Math.pow(10 / baseSeconds, (safeLevel - 1) / (levels - 1))));
-}
-
-function abilityCooldownDurationMs(abilityId: CooldownAbility, level: number) {
-  return abilityCooldownSeconds(abilityId, level) * 1000;
-}
-
 const SHOP_PRODUCTS: ShopProduct[] = [
-  { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
-  ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('scanner', level); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
-  { id: 'research', name: 'Ricerca', description: 'Rivela la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
-  ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('research', level); return { id: `research-upgrade-${level}`, name: `Ricerca · Livello ${level}`, description: `Cooldown della Ricerca: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'research' : `research-upgrade-${level - 1}`], requirementLabel: `Acquista prima Ricerca livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta della categoria in cui collocare il Pokémon.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('scanner', level); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: 'Riduce il tempo di attesa dello Scanner.', cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'research', name: 'Ricerca', description: 'Ricerca e rivela la sottocategoria corretta per l’entità selezionata.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
+  ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('research', level); return { id: `research-upgrade-${level}`, name: `Ricerca · Livello ${level}`, description: 'Riduce il tempo di attesa della Ricerca.', cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'research' : `research-upgrade-${level - 1}`], requirementLabel: `Acquista prima Ricerca livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'direct-region', name: 'Inserimento regionale rapido', description: 'Consente di inserire un Pokémon nella sua regione senza scegliere il numero esatto.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'number-check', name: 'Controllo numerazione', description: 'Rivela il numero del Pokédex Nazionale dei Pokémon selezionati. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  ...Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('number-check', level); return { id: `number-check-upgrade-${level}`, name: `Controllo numerazione · Livello ${level}`, description: `Cooldown del Controllo numerazione: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'number-check' : `number-check-upgrade-${level - 1}`], requirementLabel: `Acquista prima Controllo numerazione livello ${level - 1}`, kind: 'upgrade' as const }; }),
-  { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  ...Array.from({ length: REVEAL_SUBCATEGORY_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('reveal-subcategory', level); return { id: `reveal-subcategory-upgrade-${level}`, name: `Rivelazione sottocategoria · Livello ${level}`, description: `Cooldown: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'reveal-subcategory' : `reveal-subcategory-upgrade-${level - 1}`], requirementLabel: `Acquista prima Rivelazione sottocategoria livello ${level - 1}`, kind: 'upgrade' as const }; }),
-  { id: 'auto-sort', name: 'Smistamento automatico', description: 'Sposta le entità selezionate direttamente nelle rispettive sottocategorie corrette, senza completare la catalogazione. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  ...Array.from({ length: AUTO_SORT_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('auto-sort', level); return { id: `auto-sort-upgrade-${level}`, name: `Smistamento automatico · Livello ${level}`, description: `Cooldown: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'auto-sort' : `auto-sort-upgrade-${level - 1}`], requirementLabel: `Acquista prima Smistamento automatico livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'number-check', name: 'Controllo numerazione', description: 'Mostra il numero del Pokédex Nazionale dei Pokémon selezionati.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('number-check', level); return { id: `number-check-upgrade-${level}`, name: `Controllo numerazione · Livello ${level}`, description: 'Riduce il tempo di attesa del Controllo numerazione.', cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'number-check' : `number-check-upgrade-${level - 1}`], requirementLabel: `Acquista prima Controllo numerazione livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: REVEAL_SUBCATEGORY_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('reveal-subcategory', level); return { id: `reveal-subcategory-upgrade-${level}`, name: `Rivelazione sottocategoria · Livello ${level}`, description: 'Riduce il tempo di attesa della Rivelazione sottocategoria.', cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'reveal-subcategory' : `reveal-subcategory-upgrade-${level - 1}`], requirementLabel: `Acquista prima Rivelazione sottocategoria livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'auto-sort', name: 'Smistamento automatico', description: 'Sposta le entità selezionate nelle rispettive sottocategorie corrette senza completare la catalogazione.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: AUTO_SORT_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = abilityCooldownSeconds('auto-sort', level); return { id: `auto-sort-upgrade-${level}`, name: `Smistamento automatico · Livello ${level}`, description: 'Riduce il tempo di attesa della Rivelazione sottocategoria.', cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'auto-sort' : `auto-sort-upgrade-${level - 1}`], requirementLabel: `Acquista prima Smistamento automatico livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'reveal-name', name: 'Rivelazione del nome', description: 'Mostra il nome dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: 8 }, (_, i) => { const level = i + 1; return { id: `multi-select-${level}`, name: `Selezione multipla · Livello ${level}`, description: `Consente di selezionare fino a ${level + 2} entità contemporaneamente, anche tra pagine diverse.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: level === 1 ? [] : [`multi-select-${level - 1}`], requirementLabel: level === 1 ? 'Nessun requisito aggiuntivo' : `Acquista prima Selezione multipla livello ${level - 1}`, kind: (level === 1 ? 'active' : 'upgrade') as 'active' | 'upgrade' }; }),
   { id: 'subcategory-errors', name: 'Evidenziazione errori', description: 'Evidenzia in rosso solo le entità nella sottocategoria sbagliata. Non controlla la numerazione.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },

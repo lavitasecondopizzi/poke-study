@@ -1330,6 +1330,8 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 .shop-requirement-progress li{display:flex;align-items:flex-start;gap:7px;color:#778b9b;font-size:10px;line-height:1.4}
 .shop-requirement-progress li>span{flex:0 0 12px;font-weight:900}
 .shop-requirement-progress li.requirement-done{color:#367b4c}
+.shop-cooldown-info{display:flex;align-items:center;gap:6px;margin-top:7px;color:#477fa5;font-size:11px;line-height:1.4}
+.shop-cooldown-info strong,.shop-next-upgrade span strong{color:#245d83;font-variant-numeric:tabular-nums}
 .shop-next-upgrade{display:flex;flex-direction:column;gap:4px;padding:10px;border:1px solid #d8e8f3;border-radius:9px;background:#f2f8fd}
 .shop-next-upgrade strong{color:#326d96;font-size:10px}
 .shop-next-upgrade span{color:#637f95;font-size:10px;line-height:1.5}
