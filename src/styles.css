@@ -4326,3 +4326,61 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .game-layout .folder-correct-slots .placed-entity-name{font-size:8px}
   .game-layout .folder-correct-slots .placed-entity-category{font-size:7px}
 }
+
+
+/* Revealed names on placed Pokémon must sit below the sprite, never overlay it. */
+.game-layout .folder-correct-slots .placed-entity-name,
+.game-layout .folder-correct-slots .placed-entity-category{
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  order:3;
+  display:block!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  white-space:normal!important;
+  text-overflow:clip!important;
+  overflow:visible!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  z-index:auto!important;
+}
+.game-layout .folder-correct-slots .placed-entity-name{
+  order:2;
+  font-size:10px!important;
+  font-weight:700;
+  line-height:1.15!important;
+  padding:1px 2px!important;
+  text-align:center!important;
+}
+.game-layout .folder-correct-slots .category-entity-slot .category-entity-image,
+.game-layout .folder-correct-slots .pokemon-number-entity-slot .category-entity-image{
+  order:1;
+  display:block;
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  flex:0 0 auto!important;
+  margin:0 auto!important;
+}
+.game-layout .folder-correct-slots .pokemon-number-entity-slot{
+  height:auto!important;
+  min-height:94px;
+  padding:5px 3px!important;
+  flex-direction:column;
+  gap:2px;
+}
+.game-layout .folder-correct-slots .pokemon-number-entity-slot .placed-entity-name{
+  order:3;
+}
+.game-layout .folder-correct-slots .pokemon-number-entity-slot .placed-entity-category{
+  order:4;
+}
+@media(max-width:650px){
+  .game-layout .folder-correct-slots .placed-entity-name{font-size:8px!important}
+  .game-layout .folder-correct-slots .pokemon-number-entity-slot{min-height:84px}
+}
