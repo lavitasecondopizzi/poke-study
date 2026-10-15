@@ -1,0 +1,24 @@
+{
+  "id": 24,
+  "name": "starter-chespin",
+  "condition": {
+    "name": "starter",
+    "url": "/api/v2/encounter-condition/7/"
+  },
+  "names": [
+    {
+      "name": "Chespin as starter",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Marisson en starter",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": 966,
+  "name": "deadwood-haunt-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "deadwood-haunt",
+    "url": "/api/v2/location/972/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

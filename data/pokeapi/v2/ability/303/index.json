@@ -1,0 +1,143 @@
+{
+  "id": 303,
+  "name": "embody-aspect",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "おもかげやどし",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "초상투영",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "面影輝映",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Force Mémorielle",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Erinnerungskraft",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Evocarrecuerdos",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Albergamemorie",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Embody Aspect",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "おもかげやどし",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "面影辉映",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Evocarrecuerdos",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Force Mémorielle booste une stat particulière, selon la forme d’un Ogerpon Téracristallisé.",
+      "short_effect": "Force Mémorielle booste une stat particulière, selon la forme d’un Ogerpon Téracristallisé.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Embody Aspect boosts a particular stat, depending on the form of a Terastallized Ogerpon",
+      "short_effect": "Embody Aspect boosts a particular stat, depending on the form of a Terastallized Ogerpon",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Le Pokémon fait briller le Masque en puisant dans ses souvenirs, ce qui augmente ses stats.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon's heart fills with memories, causing the Mask to shine and one of the Pokémon's stats to be boosted.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "思い出を 心に 宿すことで\nおめんを かがやかせ\n自分の 能力を 上げる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    }
+  ],
+  "pokemon": []
+}

@@ -1,0 +1,24 @@
+{
+  "id": 40,
+  "name": "other-virtual-console",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Playing on the Virtual Console Release",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En jouant sur la version Virtual Console",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

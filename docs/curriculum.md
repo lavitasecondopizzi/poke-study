@@ -40,7 +40,7 @@ Queste 14 materie sono aree di competenza permanenti. Ogni grado stabilisce qual
 
 ## Pesi delle materie per grado
 
-La media del grado è ponderata in base al peso di ciascuna materia prevista. Il peso va da 1 a 3 e può aumentare nei gradi avanzati per le materie più specialistiche. Il peso stabilisce l'importanza relativa della materia, non modifica il limite massimo dei voti: la media resta sempre compresa tra 0 e 100.
+La media del grado è ponderata in base al peso di ciascuna materia prevista. Il peso va da 1 a 3 e può aumentare nei gradi avanzati per le materie più specialistiche. Il peso stabilisce l'importanza relativa della materia, non modifica il limite massimo dei voti: le valutazioni sono intere da 1 a 30 e le medie possono contenere decimali.
 
 | Materia | Grado I — Fondamenti | Grado II — Conoscenza e relazioni | Grado III — Applicazione | Grado IV — Sintesi e approfondimento |
 |---|:---:|:---:|:---:|:---:|
@@ -104,22 +104,21 @@ I gradi non corrispondono a una durata reale. Il dettaglio delle lezioni, i prer
 
 ## Scala di valutazione
 
-Tutti i voti sono espressi su 100 punti, con una scala analoga a quella universitaria. La soglia per superare un test è **60/100**; la media complessiva richiesta per superare un grado è **80/100**. Le medie sono calcolate sui valori effettivi senza arrotondamenti intermedi; l'interfaccia può mostrare decimali.
+I voti dei singoli tentativi sono numeri interi da **1 a 30**. Le medie di tutti i tentativi e le medie delle materie possono contenere decimali; i calcoli usano i valori effettivi, senza arrotondamenti intermedi. La soglia di superamento di una materia è **18/30**, dopo aver completato tutte le sue lezioni obbligatorie. Per superare un grado servono tutte le attività obbligatorie completate, una media ponderata del grado di almeno **26/30** e un esame finale del grado di almeno **26/30**.
 
 ## Regole per test, tentativi e pagelle
 
 - Ogni lezione obbligatoria termina con un test dedicato.
-- Ogni tentativo genera domande casuali da un ampio database revisionato, coerenti con la lezione e con gli obiettivi già insegnati.
-- Il voto di ogni tentativo è espresso in centesimi, da 0 a 100 e resta nello storico.
+- Ogni tentativo genera domande casuali dal database revisionato, coerenti con la lezione e con gli obiettivi già insegnati; non ci sono duplicati nello stesso tentativo e la distribuzione delle difficoltà deve essere bilanciata.
+- Il voto di ogni tentativo è un intero da 1 a 30 e resta nello storico con domande, risposte, fonti e versione dei quesiti.
 - Il voto effettivo di un test è la media aritmetica di **tutti i tentativi**, compresi quelli insufficienti.
-- La lezione è superata e la successiva si sblocca quando la media effettiva del test raggiunge almeno **60/100**.
-- Il voto della materia è la media dei voti effettivi delle lezioni superate assegnate a quella materia.
+- La lezione successiva si sblocca quando la media effettiva della lezione raggiunge almeno **18/30**.
+- Il voto della materia è la media dei voti effettivi di tutte le lezioni obbligatorie della materia; per superarla occorrono tutte le lezioni completate e una media di almeno 18/30.
 - La media complessiva del grado è la media ponderata dei voti delle materie attive, usando i pesi definiti nella tabella «Pesi delle materie per grado».
-- Per superare un grado occorre completare tutte le lezioni obbligatorie e ottenere una media complessiva di almeno **80/100**.
+- I bonus di rendimento sono associati alle soglie **27/30**, **29/30** e **30/30**; gli importi in punti restano da definire prima della fase ricompense.
 - I calcoli usano valori non arrotondati; l'arrotondamento è solo visivo. Nessun tentativo o voto storico viene cancellato.
 
-La pagella deve mostrare voti per materia, media complessiva, lezioni completate e mancanti, storico dei tentativi e stato del grado. Se ci sono lezioni obbligatorie incomplete, la pagella resta provvisoria e il grado non può essere superato. Le regole di recupero per migliorare una media di grado inferiore a 80/100 restano da definire.
-
+La pagella deve mostrare voti per materia, media complessiva, lezioni completate e mancanti, storico dei tentativi e stato del grado. Per superare un grado, oltre al completamento di tutte le attività obbligatorie, sono necessari una media del grado di almeno 26/30 e un esame finale di almeno 26/30. Il numero di domande per test lezione sarà deciso prima del collaudo; l'esame finale di grado prevede 20–30 domande.
 ## Standard di una lezione
 
 Ogni lezione pubblicata deve includere:

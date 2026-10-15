@@ -1,0 +1,21 @@
+{
+  "id": 38,
+  "name": "overworld",
+  "order": 38,
+  "names": [
+    {
+      "name": "Walking in the overworld",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En marchant dans le monde extérieur",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

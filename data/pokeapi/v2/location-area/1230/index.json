@@ -1,0 +1,172 @@
+{
+  "id": 1230,
+  "name": "mirage-spot-forest-west-of-route-105",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "mirage-spot-forest",
+    "url": "/api/v2/location/697/"
+  },
+  "names": [
+    {
+      "name": "Mirage Forest (West of Route 105)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Forêt Mirage (Ouest de la Route 105)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "graveler",
+        "url": "/api/v2/pokemon/75/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "rock-smash",
+                "url": "/api/v2/encounter-method/6/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "rock-smash",
+                "url": "/api/v2/encounter-method/6/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "forretress",
+        "url": "/api/v2/pokemon/205/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 60,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 60,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "happiny",
+        "url": "/api/v2/pokemon/440/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 40,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 40,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

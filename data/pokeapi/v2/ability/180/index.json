@@ -1,0 +1,863 @@
+{
+  "id": 180,
+  "name": "symbiosis",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-vi",
+    "url": "/api/v2/generation/6/"
+  },
+  "names": [
+    {
+      "name": "きょうせい",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "공생",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "共生",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Symbiose",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Nutznießer",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Simbiosis",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Simbiosi",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Symbiosis",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "きょうせい",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "共生",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Simbiosis",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Si un Pokémon allié consomme son objet tenu, comme une Baie, alors ce Pokémon lui donnera l'objet que lui-même tient. ",
+      "short_effect": "Transmet l’objet tenu du porteur à un allié quand l’allié utilise son objet.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Gibt das eigene getragene Item an einen Teampartner weiter, wenn dieser sein Item benutzt hat.\n\nDas gilt auch, wenn der Partner das Item mit Schleuder verbraucht hat, wenn er eine gegnerische Beere mit Pflücker gegessen hat und kein Item trägt oder sein Luftballon platzt. Wenn mehrere Teampartner ihre Items in der gleichen Runde verbrauchen, erhält derjenige mit der höheren Initiative das Item ohne dabei Bizarroraum zu beachten.\n\nDie Fähigkeit löst nicht aus, wenn das Item nur bewegt wird, beispielsweise durch Raub, Zauberer oder Klettdorn, wenn es durch Einäschern zerstört oder fallengelassen wird.",
+      "short_effect": "Gibt das eigene Item an einen Verbündeten weiter, wenn dieser seins benutzt hat.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "effect": "Passes the bearer's held item to an ally when the ally uses up its item.",
+      "short_effect": "Passes the bearer's held item to an ally when the ally uses up its item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "みかたに　どうぐを\nわたせるように　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "같은 편에게 도구를\n건넬 수 있게 된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Permet aux alliés d’utiliser\nl’objet porté par ce Pokémon.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Das Pokémon kann sein Item an\neinen Mitstreiter weitergeben.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon puede pasar su\nobjeto a un aliado.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Il Pokémon può passare il suo\nstrumento a un alleato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon can pass\nan item to an ally.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "味方に　道具を\n渡せるように　なる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon puede pasar su\nobjeto a un aliado.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": " かたに　どうぐを\nわたせるように　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "같은 편에게 도구를\n건넬 수 있게 된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Permet aux alliés d’utiliser\nl’objet porté par ce Pokémon.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Das Pokémon kann sein Item an\neinen Mitstreiter weitergeben.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon puede pasar su\nobjeto a un aliado.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Il Pokémon può passare il suo\nstrumento a un alleato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon can pass\nan item to an ally.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "味方に　道具を\n渡せるように　なる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon puede pasar su\nobjeto a un aliado.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "みかたが　どうぐを　つかうと\nじぶんの　もっている　どうぐを\nみかたに　わたす。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "같은 편이 도구를 쓰면\n자신이 지니고 있는 도구를\n같은 편에게 건넨다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具時，\n會把自己持有的道具交給同伴。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Quand les alliés utilisent l’objet qu’ils tiennent,\nle Pokémon leur donne l’objet qu’il tient en\nremplacement.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Gibt Mitstreitern, die ihr Item aufgebraucht haben,\nsein eigenes Item.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Se un alleato usa uno strumento, il Pokémon\ngli passa il proprio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon passes its item to an ally that has\nused up an item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "味方が　道具を　使うと\n自分の　持っている　道具を\n味方に　渡す。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具时，\n会把自己持有的道具传递给同伴。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "みかたが　どうぐを　つかうと\nじぶんの　もっている　どうぐを\nみかたに　わたす。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "같은 편이 도구를 쓰면\n자신이 지니고 있는 도구를\n같은 편에게 건넨다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具時，\n會把自己持有的道具交給同伴。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Quand les alliés utilisent l’objet qu’ils tiennent,\nle Pokémon leur donne l’objet qu’il tient en\nremplacement.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Gibt Mitstreitern, die ihr Item aufgebraucht haben,\nsein eigenes Item.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Se un alleato usa uno strumento, il Pokémon\ngli passa il proprio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon passes its item to an ally that has\nused up an item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "味方が　道具を　使うと\n自分の　持っている　道具を\n味方に　渡す。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具时，\n会把自己持有的道具传递给同伴。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "みかたが　どうぐを　つかうと\nじぶんの　もっている　どうぐを\nみかたに　わたす。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "같은 편이 도구를 쓰면\n자신이 지니고 있는 도구를\n같은 편에게 건넨다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具時，\n會把自己持有的道具交給同伴。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Quand les alliés utilisent l’objet qu’ils tiennent,\nle Pokémon leur donne l’objet qu’il tient en\nremplacement.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Gibt Mitstreitern, die ihr Item aufgebraucht haben,\nsein eigenes Item.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Se un alleato usa uno strumento, il Pokémon\ngli passa il proprio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon passes its item to an ally that has\nused up an item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "味方が　道具を　使うと\n自分の　持っている　道具を\n味方に　渡す。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具时，\n会把自己持有的道具传递给同伴。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "El Pokémon pasa su objeto a un aliado que ya haya\nutilizado el suyo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "みかたが　どうぐを　つかうと\nじぶんの　もっている　どうぐを\nみかたに　わたす。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "같은 편이 도구를 쓰면\n자신이 지니고 있는 도구를\n같은 편에게 건넨다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具時，\n會把自己持有的道具交給同伴。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Quand les alliés utilisent l’objet qu’ils tiennent,\nle Pokémon leur donne l’objet qu’il tient\nen remplacement.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Gibt Mitstreitern, die ihr Item aufgebraucht haben,\nsein eigenes Item.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Pasa su objeto a un aliado que ya haya utilizado el suyo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Se un alleato usa uno strumento, il Pokémon\ngli passa il proprio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon passes its item to an ally that has\nused up an item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "味方が　道具を　使うと\n自分の　持っている　道具を\n味方に　渡す。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "同伴使用道具时，\n会把自己持有的道具传递给同伴。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Pasa su objeto a un aliado que ya haya utilizado el suyo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Quand les alliés utilisent l’objet qu’ils tiennent,\\nle Pokémon leur donne l’objet qu’il tient\\nen remplacement.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon passes its held item to an ally that has used up an item.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "flabebe",
+        "url": "/api/v2/pokemon/669/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "floette",
+        "url": "/api/v2/pokemon/670/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "florges",
+        "url": "/api/v2/pokemon/671/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "oranguru",
+        "url": "/api/v2/pokemon/765/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "floette-eternal",
+        "url": "/api/v2/pokemon/10061/"
+      }
+    }
+  ]
+}

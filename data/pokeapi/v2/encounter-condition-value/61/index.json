@@ -1,0 +1,24 @@
+{
+  "id": 61,
+  "name": "weekday-tuesday",
+  "condition": {
+    "name": "weekday",
+    "url": "/api/v2/encounter-condition/12/"
+  },
+  "names": [
+    {
+      "name": "Tuesday",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Le mardi",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

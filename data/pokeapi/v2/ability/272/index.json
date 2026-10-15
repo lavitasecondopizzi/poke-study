@@ -1,0 +1,168 @@
+{
+  "id": 272,
+  "name": "purifying-salt",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "きよめのしお",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "정화의소금",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "潔淨之鹽",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Sel Purificateur",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Läutersalz",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Sal Purificadora",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Sale Purificante",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Purifying Salt",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "きよめのしお",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "洁净之盐",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Sal Purificadora",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Le sel pur du Pokémon le protège des conditions de statut et divise par deux les dégâts subis par les capacités de type Spectre.",
+      "short_effect": "Protège des conditions de statut et divise par deux les dégâts des capacités de type Spectre.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "The Pokémon’s pure salt protects it from status conditions and halves the damage taken from Ghost-type moves.",
+      "short_effect": "Protects from status conditions and halves damage from Ghost-type moves.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Le sel pur immunise le Pokémon contre les altérations\\nde statut, et diminue de moitié les dégâts des capacités\\nde type Spectre.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The Pokémon's pure salt protects it from status conditions and halves the damage taken from Ghost-type moves.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "清らかな塩で　状態異常に　ならない。\nゴーストタイプの　技の\nダメージを　半減させる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "nacli",
+        "url": "/api/v2/pokemon/932/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "naclstack",
+        "url": "/api/v2/pokemon/933/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "garganacl",
+        "url": "/api/v2/pokemon/934/"
+      }
+    }
+  ]
+}

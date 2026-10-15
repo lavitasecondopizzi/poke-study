@@ -8,6 +8,7 @@ const corsHeaders = {
 };
 
 const categories = new Set(["generale", "domande", "strategie", "annunci"]);
+const communityRoles = new Set(["utente", "collaboratore_autorizzato", "moderatore", "amministratore"]);
 type Academy = "arancia" | "uva" | "mirtillo";
 
 const STARTER_AVATAR_IDS = new Set([1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912]);
@@ -38,6 +39,27 @@ function normalizePlayerProgress(value: unknown) {
       cooldowns[key] = until;
     }
   }
+  let gameState: Record<string, unknown> | undefined;
+  if (raw.gameState !== undefined) {
+    if (!raw.gameState || typeof raw.gameState !== "object" || Array.isArray(raw.gameState)) return null;
+    const candidate = raw.gameState as Record<string, unknown>;
+    const validMap = (value: unknown) => value && typeof value === "object" && !Array.isArray(value)
+      && Object.entries(value as Record<string, unknown>).length <= 5000
+      && Object.entries(value as Record<string, unknown>).every(([key, target]) => key.length > 0 && key.length <= 180 && typeof target === "string" && target.length <= 240);
+    if (!validMap(candidate.categoryPlacements) || !validMap(candidate.misplacedCards)) return null;
+    const optionalId = (key: string, max = 180) => candidate[key] === undefined || candidate[key] === null
+      || (typeof candidate[key] === "string" && (candidate[key] as string).length <= max);
+    if (!optionalId("openMacroId") || !optionalId("openSubcategoryId") || !optionalId("openPokemonRegionId")
+      || (candidate.gamePage !== undefined && (!Number.isInteger(candidate.gamePage) || Number(candidate.gamePage) < 0 || Number(candidate.gamePage) > 100000))) return null;
+    gameState = {
+      categoryPlacements: candidate.categoryPlacements,
+      misplacedCards: candidate.misplacedCards,
+      openMacroId: candidate.openMacroId ?? null,
+      openSubcategoryId: candidate.openSubcategoryId ?? null,
+      openPokemonRegionId: candidate.openPokemonRegionId ?? null,
+      gamePage: candidate.gamePage ?? 0,
+    };
+  }
   return {
     points,
     completedIds: [...new Set(raw.completedIds as number[])],
@@ -46,6 +68,7 @@ function normalizePlayerProgress(value: unknown) {
     inventory,
     completedEntries,
     abilityCooldowns: cooldowns,
+    ...(gameState ? { gameState } : {}),
   };
 }
 
@@ -57,6 +80,43 @@ function cleanText(value: unknown, min: number, max: number): string | null {
   if (typeof value !== "string") return null;
   const cleaned = value.trim();
   return cleaned.length >= min && cleaned.length <= max ? cleaned : null;
+}
+
+function normalizeProfileSettings(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const raw = value as Record<string, unknown>;
+  const textField = (key: string, max: number) => {
+    const candidate = raw[key];
+    return typeof candidate === "string" && candidate.length <= max ? candidate.trim() : null;
+  };
+  const bio = textField("bio", 180);
+  const favoritePokemon = textField("favoritePokemon", 60);
+  const motto = textField("motto", 90);
+  const activeTitle = textField("activeTitle", 80);
+  if (bio === null || favoritePokemon === null || motto === null || activeTitle === null) return null;
+  const frames = new Set(["academy", "research", "archive", "expert", "master"]);
+  if (typeof raw.frame !== "string" || !frames.has(raw.frame)) return null;
+  if (!Array.isArray(raw.badges) || raw.badges.length > 3
+    || !raw.badges.every(item => typeof item === "string" && item.length > 0 && item.length <= 80)) return null;
+  const visibilityKeys = ["bio", "favoritePokemon", "motto", "activeTitle", "badges", "catalogStats", "communityStats", "academicGrade", "matricola"];
+  if (!raw.visibility || typeof raw.visibility !== "object" || Array.isArray(raw.visibility)) return null;
+  const visibilityRaw = raw.visibility as Record<string, unknown>;
+  const visibility: Record<string, boolean> = {};
+  for (const key of visibilityKeys) {
+    // Backward compatibility: older saved profiles did not have this visibility flag.
+    if (key === "academicGrade" && visibilityRaw[key] === undefined) {
+      visibility[key] = true;
+      continue;
+    }
+    if (typeof visibilityRaw[key] !== "boolean") return null;
+    visibility[key] = visibilityRaw[key] as boolean;
+  }
+  return {
+    bio, favoritePokemon, motto, activeTitle,
+    badges: [...new Set(raw.badges as string[])],
+    frame: raw.frame,
+    visibility,
+  };
 }
 
 async function hashToken(token: string): Promise<string> {
@@ -110,7 +170,7 @@ Deno.serve(async request => {
       const { data: identity, error } = await supabase
         .from("community_identities")
         .insert({ nickname, academy: academy as Academy, matricola: newMatricola(), token_hash: tokenHash })
-        .select("id,nickname,academy,matricola,created_at")
+        .select("id,nickname,academy,matricola,created_at,role")
         .single();
 
       if (error || !identity) {
@@ -127,7 +187,7 @@ Deno.serve(async request => {
     const tokenHash = await hashToken(token);
     const { data: identity, error: identityError } = await supabase
       .from("community_identities")
-      .select("id,nickname,academy,matricola,created_at")
+      .select("id,nickname,academy,matricola,created_at,role")
       .eq("token_hash", tokenHash)
       .maybeSingle();
 
@@ -135,10 +195,148 @@ Deno.serve(async request => {
 
     if (action === "whoami") return response(200, { identity });
 
+    // Role checks are performed against the database identity resolved from the private token.
+    // Client-provided roles and identity IDs are never treated as proof of privilege.
+    if (action === "admin_list_users") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const { data, error } = await supabase
+        .from("community_identities")
+        .select("id,nickname,matricola,academy,role,created_at")
+        .order("created_at", { ascending: true })
+        .limit(1000);
+      if (error) return response(500, { error: "Non è stato possibile caricare gli utenti." });
+      return response(200, { users: data ?? [] });
+    }
+
+    if (action === "admin_list_audit") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const { data, error } = await supabase
+        .from("community_admin_audit_log")
+        .select("id,actor_id,target_id,old_role,new_role,created_at")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) return response(500, { error: "Non è stato possibile caricare il registro delle operazioni." });
+      return response(200, { entries: data ?? [] });
+    }
+
+    if (action === "admin_set_role") {
+      if (identity.role !== "amministratore") return response(403, { error: "Operazione riservata agli amministratori." });
+      const targetId = typeof input.targetId === "string" ? input.targetId : "";
+      const role = typeof input.role === "string" ? input.role : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId)) {
+        return response(400, { error: "Identificativo utente non valido." });
+      }
+      if (!communityRoles.has(role)) return response(400, { error: "Ruolo non valido." });
+      if (targetId === identity.id) return response(400, { error: "Non puoi modificare il tuo stesso ruolo." });
+      const { data, error } = await supabase.rpc("admin_set_community_role", {
+        p_actor_id: identity.id,
+        p_target_id: targetId,
+        p_new_role: role,
+      });
+      if (error) {
+        const message = error.message.includes("ultimo amministratore")
+          ? "Non è possibile rimuovere l’ultimo amministratore."
+          : error.message.includes("non trovata")
+            ? "Utente non trovato."
+            : error.message.includes("riservata agli amministratori")
+              ? "Operazione riservata agli amministratori."
+              : "Non è stato possibile modificare il ruolo.";
+        return response(409, { error: message });
+      }
+      return response(200, { updated: true, result: Array.isArray(data) ? data[0] : data });
+    }
+
+    if (action === "get_public_profile") {
+      const targetId = typeof input.identityId === "string" ? input.identityId : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId)) {
+        return response(400, { error: "Identificativo profilo non valido." });
+      }
+      const { data: target, error: targetError } = await supabase
+        .from("community_identities")
+        .select("id,nickname,academy,matricola,player_profile,player_progress")
+        .eq("id", targetId)
+        .maybeSingle();
+      if (targetError || !target) return response(404, { error: "Profilo pubblico non trovato." });
+      const rawProfile = target.player_profile && typeof target.player_profile === "object" && !Array.isArray(target.player_profile)
+        ? target.player_profile as Record<string, unknown>
+        : {};
+      const settings = rawProfile.profileSettings === undefined
+        ? null
+        : normalizeProfileSettings(rawProfile.profileSettings);
+      if (rawProfile.profileSettings !== undefined && !settings) {
+        return response(500, { error: "Le preferenze pubbliche del profilo non sono valide." });
+      }
+      const visibility = settings?.visibility as Record<string, boolean> | undefined ?? {
+        bio: true, favoritePokemon: true, motto: true, activeTitle: true,
+        badges: true, catalogStats: true, communityStats: true, academicGrade: true, matricola: true,
+      };
+      const progress = target.player_progress === null ? null : normalizePlayerProgress(target.player_progress);
+      if (target.player_progress !== null && !progress) {
+        return response(500, { error: "Le statistiche del profilo non sono disponibili." });
+      }
+      let communityStats: { discussions: number; replies: number } | undefined;
+      let academicGrade: number | undefined;
+      if (visibility.academicGrade) {
+        const { data: gradeAttempts, error: gradeAttemptsError } = await supabase.from("academy_attempts")
+          .select("grade_number")
+          .eq("identity_id", target.id)
+          .eq("attempt_kind", "grade_exam")
+          .eq("status", "submitted")
+          .eq("passed", true);
+        if (gradeAttemptsError) return response(500, { error: "Non è stato possibile caricare il grado di studi pubblico." });
+        const grades = (gradeAttempts ?? []).map(attempt => Number(attempt.grade_number ?? 0)).filter(grade => Number.isInteger(grade) && grade > 0);
+        if (grades.length) academicGrade = Math.max(...grades);
+      }
+      if (visibility.communityStats) {
+        const [threads, replies] = await Promise.all([
+          supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", target.id),
+          supabase.from("forum_posts").select("id", { count: "exact", head: true }).eq("identity_id", target.id),
+        ]);
+        if (threads.error || replies.error) {
+          return response(500, { error: "Non è stato possibile caricare le statistiche pubbliche del profilo." });
+        }
+        communityStats = { discussions: threads.count ?? 0, replies: replies.count ?? 0 };
+      }
+      const profile: Record<string, unknown> = {
+        id: target.id,
+        matricola: target.matricola,
+        academy: target.academy,
+        avatarId: typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? rawProfile.avatarId : null,
+        frame: settings?.frame ?? "academy",
+      };
+      profile.matricola = target.matricola;
+      if (visibility.bio && settings?.bio) profile.bio = settings.bio;
+      if (visibility.favoritePokemon && settings?.favoritePokemon) profile.favoritePokemon = settings.favoritePokemon;
+      if (visibility.motto && settings?.motto) profile.motto = settings.motto;
+      if (visibility.activeTitle && settings?.activeTitle) profile.activeTitle = settings.activeTitle;
+      if (visibility.badges && settings?.badges?.length) profile.badges = settings.badges;
+      if (visibility.catalogStats && progress) {
+        profile.catalogStats = {
+          completedPokemon: progress.completedIds.length,
+          completedEntries: progress.completedEntries.length,
+          points: progress.points,
+        };
+      }
+      if (communityStats) profile.communityStats = communityStats;
+      if (academicGrade !== undefined) profile.academicGrade = academicGrade;
+      return response(200, profile);
+    }
+
+    if (action === "get_my_public_activity") {
+      const [threads, replies] = await Promise.all([
+        supabase.from("forum_threads").select("id", { count: "exact", head: true }).eq("identity_id", identity.id),
+        supabase.from("forum_posts").select("id", { count: "exact", head: true }).eq("identity_id", identity.id),
+      ]);
+      if (threads.error || replies.error) {
+        return response(500, { error: "Non è stato possibile caricare le statistiche pubbliche della community." });
+      }
+      return response(200, { discussions: threads.count ?? 0, replies: replies.count ?? 0 });
+    }
+
     if (action === "list_leaderboard") {
       const { data, error, count } = await supabase
         .from("community_identities")
-        .select("id,nickname,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
+        .select("id,matricola,academy,player_profile,player_progress,player_state_updated_at", { count: "exact" })
         .order("created_at", { ascending: true })
         .limit(1000);
       if (error) return response(500, { error: "Non è stato possibile caricare la classifica." });
@@ -152,7 +350,7 @@ Deno.serve(async request => {
         const completedEntries = progress?.completedEntries.length ?? 0;
         return {
           id: row.id,
-          nickname: row.nickname,
+          matricola: row.matricola,
           academy: row.academy,
           avatarId: typeof profile?.avatarId === "number" && STARTER_AVATAR_IDS.has(profile.avatarId) ? profile.avatarId : null,
           // Recalculate the main score from recorded completions instead of trusting the client-supplied points total.
@@ -166,7 +364,7 @@ Deno.serve(async request => {
         right.points - left.points
         || right.examPoints - left.examPoints
         || right.completedPokemon - left.completedPokemon
-        || left.nickname.localeCompare(right.nickname, "it")
+        || left.matricola.localeCompare(right.matricola, "it")
       ).map((entry, index) => ({ ...entry, rank: index + 1 }));
 
       return response(200, { entries, totalPlayers: count ?? entries.length });
@@ -183,14 +381,21 @@ Deno.serve(async request => {
       const rawProfile = data.player_profile && typeof data.player_profile === "object" && !Array.isArray(data.player_profile)
         ? data.player_profile as Record<string, unknown>
         : null;
+      const settings = rawProfile?.profileSettings === undefined
+        ? null
+        : normalizeProfileSettings(rawProfile.profileSettings);
       const profile = rawProfile
         ? {
             matricola: identity.matricola,
             ...(typeof rawProfile.avatarId === "number" && STARTER_AVATAR_IDS.has(rawProfile.avatarId) ? { avatarId: rawProfile.avatarId } : {}),
+            ...(settings ? { profileSettings: settings } : {}),
           }
         : null;
       if (data.player_profile !== null && !rawProfile) {
         return response(500, { error: "Il profilo salvato nel database non è valido; i dati non sono stati sovrascritti." });
+      }
+      if (rawProfile?.profileSettings !== undefined && !settings) {
+        return response(500, { error: "Le preferenze del profilo salvate nel database non sono valide; i dati non sono stati sovrascritti." });
       }
       const progress = data.player_progress === null ? null : normalizePlayerProgress(data.player_progress);
       if (data.player_progress !== null && !progress) {
@@ -212,13 +417,33 @@ Deno.serve(async request => {
         }
         avatarId = profileInput.avatarId;
       }
+      const profileSettings = profileInput.profileSettings === undefined
+        ? undefined
+        : normalizeProfileSettings(profileInput.profileSettings);
+      if (profileInput.profileSettings !== undefined && !profileSettings) {
+        return response(400, { error: "Preferenze del profilo non valide." });
+      }
       const progress = normalizePlayerProgress(input.progress);
       if (!progress) return response(400, { error: "Progressi giocatore non validi." });
+      const { data: existing, error: existingError } = await supabase
+        .from("community_identities")
+        .select("player_profile")
+        .eq("id", identity.id)
+        .single();
+      if (existingError || !existing) return response(500, { error: "Non è stato possibile leggere il profilo prima del salvataggio." });
+      const previousProfile = existing.player_profile && typeof existing.player_profile === "object" && !Array.isArray(existing.player_profile)
+        ? existing.player_profile as Record<string, unknown>
+        : {};
+      const preservedSettings = profileSettings ?? previousProfile.profileSettings;
+      const playerProfile = {
+        avatarId,
+        ...(preservedSettings !== undefined ? { profileSettings: preservedSettings } : {}),
+      };
       const updatedAt = new Date().toISOString();
       const { error } = await supabase
         .from("community_identities")
         .update({
-          player_profile: { avatarId },
+          player_profile: playerProfile,
           player_progress: progress,
           player_state_updated_at: updatedAt,
         })
@@ -230,7 +455,7 @@ Deno.serve(async request => {
     if (action === "list_threads") {
       const { data, error } = await supabase
         .from("forum_threads")
-        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(nickname,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(nickname,academy))")
+        .select("id,title,body,category,created_at,updated_at,author:community_identities!forum_threads_identity_id_fkey(id,matricola,academy),posts:forum_posts(id,body,created_at,author:community_identities!forum_posts_identity_id_fkey(id,matricola,academy))")
         .order("created_at", { ascending: false })
         .limit(50);
       if (error) return response(500, { error: "Non è stato possibile caricare le discussioni." });

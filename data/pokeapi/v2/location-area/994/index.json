@@ -1,0 +1,12 @@
+{
+  "id": 994,
+  "name": "hisui-lake-valor-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-lake-valor",
+    "url": "/api/v2/location/1000/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

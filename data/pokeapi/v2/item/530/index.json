@@ -1,0 +1,131 @@
+{
+  "id": 530,
+  "name": "devon-goods",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "plot-advancement",
+    "url": "/api/v2/item-category/22/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Contient la partie de la machine à livrer au Capitaine Poupe.",
+      "short_effect": "Contient les pièces mécaniques à livrer au Capitaine Poupe.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Contains a machine part to be delivered to Captain Stern.",
+      "short_effect": "Contains mechanical parts to be delivered to Captain Stern.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "text": "A package that\ncontains DEVON’s\nmachine parts.",
+      "version_group": {
+        "name": "ruby-sapphire",
+        "url": "/api/v2/version-group/5/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A package that\ncontains DEVON’s\nmachine parts.",
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A package that contains mechanical\nparts of some sort made by the\nDEVON CORPORATION.",
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 269,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "デボンのにもつ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Pack Devon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Devon-Waren",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Piezas Devon",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Merce Devon",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Devon Goods",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Piezas Devon",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/devon-goods.png"
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

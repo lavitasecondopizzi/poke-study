@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "gene_modulo": {
+      "type": "integer"
+    },
+    "possible_values": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "highest_stat": {
+      "$ref": "/schema/v2/named_api_resource.json"
+    },
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/description.json"
+      }
+    }
+  },
+  "required": [
+    "descriptions",
+    "gene_modulo",
+    "highest_stat",
+    "id",
+    "possible_values"
+  ]
+}

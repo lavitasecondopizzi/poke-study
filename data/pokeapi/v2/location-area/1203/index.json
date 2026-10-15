@@ -1,0 +1,61 @@
+{
+  "id": 1203,
+  "name": "saffron-city-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "saffron-city",
+    "url": "/api/v2/location/234/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "raichu-alola",
+        "url": "/api/v2/pokemon/10100/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "lets-go-pikachu",
+            "url": "/api/v2/version/31/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "lets-go-eevee",
+            "url": "/api/v2/version/32/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

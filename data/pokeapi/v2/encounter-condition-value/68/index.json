@@ -1,0 +1,24 @@
+{
+  "id": 68,
+  "name": "item-odd-keystone",
+  "condition": {
+    "name": "item",
+    "url": "/api/v2/encounter-condition/11/"
+  },
+  "names": [
+    {
+      "name": "Have Odd Keystone in bag",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En ayant une Clé de Voûte dans le sac",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

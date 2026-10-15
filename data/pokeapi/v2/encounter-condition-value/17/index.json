@@ -1,0 +1,31 @@
+{
+  "id": 17,
+  "name": "season-spring",
+  "condition": {
+    "name": "season",
+    "url": "/api/v2/encounter-condition/6/"
+  },
+  "names": [
+    {
+      "name": "Im Frühling",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "During Spring",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Au printemps",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

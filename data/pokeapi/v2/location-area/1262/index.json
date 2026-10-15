@@ -1,0 +1,112 @@
+{
+  "id": 1262,
+  "name": "phenac-city-card-e-room",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "phenac-city",
+    "url": "/api/v2/location/1096/"
+  },
+  "names": [
+    {
+      "name": "Phenac City (Card E Room)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Phénacit (Salle Carte E)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "togepi",
+        "url": "/api/v2/pokemon/175/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 20,
+              "max_level": 20,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "mareep",
+        "url": "/api/v2/pokemon/179/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 37,
+              "max_level": 37,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "scizor",
+        "url": "/api/v2/pokemon/212/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

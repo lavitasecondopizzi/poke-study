@@ -1,0 +1,1186 @@
+{
+  "id": 47,
+  "name": "sing",
+  "accuracy": 55,
+  "effect_chance": null,
+  "pp": 15,
+  "priority": 0,
+  "power": null,
+  "contest_combos": {
+    "normal": {
+      "use_before": [
+        {
+          "name": "perish-song",
+          "url": "/api/v2/move/195/"
+        },
+        {
+          "name": "refresh",
+          "url": "/api/v2/move/287/"
+        }
+      ],
+      "use_after": null
+    },
+    "super": {
+      "use_before": null,
+      "use_after": null
+    }
+  },
+  "contest_type": {
+    "name": "cute",
+    "url": "/api/v2/contest-type/3/"
+  },
+  "contest_effect": {
+    "url": "/api/v2/contest-effect/18/"
+  },
+  "damage_class": {
+    "name": "status",
+    "url": "/api/v2/move-damage-class/1/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Endort la cible.",
+      "short_effect": "Endort la cible.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Puts the target to sleep.",
+      "short_effect": "Puts the target to sleep.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-i",
+    "url": "/api/v2/generation/1/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "sleep",
+      "url": "/api/v2/move-ailment/2/"
+    },
+    "category": {
+      "name": "ailment",
+      "url": "/api/v2/move-category/1/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": 2,
+    "max_turns": 4,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "うたう",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "노래하기",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "唱歌",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Berceuse",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Gesang",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Canto",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Canto",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Sing",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "うたう",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "唱歌",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Canto",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": {
+    "url": "/api/v2/super-contest-effect/19/"
+  },
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "normal",
+    "url": "/api/v2/type/1/"
+  },
+  "machines": [
+    {
+      "machine": {
+        "url": "/api/v2/machine/2323/"
+      },
+      "version_group": {
+        "name": "mega-dimension",
+        "url": "/api/v2/version-group/31/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "May cause the foe\nto fall asleep.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "gold-silver",
+        "url": "/api/v2/version-group/3/"
+      }
+    },
+    {
+      "flavor_text": "May cause the foe\nto fall asleep.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "crystal",
+        "url": "/api/v2/version-group/4/"
+      }
+    },
+    {
+      "flavor_text": "A soothing song lulls the\nfoe into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ruby-sapphire",
+        "url": "/api/v2/version-group/5/"
+      }
+    },
+    {
+      "flavor_text": "A soothing song lulls the\nfoe into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      }
+    },
+    {
+      "flavor_text": "A soothing song\nin a calming voice\nlulls the foe into\na deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is\nsung in a calming\nvoice that puts the\nfoe into a deep\nslumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "diamond-pearl",
+        "url": "/api/v2/version-group/8/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is\nsung in a calming\nvoice that puts the\nfoe into a deep\nslumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "platinum",
+        "url": "/api/v2/version-group/9/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is\nsung in a calming\nvoice that puts the\nfoe into a deep\nslumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "heartgold-soulsilver",
+        "url": "/api/v2/version-group/10/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi\ndans un profond sommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming\nvoice that puts the target into a deep\nslumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming\nvoice that puts the target into a deep\nslumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-2-white-2",
+        "url": "/api/v2/version-group/14/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond\nsommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming\nvoice that puts the target into a\ndeep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond\nsommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming\nvoice that puts the target into a\ndeep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "唱出舒服美妙的歌聲，\n讓對手陷入睡眠狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond\nsommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming voice that\nputs the target into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "让对手听舒适、\n美妙的歌声，\n从而陷入睡眠状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "唱出舒服美妙的歌聲，\n讓對手陷入睡眠狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond\nsommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming voice that\nputs the target into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "让对手听舒适、\n美妙的歌声，\n从而陷入睡眠状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "唱出舒服美妙的歌聲，\n讓對手陷入睡眠狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond sommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming voice that\nputs the target into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "让对手听舒适、\n美妙的歌声，\n从而陷入睡眠状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "ここちよい　きれいな\nうたごえを　きかせて\nあいてを　ねむり　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "기분 좋은 예쁜\n노랫소리를 들려주고\n상대를 잠듦 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "唱出舒服美妙的歌聲，\n讓對手陷入睡眠狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Une berceuse plonge l’ennemi dans un profond sommeil.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ein Lied, das das Ziel in tiefen Schlaf versetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Dolce ninnananna, cantata da una voce suadente,\nche fa addormentare il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming voice that\nputs the target into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "心地好い　きれいな\n歌声を　聞かせて\n相手を　眠り状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "让对手听舒适、\n美妙的歌声，\n从而陷入睡眠状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cancioncilla que hace dormir profundamente al\nobjetivo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a calming voice that puts the target into a deep slumber.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "legends-arceus",
+        "url": "/api/v2/version-group/24/"
+      }
+    },
+    {
+      "flavor_text": "A soothing lullaby is sung in a beautiful voice that puts the target to sleep.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "clefairy",
+      "url": "/api/v2/pokemon/35/"
+    },
+    {
+      "name": "clefable",
+      "url": "/api/v2/pokemon/36/"
+    },
+    {
+      "name": "jigglypuff",
+      "url": "/api/v2/pokemon/39/"
+    },
+    {
+      "name": "wigglytuff",
+      "url": "/api/v2/pokemon/40/"
+    },
+    {
+      "name": "meowth",
+      "url": "/api/v2/pokemon/52/"
+    },
+    {
+      "name": "marowak",
+      "url": "/api/v2/pokemon/105/"
+    },
+    {
+      "name": "chansey",
+      "url": "/api/v2/pokemon/113/"
+    },
+    {
+      "name": "kangaskhan",
+      "url": "/api/v2/pokemon/115/"
+    },
+    {
+      "name": "jynx",
+      "url": "/api/v2/pokemon/124/"
+    },
+    {
+      "name": "lapras",
+      "url": "/api/v2/pokemon/131/"
+    },
+    {
+      "name": "cleffa",
+      "url": "/api/v2/pokemon/173/"
+    },
+    {
+      "name": "igglybuff",
+      "url": "/api/v2/pokemon/174/"
+    },
+    {
+      "name": "marill",
+      "url": "/api/v2/pokemon/183/"
+    },
+    {
+      "name": "azumarill",
+      "url": "/api/v2/pokemon/184/"
+    },
+    {
+      "name": "smoochum",
+      "url": "/api/v2/pokemon/238/"
+    },
+    {
+      "name": "blissey",
+      "url": "/api/v2/pokemon/242/"
+    },
+    {
+      "name": "ralts",
+      "url": "/api/v2/pokemon/280/"
+    },
+    {
+      "name": "azurill",
+      "url": "/api/v2/pokemon/298/"
+    },
+    {
+      "name": "skitty",
+      "url": "/api/v2/pokemon/300/"
+    },
+    {
+      "name": "delcatty",
+      "url": "/api/v2/pokemon/301/"
+    },
+    {
+      "name": "mawile",
+      "url": "/api/v2/pokemon/303/"
+    },
+    {
+      "name": "plusle",
+      "url": "/api/v2/pokemon/311/"
+    },
+    {
+      "name": "minun",
+      "url": "/api/v2/pokemon/312/"
+    },
+    {
+      "name": "gulpin",
+      "url": "/api/v2/pokemon/316/"
+    },
+    {
+      "name": "swablu",
+      "url": "/api/v2/pokemon/333/"
+    },
+    {
+      "name": "altaria",
+      "url": "/api/v2/pokemon/334/"
+    },
+    {
+      "name": "snorunt",
+      "url": "/api/v2/pokemon/361/"
+    },
+    {
+      "name": "kricketune",
+      "url": "/api/v2/pokemon/402/"
+    },
+    {
+      "name": "chatot",
+      "url": "/api/v2/pokemon/441/"
+    },
+    {
+      "name": "minccino",
+      "url": "/api/v2/pokemon/572/"
+    },
+    {
+      "name": "cinccino",
+      "url": "/api/v2/pokemon/573/"
+    },
+    {
+      "name": "meloetta-aria",
+      "url": "/api/v2/pokemon/648/"
+    },
+    {
+      "name": "popplio",
+      "url": "/api/v2/pokemon/728/"
+    },
+    {
+      "name": "brionne",
+      "url": "/api/v2/pokemon/729/"
+    },
+    {
+      "name": "primarina",
+      "url": "/api/v2/pokemon/730/"
+    },
+    {
+      "name": "komala",
+      "url": "/api/v2/pokemon/775/"
+    },
+    {
+      "name": "gossifleur",
+      "url": "/api/v2/pokemon/829/"
+    },
+    {
+      "name": "eldegoss",
+      "url": "/api/v2/pokemon/830/"
+    },
+    {
+      "name": "skeledirge",
+      "url": "/api/v2/pokemon/911/"
+    },
+    {
+      "name": "scream-tail",
+      "url": "/api/v2/pokemon/985/"
+    },
+    {
+      "name": "meloetta-pirouette",
+      "url": "/api/v2/pokemon/10018/"
+    },
+    {
+      "name": "altaria-mega",
+      "url": "/api/v2/pokemon/10067/"
+    },
+    {
+      "name": "clefable-mega",
+      "url": "/api/v2/pokemon/10278/"
+    }
+  ]
+}

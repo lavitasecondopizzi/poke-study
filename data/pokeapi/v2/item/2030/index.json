@@ -1,0 +1,101 @@
+{
+  "id": 2030,
+  "name": "spooky-tablecloth",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "picnic",
+    "url": "/api/v2/item-category/55/"
+  },
+  "effect_entries": [],
+  "flavor_text_entries": [],
+  "game_indices": [
+    {
+      "game_index": 2327,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "うらめしクロス",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "원망 테이블보",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "鬼祟桌巾",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Nappe Hantée",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Groll-Tischtuch",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Mantel Espectral",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Tovaglia dispetto",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Spooky Tablecloth",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "うらめしクロス",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "鬼祟桌巾",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": null
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

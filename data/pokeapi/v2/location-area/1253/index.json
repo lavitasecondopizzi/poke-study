@@ -1,0 +1,27 @@
+{
+  "id": 1253,
+  "name": "the-under-colosseum",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "the-under",
+    "url": "/api/v2/location/1104/"
+  },
+  "names": [
+    {
+      "name": "The Under Colosseum",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Colosseum de Suerebe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

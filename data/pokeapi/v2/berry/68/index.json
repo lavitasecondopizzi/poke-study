@@ -1,0 +1,17 @@
+{
+  "id": 68,
+  "name": "roseli",
+  "growth_time": null,
+  "max_harvest": null,
+  "natural_gift_power": null,
+  "size": null,
+  "smoothness": null,
+  "soil_dryness": null,
+  "firmness": null,
+  "flavors": [],
+  "item": {
+    "name": "roseli-berry",
+    "url": "/api/v2/item/2279/"
+  },
+  "natural_gift_type": null
+}

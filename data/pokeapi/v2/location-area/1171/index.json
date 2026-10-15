@@ -1,0 +1,144 @@
+{
+  "id": 1171,
+  "name": "dragonspiral-tower-7f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "dragonspiral-tower",
+    "url": "/api/v2/location/381/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "reshiram",
+        "url": "/api/v2/pokemon/643/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black",
+            "url": "/api/v2/version/17/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "special-encounter-couldnt-capture-before",
+                  "url": "/api/v2/encounter-condition-value/72/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "item-light-stone",
+                  "url": "/api/v2/encounter-condition-value/78/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "zekrom",
+        "url": "/api/v2/pokemon/644/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "white",
+            "url": "/api/v2/version/18/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "item-dark-stone",
+                  "url": "/api/v2/encounter-condition-value/79/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

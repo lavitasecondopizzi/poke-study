@@ -1,0 +1,24 @@
+{
+  "id": 30,
+  "name": "story-progress-beat-galactic-coronet",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Visited Lake Verity after defeating Team Galactic at Mt. Coronet",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En ayant visité le Lac Vérité après avoir vaincu la Team Galaxie au Mont Couronné",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

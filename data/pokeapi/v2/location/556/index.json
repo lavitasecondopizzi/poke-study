@@ -1,0 +1,48 @@
+{
+  "id": 556,
+  "name": "hidden-grotto",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "隠し穴",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Trouée Cachée",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Versteckte Lichtung",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Hidden Grotto",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 143,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": []
+}

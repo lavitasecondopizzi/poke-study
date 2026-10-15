@@ -1,0 +1,676 @@
+{
+  "id": 686,
+  "name": "revelation-dance",
+  "accuracy": 100,
+  "effect_chance": null,
+  "pp": 15,
+  "priority": 0,
+  "power": 90,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "special",
+    "url": "/api/v2/move-damage-class/3/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Inflige des dégâts réguliers.  Le type de cette capacité correspond au premier type du lanceur, s'il en a; sinon, c'est sans type.",
+      "short_effect": "A le même type que le lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Inflicts regular damage.  This move’s type matches the user’s first type, if any; otherwise, it’s typeless.",
+      "short_effect": "Has the same type as the user.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-vii",
+    "url": "/api/v2/generation/7/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage",
+      "url": "/api/v2/move-category/0/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "めざめるダンス",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "잠재댄스",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "覺醒之舞",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Danse Éveil",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Wecktanz",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Danza Despertar",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Mutadanza",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Revelation Dance",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "めざめるダンス",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "觉醒之舞",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Danza Revelación",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "normal",
+    "url": "/api/v2/type/1/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "ぜんりょくで　おどって　こうげきする。\nこの　わざの　タイプは\nじぶんの　タイプと　おなじに　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "전력으로 춤추며 공격한다.\n이 기술의 타입은\n자신의 타입과 같아진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞進行攻擊。\n此招式的屬性將\n變得和自己的屬性相同。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur attaque en dansant avec enthousiasme.\nLe type de la capacité est le même que celui\ndu lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Der Anwender tanzt und greift dabei das Ziel mit\nvoller Kraft an. Die Attacke hat denselben Typ wie\ndas Pokémon, das sie einsetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa si lancia in una danza e attacca il nemico\ncon tutte le sue forze. Il tipo della mossa corrisponde\nal tipo del Pokémon che la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing very hard.\nThe user’s type determines the type of this move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "全力で　踊って　攻撃する。\nこの　技の　タイプは\n自分の　タイプと　同じになる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞进行攻击。\n此招式的属性将\n变得和自己的属性相同。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "ぜんりょくで　おどって　こうげきする。\nこの　わざの　タイプは\nじぶんの　タイプと　おなじに　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "전력으로 춤추며 공격한다.\n이 기술의 타입은\n자신의 타입과 같아진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞進行攻擊。\n此招式的屬性將\n變得和自己的屬性相同。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur attaque en dansant avec enthousiasme.\nLe type de la capacité est le même que celui\ndu lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Der Anwender tanzt und greift dabei das Ziel mit\nvoller Kraft an. Die Attacke hat denselben Typ wie\ndas Pokémon, das sie einsetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa si lancia in una danza e attacca il nemico\ncon tutte le sue forze. Il tipo della mossa corrisponde\nal tipo del Pokémon che la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing very hard.\nThe user’s type determines the type of this move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "全力で　踊って　攻撃する。\nこの　技の　タイプは\n自分の　タイプと　同じになる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞进行攻击。\n此招式的属性将\n变得和自己的属性相同。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "ぜんりょくで　おどって　こうげきする。\nこの　わざの　タイプは\nじぶんの　タイプと　おなじに　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "전력으로 춤추며 공격한다.\n이 기술의 타입은\n자신의 타입과 같아진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞進行攻擊。\n此招式的屬性將\n變得和自己的屬性相同。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur attaque en dansant avec enthousiasme.\nLe type de la capacité est le même que celui du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Der Anwender tanzt und greift dabei das Ziel mit\nvoller Kraft an. Die Attacke hat denselben Typ wie\ndas Pokémon, das sie einsetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa si lancia in una danza e attacca il nemico\ncon tutte le sue forze. Il tipo della mossa corrisponde\nal tipo del Pokémon che la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing very hard.\nThe user’s type determines the type of this move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "全力で　踊って　攻撃する。\nこの　技の　タイプは\n自分の　タイプと　同じになる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞进行攻击。\n此招式的属性将\n变得和自己的属性相同。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon\nque lo ejecuta.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "ぜんりょくで　おどって　こうげきする。\nこの　わざの　タイプは\nじぶんの　タイプと　おなじに　なる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "전력으로 춤추며 공격한다.\n이 기술의 타입은\n자신의 타입과 같아진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞進行攻擊。\n此招式的屬性將\n變得和自己的屬性相同。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur attaque en dansant avec enthousiasme.\nLe type de la capacité est le même que celui du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Der Anwender tanzt und greift dabei das Ziel mit voller\nKraft an. Die Attacke hat denselben Typ wie das\nPokémon, das sie einsetzt.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon que\nlo ejecuta.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa si lancia in una danza e attacca il nemico\ncon tutte le sue forze. Il tipo della mossa corrisponde\nal tipo del Pokémon che la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing very hard.\nThe user’s type determines the type of this move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "全力で　踊って　攻撃する。\nこの　技の　タイプは\n自分の　タイプと　同じになる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "全力跳舞进行攻击。\n此招式的属性将\n变得和自己的属性相同。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque que consiste en un baile muy enérgico. El tipo\nde este ataque se corresponde con el del Pokémon que\nlo ejecuta.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing very hard. The user's type determines the type of this move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "legends-arceus",
+        "url": "/api/v2/version-group/24/"
+      }
+    },
+    {
+      "flavor_text": "The user attacks the target by dancing with all its might. This move becomes the same type as the user's type.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "oricorio-baile",
+      "url": "/api/v2/pokemon/741/"
+    },
+    {
+      "name": "oricorio-pom-pom",
+      "url": "/api/v2/pokemon/10123/"
+    },
+    {
+      "name": "oricorio-pau",
+      "url": "/api/v2/pokemon/10124/"
+    },
+    {
+      "name": "oricorio-sensu",
+      "url": "/api/v2/pokemon/10125/"
+    }
+  ]
+}

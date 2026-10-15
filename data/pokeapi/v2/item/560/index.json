@@ -1,0 +1,120 @@
+{
+  "id": 560,
+  "name": "sapphire",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "plot-advancement",
+    "url": "/api/v2/item-category/22/"
+  },
+  "effect_entries": [
+    {
+      "effect": "À donner à Cliéo dans Saphir pour utilisation dans le Centre Réseau Pokémon.",
+      "short_effect": "À donner à Cliéo dans Rubis pour activer le Centre Réseau Pokémon et avoir le Passe Prisme.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Deliver to Celio for use in the Network Machine.",
+      "short_effect": "Give to Celio with Ruby to activate Network Machine and get Rainbow Pass.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "text": "A brilliant blue gem\nthat symbolizes\nhonesty.",
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "An exquisitely beautiful gem that\nhas a blue glow.\nIt symbolizes honesty.",
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 374,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "サファイア",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Saphir",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Saphir",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Zafiro",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Zaffiro",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Sapphire",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Zafiro",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sapphire.png"
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

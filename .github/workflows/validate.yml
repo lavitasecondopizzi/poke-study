@@ -24,3 +24,29 @@ jobs:
         run: npx tsc -b
       - name: Build frontend
         run: npx vite build
+
+  academy-edge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check academy Edge Function
+        run: deno check supabase/functions/academy/index.ts
+
+  database-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start local Supabase database
+        run: supabase start -x studio,mailpit,storage-api,imgproxy,edge-runtime,analytics,vector
+      - name: Run SQL regression tests
+        run: supabase test db

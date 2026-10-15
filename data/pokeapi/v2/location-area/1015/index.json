@@ -1,0 +1,12 @@
+{
+  "id": 1015,
+  "name": "hisui-snowpoint-temple-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-snowpoint-temple",
+    "url": "/api/v2/location/1021/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

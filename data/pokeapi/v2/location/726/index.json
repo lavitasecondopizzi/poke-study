@@ -1,0 +1,102 @@
+{
+  "id": 726,
+  "name": "melemele-meadow",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "メレメレのはなぞの",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "멜레멜레 화원",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "美樂美樂花園",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Jardin de Mele-Mele",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Mele-Mele-Blumenmeer",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Jardines de Melemele",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Prato Mele Mele",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Melemele Meadow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "メレメレの花園",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "美乐美乐花园",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Jardines de Melemele",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 40,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "melemele-meadow-area",
+      "url": "/api/v2/location-area/1102/"
+    }
+  ]
+}

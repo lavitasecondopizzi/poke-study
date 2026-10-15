@@ -1,0 +1,21 @@
+{
+  "id": 27,
+  "name": "seaweed",
+  "order": 27,
+  "names": [
+    {
+      "name": "Diving on seaweed",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En plongeant dans les algues",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

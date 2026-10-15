@@ -1,0 +1,12 @@
+{
+  "id": 1008,
+  "name": "sandgem-flats-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sandgem-flats",
+    "url": "/api/v2/location/1014/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

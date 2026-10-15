@@ -1,0 +1,24 @@
+{
+  "id": 75,
+  "name": "story-progress-juniper-cave-of-being",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Spoke to Professor Juniper in the Cave of Being",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Parler au Professeur Keteleeria dans la Caverne des Esprits",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": 59,
+  "name": "chase-water",
+  "order": 59,
+  "names": [
+    {
+      "name": "Get chased by territorial Pokémon when entering the water.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Se faire poursuivre par un Pokémon territorial dans l'eau",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

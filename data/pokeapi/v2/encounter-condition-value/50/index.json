@@ -1,0 +1,24 @@
+{
+  "id": 50,
+  "name": "item-claw-fossil",
+  "condition": {
+    "name": "item",
+    "url": "/api/v2/encounter-condition/11/"
+  },
+  "names": [
+    {
+      "name": "Have Claw Fossil in bag",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En ayant un Fossile Griffe dans le sac",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

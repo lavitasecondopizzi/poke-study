@@ -1,0 +1,110 @@
+{
+  "id": 789,
+  "name": "vast-poni-canyon",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "ポニのだいきょうこく",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "포니대협곡",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "波尼大峽谷",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Grand Canyon de Poni",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Canyon von Poni",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cañón de Poni",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Canyon di Poni",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Vast Poni Canyon",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ポニの大峡谷",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "波尼大峡谷",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Cañón de Poni",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 174,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "vast-poni-canyon-inside",
+      "url": "/api/v2/location-area/1151/"
+    },
+    {
+      "name": "vast-poni-canyon-northwest",
+      "url": "/api/v2/location-area/1152/"
+    },
+    {
+      "name": "vast-poni-canyon-outside",
+      "url": "/api/v2/location-area/1153/"
+    }
+  ]
+}

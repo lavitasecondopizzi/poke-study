@@ -1,0 +1,973 @@
+{
+  "id": 1085,
+  "name": "hauoli-city-shopping-district",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hauoli-city",
+    "url": "/api/v2/location/1042/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "pikachu",
+        "url": "/api/v2/pokemon/25/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "abra",
+        "url": "/api/v2/pokemon/63/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 25,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 25,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "magnemite",
+        "url": "/api/v2/pokemon/81/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "hypno",
+        "url": "/api/v2/pokemon/97/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 29,
+              "max_level": 29,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 29,
+              "max_level": 29,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "mr-mime",
+        "url": "/api/v2/pokemon/122/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "pichu",
+        "url": "/api/v2/pokemon/172/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "wingull",
+        "url": "/api/v2/pokemon/278/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "mime-jr",
+        "url": "/api/v2/pokemon/439/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "happiny",
+        "url": "/api/v2/pokemon/440/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 15,
+              "method": {
+                "name": "sos",
+                "url": "/api/v2/encounter-method/33/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "furfrou",
+        "url": "/api/v2/pokemon/676/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 25,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 25,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "yungoos",
+        "url": "/api/v2/pokemon/734/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "bewear",
+        "url": "/api/v2/pokemon/760/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "rattata-alola",
+        "url": "/api/v2/pokemon/10091/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "meowth-alola",
+        "url": "/api/v2/pokemon/10107/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "grimer-alola",
+        "url": "/api/v2/pokemon/10112/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 9,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

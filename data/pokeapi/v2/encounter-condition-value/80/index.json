@@ -1,0 +1,24 @@
+{
+  "id": 80,
+  "name": "other-captured-reshiram-or-zekrom",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Captured Reshiram or Zekrom previously",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir capturé Reshiram ou Zekrom précédemment",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

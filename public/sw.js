@@ -46,11 +46,20 @@ self.addEventListener('fetch', event => {
           }).catch(() => caches.match(request).then(cached => cached || caches.match(BASE + 'index.html')))
         );
       } else {
+        // Never return index.html for a failed script, stylesheet, or other asset:
+        // that produces a misleading 200/HTML response and can break app startup.
+        // Offline fallback to the app shell is reserved for navigation requests above.
         event.respondWith(
-          caches.match(request).then(cached => cached || fetch(request).then(response => {
-            if (response.ok) caches.open(SHELL_CACHE).then(cache => cache.put(request, response.clone()));
-            return response;
-          }).catch(() => caches.match(BASE + 'index.html')))
+          caches.match(request).then(cached => {
+            if (cached) return cached;
+            return fetch(request).then(response => {
+              if (response.ok) {
+                const responseToCache = response.clone();
+                caches.open(SHELL_CACHE).then(cache => cache.put(request, responseToCache));
+              }
+              return response;
+            });
+          })
         );
       }
       return;

@@ -1,0 +1,12 @@
+{
+  "id": 967,
+  "name": "deertrack-heights-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "deertrack-heights",
+    "url": "/api/v2/location/973/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

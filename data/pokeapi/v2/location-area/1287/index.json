@@ -1,0 +1,140 @@
+{
+  "id": 1287,
+  "name": "citadark-isle-3f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "citadark-isle",
+    "url": "/api/v2/location/1112/"
+  },
+  "names": [
+    {
+      "name": "Citadark Isle 3F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Île Ténébra (2e ét.)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "rapidash",
+        "url": "/api/v2/pokemon/78/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "hitmonlee",
+        "url": "/api/v2/pokemon/106/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "hitmonchan",
+        "url": "/api/v2/pokemon/107/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "magcargo",
+        "url": "/api/v2/pokemon/219/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

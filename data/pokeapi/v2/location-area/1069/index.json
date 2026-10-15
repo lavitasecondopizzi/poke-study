@@ -1,0 +1,46 @@
+{
+  "id": 1069,
+  "name": "altar-of-the-moone-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "altar-of-the-moone",
+    "url": "/api/v2/location/791/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "lunala",
+        "url": "/api/v2/pokemon/792/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

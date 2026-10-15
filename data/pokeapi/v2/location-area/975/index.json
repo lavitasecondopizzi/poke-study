@@ -1,0 +1,12 @@
+{
+  "id": 975,
+  "name": "gapejaw-bog-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "gapejaw-bog",
+    "url": "/api/v2/location/981/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,124 @@
+{
+  "id": 1318,
+  "name": "mirage-spot-mountain-south-of-route-129",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "mirage-spot-mountain",
+    "url": "/api/v2/location/699/"
+  },
+  "names": [
+    {
+      "name": "Mirage Mountain (South of Route 129)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Mont Mirage (Sud de la Route 129)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "elekid",
+        "url": "/api/v2/pokemon/239/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 40,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 40,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "zebstrika",
+        "url": "/api/v2/pokemon/523/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 60,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 38,
+              "chance": 60,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

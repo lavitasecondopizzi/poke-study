@@ -1,0 +1,12 @@
+{
+  "id": 992,
+  "name": "jubilife-village-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "jubilife-village",
+    "url": "/api/v2/location/998/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

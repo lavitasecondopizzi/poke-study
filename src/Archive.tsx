@@ -110,7 +110,7 @@ export default function Archive({
         <div>
           <div className="eyebrow">ARCHIVIO DIDATTICO</div>
           <h2 id="archive-title">Archivio Nazionale</h2>
-          <p>Cerca e consulta tutte le entità disponibili. Le categorie sono informative: non filtrano l’elenco.</p>
+          <p>Pokémon, strumenti e materiali catalogati.</p>
         </div>
         <strong className="archive-total">{results.length.toLocaleString('it-IT')} risultati</strong>
       </header>
@@ -137,13 +137,13 @@ export default function Archive({
       </div>
 
       {loadingItems && items.length === 0 && (
-        <p className="archive-data-status" role="status">Gli oggetti e i materiali sono in caricamento. Intanto puoi già consultare i Pokémon.</p>
+        <p className="archive-data-status" role="status">Caricamento di strumenti e materiali…</p>
       )}
       {!loadingItems && items.length === 0 && (
         <p className="archive-data-status" role="status">
           {online
-            ? 'Il catalogo degli oggetti non è disponibile in questo momento; l’elenco Pokémon resta consultabile.'
-            : 'Sei offline e non ci sono oggetti salvati in cache; l’elenco Pokémon resta consultabile.'}
+            ? 'Strumenti e materiali non disponibili.'
+            : 'Offline: strumenti e materiali non disponibili.'}
         </p>
       )}
 
@@ -152,7 +152,7 @@ export default function Archive({
       ) : results.length === 0 ? (
         <div className="archive-empty-state">
           <strong>Nessun risultato</strong>
-          <p>Modifica la ricerca oppure cancella il testo per rivedere tutte le entità.</p>
+          <p>Prova un’altra ricerca.</p>
           {search && <button type="button" className="secondary-button" onClick={() => changeSearch('')}>Mostra tutto</button>}
         </div>
       ) : (

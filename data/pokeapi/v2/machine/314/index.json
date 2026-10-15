@@ -1,0 +1,15 @@
+{
+  "id": 314,
+  "item": {
+    "name": "tm15",
+    "url": "/api/v2/item/319/"
+  },
+  "version_group": {
+    "name": "ruby-sapphire",
+    "url": "/api/v2/version-group/5/"
+  },
+  "move": {
+    "name": "hyper-beam",
+    "url": "/api/v2/move/63/"
+  }
+}

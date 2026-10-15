@@ -1,0 +1,3 @@
+-- Supabase project rollout applied this migration under version 20261014204655.
+-- The implementation lives in 20261014204655_academic_points_campus_ranking.sql.
+-- Keep this earlier migration as a no-op so fresh databases and the live migration history stay aligned.

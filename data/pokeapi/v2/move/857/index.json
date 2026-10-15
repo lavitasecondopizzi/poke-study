@@ -1,0 +1,148 @@
+{
+  "id": 857,
+  "name": "jet-punch",
+  "accuracy": 100,
+  "effect_chance": null,
+  "pp": 15,
+  "priority": 1,
+  "power": 60,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "meta": null,
+  "names": [
+    {
+      "name": "ジェットパンチ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "제트펀치",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "噴射拳",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Poing Sonique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Düsenhieb",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Puño Jet",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Pugnojet",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Jet Punch",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ジェットパンチ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "喷射拳",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Puño Jet",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "water",
+    "url": "/api/v2/type/11/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Le lanceur enveloppe son poing d'un torrent furieux et attaque si rapidement qu'on peine à le discerner. Frappe en priorité.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The user summons a torrent around its fist and punches at blinding speed. This move always goes first.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "palafin-zero",
+      "url": "/api/v2/pokemon/964/"
+    },
+    {
+      "name": "palafin-hero",
+      "url": "/api/v2/pokemon/10256/"
+    }
+  ]
+}

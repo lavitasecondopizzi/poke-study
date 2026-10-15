@@ -1,0 +1,17 @@
+{
+  "id": 115,
+  "name": "coins-180",
+  "condition": {
+    "name": "coins",
+    "url": "/api/v2/encounter-condition/16/"
+  },
+  "names": [
+    {
+      "name": "Have at least 180 coins in your Coin Case",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

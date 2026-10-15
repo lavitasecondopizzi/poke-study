@@ -1,0 +1,41 @@
+{
+  "id": 1072,
+  "name": "paradise-barrens",
+  "region": {
+    "name": "paldea",
+    "url": "/api/v2/region/10/"
+  },
+  "names": [
+    {
+      "name": "Lande de la Quiétude",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Paradiesebene",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Paradise Barrens",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 162,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "areas": []
+}

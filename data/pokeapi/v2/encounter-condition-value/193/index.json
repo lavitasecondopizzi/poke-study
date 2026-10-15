@@ -1,0 +1,17 @@
+{
+  "id": 193,
+  "name": "headbutt-tree-rare",
+  "condition": {
+    "name": "headbutt-tree",
+    "url": "/api/v2/encounter-condition/20/"
+  },
+  "names": [
+    {
+      "name": "Headbutt Tree (Rare)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

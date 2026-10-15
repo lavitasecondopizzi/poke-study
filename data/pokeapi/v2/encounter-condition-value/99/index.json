@@ -1,0 +1,24 @@
+{
+  "id": 99,
+  "name": "other-captured-all-ultra-beasts",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Captured all Ultra Beasts",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir capturé toutes les Ultra-Chimères",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

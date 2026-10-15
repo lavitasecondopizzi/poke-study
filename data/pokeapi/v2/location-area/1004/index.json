@@ -1,0 +1,12 @@
+{
+  "id": 1004,
+  "name": "primeval-grotto-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "primeval-grotto",
+    "url": "/api/v2/location/1010/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

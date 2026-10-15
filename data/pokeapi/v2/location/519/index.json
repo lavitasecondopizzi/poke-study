@@ -1,0 +1,46 @@
+{
+  "id": 519,
+  "name": "canyon-entrance",
+  "region": {
+    "name": "kanto",
+    "url": "/api/v2/region/1/"
+  },
+  "names": [
+    {
+      "name": "Entrée du Canyon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Schluchteingang",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Canyon Entrance",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 168,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "canyon-entrance-area",
+      "url": "/api/v2/location-area/526/"
+    }
+  ]
+}

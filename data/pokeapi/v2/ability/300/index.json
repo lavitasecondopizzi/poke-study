@@ -1,0 +1,160 @@
+{
+  "id": 300,
+  "name": "supersweet-syrup",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "かんろなミツ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "감미로운꿀",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "甘露之蜜",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Nectar Mielleux",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Süßer Nektar",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Néctar Dulce",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Sciroppo Sublime",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Supersweet Syrup",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "かんろなミツ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "甘露之蜜",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Néctar Dulce",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Une odeur écœurante se répand sur le terrain la première fois que le Pokémon entre au combat, réduisant l'esquive des Pokémon adverses.",
+      "short_effect": "Une fois par combat, quand un Pokémon avec Nectar Mielleux entre au combat, il diminue la stat d’esquive de tous les adversaires adjacents d’un niveau.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "A sickly sweet scent spreads across the field the first time the Pokémon enters a battle, lowering the evasiveness of opposing Pokémon.",
+      "short_effect": "Once per battle, when a Pokémon with Supersweet Syrup enters the battle, it lowers the evasion stat of all adjacent opponents by one stage. ",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "La première fois que le Pokémon entre au combat,\\nune odeur de nectar sucré se répand sur le terrain,\\nce qui baisse l’Esquive de l’adversaire.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "Lowers the evasion of opposing Pokémon by 1 stage when first sent into battle",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "最初に　登場　したとき\n甘ったるい　蜜の香りを　ふりまいて\n相手の　回避率を　下げる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "dipplin",
+        "url": "/api/v2/pokemon/1011/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "hydrapple",
+        "url": "/api/v2/pokemon/1019/"
+      }
+    }
+  ]
+}

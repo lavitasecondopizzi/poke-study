@@ -1,0 +1,105 @@
+{
+  "id": 10018,
+  "name": "shadow-sky",
+  "accuracy": null,
+  "effect_chance": null,
+  "pp": null,
+  "priority": 0,
+  "power": null,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "status",
+    "url": "/api/v2/move-damage-class/1/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Change la météo en Ciel Noir pendant cinq tours.  Les autres Pokémon que les Pokémon Obscur prennent 1/16 de leurs PV max en dégâts à la fin de chaque tour.  Cette capacité est sans type aux fins de Ball’Météo.",
+      "short_effect": "Change la météo en Ciel Noir pendant cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Changes the weather to Shadow Sky for five turns.  Pokémon other than Shadow Pokémon take 1/16 their max HP at the end of every turn.  This move is typeless for the purposes of Weather Ball.",
+      "short_effect": "Changes the weather to Shadow Sky for five turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-iii",
+    "url": "/api/v2/generation/3/"
+  },
+  "meta": null,
+  "names": [
+    {
+      "name": "ダークウェザー",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Ciel Noir",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Cryptowetter",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cielo Oscuro",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Cieloscuro",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Shadow Sky",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Cielo Oscuro",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "entire-field",
+    "url": "/api/v2/move-target/12/"
+  },
+  "type": {
+    "name": "shadow",
+    "url": "/api/v2/type/10002/"
+  },
+  "machines": [],
+  "flavor_text_entries": [],
+  "learned_by_pokemon": []
+}

@@ -1,0 +1,38 @@
+{
+  "id": 1039,
+  "name": "windswept-run",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Rive Filevent",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Windpassage",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Windswept Run",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "windswept-run-area",
+      "url": "/api/v2/location-area/1033/"
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "id": 794,
+  "name": "roaming-kanto-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "roaming-kanto",
+    "url": "/api/v2/location/799/"
+  },
+  "names": [
+    {
+      "name": "Roaming Kanto",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Wandert durch Kanto",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Sillonnant Kanto",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "raikou",
+        "url": "/api/v2/pokemon/243/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-squirtle",
+                  "url": "/api/v2/encounter-condition-value/22/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-squirtle",
+                  "url": "/api/v2/encounter-condition-value/22/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "entei",
+        "url": "/api/v2/pokemon/244/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-bulbasaur",
+                  "url": "/api/v2/encounter-condition-value/21/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-bulbasaur",
+                  "url": "/api/v2/encounter-condition-value/21/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "suicune",
+        "url": "/api/v2/pokemon/245/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-charmander",
+                  "url": "/api/v2/encounter-condition-value/23/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 25,
+              "method": {
+                "name": "roaming-grass",
+                "url": "/api/v2/encounter-method/28/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-beat-elite-four-round-two",
+                  "url": "/api/v2/encounter-condition-value/34/"
+                },
+                {
+                  "name": "starter-charmander",
+                  "url": "/api/v2/encounter-condition-value/23/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

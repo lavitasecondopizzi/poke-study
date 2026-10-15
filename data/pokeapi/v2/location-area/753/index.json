@@ -1,0 +1,469 @@
+{
+  "id": 753,
+  "name": "connecting-cave-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "connecting-cave",
+    "url": "/api/v2/location/672/"
+  },
+  "names": [
+    {
+      "name": "Connecting Cave",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Geolinkhöhle",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cave Connecterre",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "zubat",
+        "url": "/api/v2/pokemon/41/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 65,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 35,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 65,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 35,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "whismur",
+        "url": "/api/v2/pokemon/293/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 90,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 60,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 90,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 60,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "meditite",
+        "url": "/api/v2/pokemon/307/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "axew",
+        "url": "/api/v2/pokemon/610/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 4,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 1,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 13,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 4,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 1,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "horde",
+                "url": "/api/v2/encounter-method/44/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

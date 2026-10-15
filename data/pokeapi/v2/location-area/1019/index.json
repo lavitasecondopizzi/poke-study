@@ -1,0 +1,12 @@
+{
+  "id": 1019,
+  "name": "hisui-spring-path-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-spring-path",
+    "url": "/api/v2/location/1025/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

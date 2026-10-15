@@ -1,0 +1,24 @@
+{
+  "id": 65,
+  "name": "weekday-saturday",
+  "condition": {
+    "name": "weekday",
+    "url": "/api/v2/encounter-condition/12/"
+  },
+  "names": [
+    {
+      "name": "Saturday",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Le samedi",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

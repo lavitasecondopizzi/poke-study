@@ -1,0 +1,21 @@
+{
+  "id": 49,
+  "name": "pokemon-battle-revolution",
+  "order": 49,
+  "names": [
+    {
+      "name": "Receiving a Pikachu, Electivire, or Magmar from Pokemon Battle Revolution",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Recevoir depuis Pokémon Battle Revolution",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

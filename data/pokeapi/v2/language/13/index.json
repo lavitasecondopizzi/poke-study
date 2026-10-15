@@ -1,0 +1,79 @@
+{
+  "id": 13,
+  "name": "pt-br",
+  "official": true,
+  "iso639": "pt",
+  "iso3166": "br",
+  "names": [
+    {
+      "name": "Burajiru porutogaru-go",
+      "language": {
+        "name": "ja-roma",
+        "url": "/api/v2/language/2/"
+      }
+    },
+    {
+      "name": "브라질 포르투갈어",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Portugais brésilien",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Brasilianisches portugiesisch",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Portugués brasileño",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Portoghese brasiliano",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Brazilian portuguese",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Brazilská portugalština",
+      "language": {
+        "name": "cs",
+        "url": "/api/v2/language/10/"
+      }
+    },
+    {
+      "name": "Português brasileiro",
+      "language": {
+        "name": "pt-br",
+        "url": "/api/v2/language/13/"
+      }
+    },
+    {
+      "name": "Portugués brasileño",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

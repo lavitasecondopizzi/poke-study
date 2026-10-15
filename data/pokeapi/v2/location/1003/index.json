@@ -1,0 +1,38 @@
+{
+  "id": 1003,
+  "name": "lunkers-lair",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Arche Poissigrand",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Großfischfelsen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Lunker's Lair",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "lunkers-lair-area",
+      "url": "/api/v2/location-area/997/"
+    }
+  ]
+}

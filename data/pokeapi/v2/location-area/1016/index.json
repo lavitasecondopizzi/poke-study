@@ -1,0 +1,12 @@
+{
+  "id": 1016,
+  "name": "hisui-solaceon-ruins-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-solaceon-ruins",
+    "url": "/api/v2/location/1022/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

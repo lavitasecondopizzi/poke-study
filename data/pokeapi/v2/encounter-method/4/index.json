@@ -1,0 +1,28 @@
+{
+  "id": 4,
+  "name": "super-rod",
+  "order": 12,
+  "names": [
+    {
+      "name": "Mit einer Superangel angeln",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Fishing with a Super Rod",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En pêchant avec une Méga Canne",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

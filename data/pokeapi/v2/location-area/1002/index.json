@@ -1,0 +1,12 @@
+{
+  "id": 1002,
+  "name": "oreburrow-tunnel-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "oreburrow-tunnel",
+    "url": "/api/v2/location/1008/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

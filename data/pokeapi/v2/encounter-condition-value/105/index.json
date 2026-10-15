@@ -1,0 +1,24 @@
+{
+  "id": 105,
+  "name": "other-scan-qr-code",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Scan a specific QR Code",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Scanner un code QR spécifique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

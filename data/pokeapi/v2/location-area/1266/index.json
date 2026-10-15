@@ -1,0 +1,89 @@
+{
+  "id": 1266,
+  "name": "gateon-port-lighthouse-top",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "gateon-port",
+    "url": "/api/v2/location/1107/"
+  },
+  "names": [
+    {
+      "name": "Gateon Port (Lighthouse Top)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Port Amarrée (Sommet du Phare)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "dragonite",
+        "url": "/api/v2/pokemon/149/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-catch-all-shadow-pokemon",
+                  "url": "/api/v2/encounter-condition-value/113/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "poochyena",
+        "url": "/api/v2/pokemon/261/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 10,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

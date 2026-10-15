@@ -1,0 +1,241 @@
+{
+  "id": 1174,
+  "name": "sea-spirits-den-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sea-spirits-den",
+    "url": "/api/v2/location/679/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "articuno",
+        "url": "/api/v2/pokemon/144/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-chespin",
+                  "url": "/api/v2/encounter-condition-value/24/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-chespin",
+                  "url": "/api/v2/encounter-condition-value/24/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "zapdos",
+        "url": "/api/v2/pokemon/145/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-fennekin",
+                  "url": "/api/v2/encounter-condition-value/25/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-fennekin",
+                  "url": "/api/v2/encounter-condition-value/25/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "moltres",
+        "url": "/api/v2/pokemon/146/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-froakie",
+                  "url": "/api/v2/encounter-condition-value/26/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "starter-froakie",
+                  "url": "/api/v2/encounter-condition-value/26/"
+                },
+                {
+                  "name": "other-found-11-times-roaming",
+                  "url": "/api/v2/encounter-condition-value/82/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

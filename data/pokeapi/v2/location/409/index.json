@@ -1,0 +1,60 @@
+{
+  "id": 409,
+  "name": "village-bridge",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "ビレッジブリッジ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Pont du Hameau",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Dorfbrücke",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Village Bridge",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 67,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    },
+    {
+      "game_index": 91,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "village-bridge-area",
+      "url": "/api/v2/location-area/621/"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "id": 765,
+  "name": "max-geyser",
+  "accuracy": null,
+  "effect_chance": 100,
+  "pp": 10,
+  "priority": 0,
+  "power": 10,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Change la météo en pluie pendant cinq tours, durant lesquels les capacités Eau infligent 50% de dégâts supplémentaires, et les capacités Feu infligent la moitié des dégâts.\n\nSi le lanceur tient Roche Humide, cet effet dure huit tours.\n\nFatal-Foudre a 100% de précision.  Si la cible a utilisé Détection ou Abri, Fatal-Foudre a (100 - accuracy)% de chances de passer à travers la protection.\n\nLance-Soleil a deux fois moins de puissance.\n\nRayon Lune, Aurore, et Synthèse soignent seulement 1/4 des PV max du lanceur.\n\nLes Pokémon avec Glissade ont une Vitesse de base doublée.\n\nLes Pokémon avec Météo deviennent Eau.\n\nLes Pokémon avec Peau Sèche soignent 1/8 des PV max, les Pokémon avec Hydratation sont soignés de leurs effets majeurs de statut, et les Pokémon avec Cuvette soignent 1/16 des PV max à la fin de chaque tour.",
+      "short_effect": "Change la météo en pluie pendant cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Changes the weather to rain for five turns, during which Water moves inflict 50% extra damage, and Fire moves inflict half damage.\n\nIf the user is holding Damp Rock, this effect lasts for eight turns.\n\nThunder has 100% accuracy.  If the target has used Detect or Protect, Thunder has a (100 - accuracy)% chance to break through the protection.\n\nSolar Beam has half power.\n\nMoonlight, Morning Sun, and Synthesis heal only 1/4 of the user’s max HP.\n\nPokémon with Swift Swim have doubled original Speed.\n\nPokémon with Forecast become Water.\n\nPokémon with Dry Skin heal 1/8 max HP, Pokémon with Hydration are cured of major status effects, and Pokémon with Rain Dish heal 1/16 max HP at the end of each turn.",
+      "short_effect": "Changes the weather to rain for five turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-viii",
+    "url": "/api/v2/generation/8/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage",
+      "url": "/api/v2/move-category/0/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ダイストリーム",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "다이스트림",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "極巨水流",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Hydromax",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Dyna-Flut",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Maxichorro",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Dynaflusso",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Max Geyser",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ダイストリーム",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "极巨水流",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Maxichorro",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon-me-first",
+    "url": "/api/v2/move-target/2/"
+  },
+  "type": {
+    "name": "water",
+    "url": "/api/v2/type/11/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\nくりだす　みずタイプの　こうげき。\n５ターンの　あいだ　あめを　ふらせる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "다이맥스한 포켓몬이 날리는\n물타입의 공격.\n5턴 동안 비를 내리게 한다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "極巨化寶可夢\n所使出的水屬性攻擊。\n在５回合內會降下大雨。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Une attaque de type Eau que seuls\nles Pokémon Dynamax peuvent utiliser.\nInvoque de fortes pluies qui durent cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Eine Wasser-Attacke, die nur Dynamax-Pokémon\neinsetzen können. Löst fünf Runden lang strömenden\nRegen aus.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Agua ejecutado por un Pokémon\nDinamax. Desata un aguacero que dura cinco turnos.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Un attacco di tipo Acqua che può essere eseguito\ndai Pokémon dynamaxizzati. Provoca una forte pioggia\nper cinque turni.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This is a Water-type attack Dynamax Pokémon use.\nThe user summons a heavy rain that falls for\nfive turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\n繰りだす　みずタイプの　攻撃。\n５ターンの　間　雨を　降らせる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "极巨化宝可梦使出的水属性攻击。\n可在５回合内降下大雨。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Agua ejecutado por un Pokémon\nDinamax. Desata un aguacero que dura cinco turnos.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "learned_by_pokemon": []
+}

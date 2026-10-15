@@ -1,0 +1,38 @@
+{
+  "id": 5,
+  "name": "swagger",
+  "descriptions": [
+    {
+      "description": "Pas de dégât; inflige une altération de statut; augmente les stats de la cible",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "No damage; inflicts status ailment; raises target’s stats",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "moves": [
+    {
+      "name": "swagger",
+      "url": "/api/v2/move/207/"
+    },
+    {
+      "name": "flatter",
+      "url": "/api/v2/move/260/"
+    },
+    {
+      "name": "toxic-thread",
+      "url": "/api/v2/move/672/"
+    },
+    {
+      "name": "tar-shot",
+      "url": "/api/v2/move/749/"
+    }
+  ]
+}

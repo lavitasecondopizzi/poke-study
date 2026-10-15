@@ -1,0 +1,12 @@
+{
+  "id": 1003,
+  "name": "pearl-settlement-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pearl-settlement",
+    "url": "/api/v2/location/1009/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

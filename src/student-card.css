@@ -1,0 +1,189 @@
+/* Student card: isolated header component, desktop identity summary and compact mobile entry. */
+.student-card-refactor {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 1 350px;
+  min-width: 0;
+  max-width: 390px;
+  margin-left: auto;
+  padding: 9px 11px;
+  border: 1px solid #b8d7ec;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #fff 0%, #f4faff 54%, #e3f2fd 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 2px 0 #d5e8f6, 0 4px 12px #28577a0c;
+  color: #244e70;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .16s ease, background .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.student-card-refactor:hover {
+  border-color: #6ba5cf;
+  background: linear-gradient(180deg, #fff 0%, #f0f8ff 48%, #d9edfc 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 2px 0 #c5e0f3, 0 5px 14px #28577a16;
+}
+
+.student-card-refactor:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px #28577a12;
+}
+
+.student-card-refactor:focus-visible {
+  outline: 3px solid #3985bd;
+  outline-offset: 3px;
+}
+
+.student-card-refactor__crest {
+  display: block;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.student-card-refactor__avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid #b8d5e9;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #fff 0%, #e5f4ff 100%);
+}
+
+.student-card-refactor__avatar > img {
+  display: block;
+  width: 145%;
+  height: 145%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.student-card-refactor__avatar-fallback {
+  color: #a8750d;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.student-card-refactor__copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.student-card-refactor__eyebrow {
+  color: #5b7890;
+  font: 700 9px 'DM Mono', monospace;
+  letter-spacing: .08em;
+}
+
+.student-card-refactor__nickname {
+  overflow: hidden;
+  color: #173f60;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-card-refactor__matricola,
+.student-card-refactor__academy {
+  overflow: hidden;
+  color: #58758c;
+  font-size: 10px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-card-refactor__chevron {
+  flex: 0 0 auto;
+  color: #5d8eb2;
+  transition: transform .16s ease;
+}
+
+.student-card-refactor:hover .student-card-refactor__chevron {
+  transform: translateX(2px);
+}
+
+@media (max-width: 900px) and (min-width: 651px) {
+  .student-card-refactor {
+    flex-basis: 290px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .student-card-refactor__crest {
+    flex-basis: 30px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .student-card-refactor__avatar {
+    flex-basis: 36px;
+    width: 36px;
+    height: 42px;
+  }
+
+  .student-card-refactor__eyebrow {
+    font-size: 8px;
+  }
+
+  .student-card-refactor__academy,
+  .student-card-refactor__matricola {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 650px) {
+  .student-card-refactor {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    padding: 3px;
+    border-radius: 8px;
+    order: 2;
+  }
+
+  .student-card-refactor__crest,
+  .student-card-refactor__copy,
+  .student-card-refactor__chevron {
+    display: none;
+  }
+
+  .student-card-refactor__avatar {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+  }
+
+  .student-card-refactor__avatar > img {
+    width: 145%;
+    height: 145%;
+  }
+
+  .mobile-toggle {
+    order: 3;
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .student-card-refactor,
+  .student-card-refactor__chevron {
+    transition: none;
+  }
+}

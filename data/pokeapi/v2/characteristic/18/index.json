@@ -1,0 +1,95 @@
+{
+  "id": 18,
+  "gene_modulo": 2,
+  "possible_values": [
+    2,
+    7,
+    12,
+    17,
+    22,
+    27
+  ],
+  "highest_stat": {
+    "name": "speed",
+    "url": "/api/v2/stat/6/"
+  },
+  "descriptions": [
+    {
+      "description": "おっちょこちょい",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "description": "촐랑대는 성격임",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "description": "冒冒失失",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "description": "Il est bête et impulsif",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Ist ungestüm und einfältig",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Es de carácter simple e impetuoso",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "description": "È irruente e semplice",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "description": "Impetuous and silly",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "description": "おっちょこちょい",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "description": "冒冒失失",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "description": "Es de carácter simple e impetuoso",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

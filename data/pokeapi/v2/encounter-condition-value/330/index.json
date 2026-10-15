@@ -1,0 +1,17 @@
+{
+  "id": 330,
+  "name": "other-grow-iceroot-carrot",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Grow an Iceroot Carrot while helping Calyrex.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

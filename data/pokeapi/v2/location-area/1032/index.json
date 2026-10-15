@@ -1,0 +1,12 @@
+{
+  "id": 1032,
+  "name": "windbreak-stand-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "windbreak-stand",
+    "url": "/api/v2/location/1038/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,649 @@
+{
+  "id": 216,
+  "name": "dancer",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-vii",
+    "url": "/api/v2/generation/7/"
+  },
+  "names": [
+    {
+      "name": "おどりこ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "무희",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "舞者",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Danseuse",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Tänzer",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pareja de Baile",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Sincrodanza",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Dancer",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "おどりこ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "舞者",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Pareja de Baile",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Quand un autre Pokémon utilise une capacité de danse, ce Pokémon utilisera la même capacité immédiatement après.",
+      "short_effect": "Quand un autre Pokémon utilise une capacité de danse, ce Pokémon utilisera la même capacité immédiatement après.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Whenever another Pokémon uses a dance move, this Pokémon will use the same move immediately afterwards.",
+      "short_effect": "Whenever another Pokémon uses a dance move, this Pokémon will use the same move immediately afterwards.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "だれかが　おどりわざを　つかうと\nじぶんも　それに　つづいて\nおどりわざを　だすことが　できる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "누군가 춤 기술을 쓰면\n자신도 이어서\n춤 기술을 쓸 수 있다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "當有誰使出跳舞招式時，\n自己也能接著使出跳舞招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Si n’importe quel Pokémon utilise une capacité\ndansante, ce Pokémon peut se mettre aussi\nà danser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Kann direkt im Anschluss an die Tanz-Attacke\neines anderen Pokémon ebenfalls eine solche\neinsetzen.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Permette al Pokémon di copiare immediatamente\nqualsiasi mossa basata sulla danza usata da un\naltro Pokémon in campo.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "When another Pokémon uses a dance move,\nit can use a dance move following it regardless\nof its Speed.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　踊り技を　使うと\n自分も　それに　続いて\n踊り技を　出すことが　できる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "有谁使出跳舞招式时，\n自己也能就这么接着使出跳舞招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　おどりわざを　つかうと\nじぶんも　それに　つづいて\nおどりわざを　だすことが　できる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "누군가 춤 기술을 쓰면\n자신도 이어서\n춤 기술을 쓸 수 있다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "當有誰使出跳舞招式時，\n自己也能接著使出跳舞招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Si n’importe quel Pokémon utilise une capacité\ndansante, ce Pokémon peut se mettre aussi\nà danser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Kann direkt im Anschluss an die Tanz-Attacke\neines anderen Pokémon ebenfalls eine solche\neinsetzen.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Permette al Pokémon di copiare immediatamente\nqualsiasi mossa basata sulla danza usata da un\naltro Pokémon in campo.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "When another Pokémon uses a dance move,\nit can use a dance move following it regardless\nof its Speed.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　踊り技を　使うと\n自分も　それに　続いて\n踊り技を　出すことが　できる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "有谁使出跳舞招式时，\n自己也能就这么接着使出跳舞招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　おどりわざを　つかうと\nじぶんも　それに　つづいて\nおどりわざを　だすことが　できる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "누군가 춤 기술을 쓰면\n자신도 이어서\n춤 기술을 쓸 수 있다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "當有誰使出跳舞招式時，\n自己也能接著使出跳舞招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Si n’importe quel Pokémon utilise une capacité\ndansante, ce Pokémon peut se mettre aussi\nà danser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Kann direkt im Anschluss an die Tanz-Attacke\neines anderen Pokémon ebenfalls eine solche\neinsetzen.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Permette al Pokémon di copiare immediatamente\nqualsiasi mossa basata sulla danza usata da un\naltro Pokémon in campo.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "When another Pokémon uses a dance move,\nit can use a dance move following it regardless\nof its Speed.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　踊り技を　使うと\n自分も　それに　続いて\n踊り技を　出すことが　できる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "有谁使出跳舞招式时，\n自己也能就这么接着使出跳舞招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Permite copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　おどりわざを　つかうと\nじぶんも　それに　つづいて\nおどりわざを　だすことが　できる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "누군가 춤 기술을 쓰면\n자신도 이어서\n춤 기술을 쓸 수 있다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "當有誰使出跳舞招式時，\n自己也能接著使出跳舞招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Si n’importe quel Pokémon utilise une capacité dansante,\nce Pokémon peut se mettre aussi à danser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Kann direkt im Anschluss an die Tanz-Attacke eines\nanderen Pokémon ebenfalls eine solche einsetzen.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Puede copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Permette al Pokémon di copiare immediatamente\nqualsiasi mossa basata sulla danza usata da un\naltro Pokémon in campo.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "When another Pokémon uses a dance move,\nit can use a dance move following it regardless\nof its Speed.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "だれかが　踊り技を　使うと\n自分も　それに　続いて\n踊り技を　出すことが　できる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "有谁使出跳舞招式时，\n自己也能就这么接着使出跳舞招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Puede copiar inmediatamente cualquier movimiento\nde baile que haya usado otro Pokémon presente en\nel combate.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Si n’importe quel Pokémon utilise une capacité dansante,\\nle Pokémon utilise immédiatement cette danse lui aussi.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "Whenever a dance move is used in battle, the Pokémon will copy the user to immediately perform that dance move itself.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "oricorio-baile",
+        "url": "/api/v2/pokemon/741/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "oricorio-pom-pom",
+        "url": "/api/v2/pokemon/10123/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "oricorio-pau",
+        "url": "/api/v2/pokemon/10124/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "oricorio-sensu",
+        "url": "/api/v2/pokemon/10125/"
+      }
+    }
+  ]
+}

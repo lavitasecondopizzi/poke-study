@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/name.json"
+      }
+    },
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/description.json"
+      }
+    },
+    "version_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/named_api_resource.json"
+      }
+    }
+  },
+  "required": [
+    "descriptions",
+    "id",
+    "name",
+    "names",
+    "version_groups"
+  ]
+}

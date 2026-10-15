@@ -1,0 +1,17 @@
+{
+  "id": 345,
+  "name": "berry-tree-type-blue",
+  "condition": {
+    "name": "berry-tree-type",
+    "url": "/api/v2/encounter-condition/29/"
+  },
+  "names": [
+    {
+      "name": "Interact with a Blue Berry Tree",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

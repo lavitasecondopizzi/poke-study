@@ -1,0 +1,12 @@
+{
+  "id": 1209,
+  "name": "hoenn-pokemart-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hoenn-pokemart",
+    "url": "/api/v2/location/1088/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

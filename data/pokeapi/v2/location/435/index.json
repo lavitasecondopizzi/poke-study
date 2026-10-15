@@ -1,0 +1,107 @@
+{
+  "id": 435,
+  "name": "meteor-falls",
+  "region": {
+    "name": "hoenn",
+    "url": "/api/v2/region/3/"
+  },
+  "names": [
+    {
+      "name": "りゅうせいのたき",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "유성의 폭포",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Site Météore",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Meteorfälle",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cascada Meteoro",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Cascate Meteora",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Meteor Falls",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "流星の滝",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Cascada Meteoro",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 63,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    },
+    {
+      "game_index": 272,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "meteor-falls-area",
+      "url": "/api/v2/location-area/356/"
+    },
+    {
+      "name": "meteor-falls-back",
+      "url": "/api/v2/location-area/357/"
+    },
+    {
+      "name": "meteor-falls-b1f",
+      "url": "/api/v2/location-area/358/"
+    },
+    {
+      "name": "meteor-falls-backsmall-room",
+      "url": "/api/v2/location-area/359/"
+    }
+  ]
+}

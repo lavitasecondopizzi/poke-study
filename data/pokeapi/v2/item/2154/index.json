@@ -1,0 +1,101 @@
+{
+  "id": 2154,
+  "name": "grubbin-thread",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "tm-materials",
+    "url": "/api/v2/item-category/54/"
+  },
+  "effect_entries": [],
+  "flavor_text_entries": [],
+  "game_indices": [
+    {
+      "game_index": 2473,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "アゴジムシのいと",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "턱지충이의실",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "強顎雞母蟲的絲",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Fil de Larvibule",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Mabula-Faden",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Hilo de Grubbin",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Filo di Grubbin",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Grubbin Thread",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "アゴジムシのいと",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "强颚鸡母虫的丝",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": null
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

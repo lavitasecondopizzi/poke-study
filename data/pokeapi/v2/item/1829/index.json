@@ -1,0 +1,101 @@
+{
+  "id": 1829,
+  "name": "shellos-mucus",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "tm-materials",
+    "url": "/api/v2/item-category/54/"
+  },
+  "effect_entries": [],
+  "flavor_text_entries": [],
+  "game_indices": [
+    {
+      "game_index": 2023,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "カラナクシのねんえき",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "깝질무의점액",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "無殼海兔的黏液",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Mucus de Sancoki",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Schalellos-Schleim",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Secreción de Shellos",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Bava di Shellos",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Shellos Mucus",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "カラナクシのねんえき",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "无壳海兔的黏液",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": null
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

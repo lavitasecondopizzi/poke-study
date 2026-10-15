@@ -1,0 +1,168 @@
+{
+  "id": 302,
+  "name": "toxic-chain",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "どくのくさり",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "독사슬",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "毒鎖鏈",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Chaîne Toxique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Giftkette",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cadena Tóxica",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Catena Tossica",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Toxic Chain",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "どくのくさり",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "毒锁链",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Cadena Tóxica",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Le pouvoir de la chaîne toxique du Pokémon peut empoisonner gravement n'importe quelle cible que ce Pokémon frappe avec une capacité.",
+      "short_effect": "Peut infliger un poison grave quand le Pokémon frappe un adversaire avec une capacité.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "The power of the Pokémon's toxic chain may badly poison any target the Pokémon hits with a move.",
+      "short_effect": "May cause bad poisoning when the Pokémon hits an opponent with a move.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Grâce aux pouvoirs de sa chaîne imprégnée de toxines,\\nle Pokémon peut empoisonner gravement sa cible\\nen la touchant avec une capacité.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The power of the Pokémon's toxic chain may badly poison any target the Pokémon hits with a move",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "毒素を　ふくんだ　鎖の力で\n技を　当てた　相手を\n猛毒の状態に　することが　ある。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "okidogi",
+        "url": "/api/v2/pokemon/1014/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "munkidori",
+        "url": "/api/v2/pokemon/1015/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "fezandipiti",
+        "url": "/api/v2/pokemon/1016/"
+      }
+    }
+  ]
+}

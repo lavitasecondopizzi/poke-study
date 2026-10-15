@@ -1,0 +1,68 @@
+{
+  "id": 14,
+  "name": "all-pokemon",
+  "descriptions": [
+    {
+      "description": "Tous les Pokémon du terrain.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Jedes Pokémon auf dem Feld.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Every Pokémon on the field.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "moves": [
+    {
+      "name": "perish-song",
+      "url": "/api/v2/move/195/"
+    },
+    {
+      "name": "rototiller",
+      "url": "/api/v2/move/563/"
+    },
+    {
+      "name": "flower-shield",
+      "url": "/api/v2/move/579/"
+    },
+    {
+      "name": "teatime",
+      "url": "/api/v2/move/752/"
+    }
+  ],
+  "names": [
+    {
+      "name": "Tous les Pokémon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Jedes Pokémon",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "All Pokémon",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

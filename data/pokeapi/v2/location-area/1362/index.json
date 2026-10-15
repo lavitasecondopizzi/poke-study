@@ -1,0 +1,931 @@
+{
+  "id": 1362,
+  "name": "floaroma-meadow-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "floaroma-meadow",
+    "url": "/api/v2/location/175/"
+  },
+  "names": [
+    {
+      "name": "Floaroma Meadow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Pré de Floraville",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "aipom",
+        "url": "/api/v2/pokemon/190/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "heracross",
+        "url": "/api/v2/pokemon/214/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "wurmple",
+        "url": "/api/v2/pokemon/265/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 45,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 45,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "silcoon",
+        "url": "/api/v2/pokemon/266/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "cascoon",
+        "url": "/api/v2/pokemon/268/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "burmy",
+        "url": "/api/v2/pokemon/412/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "combee",
+        "url": "/api/v2/pokemon/415/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 60,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 40,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "cherubi",
+        "url": "/api/v2/pokemon/420/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 25,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 20,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-b",
+                  "url": "/api/v2/encounter-condition-value/190/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 10,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-a",
+                  "url": "/api/v2/encounter-condition-value/189/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "munchlax",
+        "url": "/api/v2/pokemon/446/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-c",
+                  "url": "/api/v2/encounter-condition-value/191/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-c",
+                  "url": "/api/v2/encounter-condition-value/191/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "honey-tree",
+                "url": "/api/v2/encounter-method/55/"
+              },
+              "condition_values": [
+                {
+                  "name": "honey-tree-group-c",
+                  "url": "/api/v2/encounter-condition-value/191/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

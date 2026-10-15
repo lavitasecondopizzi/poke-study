@@ -1,0 +1,26 @@
+{
+  "id": 10,
+  "name": "in-battle-level-up",
+  "names": [
+    {
+      "name": "Montée de niveau en combat",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Level up in battle",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "pokemon_species": [
+    {
+      "name": "maushold",
+      "url": "/api/v2/pokemon-species/925/"
+    }
+  ]
+}

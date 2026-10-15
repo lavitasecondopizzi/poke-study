@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "pokemon_species_details": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rate": {
+            "type": "integer"
+          },
+          "pokemon_species": {
+            "$ref": "/schema/v2/named_api_resource.json"
+          }
+        },
+        "required": [
+          "pokemon_species",
+          "rate"
+        ]
+      }
+    },
+    "required_for_evolution": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/named_api_resource.json"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "pokemon_species_details",
+    "required_for_evolution"
+  ]
+}

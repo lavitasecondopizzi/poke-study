@@ -1,0 +1,41 @@
+{
+  "id": 177,
+  "name": "fullmoon-island",
+  "region": {
+    "name": "sinnoh",
+    "url": "/api/v2/region/4/"
+  },
+  "names": [
+    {
+      "name": "Ile Pleine Lune",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Vollmondinsel",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Fullmoon Island",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 60,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

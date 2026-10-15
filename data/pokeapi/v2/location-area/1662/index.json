@@ -1,0 +1,111 @@
+{
+  "id": 1662,
+  "name": "snowpoint-city-north-west-house",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "snowpoint-city",
+    "url": "/api/v2/location/171/"
+  },
+  "names": [
+    {
+      "name": "Snowpoint City (Northwest House)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Frimapic (Maison au Nord-Ouest)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "haunter",
+        "url": "/api/v2/pokemon/93/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 37,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-medicham",
+                  "url": "/api/v2/encounter-condition-value/357/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 37,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-medicham",
+                  "url": "/api/v2/encounter-condition-value/357/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 37,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-medicham",
+                  "url": "/api/v2/encounter-condition-value/357/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

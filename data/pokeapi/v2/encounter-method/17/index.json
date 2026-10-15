@@ -1,0 +1,28 @@
+{
+  "id": 17,
+  "name": "rough-terrain",
+  "order": 9,
+  "names": [
+    {
+      "name": "Auf unwegsamen Gelände laufen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Walking on rough terrain",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En marchant sur un terrain accidenté",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

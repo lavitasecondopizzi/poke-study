@@ -1,0 +1,41 @@
+{
+  "id": 824,
+  "name": "cascarrafa",
+  "region": {
+    "name": "paldea",
+    "url": "/api/v2/region/10/"
+  },
+  "names": [
+    {
+      "name": "Jarramanca",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Garrafosa City",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cascarrafa",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 76,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "areas": []
+}

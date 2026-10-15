@@ -1,0 +1,38 @@
+{
+  "id": 1017,
+  "name": "seaside-hollow",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Creux du Cap",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Kleine Meeresgrotte",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Seaside Hollow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "seaside-hollow-area",
+      "url": "/api/v2/location-area/1011/"
+    }
+  ]
+}

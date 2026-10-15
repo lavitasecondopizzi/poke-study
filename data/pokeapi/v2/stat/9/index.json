@@ -1,0 +1,21 @@
+{
+  "id": 9,
+  "name": "special",
+  "game_index": 7,
+  "is_battle_only": false,
+  "affecting_moves": {
+    "increase": [],
+    "decrease": []
+  },
+  "affecting_natures": {
+    "increase": [],
+    "decrease": []
+  },
+  "affecting_items": [],
+  "characteristics": [],
+  "move_damage_class": {
+    "name": "special",
+    "url": "/api/v2/move-damage-class/3/"
+  },
+  "names": []
+}

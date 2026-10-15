@@ -1,0 +1,637 @@
+{
+  "id": 700,
+  "name": "stoked-sparksurfer",
+  "accuracy": null,
+  "effect_chance": 100,
+  "pp": 1,
+  "priority": 0,
+  "power": 175,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "special",
+    "url": "/api/v2/move-damage-class/3/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Inflige des dégats réguliers.  A une chance de paralyser la cible.",
+      "short_effect": "A une chance de paralyser la cible.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Inflicts regular damage.  Has a chance to paralyze the target.",
+      "short_effect": "Has a chance to paralyze the target.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-vii",
+    "url": "/api/v2/generation/7/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "paralysis",
+      "url": "/api/v2/move-ailment/1/"
+    },
+    "category": {
+      "name": "damage-ailment",
+      "url": "/api/v2/move-category/4/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 100,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ライトニングサーフライド",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "라이트닝서프라이드",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "駕雷馭電戲衝浪",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Électro-Surf Survolté",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Blitz-Wellenritt",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Surfeo Galvánico",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Elettrosurf Folgorante",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Stoked Sparksurfer",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ライトニングサーフライド",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "驾雷驭电戏冲浪",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Surfeo Galvánico",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "electric",
+    "url": "/api/v2/type/13/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Ｚパワーを　えた　アローラちほうの\nライチュウが　ぜんりょくで　こうげきする。\nあいてを　まひ　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Z파워를 얻은 알로라지방의\n라이츄가 전력으로 공격한다.\n상대를 마비 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿羅拉地區的\n雷丘全力進行攻擊。\n讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Le Raichu de la région d’Alola utilise la Force Z\npour frapper la cible et la paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Das Alola-Raichu greift das Ziel mithilfe von Z-Kraft\nmit voller Wucht an und paralysiert es.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Grazie al Potere Z, il Raichu di Alola attacca\ncon tutta la sua potenza e paralizza il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "After obtaining Z-Power, the user, Alolan Raichu,\nattacks the target with full force. This move leaves\nthe target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ｚパワーを　得た　アローラ地方の\nライチュウが　全力で　攻撃する。\n相手を　まひ　状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿罗拉地区的\n雷丘将全力进行攻击。\n从而让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ｚパワーを　えた　アローラちほうの\nライチュウが　ぜんりょくで　こうげきする。\nあいてを　まひ　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Z파워를 얻은 알로라지방의\n라이츄가 전력으로 공격한다.\n상대를 마비 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿羅拉地區的\n雷丘全力進行攻擊。\n讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Le Raichu de la région d’Alola utilise la Force Z\npour frapper la cible et la paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Das Alola-Raichu greift das Ziel mithilfe von Z-Kraft\nmit voller Wucht an und paralysiert es.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Grazie al Potere Z, il Raichu di Alola attacca\ncon tutta la sua potenza e paralizza il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "After obtaining Z-Power, the user, Alolan Raichu,\nattacks the target with full force. This move leaves\nthe target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ｚパワーを　得た　アローラ地方の\nライチュウが　全力で　攻撃する。\n相手を　まひ　状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿罗拉地区的\n雷丘将全力进行攻击。\n从而让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ｚパワーを　えた　アローラちほうの\nライチュウが　ぜんりょくで　こうげきする。\nあいてを　まひ　じょうたいに　する。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Z파워를 얻은 알로라지방의\n라이츄가 전력으로 공격한다.\n상대를 마비 상태로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿羅拉地區的\n雷丘全力進行攻擊。\n讓對手陷入麻痺狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Le Raichu de la région d’Alola utilise la Force Z\npour frapper la cible et la paralyser.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Das Alola-Raichu greift das Ziel mithilfe von Z-Kraft\nmit voller Wucht an und paralysiert es.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Grazie al Potere Z, il Raichu di Alola attacca\ncon tutta la sua potenza e paralizza il bersaglio.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "After obtaining Z-Power, the user, Alolan Raichu,\nattacks the target with full force. This move leaves\nthe target with paralysis.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ｚパワーを　得た　アローラ地方の\nライチュウが　全力で　攻撃する。\n相手を　まひ　状態に　する。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "得到Ｚ力量的阿罗拉地区的\n雷丘将全力进行攻击。\n从而让对手陷入麻痹状态。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cuando un Raichu de Alola obtiene el Poder Z, lanza\nun potente ataque contra su enemigo y lo deja\nparalizado.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "このわざは　つかえません\nおもいだすことが　できなくなりますが\nわざを　わすれることを　おすすめします",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "사용할 수 없는 기술입니다.\n다시 배우게 할 수 없지만\n기술을 잊게 하는 것을 권장합니다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "無法使用此招式。\n雖然忘記後將無法再想起來，\n但還是建議忘記此招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cette capacité ne peut pas être utilisée.\nIl est recommandé de l’oublier, même s’il sera\nimpossible de se la remémorer une fois oubliée.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Diese Attacke kann nicht eingesetzt werden. Du solltest\ndein Pokémon sie vergessen lassen. Beachte aber,\ndass es sich danach nicht wieder an sie erinnern kann.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este movimiento no se puede usar, por lo que sería\nmejor olvidarlo, aunque eso implique que no se pueda\nrecordar posteriormente.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Questa mossa non può essere usata.\nÈ consigliabile farla dimenticare al Pokémon. Tuttavia,\nuna volta dimenticata, non potrà più essere ricordata.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This move can’t be used.\nIt’s recommended that this move is forgotten.\nOnce forgotten, this move can’t be remembered.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "この技は　使えません\n思い出すことが　できなくなりますが\n技を　忘れることを　おすすめします",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "无法使用这个招式。\n虽然忘记之后就再也想不起来了，\n但还是建议忘记这个招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este movimiento no se puede usar, por lo que sería\nmejor olvidarlo, aunque eso implique que no se pueda\nrecordar posteriormente.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "learned_by_pokemon": []
+}

@@ -1,0 +1,107 @@
+{
+  "id": 14,
+  "name": "es-419",
+  "official": true,
+  "iso639": "es",
+  "iso3166": "mx",
+  "names": [
+    {
+      "name": "ラテンアメリカスペイン語",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Raten Amerika Supein-go",
+      "language": {
+        "name": "ja-roma",
+        "url": "/api/v2/language/2/"
+      }
+    },
+    {
+      "name": "라틴 아메리카 스페인어",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "拉丁美洲西班牙文",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Espagnol latino américain",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Lateinamerikanisches Spanisch",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Español latinoamericano",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Spagnolo latinoamericano",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Latin American Spanish",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Latinskoamerická španělština",
+      "language": {
+        "name": "cs",
+        "url": "/api/v2/language/10/"
+      }
+    },
+    {
+      "name": "ラテンアメリカスペイン語",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "拉丁美洲西班牙语",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Espanhol latino americano",
+      "language": {
+        "name": "pt-br",
+        "url": "/api/v2/language/13/"
+      }
+    },
+    {
+      "name": "Español latinoamericano",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

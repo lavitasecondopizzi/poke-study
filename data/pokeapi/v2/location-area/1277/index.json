@@ -1,0 +1,84 @@
+{
+  "id": 1277,
+  "name": "cipher-key-lair-1f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cipher-key-lair",
+    "url": "/api/v2/location/1111/"
+  },
+  "names": [
+    {
+      "name": "Cipher Key Lair 1F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Repaire Ombre (RdC)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "paras",
+        "url": "/api/v2/pokemon/46/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "growlithe",
+        "url": "/api/v2/pokemon/58/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

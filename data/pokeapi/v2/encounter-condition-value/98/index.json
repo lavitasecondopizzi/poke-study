@@ -1,0 +1,24 @@
+{
+  "id": 98,
+  "name": "other-reshiram-zekrom-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have Reshiram and Zekrom in party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir Reshiram et Zekrom dans l'équipe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

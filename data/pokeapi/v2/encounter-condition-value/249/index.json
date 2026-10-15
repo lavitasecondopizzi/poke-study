@@ -1,0 +1,17 @@
+{
+  "id": 249,
+  "name": "weather-raining",
+  "condition": {
+    "name": "max-den-rating",
+    "url": "/api/v2/encounter-condition/28/"
+  },
+  "names": [
+    {
+      "name": "During rainy weather",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

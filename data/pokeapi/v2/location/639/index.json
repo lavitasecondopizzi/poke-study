@@ -1,0 +1,83 @@
+{
+  "id": 639,
+  "name": "melancolie-path",
+  "region": {
+    "name": "kalos",
+    "url": "/api/v2/region/6/"
+  },
+  "names": [
+    {
+      "name": "トリストどおり",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "트리스트 도로",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Chemin Tristesse",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Tristesse-Weg",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Senda Melancolía",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Via Malinconia",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Mélancolie Path",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "トリスト通り",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Senda Melancolía",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 79,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": []
+}

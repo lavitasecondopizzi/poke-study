@@ -1,0 +1,53 @@
+{
+  "id": 564,
+  "name": "glacier-room",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "氷山の間",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Salle Iceberg",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Eisbergkammer",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Glacier Room",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 151,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "glacier-room-area",
+      "url": "/api/v2/location-area/698/"
+    }
+  ]
+}

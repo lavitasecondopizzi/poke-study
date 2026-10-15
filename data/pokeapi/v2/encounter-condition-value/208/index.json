@@ -1,0 +1,17 @@
+{
+  "id": 208,
+  "name": "item-fossilized-bird",
+  "condition": {
+    "name": "item",
+    "url": "/api/v2/encounter-condition/11/"
+  },
+  "names": [
+    {
+      "name": "Have Fossilized Bird in bag",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": 25,
+  "name": "starter-fennekin",
+  "condition": {
+    "name": "starter",
+    "url": "/api/v2/encounter-condition/7/"
+  },
+  "names": [
+    {
+      "name": "Fennekin as starter",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Feunnec en starter",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

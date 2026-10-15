@@ -1,0 +1,88 @@
+{
+  "id": 690,
+  "name": "unknown-dungeon",
+  "region": {
+    "name": "kalos",
+    "url": "/api/v2/region/6/"
+  },
+  "names": [
+    {
+      "name": "ななしのどうくつ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "이름없는 동굴",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Grotte Inconnue",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Geheimdungeon",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Mazmorra Rara",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Grotta Ignota",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Unknown Dungeon",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ななしの洞窟",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Mazmorra Rara",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 168,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "unknown-dungeon-area",
+      "url": "/api/v2/location-area/1175/"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": 1285,
+  "name": "citadark-isle-bf1",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "citadark-isle",
+    "url": "/api/v2/location/1112/"
+  },
+  "names": [
+    {
+      "name": "Citadark Isle B1F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Île Ténébra (1e sous-sol)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "kangaskhan",
+        "url": "/api/v2/pokemon/115/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 36,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "banette",
+        "url": "/api/v2/pokemon/354/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 37,
+              "max_level": 37,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

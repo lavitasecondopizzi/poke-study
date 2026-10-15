@@ -1,0 +1,12 @@
+{
+  "id": 968,
+  "name": "deertrack-path-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "deertrack-path",
+    "url": "/api/v2/location/974/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

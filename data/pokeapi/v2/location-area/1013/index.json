@@ -1,0 +1,12 @@
+{
+  "id": 1013,
+  "name": "sludge-mound-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sludge-mound",
+    "url": "/api/v2/location/1019/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

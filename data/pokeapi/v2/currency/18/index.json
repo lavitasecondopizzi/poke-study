@@ -1,0 +1,13 @@
+{
+  "id": 18,
+  "name": "league-point",
+  "names": [
+    {
+      "name": "League Point",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

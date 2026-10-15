@@ -1,0 +1,105 @@
+{
+  "id": 10001,
+  "name": "shadow-rush",
+  "accuracy": 100,
+  "effect_chance": null,
+  "pp": null,
+  "priority": 0,
+  "power": 55,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Inflige des dégâts réguliers.  Le taux de coups critiques du lanceur est un niveau plus haut en utilisant cette capacité en étant en Mode Hyper.",
+      "short_effect": "A une chance augmentée de coup critique en Mode Hyper.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Inflicts regular damage.  User’s critical hit rate is one level higher when using this move while in hyper mode.",
+      "short_effect": "Has an increased chance for a critical hit in Hyper Mode.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-iii",
+    "url": "/api/v2/generation/3/"
+  },
+  "meta": null,
+  "names": [
+    {
+      "name": "ダークラッシュ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Charge Noire",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Cryptoschlag",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Carga Oscura",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Ombroraffica",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Shadow Rush",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Carga Oscura",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "shadow",
+    "url": "/api/v2/type/10002/"
+  },
+  "machines": [],
+  "flavor_text_entries": [],
+  "learned_by_pokemon": []
+}

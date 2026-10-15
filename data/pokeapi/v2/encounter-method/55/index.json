@@ -1,0 +1,21 @@
+{
+  "id": 55,
+  "name": "honey-tree",
+  "order": 55,
+  "names": [
+    {
+      "name": "Slathering a Honey Tree with Honey and waiting for a Pokémon to appear.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Arbre à Miel",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

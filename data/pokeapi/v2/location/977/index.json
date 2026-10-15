@@ -1,0 +1,38 @@
+{
+  "id": 977,
+  "name": "droning-meadow",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Champ Bourdonne",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Surrende Felder",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Droning Meadow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "droning-meadow-area",
+      "url": "/api/v2/location-area/971/"
+    }
+  ]
+}

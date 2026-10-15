@@ -1,0 +1,57 @@
+{
+  "id": 376,
+  "name": "desert-resort",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "リゾートデザート",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Désert Délassant",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Wüstenresort",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Desert Resort",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 34,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "desert-resort-entrance",
+      "url": "/api/v2/location-area/583/"
+    },
+    {
+      "name": "desert-resort-area",
+      "url": "/api/v2/location-area/584/"
+    }
+  ]
+}

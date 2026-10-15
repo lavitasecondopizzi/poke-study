@@ -1,0 +1,53 @@
+{
+  "id": 399,
+  "name": "moor-of-icirrus",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "セッカの湿原",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Tourbière Flocombe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Moor von Nevaio",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Moor of Icirrus",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 57,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "moor-of-icirrus-area",
+      "url": "/api/v2/location-area/638/"
+    }
+  ]
+}

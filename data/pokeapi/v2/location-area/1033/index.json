@@ -1,0 +1,12 @@
+{
+  "id": 1033,
+  "name": "windswept-run-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "windswept-run",
+    "url": "/api/v2/location/1039/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": 913,
+  "item": {
+    "name": "tm42",
+    "url": "/api/v2/item/346/"
+  },
+  "version_group": {
+    "name": "heartgold-soulsilver",
+    "url": "/api/v2/version-group/10/"
+  },
+  "move": {
+    "name": "facade",
+    "url": "/api/v2/move/263/"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": 77,
+  "name": "story-progress-quake-badge",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Obtained Quake Badge",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Obtenir le Badge Sismique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

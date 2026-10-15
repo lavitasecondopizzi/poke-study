@@ -1,0 +1,12 @@
+{
+  "id": 1005,
+  "name": "ramanas-island-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ramanas-island",
+    "url": "/api/v2/location/1011/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

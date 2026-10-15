@@ -1,0 +1,110 @@
+{
+  "id": 770,
+  "name": "mount-hokulani",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "ホクラニだけ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "호쿠라니큰산",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "輝克拉尼山",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Mont Hokulani",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Hokulani-Berg",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pico Hokulani",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Picco Hokulani",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Mount Hokulani",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ホクラニ岳",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "辉克拉尼山",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Pico Hokulani",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 136,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "mount-hokulani-main",
+      "url": "/api/v2/location-area/1105/"
+    },
+    {
+      "name": "mount-hokulani-east",
+      "url": "/api/v2/location-area/1106/"
+    },
+    {
+      "name": "mount-hokulani-west",
+      "url": "/api/v2/location-area/1107/"
+    }
+  ]
+}

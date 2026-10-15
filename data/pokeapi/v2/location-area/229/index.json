@@ -1,0 +1,34 @@
+{
+  "id": 229,
+  "name": "whirl-islands-empty-floor-x",
+  "game_index": 46,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "whirl-islands",
+    "url": "/api/v2/location/156/"
+  },
+  "names": [
+    {
+      "name": "Whirl Islands (empty floor X)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Strudelinseln empty floor X",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Tourb'Iles (étage vide X)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

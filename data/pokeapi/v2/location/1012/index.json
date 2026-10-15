@@ -1,0 +1,38 @@
+{
+  "id": 1012,
+  "name": "sacred-plaza",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Parvis des Prières",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Platz der Huldigung",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Sacred Plaza",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "sacred-plaza-area",
+      "url": "/api/v2/location-area/1006/"
+    }
+  ]
+}

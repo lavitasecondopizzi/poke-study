@@ -6,6 +6,8 @@ import {
 import type { CommunityIdentity, CommunityRankingEntry } from './community';
 import { listCommunityRanking } from './community';
 import type { SavedProgress } from './types';
+import { loadAcademyCurriculum } from './academy';
+import type { AcademyPointsSummary } from './academy';
 
 type AcademyFilter = 'tutte' | 'arancia' | 'uva' | 'mirtillo';
 
@@ -16,6 +18,7 @@ interface LeaderboardProps {
   communityConfigured: boolean;
   progress: SavedProgress;
   onConnect: () => void;
+  onOpenPublicProfile: (identityId: string) => void;
 }
 
 const ACADEMIES: { value: AcademyFilter; label: string }[] = [
@@ -53,11 +56,11 @@ function rankLabel(rank: number) {
   return rank <= 3 ? `${rank}°` : String(rank).padStart(2, '0');
 }
 
-function PlayerAvatar({ avatarId, nickname, large = false }: { avatarId: number | null; nickname: string; large?: boolean }) {
+function PlayerAvatar({ avatarId, matricola, large = false }: { avatarId: number | null; matricola: string; large?: boolean }) {
   return (
     <span className={large ? 'leaderboard-avatar leaderboard-avatar-large' : 'leaderboard-avatar'}>
       {avatarId
-        ? <img src={avatarUrl(avatarId)} alt={`Avatar di ${nickname}`} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
+        ? <img src={avatarUrl(avatarId)} alt={`Avatar dello studente ${matricola}`} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
         : <GraduationCap aria-hidden="true" size={large ? 27 : 17} />}
     </span>
   );
@@ -67,39 +70,37 @@ function AcademyBadge({ academy }: { academy: CommunityRankingEntry['academy'] }
   return <span className={`leaderboard-academy-badge academy-badge-${academy}`}>{academyLabel(academy)}</span>;
 }
 
-function PodiumCard({ entry, position, isCurrent }: { entry: CommunityRankingEntry; position: number; isCurrent: boolean }) {
+function PodiumCard({ entry, position, isCurrent, onOpenProfile }: { entry: CommunityRankingEntry; position: number; isCurrent: boolean; onOpenProfile: (identityId: string) => void }) {
   const Icon = position === 1 ? Crown : Medal;
   return (
     <article className={`leaderboard-podium-card leaderboard-podium-${position}${isCurrent ? ' is-current' : ''}`}>
       <div className="leaderboard-podium-position"><Icon size={17} aria-hidden="true" /><span>{rankLabel(position)} POSTO</span></div>
-      <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} large />
-      <strong className="leaderboard-podium-name">{entry.nickname}</strong>
+      <PlayerAvatar avatarId={entry.avatarId} matricola={entry.matricola} large />
+      <button type="button" className="leaderboard-profile-link leaderboard-podium-name" onClick={() => onOpenProfile(entry.id)}>{entry.matricola}</button>
       <AcademyBadge academy={entry.academy} />
       <strong className="leaderboard-podium-score">{entry.points.toLocaleString('it-IT')} <small>PP</small></strong>
-      <span className="leaderboard-podium-exams">{entry.examPoints.toLocaleString('it-IT')} punti esame</span>
       {isCurrent && <span className="leaderboard-you-tag">LA TUA POSIZIONE</span>}
     </article>
   );
 }
 
-function RankingTable({ entries, currentIdentityId }: { entries: CommunityRankingEntry[]; currentIdentityId: string }) {
+function RankingTable({ entries, currentIdentityId, onOpenProfile }: { entries: CommunityRankingEntry[]; currentIdentityId: string; onOpenProfile: (identityId: string) => void }) {
   return (
     <div className="leaderboard-table-wrap">
       <table className="leaderboard-table">
-        <thead><tr><th scope="col">Pos.</th><th scope="col">Allievo</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Punti esame</th><th scope="col">Pokémon</th></tr></thead>
+        <thead><tr><th scope="col">Pos.</th><th scope="col">Matricola</th><th scope="col">Accademia</th><th scope="col">Punti Poké</th><th scope="col">Pokémon</th></tr></thead>
         <tbody>{entries.map(entry => (
           <tr key={entry.id} className={entry.id === currentIdentityId ? 'leaderboard-current-row' : undefined}>
             <td><span className={`leaderboard-rank-number leaderboard-rank-${entry.rank <= 3 ? entry.rank : 'other'}`}>{rankLabel(entry.rank)}</span></td>
             <td>
               <div className="leaderboard-player-cell">
-                <PlayerAvatar avatarId={entry.avatarId} nickname={entry.nickname} />
-                <strong>{entry.nickname}</strong>
+                <PlayerAvatar avatarId={entry.avatarId} matricola={entry.matricola} />
+                <button type="button" className="leaderboard-profile-link" onClick={() => onOpenProfile(entry.id)}>{entry.matricola}</button>
                 {entry.id === currentIdentityId && <span className="leaderboard-you-tag">TU</span>}
               </div>
             </td>
             <td><AcademyBadge academy={entry.academy} /></td>
             <td><strong>{entry.points.toLocaleString('it-IT')}</strong></td>
-            <td>{entry.examPoints.toLocaleString('it-IT')}</td>
             <td>{entry.completedPokemon.toLocaleString('it-IT')}/1025</td>
           </tr>
         ))}</tbody>
@@ -115,10 +116,10 @@ function LocalProgressPanel({ progress, onConnect }: { progress: SavedProgress; 
       <div className="leaderboard-connect-content">
         <span className="leaderboard-section-label">CLASSIFICA CONDIVISA</span>
         <h2>Collega la tua identità community</h2>
-        <p>La graduatoria globale usa identità verificate. I progressi locali non vengono pubblicati né associati a un nickname senza collegare un account community.</p>
+        <p>Collega l’identità online per entrare in classifica.</p>
         <div className="leaderboard-local-stats">
           <div><span>I TUOI PUNTI POKÉ</span><strong>{progress.points.toLocaleString('it-IT')}</strong></div>
-          <div><span>PUNTI ESAME</span><strong>{progress.examPoints.toLocaleString('it-IT')}</strong></div>
+          <div><span>AIUTI SBLOCCATI</span><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong></div>
           <div><span>POKÉMON CATALOGATI</span><strong>{progress.completedIds.length}/1025</strong></div>
         </div>
         <button type="button" className="leaderboard-primary-button" onClick={onConnect}>Vai al profilo <span aria-hidden="true">›</span></button>
@@ -128,7 +129,7 @@ function LocalProgressPanel({ progress, onConnect }: { progress: SavedProgress; 
 }
 
 export default function Leaderboard({
-  academy, academyName: currentAcademyName, communityIdentity, communityConfigured, progress, onConnect,
+  academy, academyName: currentAcademyName, communityIdentity, communityConfigured, progress, onConnect, onOpenPublicProfile,
 }: LeaderboardProps) {
   const [entries, setEntries] = useState<CommunityRankingEntry[]>([]);
   const [totalPlayers, setTotalPlayers] = useState(0);
@@ -137,6 +138,8 @@ export default function Leaderboard({
   const [academyFilter, setAcademyFilter] = useState<AcademyFilter>('tutte');
   const [query, setQuery] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [academicPoints, setAcademicPoints] = useState<AcademyPointsSummary | null>(null);
+  const [academicPointsError, setAcademicPointsError] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -163,11 +166,31 @@ export default function Leaderboard({
     return () => { active = false; };
   }, [communityIdentity, communityConfigured, refreshKey]);
 
+  useEffect(() => {
+    let active = true;
+    if (!communityIdentity || !communityConfigured) {
+      setAcademicPoints(null);
+      setAcademicPointsError('');
+      return () => { active = false; };
+    }
+    loadAcademyCurriculum()
+      .then(data => {
+        if (active) {
+          setAcademicPoints(data.points);
+          setAcademicPointsError('');
+        }
+      })
+      .catch(reason => {
+        if (active) setAcademicPointsError(reason instanceof Error ? reason.message : 'Punteggio delle accademie non disponibile.');
+      });
+    return () => { active = false; };
+  }, [communityIdentity, communityConfigured, refreshKey]);
+
   const filteredEntries = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('it');
     return entries.filter(entry =>
       (academyFilter === 'tutte' || entry.academy === academyFilter)
-      && (!normalizedQuery || entry.nickname.toLocaleLowerCase('it').includes(normalizedQuery))
+      && (!normalizedQuery || entry.matricola.toLocaleLowerCase('it').includes(normalizedQuery))
     );
   }, [entries, academyFilter, query]);
 
@@ -177,13 +200,13 @@ export default function Leaderboard({
 
   return (
     <div className={`leaderboard-page academy-theme-${academy}`}>
-      <div className="breadcrumb">Home / Comunità / <b>Classifica globale</b></div>
+      <div className="breadcrumb">Home / Comunità / <b>Classifica</b></div>
 
       <header className="leaderboard-hero">
         <div className="leaderboard-hero-copy">
-          <span className="leaderboard-eyebrow"><Trophy size={14} aria-hidden="true" /> PORTALE UFFICIALE · CLASSIFICHE</span>
-          <h1>Classifica globale</h1>
-          <p>Confronta i progressi degli allievi e scopri chi guida il Pokédex Nazionale.</p>
+          <span className="leaderboard-eyebrow"><Trophy size={14} aria-hidden="true" /> AREA COMPETITIVA</span>
+          <h1>Classifica</h1>
+          <p>Confronta i progressi degli allievi e il punteggio accademico dei campus.</p>
           <div className="leaderboard-hero-tags">
             <span><ShieldCheck size={14} aria-hidden="true" /> Identità verificate</span>
             <span><Users size={14} aria-hidden="true" /> Graduatoria online</span>
@@ -195,6 +218,35 @@ export default function Leaderboard({
           <small>ANNO ACCADEMICO 2026/27</small>
         </div>
       </header>
+
+      <section className="leaderboard-academy-ranking" aria-labelledby="leaderboard-academy-title">
+        <div className="leaderboard-academy-ranking-heading">
+          <div>
+            <span className="leaderboard-section-label">PUNTEGGIO ACCADEMICO</span>
+            <h2 id="leaderboard-academy-title">Classifica dei campus</h2>
+            <p>I punti assegnati alle prove degli studenti contribuiscono al totale della propria accademia.</p>
+          </div>
+          {academicPoints && <div className="leaderboard-academy-balance"><span>I TUOI PUNTI</span><strong>{academicPoints.studentPoints.toLocaleString('it-IT')}</strong></div>}
+        </div>
+        {!communityIdentity
+          ? <div className="leaderboard-academy-state"><GraduationCap size={19} aria-hidden="true" /><span>Collega il profilo online per visualizzare la graduatoria dei campus.</span></div>
+          : !communityConfigured
+            ? <div className="leaderboard-academy-state"><WifiOff size={19} aria-hidden="true" /><span>Il servizio accademico online non è configurato.</span></div>
+            : academicPointsError
+              ? <div className="leaderboard-academy-state leaderboard-academy-state-error"><AlertCircle size={19} aria-hidden="true" /><span>{academicPointsError}</span></div>
+              : !academicPoints
+                ? <div className="leaderboard-academy-state" role="status"><RefreshCw size={18} className="leaderboard-spinning" aria-hidden="true" /><span>Caricamento della graduatoria dei campus…</span></div>
+                : <ol className="leaderboard-academy-list">
+                    {academicPoints.campusRanking.map((campus, index) => (
+                      <li key={campus.academy} className={academicPoints.studentAcademy === campus.academy ? 'is-own-campus' : ''}>
+                        <span className="leaderboard-academy-rank">{index + 1}</span>
+                        <img src={crestUrl(campus.academy)} alt="" loading="lazy" />
+                        <span className="leaderboard-academy-name">{campus.title}{academicPoints.studentAcademy === campus.academy && <small>IL TUO CAMPUS</small>}</span>
+                        <strong>{campus.points.toLocaleString('it-IT')} <small>PA</small></strong>
+                      </li>
+                    ))}
+                  </ol>}
+      </section>
 
       {!communityIdentity ? (
         <LocalProgressPanel progress={progress} onConnect={onConnect} />
@@ -209,30 +261,29 @@ export default function Leaderboard({
             <article className="leaderboard-stat-card"><span><Users size={15} aria-hidden="true" /> ALLIEVI REGISTRATI</span><strong>{totalPlayers.toLocaleString('it-IT')}</strong><small>Identità community</small></article>
             <article className="leaderboard-stat-card"><span><Trophy size={15} aria-hidden="true" /> IL TUO POSIZIONAMENTO</span><strong>{currentEntry ? `#${currentEntry.rank}` : '—'}</strong><small>{currentEntry ? `su ${totalPlayers} allievi` : 'In attesa di sincronizzazione'}</small></article>
             <article className="leaderboard-stat-card"><span><Medal size={15} aria-hidden="true" /> I TUOI PUNTI POKÉ</span><strong>{currentEntry?.points.toLocaleString('it-IT') ?? progress.points.toLocaleString('it-IT')}</strong><small>{currentEntry?.completedPokemon ?? progress.completedIds.length} Pokémon catalogati</small></article>
-            <article className="leaderboard-stat-card"><span><GraduationCap size={15} aria-hidden="true" /> PUNTI ESAME</span><strong>{currentEntry?.examPoints.toLocaleString('it-IT') ?? progress.examPoints.toLocaleString('it-IT')}</strong><small>Ricompense didattiche</small></article>
+            <article className="leaderboard-stat-card"><span><GraduationCap size={15} aria-hidden="true" /> AIUTI SBLOCCATI</span><strong>{(progress.inventory ?? []).length.toLocaleString('it-IT')}</strong><small>Strumenti e archivi</small></article>
           </section>
 
-          <section className="leaderboard-content-panel">
+          <section className="leaderboard-content-panel" aria-labelledby="leaderboard-students-title">
             <div className="leaderboard-section-heading">
-              <div><span className="leaderboard-section-label">GRADUATORIA UFFICIALE</span><h2>Allievi in classifica</h2><p>Ordinamento per Punti Poké, punti esame e Pokémon catalogati.</p></div>
+              <div><span className="leaderboard-section-label">CLASSIFICA GLOBALE</span><h2 id="leaderboard-students-title">Graduatoria degli allievi</h2><p>Ordina e confronta i risultati della community.</p></div>
               <button type="button" className="leaderboard-refresh-button" onClick={() => setRefreshKey(value => value + 1)} disabled={loading} aria-label="Aggiorna classifica">
                 <RefreshCw size={15} className={loading ? 'leaderboard-spinning' : ''} aria-hidden="true" /> <span>Aggiorna</span>
               </button>
             </div>
 
-            <div className="leaderboard-filters">
-              <label className="leaderboard-search"><Search size={16} aria-hidden="true" /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca nickname…" aria-label="Cerca nickname" /></label>
-              <label className="leaderboard-academy-filter"><span>Accademia</span><select value={academyFilter} onChange={event => setAcademyFilter(event.target.value as AcademyFilter)}>{ACADEMIES.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+            <div className="leaderboard-filters" aria-label="Filtri della classifica">
+              <label className="leaderboard-search"><Search size={16} aria-hidden="true" /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Cerca matricola…" aria-label="Cerca matricola" /></label>
+              <label className="leaderboard-academy-filter"><span>Filtra per campus</span><select value={academyFilter} onChange={event => setAcademyFilter(event.target.value as AcademyFilter)}>{ACADEMIES.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
             </div>
 
             {loading && <div className="leaderboard-message" role="status"><RefreshCw size={20} className="leaderboard-spinning" aria-hidden="true" /><span>Caricamento della graduatoria online…</span></div>}
             {error && <div className="leaderboard-message leaderboard-message-error" role="alert"><AlertCircle size={20} aria-hidden="true" /><div><strong>Classifica non disponibile</strong><p>{error}</p><button type="button" onClick={() => setRefreshKey(value => value + 1)}>Riprova</button></div></div>}
 
-            {!loading && !error && podium.length > 0 && <div className="leaderboard-podium" aria-label="Podio dei primi classificati">{podium.map((entry, index) => <PodiumCard key={entry.id} entry={entry} position={index + 1} isCurrent={entry.id === communityIdentity.id} />)}</div>}
-            {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} />}
-            {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Modifica la ricerca o seleziona un'altra accademia.</p></div>}
+            {!loading && !error && podium.length > 0 && <div className="leaderboard-podium" aria-label="Podio dei primi classificati">{podium.map((entry, index) => <PodiumCard key={entry.id} entry={entry} position={index + 1} isCurrent={entry.id === communityIdentity.id} onOpenProfile={onOpenPublicProfile} />)}</div>}
+            {!loading && !error && filteredEntries.length > 0 && <RankingTable entries={filteredEntries} currentIdentityId={communityIdentity.id} onOpenProfile={onOpenPublicProfile} />}
+            {!loading && !error && filteredEntries.length === 0 && <div className="leaderboard-empty"><Search size={25} aria-hidden="true" /><strong>Nessun allievo trovato</strong><p>Prova un’altra ricerca.</p></div>}
 
-            <p className="leaderboard-footnote">La graduatoria mostra nickname, accademia e progressi di gioco. Matricole e credenziali restano riservate.</p>
           </section>
 
           <section className="leaderboard-total-progress"><div><strong>{completedPokemonTotal.toLocaleString('it-IT')}</strong><span>Pokémon catalogati complessivamente</span></div><span className="leaderboard-total-progress-mark">POKÉDEX NAZIONALE · 1025</span></section>

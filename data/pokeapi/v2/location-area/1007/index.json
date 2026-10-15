@@ -1,0 +1,12 @@
+{
+  "id": 1007,
+  "name": "sands-reach-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sands-reach",
+    "url": "/api/v2/location/1013/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1034,
+  "name": "worn-bridge-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "worn-bridge",
+    "url": "/api/v2/location/1040/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

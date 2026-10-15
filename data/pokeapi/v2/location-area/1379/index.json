@@ -1,0 +1,56 @@
+{
+  "id": 1379,
+  "name": "distortion-world-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "distortion-world",
+    "url": "/api/v2/location/219/"
+  },
+  "names": [
+    {
+      "name": "Distortion World",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Monde Distorsion",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "giratina-altered",
+        "url": "/api/v2/pokemon/487/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

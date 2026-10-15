@@ -1,0 +1,12 @@
+{
+  "id": 974,
+  "name": "floaro-gardens-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "floaro-gardens",
+    "url": "/api/v2/location/980/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

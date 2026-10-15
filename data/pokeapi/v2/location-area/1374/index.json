@@ -1,0 +1,86 @@
+{
+  "id": 1374,
+  "name": "turffield-gym",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "turffield",
+    "url": "/api/v2/location/945/"
+  },
+  "names": [
+    {
+      "name": "Turffield (Gym)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Greenbury (Arène)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "meowth",
+        "url": "/api/v2/pokemon/52/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 18,
+              "max_level": 18,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-meowth-galar",
+                  "url": "/api/v2/encounter-condition-value/229/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 18,
+              "max_level": 18,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-meowth-galar",
+                  "url": "/api/v2/encounter-condition-value/229/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

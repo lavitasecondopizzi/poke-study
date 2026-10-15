@@ -1,0 +1,17 @@
+{
+  "id": 327,
+  "name": "other-regirock-regice-registeel-regieleki-regidrago-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have Regirock, Regice, Registeel, Regieleki, and Regidrago in the party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

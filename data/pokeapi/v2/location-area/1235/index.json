@@ -1,0 +1,224 @@
+{
+  "id": 1235,
+  "name": "shadow-pokemon-lab-bf2",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "shadow-pokemon-lab",
+    "url": "/api/v2/location/1098/"
+  },
+  "names": [
+    {
+      "name": "Shadow Pokémon Lab B2F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Laboratoire de Pokémon Obscurs (2e sous-sol)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "bayleef",
+        "url": "/api/v2/pokemon/153/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "quilava",
+        "url": "/api/v2/pokemon/156/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "croconaw",
+        "url": "/api/v2/pokemon/159/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "ariados",
+        "url": "/api/v2/pokemon/168/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 43,
+              "max_level": 43,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "forretress",
+        "url": "/api/v2/pokemon/205/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 43,
+              "max_level": 43,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "granbull",
+        "url": "/api/v2/pokemon/210/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 43,
+              "max_level": 43,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "raikou",
+        "url": "/api/v2/pokemon/243/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

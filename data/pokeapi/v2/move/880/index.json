@@ -1,0 +1,160 @@
+{
+  "id": 880,
+  "name": "shed-tail",
+  "accuracy": null,
+  "effect_chance": null,
+  "pp": 10,
+  "priority": 0,
+  "power": 0,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "status",
+    "url": "/api/v2/move-damage-class/1/"
+  },
+  "effect_entries": [],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "meta": null,
+  "names": [
+    {
+      "name": "しっぽきり",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "꼬리자르기",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "斷尾",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Queulonage",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Schwanzabwurf",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Autotomía",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Tagliacoda",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Shed Tail",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "しっぽきり",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "断尾",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Autotomía",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "user",
+    "url": "/api/v2/move-target/7/"
+  },
+  "type": {
+    "name": "normal",
+    "url": "/api/v2/type/1/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Le lanceur crée un clone en sacrifiant des PV, puis il revient et échange sa place avec un Pokémon de l'équipe prêt à combattre.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The user creates a substitute for itself using its own HP before switching places with a party Pokémon in waiting.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "sceptile",
+      "url": "/api/v2/pokemon/254/"
+    },
+    {
+      "name": "heliolisk",
+      "url": "/api/v2/pokemon/695/"
+    },
+    {
+      "name": "cyclizar",
+      "url": "/api/v2/pokemon/967/"
+    },
+    {
+      "name": "orthworm",
+      "url": "/api/v2/pokemon/968/"
+    },
+    {
+      "name": "sceptile-mega",
+      "url": "/api/v2/pokemon/10065/"
+    }
+  ]
+}

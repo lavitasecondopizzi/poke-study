@@ -1,0 +1,17 @@
+{
+  "id": 341,
+  "name": "max-den-rating-4-star",
+  "condition": {
+    "name": "max-den-rating",
+    "url": "/api/v2/encounter-condition/28/"
+  },
+  "names": [
+    {
+      "name": "Start a max raid with a difficulty of 4 stars.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

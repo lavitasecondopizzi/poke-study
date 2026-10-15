@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "region": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "/schema/v2/named_api_resource.json"
+        }
+      ]
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/name.json"
+      }
+    },
+    "game_indices": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/generation_game_index.json"
+      }
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/named_api_resource.json"
+      }
+    }
+  },
+  "required": [
+    "areas",
+    "game_indices",
+    "id",
+    "name",
+    "names",
+    "region"
+  ]
+}

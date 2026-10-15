@@ -1,0 +1,106 @@
+{
+  "id": 746,
+  "name": "wela-volcano-park",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "ヴェラかざんこうえん",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "벨라화산공원",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "維拉火山公園",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Parc Volcanique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Wela-Vulkanpark",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Área Volcánica Wela",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Parco Vulcano Wela",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Wela Volcano Park",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ヴェラ火山公園",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "维拉火山公园",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Área Volcánica Wela",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 82,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "wela-volcano-park-area",
+      "url": "/api/v2/location-area/1156/"
+    },
+    {
+      "name": "wela-volcano-park-totems-den",
+      "url": "/api/v2/location-area/1157/"
+    }
+  ]
+}

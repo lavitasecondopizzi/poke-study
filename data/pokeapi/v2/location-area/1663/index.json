@@ -1,0 +1,111 @@
+{
+  "id": 1663,
+  "name": "sinnoh-sea-route-226-island-house",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sinnoh-sea-route-226",
+    "url": "/api/v2/location/63/"
+  },
+  "names": [
+    {
+      "name": "Route 226 (Island House)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 226 (Maison sur l'Île)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "magikarp",
+        "url": "/api/v2/pokemon/129/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "diamond",
+            "url": "/api/v2/version/12/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-finneon",
+                  "url": "/api/v2/encounter-condition-value/358/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "pearl",
+            "url": "/api/v2/version/13/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-finneon",
+                  "url": "/api/v2/encounter-condition-value/358/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "platinum",
+            "url": "/api/v2/version/14/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-finneon",
+                  "url": "/api/v2/encounter-condition-value/358/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

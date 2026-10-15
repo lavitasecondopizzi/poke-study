@@ -1,0 +1,41 @@
+{
+  "id": 806,
+  "name": "three-island",
+  "region": {
+    "name": "kanto",
+    "url": "/api/v2/region/1/"
+  },
+  "names": [
+    {
+      "name": "Île 3",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Eiland Drei",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Three Island",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 145,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "areas": []
+}

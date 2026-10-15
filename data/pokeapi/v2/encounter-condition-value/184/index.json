@@ -1,0 +1,17 @@
+{
+  "id": 184,
+  "name": "great-marsh-daily-slot-3-of-32",
+  "condition": {
+    "name": "great-marsh-daily-slot",
+    "url": "/api/v2/encounter-condition/18/"
+  },
+  "names": [
+    {
+      "name": "Great Marsh Daily Chance: 3 in 32",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

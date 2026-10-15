@@ -1,0 +1,88 @@
+{
+  "id": 590,
+  "name": "aquacorde-town",
+  "region": {
+    "name": "kalos",
+    "url": "/api/v2/region/6/"
+  },
+  "names": [
+    {
+      "name": "メイスイタウン",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "수미마을",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Quarellis",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Aquarellia",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pueblo Acuarela",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Rio Acquerello",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Aquacorde Town",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "メイスイタウン",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Pueblo Acuarela",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 10,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "aquacorde-town-area",
+      "url": "/api/v2/location-area/778/"
+    }
+  ]
+}

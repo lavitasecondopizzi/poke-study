@@ -1,0 +1,17 @@
+{
+  "id": 190,
+  "name": "honey-tree-group-b",
+  "condition": {
+    "name": "honey-tree-group",
+    "url": "/api/v2/encounter-condition/19/"
+  },
+  "names": [
+    {
+      "name": "Honey Tree Group B (20% on normal trees / 70% on Munchlax trees)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

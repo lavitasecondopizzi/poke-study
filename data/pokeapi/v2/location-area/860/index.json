@@ -1,0 +1,27 @@
+{
+  "id": 860,
+  "name": "ballonlea-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ballonlea",
+    "url": "/api/v2/location/880/"
+  },
+  "names": [
+    {
+      "name": "Ballonlea",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Corrifey",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

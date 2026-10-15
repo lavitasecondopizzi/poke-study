@@ -1,0 +1,27 @@
+{
+  "id": 934,
+  "name": "tower-of-darkness-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "tower-of-darkness",
+    "url": "/api/v2/location/941/"
+  },
+  "names": [
+    {
+      "name": "Tower of Darkness",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Tour des Ténèbres",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

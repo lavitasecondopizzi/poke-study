@@ -1,0 +1,83 @@
+{
+  "id": 828,
+  "name": "embedded-tower-rayquaza-room",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "embedded-tower",
+    "url": "/api/v2/location/248/"
+  },
+  "names": [
+    {
+      "name": "Embedded Tower (Rayquaza’s room)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Felsenherzturm (Rayquazas Raum)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Tour Enfouie (salle de Rayquaza)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "rayquaza",
+        "url": "/api/v2/pokemon/384/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

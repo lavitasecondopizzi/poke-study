@@ -1,0 +1,12 @@
+{
+  "id": 1026,
+  "name": "hisui-turnback-cave-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-turnback-cave",
+    "url": "/api/v2/location/1032/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

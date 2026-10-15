@@ -1,0 +1,17 @@
+{
+  "id": 271,
+  "name": "johto-safari-blocks-forest-min-3",
+  "condition": {
+    "name": "johto-safari-blocks",
+    "url": "/api/v2/encounter-condition/26/"
+  },
+  "names": [
+    {
+      "name": "At least 3 Forest block points placed",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

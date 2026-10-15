@@ -1,0 +1,12 @@
+{
+  "id": 971,
+  "name": "droning-meadow-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "droning-meadow",
+    "url": "/api/v2/location/977/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

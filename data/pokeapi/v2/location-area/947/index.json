@@ -1,0 +1,12 @@
+{
+  "id": 947,
+  "name": "ancient-quarry-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ancient-quarry",
+    "url": "/api/v2/location/953/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

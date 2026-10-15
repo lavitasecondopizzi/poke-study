@@ -1,0 +1,12 @@
+{
+  "id": 951,
+  "name": "avaluggs-legacy-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "avaluggs-legacy",
+    "url": "/api/v2/location/957/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

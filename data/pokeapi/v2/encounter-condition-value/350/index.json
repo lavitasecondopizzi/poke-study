@@ -1,0 +1,17 @@
+{
+  "id": 350,
+  "name": "trash-can-type-daily",
+  "condition": {
+    "name": "trash-can-type",
+    "url": "/api/v2/encounter-condition/30/"
+  },
+  "names": [
+    {
+      "name": "Interact with a Shaking Trash Can (Daily)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

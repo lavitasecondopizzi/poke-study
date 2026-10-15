@@ -1,0 +1,140 @@
+{
+  "id": 1284,
+  "name": "citadark-isle-1f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "citadark-isle",
+    "url": "/api/v2/location/1112/"
+  },
+  "names": [
+    {
+      "name": "Citadark Isle 1F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Île Ténébra (RdC)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "raticate",
+        "url": "/api/v2/pokemon/20/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 34,
+              "max_level": 34,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "farfetchd",
+        "url": "/api/v2/pokemon/83/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 36,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "dodrio",
+        "url": "/api/v2/pokemon/85/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 34,
+              "max_level": 34,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "altaria",
+        "url": "/api/v2/pokemon/334/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 36,
+              "max_level": 36,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

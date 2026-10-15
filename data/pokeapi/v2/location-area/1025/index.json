@@ -1,0 +1,12 @@
+{
+  "id": 1025,
+  "name": "tranquility-cove-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "tranquility-cove",
+    "url": "/api/v2/location/1031/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

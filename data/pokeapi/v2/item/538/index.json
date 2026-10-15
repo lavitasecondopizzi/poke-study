@@ -1,0 +1,131 @@
+{
+  "id": 538,
+  "name": "rm-1-key",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "plot-advancement",
+    "url": "/api/v2/item-category/22/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Déverouille la salle 1 du Épave.",
+      "short_effect": "Dévérouille la salle 1 du Lavandia Sea.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Unlocks room 1 on the Abandoned Ship.",
+      "short_effect": "Unlocks room 1 on the Abandoned Ship.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "text": "A key that opens a\ndoor inside the\nABANDONED SHIP.",
+      "version_group": {
+        "name": "ruby-sapphire",
+        "url": "/api/v2/version-group/5/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A key that opens a\ndoor inside the\nABANDONED SHIP.",
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A key that opens the door to Room\n1 inside the ABANDONED SHIP.\nIt is old and looks easily broken.",
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 281,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "１ごうしつのカギ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Clé Salle 1",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "K1-Schlüssel",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Ll. Cabina 1",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Chiave Cab.1",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Rm. 1 Key",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Ll. Cabina 1",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rm-1-key.png"
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

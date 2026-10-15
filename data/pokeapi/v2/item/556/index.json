@@ -1,0 +1,120 @@
+{
+  "id": 556,
+  "name": "mysticticket",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "event-items",
+    "url": "/api/v2/item-category/20/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Donne accès au Roc Nombri, Ho-Oh, and Lugia.",
+      "short_effect": "Permet d'accéder au Roc Nombri et Lugia ou Ho-oh.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Provides access to Navel Rock, Ho-Oh, and Lugia.",
+      "short_effect": "Allows access to Navel Rock and Lugia or Ho-oh.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "text": "A ticket required\nto board the ship\nto NAVEL ROCK.",
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A ticket required to board the ship\nto NAVEL ROCK.\nIt glows with a mystic light.",
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 370,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "しんぴのチケット",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Ticketmystik",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Geheimticket",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Misti-Ticket",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Bigl. Magico",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "MysticTicket",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Misti-Ticket",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/mysticticket.png"
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

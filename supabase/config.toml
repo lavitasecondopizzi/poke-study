@@ -2,3 +2,8 @@
 # This endpoint validates Poké Study's own private account token for writes.
 # Do not put the Supabase service-role key in the frontend.
 verify_jwt = false
+
+[functions.academy]
+# Validates the existing private account token in the request body.
+# Never expose the service-role key to the browser.
+verify_jwt = false

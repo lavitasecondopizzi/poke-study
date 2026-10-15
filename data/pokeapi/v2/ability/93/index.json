@@ -1,0 +1,1128 @@
+{
+  "id": 93,
+  "name": "hydration",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-iv",
+    "url": "/api/v2/generation/4/"
+  },
+  "names": [
+    {
+      "name": "うるおいボディ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "촉촉바디",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "濕潤之軀",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Hydratation",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Hydration",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Hidratación",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Idratazione",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Hydration",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "うるおいボディ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "湿润之躯",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Hidratación",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Ce Pokémon est soigné de n'importe quelle altération majeure de statut après chaque tour sous pluie.",
+      "short_effect": "Soigne n'importe quelle altération majeure de statut après chaque tour sous pluie.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Pokémon mit dieser Fähigkeit werden am Ende jeder Runde von Primäre Statusveränderungen geheilt wenn es regnet.",
+      "short_effect": "Heilt jede Runde eine Primäre Statusveränderungen wenn es regnet.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "effect": "This Pokémon is cured of any major status ailment after each turn during rain.",
+      "short_effect": "Cures any major status ailment after each turn during rain.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "diamond-pearl",
+        "url": "/api/v2/version-group/8/"
+      }
+    },
+    {
+      "flavor_text": "Heals status problems if\nit is raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "diamond-pearl",
+        "url": "/api/v2/version-group/8/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "platinum",
+        "url": "/api/v2/version-group/9/"
+      }
+    },
+    {
+      "flavor_text": "Heals status problems if\nit is raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "platinum",
+        "url": "/api/v2/version-group/9/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "heartgold-soulsilver",
+        "url": "/api/v2/version-group/10/"
+      }
+    },
+    {
+      "flavor_text": "Heals status problems if\nit is raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "heartgold-soulsilver",
+        "url": "/api/v2/version-group/10/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "Heals status problems if\nit is raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "xd",
+        "url": "/api/v2/version-group/13/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "black-2-white-2",
+        "url": "/api/v2/version-group/14/"
+      }
+    },
+    {
+      "flavor_text": "Heals status problems if\nit is raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-2-white-2",
+        "url": "/api/v2/version-group/14/"
+      }
+    },
+    {
+      "flavor_text": "じょうたい　いじょうが\nあめの　とき　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "비가 오면\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon quand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si\nestá lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Cura i problemi di stato se piove.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if\nit’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "状態異常が\n雨の　とき　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si\nestá lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "じょうたい　いじょうが\nあめの　とき　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "비가 오면\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les problèmes de statut s'il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si\nestá lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Cura i problemi di stato se piove.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if\nit’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "状態異常が\n雨の　とき　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si\nestá lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "てんきが　あめのとき\nじょうたい　いじょうが　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "비가 오는 날씨일 때\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "天氣為下雨時，\n會治癒異常狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon quand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Se piove, il Pokémon guarisce dai problemi di stato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if it’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "天気が　雨のとき\n状態異常が　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "下雨天气时，\n异常状态会治愈。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "てんきが　あめのとき\nじょうたい　いじょうが　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "비가 오는 날씨일 때\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "天氣為下雨時，\n會治癒異常狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon quand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Se piove, il Pokémon guarisce dai problemi di stato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if it’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "天気が　雨のとき\n状態異常が　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "下雨天气时，\n异常状态会治愈。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "てんきが　あめのとき\nじょうたい　いじょうが　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "비가 오는 날씨일 때\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "天氣為下雨時，\n會治癒異常狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon\nquand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Se piove, il Pokémon guarisce dai problemi di stato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if it’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "天気が　雨のとき\n状態異常が　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "下雨天气时，\n异常状态会治愈。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "てんきが　あめのとき\nじょうたい　いじょうが　なおる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "비가 오는 날씨일 때\n상태 이상이 회복된다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "天氣為下雨時，\n會治癒異常狀態。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon quand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Heilt bei Regen Statusprobleme.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Se piove, il Pokémon guarisce dai problemi di stato.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Heals status conditions if it’s raining.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "天気が　雨のとき\n状態異常が　治る。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "下雨天气时，\n异常状态会治愈。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cura los problemas de estado si está lloviendo.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Soigne les altérations de statut du Pokémon quand il pleut.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "Cures the Pokémon's status conditions in rain.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "seel",
+        "url": "/api/v2/pokemon/86/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "dewgong",
+        "url": "/api/v2/pokemon/87/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "lapras",
+        "url": "/api/v2/pokemon/131/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "vaporeon",
+        "url": "/api/v2/pokemon/134/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "smoochum",
+        "url": "/api/v2/pokemon/238/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "wingull",
+        "url": "/api/v2/pokemon/278/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "barboach",
+        "url": "/api/v2/pokemon/339/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "whiscash",
+        "url": "/api/v2/pokemon/340/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "gorebyss",
+        "url": "/api/v2/pokemon/368/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "luvdisc",
+        "url": "/api/v2/pokemon/370/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "phione",
+        "url": "/api/v2/pokemon/489/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "manaphy",
+        "url": "/api/v2/pokemon/490/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "tympole",
+        "url": "/api/v2/pokemon/535/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "palpitoad",
+        "url": "/api/v2/pokemon/536/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "ducklett",
+        "url": "/api/v2/pokemon/580/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "swanna",
+        "url": "/api/v2/pokemon/581/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "alomomola",
+        "url": "/api/v2/pokemon/594/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "shelmet",
+        "url": "/api/v2/pokemon/616/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "accelgor",
+        "url": "/api/v2/pokemon/617/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "goomy",
+        "url": "/api/v2/pokemon/704/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "sliggoo",
+        "url": "/api/v2/pokemon/705/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 2,
+      "pokemon": {
+        "name": "goodra",
+        "url": "/api/v2/pokemon/706/"
+      }
+    },
+    {
+      "is_hidden": true,
+      "slot": 3,
+      "pokemon": {
+        "name": "lapras-gmax",
+        "url": "/api/v2/pokemon/10204/"
+      }
+    }
+  ]
+}

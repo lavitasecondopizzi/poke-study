@@ -1,0 +1,156 @@
+{
+  "id": 1295,
+  "name": "pokespot-oasis",
+  "game_index": 0,
+  "encounter_method_rates": [
+    {
+      "encounter_method": {
+        "name": "pokespot",
+        "url": "/api/v2/encounter-method/53/"
+      },
+      "version_details": [
+        {
+          "rate": 90,
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          }
+        }
+      ]
+    }
+  ],
+  "location": {
+    "name": "pokespot",
+    "url": "/api/v2/location/1109/"
+  },
+  "names": [
+    {
+      "name": "Oasis Pokespot",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Poké Place Oasis",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "hoppip",
+        "url": "/api/v2/pokemon/187/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 50,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 20,
+              "chance": 50,
+              "method": {
+                "name": "pokespot",
+                "url": "/api/v2/encounter-method/53/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "phanpy",
+        "url": "/api/v2/pokemon/231/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 35,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 20,
+              "chance": 35,
+              "method": {
+                "name": "pokespot",
+                "url": "/api/v2/encounter-method/53/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "surskit",
+        "url": "/api/v2/pokemon/283/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 20,
+              "chance": 15,
+              "method": {
+                "name": "pokespot",
+                "url": "/api/v2/encounter-method/53/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "nosepass",
+        "url": "/api/v2/pokemon/299/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 26,
+              "max_level": 26,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

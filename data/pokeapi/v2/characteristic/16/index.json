@@ -1,0 +1,95 @@
+{
+  "id": 16,
+  "gene_modulo": 2,
+  "possible_values": [
+    2,
+    7,
+    12,
+    17,
+    22,
+    27
+  ],
+  "highest_stat": {
+    "name": "special-attack",
+    "url": "/api/v2/stat/4/"
+  },
+  "descriptions": [
+    {
+      "description": "ぬけめが　ない",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "description": "빈틈이 없음",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "description": "做事萬無一失",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "description": "Il est très astucieux",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Ist äußerst gerissen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Es muy sagaz",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "description": "È estremamente sagace",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "description": "Thoroughly cunning",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "description": "抜け目が　ない",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "description": "做事万无一失",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "description": "Es muy sagaz",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

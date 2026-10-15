@@ -1,0 +1,34 @@
+{
+  "id": 1179,
+  "name": "sea-mauville-outside",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sea-mauville",
+    "url": "/api/v2/location/693/"
+  },
+  "names": [
+    {
+      "name": "Sea Mauville (Outside)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Seewoge Malvenfroh (außen)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Lavandia Sea (Surface)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

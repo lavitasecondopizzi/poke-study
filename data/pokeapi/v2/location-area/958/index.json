@@ -1,0 +1,12 @@
+{
+  "id": 958,
+  "name": "celestica-ruins-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "celestica-ruins",
+    "url": "/api/v2/location/964/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

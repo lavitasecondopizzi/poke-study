@@ -1,0 +1,41 @@
+{
+  "id": 1058,
+  "name": "apple-hills",
+  "region": {
+    "name": "paldea",
+    "url": "/api/v2/region/10/"
+  },
+  "names": [
+    {
+      "name": "Coteau Pommes",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Apfelhügel",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Apple Hills",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 136,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "areas": []
+}

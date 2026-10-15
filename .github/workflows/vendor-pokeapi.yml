@@ -1,0 +1,89 @@
+name: Import complete PokéAPI database and deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pokeapi-import-and-pages
+  cancel-in-progress: false
+
+jobs:
+  import-build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ github.token }}
+          fetch-depth: 1
+
+      - name: Download complete official static PokéAPI dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/PokeAPI/api-data.git /tmp/pokeapi-api-data
+          test -d /tmp/pokeapi-api-data/data/api/v2
+          test -d /tmp/pokeapi-api-data/data/schema
+          rm -rf data/pokeapi
+          mkdir -p data/pokeapi
+          cp -a /tmp/pokeapi-api-data/data/api/v2 data/pokeapi/v2
+          cp -a /tmp/pokeapi-api-data/data/schema data/pokeapi/schema
+          cp /tmp/pokeapi-api-data/LICENSE.txt data/pokeapi/UPSTREAM-LICENSE.txt
+          cp /tmp/pokeapi-api-data/README.md data/pokeapi/UPSTREAM-README.md
+          {
+            echo '# PokéAPI local snapshot'
+            echo
+            echo '- Source: https://github.com/PokeAPI/api-data'
+            echo "- Source commit: $(git -C /tmp/pokeapi-api-data rev-parse HEAD)"
+            echo "- Imported at (UTC): $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            echo '- Contents: all static JSON resources under data/api/v2 and the upstream JSON schemas.'
+            echo '- Runtime/build: the app builds its small gameplay catalogs from this snapshot; the build does not call PokéAPI.'
+          } > data/pokeapi/SNAPSHOT.md
+
+      - name: Install Node dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --prefer-offline --no-audit --no-fund
+
+      - name: Generate app catalogs from local database
+        run: |
+          node scripts/prepare-items.mjs
+          node scripts/prepare-pokedex.mjs
+
+      - name: Commit full database and generated catalogs to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pokeapi public/data/items.json public/data/pokemon.json
+          if git diff --cached --quiet; then
+            echo "Local PokéAPI snapshot already up to date."
+          else
+            git commit -m "Vendor complete PokéAPI database locally"
+            git push origin HEAD:main
+          fi
+
+      - name: Build app without external API calls
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

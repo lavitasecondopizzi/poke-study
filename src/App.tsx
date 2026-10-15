@@ -1,19 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
+import EvolutionArchive from './EvolutionArchive';
+import FossilArchive from './FossilArchive';
+import EvolutionToolsArchive from './EvolutionToolsArchive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
+import StudentProfilePage from './StudentProfilePage';
+import StudentCard from './StudentCard';
+import PublicStudentProfile from './PublicStudentProfile';
+import AdminPanel from './AdminPanel';
 import Cartoleria from './Cartoleria';
-import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
+import Academy from './Academy';
+import { Bell, Bone, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GitBranch, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
-import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
+import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
 
-type ShopCurrency = 'poke' | 'exam';
+type ShopCurrency = 'poke';
 export type ShopTab = 'oggetti' | 'super-aiuti';
 export type ShopProduct = {
   id: string;
@@ -30,29 +38,31 @@ export type ShopProduct = {
 
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
+const NUMBER_CHECK_LEVELS = 10;
 const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1)))); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'research', name: 'Ricerca', description: 'Rivela la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
   ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(600 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1)))); return { id: `research-upgrade-${level}`, name: `Ricerca · Livello ${level}`, description: `Cooldown della Ricerca: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'research' : `research-upgrade-${level - 1}`], requirementLabel: `Acquista prima Ricerca livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'direct-region', name: 'Inserimento regionale rapido', description: 'Consente di inserire un Pokémon nella sua regione senza scegliere il numero esatto.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'number-check', name: 'Controllo numerazione', description: 'Segnala esclusivamente se un Pokémon è nel numero sbagliato.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'number-check', name: 'Controllo numerazione', description: 'Rivela il numero del Pokédex Nazionale dei Pokémon selezionati. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1)))); return { id: `number-check-upgrade-${level}`, name: `Controllo numerazione · Livello ${level}`, description: `Cooldown del Controllo numerazione: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'number-check' : `number-check-upgrade-${level - 1}`], requirementLabel: `Acquista prima Controllo numerazione livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'auto-sort', name: 'Smistamento automatico', description: 'Inserisci un’entità nella macrocategoria e falla smistare automaticamente nella sottocategoria corretta.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'reveal-name', name: 'Rivelazione del nome', description: 'Mostra il nome dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: 8 }, (_, i) => { const level = i + 1; return { id: `multi-select-${level}`, name: `Selezione multipla · Livello ${level}`, description: `Consente di selezionare fino a ${level + 2} entità contemporaneamente, anche tra pagine diverse.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: level === 1 ? [] : [`multi-select-${level - 1}`], requirementLabel: level === 1 ? 'Nessun requisito aggiuntivo' : `Acquista prima Selezione multipla livello ${level - 1}`, kind: (level === 1 ? 'active' : 'upgrade') as 'active' | 'upgrade' }; }),
   { id: 'subcategory-errors', name: 'Evidenziazione errori', description: 'Evidenzia in rosso solo le entità nella sottocategoria sbagliata. Non controlla la numerazione.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'digital-assistant', name: 'Assistente digitale', description: 'Sblocca un supporto passivo permanente per lo studio.', cost: 2, currency: 'exam', category: 'super-aiuti', kind: 'passive' },
-  { id: 'evolution-archive', name: 'Archivio delle evoluzioni', description: 'Sblocca l’accesso permanente alle informazioni sulle evoluzioni.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'evolution-tools-archive', name: 'Archivio degli strumenti evolutivi', description: 'Sblocca una raccolta dedicata agli strumenti evolutivi.', cost: 3, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'machines-archive', name: 'Archivio MT e tecniche', description: 'Sblocca una raccolta dedicata alle macchine e alle tecniche.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'fossils-archive', name: 'Archivio fossili e reperti', description: 'Sblocca una raccolta dedicata a fossili e reperti.', cost: 4, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca una raccolta dedicata agli strumenti tenuti.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'archive' },
-  { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile. Richiede tutti i 1.025 Pokémon e tutti i livelli di Scanner e Ricerca.', cost: 10, currency: 'exam', category: 'super-aiuti', requires: ['scanner', ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => `scanner-upgrade-${i + 2}`), 'research', ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => `research-upgrade-${i + 2}`)], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista tutti i livelli di Scanner e Ricerca', kind: 'archive' },
-  { id: 'academy-theme', name: 'Tema Accademia', description: 'Sblocca un tema grafico alternativo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
-  { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca un titolo personale da mostrare nel profilo.', cost: 5, currency: 'exam', category: 'super-aiuti', kind: 'cosmetic' },
-  { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
-  { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'exam', category: 'super-aiuti', kind: 'mode' },
+  { id: 'digital-assistant', name: 'Assistente digitale', description: 'Sblocca un supporto passivo permanente per lo studio.', cost: 2, currency: 'poke', category: 'super-aiuti', kind: 'passive' },
+  { id: 'evolution-archive', name: 'Archivio delle evoluzioni', description: 'Sblocca l’accesso permanente alle informazioni sulle evoluzioni.', cost: 3, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
+  { id: 'evolution-tools-archive', name: 'Archivio degli strumenti evolutivi', description: 'Sblocca una raccolta dedicata agli strumenti evolutivi.', cost: 3, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
+  { id: 'machines-archive', name: 'Archivio MT e tecniche', description: 'Sblocca una raccolta dedicata alle macchine e alle tecniche.', cost: 4, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
+  { id: 'fossils-archive', name: 'Archivio fossili e reperti', description: 'Sblocca una raccolta dedicata a fossili e reperti.', cost: 4, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
+  { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca una raccolta dedicata agli strumenti tenuti.', cost: 5, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
+  { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile. Richiede tutti i 1.025 Pokémon e tutti i livelli di Scanner e Ricerca.', cost: 10, currency: 'poke', category: 'super-aiuti', requires: ['scanner', ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => `scanner-upgrade-${i + 2}`), 'research', ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => `research-upgrade-${i + 2}`)], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista tutti i livelli di Scanner e Ricerca', kind: 'archive' },
+  { id: 'academy-theme', name: 'Tema Accademia', description: 'Sblocca un tema grafico alternativo.', cost: 5, currency: 'poke', category: 'super-aiuti', kind: 'cosmetic' },
+  { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca un titolo personale da mostrare nel profilo.', cost: 5, currency: 'poke', category: 'super-aiuti', kind: 'cosmetic' },
+  { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
+  { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
 ];
 function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
   // Il budget complessivo del negozio coincide con tutti i PP ottenibili:
@@ -63,6 +73,10 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'direct-region') return 1;
     if (id === 'reveal-name') return 1;
     if (id === 'number-check') return 2;
+    if (id.startsWith('number-check-upgrade-')) {
+      const level = Number(id.slice(id.lastIndexOf('-') + 1));
+      return 1.5 + (level - 2) * 0.7;
+    }
     if (id === 'subcategory-errors') return 2;
     if (id === 'scanner') return 3;
     if (id === 'reveal-subcategory') return 4;
@@ -80,12 +94,25 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
       const level = Number(id.slice(id.lastIndexOf('-') + 1));
       return 1 + level * 0.45;
     }
-    return 0;
+    if (id === 'digital-assistant') return 3;
+    if (id === 'evolution-archive') return 3;
+    if (id === 'evolution-tools-archive') return 3;
+    if (id === 'machines-archive') return 4;
+    if (id === 'fossils-archive') return 4;
+    if (id === 'held-items-archive') return 5;
+    if (id === 'national-catalog') return 12;
+    if (id === 'academy-theme') return 3;
+    if (id === 'exclusive-title') return 3;
+    if (id === 'timed-training') return 6;
+    if (id === 'custom-challenges') return 8;
+    return 1;
   };
-  const purchasable = SHOP_PRODUCTS.filter(product => product.currency === 'poke');
-  const weights = purchasable.map(weightFor);
+  // Il negozio è ora un catalogo unico: il budget dei PP viene ripartito
+  // fra tutti gli articoli, inclusi aiuti, archivi, cosmetici e potenziamenti.
+  // La somma dei prezzi dell'intero catalogo coincide con i PP ottenibili.
+  const weights = SHOP_PRODUCTS.map(weightFor);
   const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
-  const exactShares = purchasable.map((product, index) => ({
+  const exactShares = SHOP_PRODUCTS.map((product, index) => ({
     id: product.id,
     raw: totalEarnablePoints * weights[index] / weightTotal,
     cost: Math.floor(totalEarnablePoints * weights[index] / weightTotal),
@@ -100,9 +127,10 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
       if (target) target.cost += 1;
     });
   const prices = new Map(exactShares.map(item => [item.id, item.cost]));
-  return SHOP_PRODUCTS.map(product => product.currency === 'poke'
-    ? { ...product, cost: prices.get(product.id) ?? product.cost }
-    : product);
+  return SHOP_PRODUCTS.map(product => ({
+    ...product,
+    cost: prices.get(product.id) ?? 1,
+  }));
 }
 
 function productUnlocked(product: ShopProduct, inventory: string[], completedPokemon: number) {
@@ -164,7 +192,7 @@ const regions = [
 function loadProgress(): SavedProgress {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? [...new Set(saved.completedIds.filter(id => Number.isInteger(id) && id > 0 && id <= NATIONAL_DEX_SIZE))] : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? [...new Set(saved.completedExams.filter(id => typeof id === 'string'))] : [], inventory: Array.isArray(saved.inventory) ? [...new Set(saved.inventory.filter(id => typeof id === 'string'))] : [], completedEntries: Array.isArray(saved.completedEntries) ? [...new Set(saved.completedEntries.filter(id => typeof id === 'string'))] : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {}, errors: Math.max(0, Number(saved.errors) || 0), history: Array.isArray(saved.history) ? saved.history.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.timestamp === 'number').slice(-100) : [] }; }
+    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? [...new Set(saved.completedIds.filter(id => Number.isInteger(id) && id > 0 && id <= NATIONAL_DEX_SIZE))] : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? [...new Set(saved.completedExams.filter(id => typeof id === 'string'))] : [], inventory: Array.isArray(saved.inventory) ? [...new Set(saved.inventory.filter(id => typeof id === 'string'))] : [], completedEntries: Array.isArray(saved.completedEntries) ? [...new Set(saved.completedEntries.filter(id => typeof id === 'string'))] : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {}, errors: Math.max(0, Number(saved.errors) || 0), history: Array.isArray(saved.history) ? saved.history.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.timestamp === 'number').slice(-100) : [], gameState: saved.gameState && typeof saved.gameState === 'object' ? { ...saved.gameState, categoryPlacements: saved.gameState.categoryPlacements && typeof saved.gameState.categoryPlacements === 'object' ? saved.gameState.categoryPlacements : {}, misplacedCards: saved.gameState.misplacedCards && typeof saved.gameState.misplacedCards === 'object' ? saved.gameState.misplacedCards : {}, revealedMacroCategories: saved.gameState.revealedMacroCategories && typeof saved.gameState.revealedMacroCategories === 'object' ? saved.gameState.revealedMacroCategories : {}, revealedSubcategories: saved.gameState.revealedSubcategories && typeof saved.gameState.revealedSubcategories === 'object' ? saved.gameState.revealedSubcategories : {}, revealedPokemonNumbers: saved.gameState.revealedPokemonNumbers && typeof saved.gameState.revealedPokemonNumbers === 'object' ? saved.gameState.revealedPokemonNumbers : {} } : undefined }; }
   } catch { /* storage may be unavailable */ }
   return emptyProgress();
 }
@@ -173,17 +201,13 @@ function emptyProgress(): SavedProgress {
   return { points: 0, completedIds: [], examPoints: 0, completedExams: [], inventory: [], completedEntries: [], abilityCooldowns: {}, errors: 0, history: [] };
 }
 
-function titleCase(name: string) {
-  return name.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
-}
-
 const STARTER_POKEMON_IDS = [1, 4, 7, 152, 155, 158, 252, 255, 258, 387, 390, 393, 495, 498, 501, 650, 653, 656, 722, 725, 728, 810, 813, 816, 906, 909, 912];
 
 function avatarPortraitUrl(id: number) {
   return `${import.meta.env.BASE_URL}images/portraits/${id}.png`;
 }
 
-const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
+const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v2';
 
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
@@ -222,10 +246,11 @@ function PortalDashboard({
   const shortcuts = [
     { id: 'game', title: 'Gioca', description: 'Classifica le carte e guadagna Punti Poké.', icon: <FlaskConical size={21} />, className: 'portal-v2-game' },
     { id: 'pokedex', title: 'Archivio Nazionale', description: archiveUnlocked ? 'Consulta specie, strumenti e materiali.' : 'Accesso riservato: consulta i requisiti per sbloccarlo.', icon: <BookOpen size={21} />, className: 'portal-v2-archive', status: archiveUnlocked ? 'Disponibile' : 'Bloccato' },
+    ...(inventory.includes('evolution-archive') ? [{ id: 'evolutions', title: 'Archivio delle evoluzioni', description: 'Consulta le linee evolutive e le condizioni di evoluzione.', icon: <GitBranch size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
+    ...(inventory.includes('evolution-tools-archive') ? [{ id: 'evolution-tools', title: 'Archivio degli strumenti evolutivi', description: 'Consulta pietre e strumenti usati per far evolvere i Pokémon.', icon: <Sparkles size={21} />, className: 'portal-v2-archive', status: 'Disponibile' }] : []),
     { id: 'registro', title: 'Registro personale', description: 'Rivedi i risultati e il tuo avanzamento.', icon: <Trophy size={21} />, className: 'portal-v2-record' },
-    { id: 'esami', title: 'Esami e prove', description: 'Completa regioni e obiettivi per ottenere Punti esame.', icon: <GraduationCap size={21} />, className: 'portal-v2-exams' },
+    { id: 'academia', title: 'Accademia', description: 'Segui le lezioni, sostieni i test e consulta la pagella.', icon: <BookOpen size={21} />, className: 'portal-v2-academy' },
     { id: 'shop', title: 'Cartoleria', description: 'Acquista strumenti e potenziamenti.', icon: <ShoppingBag size={21} />, className: 'portal-v2-shop', status: availableShopCount > 0 ? availableShopCount + ' disponibili' : undefined },
-    { id: 'profilo', title: 'Profilo allievo', description: 'Gestisci avatar, nickname e matricola.', icon: <GraduationCap size={21} />, className: 'portal-v2-profile' },
   ];
 
   return (
@@ -236,10 +261,9 @@ function PortalDashboard({
         <div className="portal-v2-hero-copy">
           <span className="portal-v2-eyebrow"><GraduationCap size={15} /> AREA PERSONALE · {academyName(academy).toLocaleUpperCase('it-IT')}</span>
           <h1 id="portal-welcome-title">Bentornato, {displayNickname}.</h1>
-          <p>Il tuo percorso di ricerca è pronto. Continua a catalogare Pokémon, completa le prove regionali e usa i tuoi punti per sbloccare nuovi strumenti.</p>
+          <p>Catalogazione, attività accademiche e progressi.</p>
           <div className="portal-v2-actions">
             <button type="button" className="portal-v2-primary" onClick={() => onNavigate('game')}><FlaskConical size={17} /> Continua a giocare <ChevronRight size={17} /></button>
-            <button type="button" className="portal-v2-secondary" onClick={() => onNavigate('esami')}>Vai agli esami</button>
           </div>
         </div>
         <div className="portal-v2-campus-card">
@@ -264,9 +288,9 @@ function PortalDashboard({
           <button type="button" aria-label="Apri la Cartoleria" onClick={() => onNavigate('shop')}><ChevronRight size={18} /></button>
         </article>
         <article className="portal-v2-metric portal-v2-metric-exams">
-          <span className="portal-v2-metric-icon">★</span>
-          <div><small>RISULTATI ACCADEMICI</small><strong>{progress.examPoints.toLocaleString('it-IT')}</strong><span>Punti esame</span></div>
-          <button type="button" aria-label="Apri gli esami" onClick={() => onNavigate('esami')}><ChevronRight size={18} /></button>
+          <span className="portal-v2-metric-icon">✦</span>
+          <div><small>AIUTI SBLOCCATI</small><strong>{inventory.length.toLocaleString('it-IT')}</strong><span>Strumenti e archivi</span></div>
+          <button type="button" aria-label="Apri la Cartoleria" onClick={() => onNavigate('shop')}><ChevronRight size={18} /></button>
         </article>
         <article className="portal-v2-metric portal-v2-metric-catalog">
           <span className="portal-v2-metric-icon"><BookOpen size={21} /></span>
@@ -278,7 +302,7 @@ function PortalDashboard({
       <section className="portal-v2-section" aria-labelledby="portal-shortcuts-title">
         <div className="portal-v2-section-heading">
           <div><span>ACCESSO RAPIDO</span><h2 id="portal-shortcuts-title">Da dove vuoi iniziare?</h2></div>
-          <p>Le aree principali del tuo percorso, sempre a portata di mano.</p>
+          
         </div>
         <div className="portal-v2-shortcut-grid">
           {shortcuts.map(item => (
@@ -300,7 +324,7 @@ function PortalDashboard({
           </div>
           <div className="portal-v2-track portal-v2-main-track"><span style={{ width: percentage + '%' }} /></div>
           <div className="portal-v2-progress-foot"><span>{completed.toLocaleString('it-IT')} specie catalogate</span><span>{remaining.toLocaleString('it-IT')} da scoprire</span></div>
-          <div className="portal-v2-progress-note"><BookOpen size={17} /><p>Ogni collocazione corretta aggiunge Punti Poké. Completa una regione per ottenere un Punto esame.</p></div>
+          <div className="portal-v2-progress-note"><BookOpen size={17} /></div>
         </article>
         <article className="portal-v2-account-card">
           <div className="portal-v2-section-heading"><div><span>STATO ACCOUNT</span><h2>La tua identità</h2></div></div>
@@ -323,15 +347,26 @@ export default function App() {
   const [lessonDeck, setLessonDeck] = useState<CatalogCard[]>([]);
   const [lessonSolved, setLessonSolved] = useState<string[]>([]);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [selectedCardIds, setSelectedCardIds] = useState<string[]>([]);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
-  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>({});
-  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>({});
+  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>(() => progress.gameState?.misplacedCards ?? {});
+  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => progress.gameState?.categoryPlacements ?? {});
   const [lessonReady, setLessonReady] = useState(false);
-  const [gamePage, setGamePage] = useState(0);
-  const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
-  const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(null);
-  const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(null);
-  const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
+  const [gamePage, setGamePage] = useState(() => progress.gameState?.gamePage ?? 0);
+  const [folderPage, setFolderPage] = useState(() => progress.gameState?.folderPage ?? 0);
+  const [mobileFolderTreeOpen, setMobileFolderTreeOpen] = useState(false);
+  const [openMacroId, setOpenMacroId] = useState<MacroId | null>(() => {
+    const value = progress.gameState?.openMacroId;
+    return value === 'pokemon' || value === 'items' || value === 'berries' || value === 'machines' || value === 'special' ? value : null;
+  });
+  const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
+  const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
+  const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
+  const [revealedPokemonNumbers, setRevealedPokemonNumbers] = useState<Record<string, number>>(() => progress.gameState?.revealedPokemonNumbers ?? {});
+  const [researchQuery, setResearchQuery] = useState('');
+  const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
+  const [researchHasSearched, setResearchHasSearched] = useState(false);
+  const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
   const [academy, setAcademy] = useState<string>(() => {
@@ -342,13 +377,27 @@ export default function App() {
   const [nickname, setNickname] = useState('');
   const [enrollmentBusy, setEnrollmentBusy] = useState(false);
   const [enrollmentError, setEnrollmentError] = useState('');
-  const [view, setView] = useState('home');
+  const [view, setView] = useState(() => {
+    try {
+      const savedView = localStorage.getItem('poke-study-current-view');
+      return savedView || 'home';
+    } catch {
+      return 'home';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('poke-study-current-view', view);
+    } catch {
+      // La navigazione continua a funzionare anche se il browser blocca localStorage.
+    }
+  }, [view]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
   const [itemCatalog, setItemCatalog] = useState<ApiNamedResource[]>([]);
   const [itemCatalogLoading, setItemCatalogLoading] = useState(false);
-  const [shopTab, setShopTab] = useState<'oggetti' | 'super-aiuti'>('oggetti');
   const [typeCatalog, setTypeCatalog] = useState<PokemonTypeIndex[]>([]);
   const [typeLoading, setTypeLoading] = useState(false);
   const [notice, setNotice] = useState('');
@@ -368,21 +417,69 @@ export default function App() {
   const [communityReplyDrafts, setCommunityReplyDrafts] = useState<Record<string, string>>({});
   const [communityReplyOpen, setCommunityReplyOpen] = useState<Record<string, boolean>>({});
   const [forumSearch, setForumSearch] = useState('');
-  const [forumCategoryFilter, setForumCategoryFilter] = useState<'tutte' | CommunityCategory>('tutte');
+  const [forumCategoryFilter, setForumCategoryFilter] = useState<'tutte' | 'discussioni' | 'domande' | 'annunci' | 'preferiti'>('tutte');
   const [forumSort, setForumSort] = useState<'recenti' | 'attive'>('recenti');
   const [showThreadComposer, setShowThreadComposer] = useState(false);
+  const [forumFavorites, setForumFavorites] = useState<string[]>([]);
+  const [forumDraftSaved, setForumDraftSaved] = useState(false);
+  const [publicProfileId, setPublicProfileId] = useState<string | null>(null);
   const communityConfigured = isCommunityConfigured();
   const displayNickname = communityIdentity?.nickname ?? student?.nickname ?? 'Allenatore in formazione';
 
   const visibleCommunityThreads = useMemo(() => {
     const query = forumSearch.trim().toLocaleLowerCase('it-IT');
     return communityThreads
-      .filter(thread => forumCategoryFilter === 'tutte' || thread.category === forumCategoryFilter)
-      .filter(thread => !query || [thread.title, thread.body, thread.author?.nickname ?? '', ...(thread.posts ?? []).map(post => post.body), ...(thread.posts ?? []).map(post => post.author?.nickname ?? '')].join(' ').toLocaleLowerCase('it-IT').includes(query))
+      .filter(thread => {
+        if (forumCategoryFilter === 'tutte') return true;
+        if (forumCategoryFilter === 'discussioni') return thread.category === 'generale' || thread.category === 'strategie';
+        if (forumCategoryFilter === 'preferiti') return forumFavorites.includes(thread.id);
+        return thread.category === forumCategoryFilter;
+      })
+      .filter(thread => !query || [thread.title, thread.body, thread.author?.matricola ?? '', ...(thread.posts ?? []).map(post => post.body), ...(thread.posts ?? []).map(post => post.author?.matricola ?? '')].join(' ').toLocaleLowerCase('it-IT').includes(query))
       .sort((a, b) => forumSort === 'attive'
         ? new Date(b.updated_at || b.created_at).getTime() - new Date(a.updated_at || a.created_at).getTime()
         : new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  }, [communityThreads, forumSearch, forumCategoryFilter, forumSort]);
+  }, [communityThreads, forumSearch, forumCategoryFilter, forumSort, forumFavorites]);
+
+  useEffect(() => {
+    if (!communityIdentity) {
+      setForumFavorites([]);
+      return;
+    }
+    const key = `poke-study-forum-favorites-v1-${communityIdentity.id}`;
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) ?? '[]') as unknown;
+      setForumFavorites(Array.isArray(saved) ? saved.filter((id): id is string => typeof id === 'string') : []);
+      const rawDraft = localStorage.getItem(`poke-study-forum-draft-v1-${communityIdentity.id}`);
+      if (rawDraft) {
+        const draft = JSON.parse(rawDraft) as { title?: unknown; body?: unknown; category?: unknown };
+        setCommunityThreadTitle(current => current || (typeof draft.title === 'string' ? draft.title : ''));
+        setCommunityThreadBody(current => current || (typeof draft.body === 'string' ? draft.body : ''));
+        if (draft.category === 'generale' || draft.category === 'domande' || draft.category === 'strategie' || draft.category === 'annunci') {
+          setCommunityThreadCategory(draft.category);
+        }
+        setForumDraftSaved(true);
+      }
+    } catch {
+      setForumFavorites([]);
+    }
+  }, [communityIdentity]);
+
+  useEffect(() => {
+    if (!communityIdentity) return;
+    const key = `poke-study-forum-draft-v1-${communityIdentity.id}`;
+    if (!communityThreadTitle.trim() && !communityThreadBody.trim()) {
+      try { localStorage.removeItem(key); } catch { /* local storage is optional */ }
+      setForumDraftSaved(false);
+      return;
+    }
+    try {
+      localStorage.setItem(key, JSON.stringify({ title: communityThreadTitle, body: communityThreadBody, category: communityThreadCategory, savedAt: new Date().toISOString() }));
+      setForumDraftSaved(true);
+    } catch {
+      setForumDraftSaved(false);
+    }
+  }, [communityIdentity, communityThreadTitle, communityThreadBody, communityThreadCategory]);
 
   useEffect(() => {
     let active = true;
@@ -414,6 +511,7 @@ export default function App() {
             nickname: communityIdentity.nickname,
             matricola: remote.profile.matricola,
             ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+            ...(remote.profile.profileSettings ? { profileSettings: remote.profile.profileSettings } : {}),
           };
           nextProgress = remote.progress;
         } else {
@@ -433,6 +531,15 @@ export default function App() {
         setAcademy(communityIdentity.academy);
         setStudent(nextStudent);
         setProgress(nextProgress);
+        setCategoryPlacements(nextProgress.gameState?.categoryPlacements ?? {});
+        setMisplacedCards(nextProgress.gameState?.misplacedCards ?? {});
+        setOpenMacroId((nextProgress.gameState?.openMacroId as MacroId | null | undefined) ?? null);
+        setOpenSubcategoryId(nextProgress.gameState?.openSubcategoryId ?? null);
+        setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
+        setGamePage(nextProgress.gameState?.gamePage ?? 0);
+        setFolderPage(nextProgress.gameState?.folderPage ?? 0);
+         setRevealedMacroCategories(old => ({ ...(nextProgress.gameState?.revealedMacroCategories ?? {}), ...old }));
+        setRevealedPokemonNumbers(old => ({ ...(nextProgress.gameState?.revealedPokemonNumbers ?? {}), ...old }));
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -507,6 +614,25 @@ export default function App() {
   }, [progress]);
 
   useEffect(() => {
+    if (!lessonReady) return;
+    setProgress(old => {
+      const nextGameState = {
+        categoryPlacements,
+        misplacedCards,
+        openMacroId,
+        openSubcategoryId,
+        openPokemonRegionId,
+        gamePage,
+        folderPage,
+        revealedMacroCategories,
+        revealedPokemonNumbers,
+      };
+      if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
+      return { ...old, gameState: nextGameState };
+    });
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories, revealedPokemonNumbers]);
+
+  useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
     return () => window.clearInterval(timer);
   }, []);
@@ -519,7 +645,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if ((view !== 'shop' && view !== 'pokedex' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
+    if ((view !== 'shop' && view !== 'pokedex' && view !== 'evolutions' && view !== 'fossils' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
     setItemCatalogLoading(true);
@@ -541,11 +667,11 @@ export default function App() {
   }, [view, online]);
 
   useEffect(() => {
-    if (view !== 'esami' || typeCatalog.length) return;
+    if (view !== 'registro' || typeCatalog.length) return;
     let active = true;
     const cacheKey = 'poke-study-api-types-v1';
     try { const cached = localStorage.getItem(cacheKey); if (cached) { setTypeCatalog(JSON.parse(cached) as PokemonTypeIndex[]); return; } } catch { /* ignore broken cache */ }
-    if (!navigator.onLine) { setNotice('Gli esami per tipo richiedono il primo caricamento online.'); return; }
+    if (!navigator.onLine) { setNotice('I progressi per tipo richiedono un primo caricamento online.'); return; }
     setTypeLoading(true);
     fetch('https://pokeapi.co/api/v2/type?limit=30')
       .then(response => { if (!response.ok) throw new Error('API tipi non disponibile'); return response.json(); })
@@ -562,7 +688,6 @@ export default function App() {
     return () => { active = false; };
   }, [view, typeCatalog.length, online]);
 
-  const completedSet = useMemo(() => new Set(progress.completedIds), [progress.completedIds]);
   const lessonTargets = useMemo(() => {
     const targets = new Map<string, { id: string; macroId: string; macroName: string; name: string; total: number; solved: number }>();
     for (const card of lessonDeck) {
@@ -602,7 +727,7 @@ export default function App() {
     () => lessonDeck.filter(card => !lessonSolved.includes(card.id) && !Object.prototype.hasOwnProperty.call(misplacedCards, card.id)),
     [lessonDeck, lessonSolved, misplacedCards],
   );
-  const gamePageSize = 15;
+  const gamePageSize = 25;
   const gamePageCount = Math.max(1, Math.ceil(remainingLessonCards.length / gamePageSize));
   const safeGamePage = Math.min(gamePage, gamePageCount - 1);
   const visibleGameCards = remainingLessonCards.slice(safeGamePage * gamePageSize, safeGamePage * gamePageSize + gamePageSize);
@@ -611,6 +736,30 @@ export default function App() {
   const currentPokemonRegion = openPokemonRegionId ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === openPokemonRegionId) : undefined;
   const currentSubcategory = openSubcategoryId ? lessonTargets.find(target => target.id === openSubcategoryId) : undefined;
   const currentSubcategoryCards = currentSubcategory ? lessonDeck.filter(card => card.subcategoryId === currentSubcategory.id) : [];
+  const activeFolderId = openSubcategoryId ?? openPokemonRegionId ?? openMacroId;
+  const folderAssignedCards = useMemo(() => lessonDeck.filter(card => {
+    const destination = misplacedCards[card.id];
+    if (!destination || lessonSolved.includes(card.id) || !activeFolderId) return false;
+    if (destination === activeFolderId) return true;
+    if (openSubcategoryId && destination.startsWith('category-slot:' + openSubcategoryId + ':')) return true;
+    if (openPokemonRegionId && destination.startsWith('pokemon-slot:')) {
+      const nationalId = Number(destination.slice('pokemon-slot:'.length));
+      return Boolean(currentPokemonRegion && nationalId >= currentPokemonRegion.start && nationalId <= currentPokemonRegion.end);
+    }
+    return false;
+  }), [lessonDeck, misplacedCards, lessonSolved, activeFolderId, openSubcategoryId, openPokemonRegionId, openMacroId, currentPokemonRegion, lessonTargets]);
+  const folderPageSize = 25;
+  const folderPageCount = Math.max(1, Math.ceil(folderAssignedCards.length / folderPageSize));
+  const safeFolderPage = Math.min(folderPage, folderPageCount - 1);
+  const visibleFolderCards = folderAssignedCards.slice(safeFolderPage * folderPageSize, safeFolderPage * folderPageSize + folderPageSize);
+
+  const activeFolderSolvedCount = openSubcategoryId
+    ? (currentSubcategory?.solved ?? 0)
+    : openPokemonRegionId
+      ? (lessonTargets.find(target => target.id === openPokemonRegionId)?.solved ?? 0)
+      : openMacroId
+        ? currentMacroTargets.reduce((sum, target) => sum + target.solved, 0)
+        : lessonSolved.length;
   const macroFolderCounts = MACRO_CATEGORIES.map(category => ({
     ...category,
     total: lessonTargets.filter(target => target.macroId === category.id).reduce((sum, target) => sum + target.total, 0),
@@ -619,10 +768,11 @@ export default function App() {
   useEffect(() => {
     if (gamePage !== safeGamePage) setGamePage(safeGamePage);
   }, [gamePage, safeGamePage]);
-  const visibleAvatars = species.filter(pokemon => STARTER_POKEMON_IDS.includes(pokemon.id));
+  useEffect(() => {
+    if (folderPage !== safeFolderPage) setFolderPage(safeFolderPage);
+  }, [folderPage, safeFolderPage]);
   const currentProfileAvatarId = STARTER_POKEMON_IDS.includes(student?.avatarId ?? -1) ? student?.avatarId : STARTER_POKEMON_IDS[0];
   const inventory = progress.inventory ?? [];
-  const completedExams = progress.completedExams ?? [];
   const shopProducts = useMemo(
     () => priceShopProducts(NATIONAL_DEX_SIZE + itemCatalog.length),
     [itemCatalog.length],
@@ -630,48 +780,111 @@ export default function App() {
   const shopPricingReady = itemCatalog.length > 0;
   const availableShopCount = shopProducts.filter(product => !inventory.includes(product.id)
     && productUnlocked(product, inventory, progress.completedIds.length)
-    && (product.currency !== 'poke' || shopPricingReady)
-    && (product.currency === 'poke' ? progress.points : progress.examPoints) >= product.cost).length;
+    && shopPricingReady
+    && progress.points >= product.cost).length;
 
   useEffect(() => {
     if (lessonReady || species.length === 0 || itemCatalog.length === 0) return;
-    setLessonDeck(createFullCatalog(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []));
-    setLessonSolved([]);
+    const fullDeck = createFullCatalog(species, itemCatalog, [], []);
+    setLessonDeck(fullDeck);
+    setLessonSolved(fullDeck.filter(card => card.kind === 'pokemon'
+      ? progress.completedIds.includes(card.pokemonId ?? -1)
+      : (progress.completedEntries ?? []).includes(card.id)).map(card => card.id));
     setLessonReady(true);
   }, [species, itemCatalog, lessonReady, progress.completedIds, progress.completedEntries]);
 
+  function toggleCardSelection(cardId: string) {
+    const multiLevel = Math.max(0, ...(progress.inventory ?? []).map(id => /^multi-select-([1-8])$/.test(id) ? Number(id.match(/[1-8]$/)?.[0] ?? 0) : 0));
+    const maxSelected = multiLevel > 0 ? multiLevel + 2 : 1;
+    setSelectedCardIds(current => {
+      if (current.includes(cardId)) {
+        const next = current.filter(id => id !== cardId);
+        setSelectedCardId(primary => primary === cardId ? (next[next.length - 1] ?? null) : primary);
+        return next;
+      }
+      if (current.length >= maxSelected) {
+        setMessage(`Puoi selezionare al massimo ${maxSelected} entità con il potenziamento acquistato.`);
+        return current;
+      }
+      setSelectedCardId(cardId);
+      setMessage(maxSelected > 1 ? `Selezionate ${current.length + 1} di ${maxSelected} entità. Seleziona una destinazione per classificare la carta principale; le altre selezioni resteranno attive.` : 'Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.');
+      return [...current, cardId];
+    });
+  }
+
+  function moveCardToFolder(cardId: string, destinationId: string) {
+    if (lessonSolved.includes(cardId)) return;
+    setMisplacedCards(old => ({ ...old, [cardId]: destinationId }));
+    setCategoryPlacements(old => { const next = { ...old }; delete next[cardId]; return next; });
+    setSelectedCardIds(old => old.filter(id => id !== cardId));
+    setSelectedCardId(old => old === cardId ? null : old);
+  }
+
   function placeCard(cardId: string, targetId: string) {
+    // Se la carta è nella selezione multipla, applica la destinazione a tutte.
+    const batchIds = selectedCardIds.includes(cardId) && selectedCardIds.length > 1
+      ? [...selectedCardIds]
+      : [cardId];
+    if (batchIds.length > 1) {
+      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\d+$/)?.[1] ?? targetId;
+      const targetIsSubcategory = lessonTargets.some(target => target.id === targetSubcategoryId);
+      if (targetIsSubcategory) {
+        const capacity = lessonDeck.filter(entry => entry.subcategoryId === targetSubcategoryId).length;
+        const occupied = new Set(Object.entries(categoryPlacements)
+          .filter(([, value]) => value.startsWith('category-slot:' + targetSubcategoryId + ':'))
+          .map(([, value]) => Number(value.split(':').pop())));
+        if (capacity - occupied.size < batchIds.length) {
+          setMessage(`La destinazione non ha abbastanza posizioni libere per tutte le ${batchIds.length} entità selezionate.`);
+          return;
+        }
+      }
+      batchIds.forEach(id => placeSingleCard(id, targetId));
+      return;
+    }
+    placeSingleCard(cardId, targetId);
+  }
+
+  function placeSingleCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const subcategoryTarget = lessonTargets.find(target => target.id === targetId);
-    if (subcategoryTarget) {
-      const slots = lessonDeck.filter(entry => entry.subcategoryId === targetId);
-      const occupied = new Set(Object.values(categoryPlacements)
-        .filter(value => value.startsWith('category-slot:' + targetId + ':'))
-        .map(value => Number(value.split(':').pop())));
-      const firstFree = slots.findIndex((_, index) => !occupied.has(index));
-      if (firstFree >= 0) targetId = 'category-slot:' + targetId + ':' + firstFree;
-    }
+    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\d+)$/);
+    const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
+    const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
+    const rapidRegion = inventory.includes('direct-region')
+      ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === targetId)
+      : undefined;
+    const rapidRegionMatch = rapidRegion && card.kind === 'pokemon' && card.pokemonId !== undefined
+      && card.pokemonId >= rapidRegion.start && card.pokemonId <= rapidRegion.end;
     const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
-    if (categorySlotMatch) setCategoryPlacements(old => {
+    if (subcategoryTarget || categorySlotMatch) setCategoryPlacements(old => {
       const next = { ...old };
-      for (const [existingId, existingTarget] of Object.entries(next)) {
-        if (existingId === cardId || existingTarget === targetId) delete next[existingId];
-      }
-      next[cardId] = targetId;
+      const targetPrefix = 'category-slot:' + requestedSubcategoryId + ':';
+      delete next[cardId];
+      const occupied = new Set(Object.entries(next)
+        .filter(([, value]) => value.startsWith(targetPrefix))
+        .map(([, value]) => Number(value.split(':').pop())));
+      const slots = lessonDeck.filter(entry => entry.subcategoryId === requestedSubcategoryId);
+      const requestedIndex = categorySlotMatch ? Number(categorySlotMatch[2]) : -1;
+      const index = requestedIndex >= 0 && !occupied.has(requestedIndex)
+        ? requestedIndex
+        : slots.findIndex((_, slotIndex) => !occupied.has(slotIndex));
+      if (index >= 0) next[cardId] = targetPrefix + index;
       return next;
     });
     const isCorrect = pokemonSlotMatch
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
-      : card.subcategoryId === targetSubcategoryId;
+      : rapidRegionMatch
+        ? true
+        : card.subcategoryId === targetSubcategoryId;
     if (!isCorrect) {
+      setCategoryPlacements(old => { const next = { ...old }; delete next[cardId]; return next; });
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
-      const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
+      const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : rapidRegion ? rapidRegion.name : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
       const errorTimestamp = Date.now();
       setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error' as const, title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
-      setSelectedCardId(null);
+      setSelectedCardId(cardId);
       setWrongTargetId(inventory.includes('subcategory-errors') ? targetId : null);
       setMessage('');
       return;
@@ -689,25 +902,24 @@ export default function App() {
         const pokemonId = card.pokemonId;
         if (!pokemonId || old.completedIds.includes(pokemonId)) return old;
         const completedIds = [...old.completedIds, pokemonId];
-        const newlyCompletedRegions = regions.filter(region =>
-          !Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => old.completedIds.includes(id))
-          && Array.from({ length: region.end - region.start + 1 }, (_, i) => region.start + i).every(id => completedIds.includes(id)),
-        );
         const timestamp = Date.now();
         const newEvents = [
           { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Pokémon catalogato', detail: `${card.name} · numero nazionale #${pokemonId}` },
-          ...newlyCompletedRegions.map(region => ({ id: `region-${timestamp}-${region.name}`, timestamp, kind: 'exam' as const, title: 'Esame regionale superato', detail: `${region.name} · +1 Punto esame` })),
         ];
-        return { ...old, points: old.points + 1, completedIds, examPoints: old.examPoints + newlyCompletedRegions.length, history: [...(old.history ?? []), ...newEvents].slice(-100) };
+        return { ...old, points: old.points + 1, completedIds, history: [...(old.history ?? []), ...newEvents].slice(-100) };
       }
       const completedEntries = old.completedEntries ?? [];
       if (completedEntries.includes(card.id)) return old;
       const timestamp = Date.now();
       return { ...old, points: old.points + 1, completedEntries: [...completedEntries, card.id], history: [...(old.history ?? []), { id: `catalog-${timestamp}-${card.id}`, timestamp, kind: 'catalog' as const, title: 'Entità classificata', detail: `${card.name} · ${card.subcategoryName}` }].slice(-100) };
     });
-    setSelectedCardId(null);
+    setSelectedCardIds(current => {
+      const next = current.filter(id => id !== cardId);
+      setSelectedCardId(primary => primary === cardId ? (next[next.length - 1] ?? null) : primary);
+      return next;
+    });
     setWrongTargetId(null);
-    setMessage(pokemonSlotMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
+    setMessage(pokemonSlotMatch || rapidRegionMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
   }
 
   function chooseAcademy(next: string) {
@@ -767,6 +979,7 @@ export default function App() {
           nickname: identity.nickname,
           matricola: remote.profile.matricola,
           ...(remote.profile.avatarId ? { avatarId: remote.profile.avatarId } : {}),
+            ...(remote.profile.profileSettings ? { profileSettings: remote.profile.profileSettings } : {}),
         };
         restoredProgress = remote.progress;
       } else {
@@ -811,23 +1024,14 @@ export default function App() {
     setNotice('');
   }
 
-  function claimExam(id: string, reward = 1) {
-    setProgress(old => {
-      const completed = old.completedExams ?? [];
-      if (completed.includes(id)) return old;
-      const timestamp = Date.now();
-      return { ...old, examPoints: old.examPoints + reward, completedExams: [...completed, id], history: [...(old.history ?? []), { id: `exam-${timestamp}-${id}`, timestamp, kind: 'exam' as const, title: 'Ricompensa esame riscattata', detail: `${id} · +${reward} ${reward === 1 ? 'Punto esame' : 'Punti esame'}` }].slice(-100) };
-    });
-    setNotice('Prova completata: ricompensa aggiunta al Registro personale.');
-  }
-
   function resetProgress() {
-    if (!window.confirm('Vuoi azzerare punti, catalogazione, esami, medaglie e storico? Il profilo studente e la matricola resteranno invariati.')) return;
+    if (!window.confirm('Vuoi azzerare punti, catalogazione, risultati, medaglie e storico? Il profilo studente e la matricola resteranno invariati.')) return;
     setProgress(emptyProgress());
     setLessonReady(false);
     setLessonDeck([]);
     setLessonSolved([]);
     setSelectedCardId(null);
+    setSelectedCardIds([]);
     setMisplacedCards({});
     setCategoryPlacements({});
     setWrongTargetId(null);
@@ -842,45 +1046,65 @@ export default function App() {
       setNotice(product.requirementLabel ? `Requisito non soddisfatto: ${product.requirementLabel}.` : 'Questo articolo non è ancora sbloccato.');
       return;
     }
-    const balance = product.currency === 'poke' ? progress.points : progress.examPoints;
-    if (balance < product.cost) { setNotice('Punti insufficienti per questo acquisto.'); return; }
+    if (progress.points < product.cost) { setNotice('Punti Poké insufficienti per questo acquisto.'); return; }
     setProgress(old => {
       const oldInventory = old.inventory ?? [];
-      const oldBalance = product.currency === 'poke' ? old.points : old.examPoints;
-      if (oldInventory.includes(product.id) || oldBalance < product.cost
+      if (oldInventory.includes(product.id) || old.points < product.cost
         || !productUnlocked(product, oldInventory, old.completedIds.length)) return old;
       return {
         ...old,
-        points: product.currency === 'poke' ? old.points - product.cost : old.points,
-        examPoints: product.currency === 'exam' ? old.examPoints - product.cost : old.examPoints,
+        points: old.points - product.cost,
         inventory: [...oldInventory, product.id],
       };
     });
     setNotice(`Acquisto registrato: ${product.name}.`);
   }
 
-  function useAbility(abilityId: 'scanner' | 'research') {
-    if (!selectedCardId) { setNotice('Seleziona prima una carta da analizzare.'); return; }
-    const card = lessonDeck.find(entry => entry.id === selectedCardId);
-    if (!card || lessonSolved.includes(card.id)) { setNotice('Seleziona una carta ancora da classificare.'); return; }
+  function useAbility(abilityId: 'scanner' | 'number-check') {
+    const selectedIds = selectedCardIds.length > 1 ? selectedCardIds : selectedCardId ? [selectedCardId] : [];
+    if (selectedIds.length === 0) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     if (!(progress.inventory ?? []).includes(abilityId)) return;
+    const selectedCards = selectedIds.map(id => lessonDeck.find(entry => entry.id === id))
+      .filter((card): card is CatalogCard => card !== undefined && !lessonSolved.includes(card.id));
+    const cards = abilityId === 'number-check' ? selectedCards.filter(card => card.kind === 'pokemon' && card.pokemonId !== undefined) : selectedCards;
+    if (cards.length === 0) { setNotice(abilityId === 'number-check' ? 'Seleziona almeno un Pokémon ancora da classificare.' : 'Seleziona almeno un’entità ancora da classificare.'); return; }
+    const now = Date.now();
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
-    if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
+    if (until > now) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, now)}.`); return; }
     const currentInventory = progress.inventory ?? [];
-    const scannerLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const researchLevel = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const cooldownMs = abilityId === 'scanner'
-      ? Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (scannerLevel - 1) / (SCANNER_LEVELS - 1))))
-      : Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (researchLevel - 1) / (RESEARCH_LEVELS - 1))));
-    const hint = abilityId === 'scanner'
-      ? `Scanner: questa carta appartiene alla macro categoria “${card.macroName}”.`
-      : `Ricerca: la sottocategoria corretta è “${card.subcategoryName}”.`;
-    setProgress(old => ({
-      ...old,
-      abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: Date.now() + cooldownMs },
-    }));
-    setMessage(hint);
-    setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato. Cooldown: ${cooldownLabel(Date.now() + cooldownMs, Date.now())}.`);
+    if (abilityId === 'scanner') {
+      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+      const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
+      const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.macroName]));
+      setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedMacroCategories: { ...(old.gameState?.revealedMacroCategories ?? {}), ...revealedNow } } }));
+      setRevealedMacroCategories(old => ({ ...old, ...revealedNow }));
+      return;
+    }
+    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('number-check-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1))));
+    const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.pokemonId as number]));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'number-check': now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedPokemonNumbers: { ...(old.gameState?.revealedPokemonNumbers ?? {}), ...revealedNow } } }));
+    setRevealedPokemonNumbers(old => ({ ...old, ...revealedNow }));
+  }
+
+  function handleResearchSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const query = researchQuery.trim().toLocaleLowerCase('it-IT');
+    if (!query || !(progress.inventory ?? []).includes('research')) return;
+    const now = Date.now();
+    if ((progress.abilityCooldowns?.research ?? 0) > now) return;
+    const matches = remainingLessonCards.flatMap((card, index) => {
+      const name = displayName(card.name);
+      return name.toLocaleLowerCase('it-IT').includes(query)
+        ? [{ id: card.id, name, page: Math.floor(index / gamePageSize) + 1 }]
+        : [];
+    });
+    setResearchResults(matches);
+    setResearchHasSearched(true);
+    const currentInventory = progress.inventory ?? [];
+    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1))));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), research: now + cooldownMs } }));
   }
 
   async function downloadCommunityAccount() {
@@ -936,6 +1160,8 @@ export default function App() {
       setCommunityThreadTitle('');
       setCommunityThreadBody('');
       setShowThreadComposer(false);
+      if (communityIdentity) { try { localStorage.removeItem(`poke-study-forum-draft-v1-${communityIdentity.id}`); } catch { /* local storage is optional */ } }
+      setForumDraftSaved(false);
       setCommunityThreads(await listCommunityThreads());
     } catch (error) {
       setCommunityForumError(error instanceof Error ? error.message : 'Non è stato possibile pubblicare la discussione.');
@@ -961,33 +1187,74 @@ export default function App() {
     }
   }
 
-  function saveAvatar(id: number) {
-    if (!student) return;
-    const updated = { ...student, avatarId: id };
+  function updateStudentProfile(updated: StudentProfile) {
     try { localStorage.setItem(STUDENT_KEY, JSON.stringify(updated)); } catch { /* storage unavailable */ }
     setStudent(updated);
+  }
+
+  function saveAvatar(id: number) {
+    if (!student || !STARTER_POKEMON_IDS.includes(id)) return;
+    updateStudentProfile({ ...student, avatarId: id });
     setNotice('Immagine profilo aggiornata.');
   }
 
   if (!identityCheckComplete || (communityIdentity && cloudStateIdentityId !== communityIdentity.id) || (Boolean(communityError) && hasCommunityToken() && !communityIdentity)) {
+    const recoveryFailed = Boolean(communityError);
+    const identityVerified = identityCheckComplete && Boolean(communityIdentity) && !recoveryFailed;
+
     return (
-      <main className="academy-choice-shell enrollment-shell">
-        <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>PORTALE DELLO STUDENTE</span></div>
-        <header className="academy-choice-brand">
-          <div className="pokeball-mark" aria-hidden="true"><span /></div>
-          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>{communityError ? 'Caricamento non riuscito' : 'Portale dello studente'}</h1><p>{communityError ? 'I dati del tuo account non sono ancora disponibili.' : 'Verifica dell’identità e caricamento dei dati personali…'}</p></div>
-        </header>
-        <section className="academy-choice-intro enrollment-intro" role={communityError ? 'alert' : 'status'}>
-          <span className="academy-choice-label">{communityError ? 'ATTENZIONE' : 'SINCRONIZZAZIONE ACCOUNT'}</span>
-          <h2>{communityError ? 'Impossibile caricare il profilo' : 'Recupero dei dati in corso'}</h2>
-          <p>{communityError || 'Stiamo recuperando dal database il profilo, l’avatar e i progressi salvati. La scelta dell’accademia non verrà richiesta per un account già registrato.'}</p>
-          {communityError && <div className="enrollment-recovery-panel">
-            <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
-            <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero per verificare l’identità e caricare i progressi salvati.</p></div>
-            <label className="community-import-button enrollment-import-button">Importa salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
-            <button type="button" className="enrollment-back" onClick={() => window.location.reload()}>Riprova caricamento</button>
-          </div>}
-        </section>
+      <main className="recovery-screen">
+        <div className="recovery-topbar">
+          <a className="recovery-wordmark" href={import.meta.env.BASE_URL} aria-label="Poké Study, pagina iniziale">
+            <span className="recovery-wordmark-mark"><span /></span>
+            <span><strong>Poké Study</strong><small>PORTALE DELLO STUDENTE</small></span>
+          </a>
+          <span className="recovery-topbar-label">AREA RISERVATA</span>
+        </div>
+
+        <div className="recovery-layout">
+          <section className={'recovery-card' + (recoveryFailed ? ' is-error' : '')} aria-labelledby="recovery-title" role={recoveryFailed ? 'alert' : 'status'} aria-live="polite">
+            <div className="recovery-card-header">
+              <span className="recovery-kicker">{recoveryFailed ? 'SINCRONIZZAZIONE INTERROTTA' : 'ACCESSO SICURO'}</span>
+              <span className={'recovery-state-pill' + (recoveryFailed ? ' is-error' : '')}>
+                <span aria-hidden="true" />
+                {recoveryFailed ? 'Richiesto intervento' : 'Connessione in corso'}
+              </span>
+            </div>
+
+            <div className="recovery-illustration" aria-hidden="true">
+              {recoveryFailed ? <CloudDownload size={32} strokeWidth={1.7} /> : <div className="recovery-spinner"><span /></div>}
+            </div>
+
+            <h1 id="recovery-title">{recoveryFailed ? 'Non siamo riusciti a recuperare i dati' : 'Bentornato in Poké Study'}</h1>
+            <p className="recovery-lead">
+              {recoveryFailed
+                ? 'Il portale non è riuscito a verificare il tuo account. I dati non vengono sovrascritti: puoi riprovare o importare un salvataggio.'
+                : 'Stiamo verificando la tua identità e sincronizzando il profilo prima di aprire il portale.'}
+            </p>
+
+            {!recoveryFailed && <ol className="recovery-steps" aria-label="Fasi del recupero dati">
+              <li className={identityCheckComplete ? 'is-complete' : 'is-current'}><span className="recovery-step-icon"><ShieldCheck size={17}/></span><span><strong>Verifica dell’account</strong><small>{identityCheckComplete ? 'Verifica completata' : 'Controllo delle credenziali'}</small></span><span className="recovery-step-status">{identityCheckComplete ? <CheckCircle2 size={17}/> : <span className="recovery-step-pulse"/>}</span></li>
+              <li className={identityVerified ? 'is-complete' : identityCheckComplete ? 'is-current' : 'is-pending'}><span className="recovery-step-icon"><Database size={17}/></span><span><strong>Profilo e progressi</strong><small>{identityVerified ? 'Dati recuperati' : identityCheckComplete ? 'Recupero dei dati salvati' : 'In attesa della verifica'}</small></span><span className="recovery-step-status">{identityVerified ? <CheckCircle2 size={17}/> : identityCheckComplete ? <span className="recovery-step-pulse"/> : <Clock3 size={16}/>}</span></li>
+              <li className="is-pending"><span className="recovery-step-icon"><GraduationCap size={17}/></span><span><strong>Preparazione del portale</strong><small>Ultimo passaggio prima dell’accesso</small></span><span className="recovery-step-status"><Clock3 size={16}/></span></li>
+            </ol>}
+
+            {recoveryFailed && <div className="recovery-error-detail">
+              <strong>Dettaglio</strong>
+              <p>{communityError}</p>
+            </div>}
+
+            {recoveryFailed && <div className="recovery-actions">
+              <button type="button" className="recovery-primary-action" onClick={() => window.location.reload()}><RefreshCw size={16}/> Riprova il recupero</button>
+              <div className="recovery-divider"><span>oppure</span></div>
+              <label className="recovery-import-action">Importa un salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
+              {!communityConfigured && <small className="recovery-import-note">Importazione non disponibile: il servizio account non è configurato.</small>}
+            </div>}
+
+            <footer className="recovery-card-footer"><ShieldCheck size={15}/><span>{recoveryFailed ? 'Il recupero non modifica automaticamente il salvataggio locale.' : 'I tuoi dati vengono caricati prima di mostrare l’area personale.'}</span></footer>
+          </section>
+          <p className="recovery-page-footnote">POKÉ STUDY <span>·</span> PORTALE DIDATTICO FAN-MADE</p>
+        </div>
       </main>
     );
   }
@@ -1014,7 +1281,7 @@ export default function App() {
             <div className="enrollment-field-heading"><span>01</span><div><label htmlFor="student-nickname">Nickname</label><small>Da 1 a 24 caratteri.</small></div></div>
             <input id="student-nickname" name="nickname" type="text" value={nickname} onChange={event => setNickname(event.target.value)} placeholder="Es. AllenatorePikachu" maxLength={24} autoComplete="nickname" required />
             {enrollmentError && <p className="community-account-error" role="alert">{enrollmentError}</p>}
-            {communityError && hasCommunityToken() && <div className="enrollment-recovery-alert"><strong>Identità online da verificare</strong><p>Il token presente nel browser non è stato verificato. Importa il file di recupero dell'account corretto per evitare di creare un'identità diversa.</p></div>}
+            {communityError && hasCommunityToken() && <div className="enrollment-recovery-alert"><strong>Identità online da verificare</strong><p>Token non verificato. Importa il file di recupero corretto.</p></div>}
             <button className="enrollment-submit" type="submit" disabled={enrollmentBusy}>{enrollmentBusy ? 'Verifica e registrazione…' : 'Crea identità e immatricolati'} {!enrollmentBusy && <ChevronRight size={18} />}</button>
             <button className="enrollment-back" type="button" disabled={enrollmentBusy} onClick={() => { setAcademy(''); setNickname(''); setEnrollmentError(''); }}>← Torna alla scelta dell'accademia</button>
           </form>
@@ -1030,7 +1297,7 @@ export default function App() {
         </header>
         <section className="academy-choice-intro admission-intro">
           <h2>Scegli l’accademia</h2>
-          <p>Seleziona il campus collegato alla tua avventura Pokémon.</p>
+          
         </section>
         <section className="enrollment-recovery-panel admission-recovery-panel" aria-label="Recupero salvataggio">
           <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
@@ -1103,25 +1370,28 @@ export default function App() {
         <span className="utility-right">AREA DIDATTICA <b className={online ? 'connection-online' : 'connection-offline'}>● {online ? 'ONLINE' : 'OFFLINE'}</b></span>
       </div>
       <header className="masthead">
-        <button className="mobile-toggle" aria-label="Apri menu" onClick={() => setMobileMenu(!mobileMenu)}>{mobileMenu ? <X /> : <Menu />}</button>
+        <button className="mobile-toggle" aria-label={mobileMenu ? "Chiudi menu" : "Apri menu"} aria-expanded={mobileMenu} aria-controls="main-navigation" onClick={() => setMobileMenu(!mobileMenu)}>{mobileMenu ? <X /> : <Menu />}</button>
         <div className="pokeball-mark" aria-label="Poké Ball"><span /></div>
         <div className="brand">
           <div className="brand-kicker">ACCADEMIA POKÉMON</div>
           <div className="brand-name">Accademia Pokémon <span>✦</span></div>
           <div className="brand-subtitle">Portale dello studente</div>
         </div>
-        <button type="button" className="student-card" onClick={() => navTo('profilo')} aria-label="Apri il profilo studente"><AcademyCrest academy={academy} className="student-card-crest" /><span className="student-avatar">{currentProfileAvatarId ? <img src={avatarPortraitUrl(currentProfileAvatarId)} alt="" /> : '★'}</span><span className="student-card-copy"><small>PROFILO ALLIEVO · APRI</small><strong>{displayNickname}</strong><span>{student?.matricola ?? ''}</span><span>{academyName(academy)}</span></span></button>
+        <StudentCard academy={academy} academyLabel={academyName(academy)} nickname={displayNickname} matricola={student?.matricola ?? ''} avatarId={currentProfileAvatarId} onOpen={() => navTo('profilo')} />
       </header>
-      <nav className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
-        <button className={view === 'home' ? 'active' : ''} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
-        <button className={view === 'game' ? 'active' : ''} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
-        <button className={view === 'pokedex' ? 'active' : ''} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
-        <button className={view === 'registro' ? 'active' : ''} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
-        <button className={view === 'shop' ? 'active' : ''} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
-        <button className={view === 'esami' ? 'active' : ''} onClick={() => navTo('esami')}><FlaskConical size={16} /> Esami</button>
-        <button className={view === 'classifica' ? 'active' : ''} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
-        <button className={view === 'profilo' ? 'active' : ''} onClick={() => navTo('profilo')}><GraduationCap size={16} /> Profilo</button>
-        <button className={view === 'forum' ? 'active' : ''} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca</button>
+      <nav id="main-navigation" aria-label="Navigazione principale" className={`main-nav ${mobileMenu ? 'nav-open' : ''}`}>
+        <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={16} /> Portale</button>
+        <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
+        <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
+        {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
+        {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}><Sparkles size={16} /> Archivio degli strumenti evolutivi</button>}
+        {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}><Bone size={16} /> Archivio fossili e reperti</button>}
+        <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
+        <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
+        <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
+        <button className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
+        <button className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca</button>
+        {communityIdentity?.role === 'amministratore' && <button className={view === 'amministrazione' ? 'active' : ''} aria-current={view === 'amministrazione' ? 'page' : undefined} onClick={() => navTo('amministrazione')}><ShieldCheck size={16} /> Amministrazione</button>}
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
 
@@ -1129,18 +1399,21 @@ export default function App() {
         <aside className="sidebar">
           <section className="side-box">
             <h2>AREA ALLIEVO</h2>
-            <button className={view === 'pokedex' ? 'side-active' : ''} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
-            <button className={view === 'registro' ? 'side-active' : ''} onClick={() => navTo('registro')}>▸ Registro personale</button>
-            <button className={view === 'shop' ? 'side-active' : ''} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
+            <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
+            {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
+            {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'side-active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}>▸ Archivio degli strumenti evolutivi</button>}
+            {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'side-active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}>▸ Archivio fossili e reperti</button>}
+            <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
+            <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
+            <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
           </section>
           <section className="side-box">
             <h2>LIBRETTO PERSONALE</h2>
             <div className="stat-row"><span>Punti Poké</span><strong>{progress.points}</strong></div>
-            <div className="stat-row"><span>Punti esame</span><strong>{progress.examPoints}</strong></div>
             <div className="progress-track"><span style={{ width: `${Math.min(100, progress.completedIds.length / NATIONAL_DEX_SIZE * 100)}%` }} /></div>
             <small className="muted">{progress.completedIds.length} / {NATIONAL_DEX_SIZE} specie catalogate</small>
           </section>
-          <section className="notice-box"><strong>AVVISO DEL PRESIDE</strong><p>Tutti i Pokémon e tutti i numeri Nazionali sono disponibili fin dall'inizio. Ogni collocazione corretta vale un Punto Poké; gli errori non comportano penalità.</p></section>
+          <section className="notice-box"><strong>AVVISO DEL PRESIDE</strong><p>Ogni collocazione corretta assegna 1 Punto Poké.</p></section>
           <div className="side-footer">POKÉ STUDY v0.2<br />Un progetto fan-made.</div>
         </aside>
 
@@ -1158,6 +1431,9 @@ export default function App() {
             notice={notice}
             onNavigate={navTo}
           />}
+          {view === 'evolutions' && (inventory.includes('evolution-archive') ? <EvolutionArchive species={species} items={itemCatalog} online={online} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio delle evoluzioni bloccato</h1><p>Acquista l’Archivio delle evoluzioni nella Cartoleria per consultare le linee evolutive.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          {view === 'evolution-tools' && (inventory.includes('evolution-tools-archive') ? <EvolutionToolsArchive items={itemCatalog} loading={itemCatalogLoading} completedEntries={progress.completedEntries ?? []} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio degli strumenti evolutivi bloccato</h1><p>Acquista questo archivio nella Cartoleria per consultare gli strumenti evolutivi.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          {view === 'fossils' && (inventory.includes('fossils-archive') ? <FossilArchive species={species} items={itemCatalog} loadingSpecies={loading} loadingItems={itemCatalogLoading} completedPokemon={progress.completedIds} completedEntries={progress.completedEntries ?? []} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio fossili e reperti bloccato</h1><p>Acquista l’Archivio fossili e reperti nella Cartoleria per consultare Pokémon fossili e reperti paleontologici.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
             items={itemCatalog}
@@ -1166,155 +1442,161 @@ export default function App() {
             online={online}
             completedPokemon={progress.completedIds}
             completedEntries={progress.completedEntries ?? []}
-          /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon, acquistare con i Punti Poké Scanner e tutti i livelli di Ricerca, quindi acquistare questo archivio con i Punti esame.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon e acquistare con i Punti Poké lo Scanner, tutti i livelli di Ricerca e l’Archivio Nazionale.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
-            <section className="challenge-board game-board mixed-lesson-board">
-              <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
-                <div className="game-zone-heading">
-                  <strong>{currentSubcategory ? `SOTTOCARTELLA · ${currentSubcategory.name.toLocaleUpperCase('it')}` : currentMacro ? `CARTELLA · ${currentMacro.name.toLocaleUpperCase('it')}` : 'SCEGLI UNA MACROCATEGORIA'}</strong>
-                  <span>{lessonSolved.length} / {lessonDeck.length} classificate</span>
-                </div>
-                {openSubcategoryId !== null && currentSubcategory ? (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => setOpenSubcategoryId(null)}>← Sottocategorie</button>
-                      <span>{currentSubcategory.name} · scegli una posizione vuota</span>
-                    </div>
-                    <div className="pokemon-number-grid category-entity-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
-                      {currentSubcategoryCards.map((_, index) => {
-                        const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
-                        const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
-                        const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
-                        const isWrong = Boolean(placedCard && placedCard.subcategoryId !== currentSubcategory.id);
-                        return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isWrong && inventory.includes('subcategory-errors') ? 'pokemon-number-wrong' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
-                          if (placed) { setCategoryPlacements(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setMisplacedCards(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setLessonSolved(old => old.filter(id => id !== placed[0])); setWrongTargetId(null); return; }
-                          if (selectedCardId) placeCard(selectedCardId, slotId);
-                        }}>
-                          {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
-                        </button>;
-                      })}
-                    </div>
-                  </>
-                ) : openMacroId === null ? (
-                  <div className="category-targets-grid macro-folder-grid">
-                    {macroFolderCounts.map(folder => <button
-                      type="button"
-                      key={folder.id}
-                      className={'category-target macro-folder ' + (wrongTargetId === folder.id ? 'category-target-wrong' : '')}
-                      onDragOver={event => event.preventDefault()}
-                      onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, folder.id); }}
-                      onClick={() => { setOpenMacroId(folder.id); setOpenPokemonRegionId(null); setOpenSubcategoryId(null); }}
-                    >
-                      <span className="folder-icon" aria-hidden="true">📁</span>
-                      <span className="category-target-macro">MACROCATEGORIA</span>
-                      <strong>{folder.name}</strong>
-                      <small>{folder.solved} / {folder.total}</small>
-                      {Object.entries(misplacedCards).filter(([, targetId]) => targetId === folder.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                    </button>)}
-                  </div>
-                ) : openMacroId === 'pokemon' && currentPokemonRegion ? (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => setOpenPokemonRegionId(null)}>← Regioni</button>
-                      <span>{currentPokemonRegion.name} · scegli il numero corretto per la carta selezionata</span>
-                    </div>
-                    <div className="pokemon-number-grid" aria-label={'Posizioni Pokémon di ' + currentPokemonRegion.name}>
-                      {Array.from({ length: currentPokemonRegion.end - currentPokemonRegion.start + 1 }, (_, index) => {
-                        const nationalId = currentPokemonRegion.start + index;
-                        const regionalNumber = index + 1;
-                        const isCompleted = progress.completedIds.includes(nationalId);
-                        const slotId = 'pokemon-slot:' + nationalId;
-                        return <button
-                          type="button"
-                          key={nationalId}
-                          className={'pokemon-number-slot pokemon-number-entity-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')}
-                          aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')}
-                          disabled={isCompleted}
-                          onDragOver={event => event.preventDefault()}
-                          onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, slotId); }}
-                          onClick={() => { if (selectedCardId) placeCard(selectedCardId, slotId); else setMessage('Seleziona prima una carta Pokémon, poi scegli il numero in cui collocarla.'); }}
-                        >
-                          <strong>#{String(regionalNumber).padStart(3, '0')}</strong>
-                          <small>N. {String(nationalId).padStart(4, '0')}</small>
-                          {isCompleted && (() => { const pokemon = lessonDeck.find(entry => entry.kind === 'pokemon' && entry.pokemonId === nationalId); return pokemon ? <img className="category-entity-image" src={pokemon.imageUrl} alt="" /> : <span aria-hidden="true">✓</span>; })()}
-                          {Object.entries(misplacedCards).filter(([, targetId]) => targetId === slotId).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-slot-chip" title="Riprendi Pokémon" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Pokémon ripreso: puoi ricollocarlo.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                        </button>;
-                      })}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="folder-toolbar">
-                      <button type="button" className="folder-back-button" onClick={() => { setOpenPokemonRegionId(null); setOpenMacroId(null); }}>← Indietro</button>
-                      <span>{openMacroId === 'pokemon' ? 'Seleziona una regione per aprire l’elenco numerato' : 'Apri la sottocartella corretta per la carta selezionata'}</span>
-                    </div>
-                    <div className="category-targets-grid subfolder-grid">
-                      {currentMacroTargets.map(target => <button
+            {(inventory.includes('scanner') || inventory.includes('research') || inventory.includes('number-check')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
+              <div className="ability-toolbar">
+                {inventory.includes('scanner') && <button type="button" className="scanner-ability-button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
+                {inventory.includes('number-check') && <button type="button" className="scanner-ability-button number-check-ability-button" disabled={!selectedCardIds.length && !selectedCardId || (progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow} onClick={() => useAbility('number-check')}><strong>Controllo numerazione</strong><small>{(progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.['number-check'] ?? 0,clockNow) : 'Pronto'}</small></button>}
+                {inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
+                  <label htmlFor="research-entity-query">Ricerca</label>
+                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off" aria-controls="research-search-results" aria-expanded={researchHasSearched}/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
+                  {researchHasSearched && <div className="research-autocomplete-overlay" role="status">
+                    {researchResults.length > 0 ? <ul id="research-search-results" className="research-search-results">{researchResults.map(result => <li key={result.id}><strong>{result.name}</strong><span>Pagina {result.page}</span></li>)}</ul> : <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p>}
+                  </div>}
+                </form>}
+              </div>
+            </section>}
+            <section className={`challenge-board game-board mixed-lesson-board folder-workspace ${mobileFolderTreeOpen ? 'mobile-tree-open' : ''}`}>
+              <aside className={`game-zone folder-tree-zone ${mobileFolderTreeOpen ? 'is-mobile-open' : ''}`} aria-label="Albero delle cartelle">
+                <div className="game-zone-heading"><strong>CARTELLE E SOTTOCARTELLE</strong><span>{lessonSolved.length} / {lessonDeck.length}</span></div>
+                <div className="folder-tree-scroll">
+                  <button type="button" className={`folder-tree-all ${!openMacroId ? 'is-active' : ''}`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>
+                    <span aria-hidden="true">▦</span><strong>Tutte le entità</strong><small>{remainingLessonCards.length}</small>
+                  </button>
+                  {macroFolderCounts.map(folder => (
+                    <div className="folder-tree-group" key={folder.id}>
+                      <button
                         type="button"
-                        key={target.id}
-                        className={'category-target subfolder-target ' + (target.solved === target.total ? 'category-target-complete ' : '')}
-                        aria-label={openMacroId === 'pokemon' ? 'Apri la regione ' + target.name : 'Classifica in ' + target.name}
+                        className={`folder-tree-node folder-tree-macro ${openMacroId === folder.id ? 'is-active' : ''}`}
+                        aria-expanded={openMacroId === folder.id}
                         onDragOver={event => event.preventDefault()}
-                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId && openMacroId !== 'pokemon') placeCard(cardId, target.id); }}
-                        onClick={() => {
-                          if (openMacroId === 'pokemon') {
-                            setOpenPokemonRegionId(target.id);
-                            setWrongTargetId(null);
-                            setMessage('Regione ' + target.name + ' aperta. Seleziona una carta Pokémon e poi la sua posizione numerata.');
-                          } else {
-                            setOpenSubcategoryId(target.id);
-                            setWrongTargetId(null);
-                          }
-                        }}
+                        onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, folder.id); }}
+                        onClick={() => { setOpenMacroId(folder.id); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setFolderPage(0); setMobileFolderTreeOpen(false); }}
                       >
-                        <span className="folder-icon" aria-hidden="true">📂</span>
-                        <strong>{target.name}</strong>
-                        <small>{target.solved} / {target.total} {openMacroId === 'pokemon' ? 'posizioni completate' : 'classificate'}</small>
-                        {Object.entries(misplacedCards).filter(([, targetId]) => targetId === target.id).map(([cardId]) => { const card = lessonDeck.find(entry => entry.id === cardId); return card ? <span key={cardId} role="button" tabIndex={0} className="misplaced-card-chip" title="Riprendi entità" onClick={event => { event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); }} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setMisplacedCards(old => { const next = { ...old }; delete next[cardId]; return next; }); setWrongTargetId(null); setMessage('Entità ripresa: puoi ricollocarla.'); } }}><img src={card.imageUrl} alt="" /></span> : null; })}
-                      </button>)}
+                        <span className="folder-tree-chevron">{openMacroId === folder.id ? '▾' : '▸'}</span><span aria-hidden="true">📁</span><strong>{folder.name}</strong><small>{folder.solved}/{folder.total}</small>
+                      </button>
+                      {openMacroId === folder.id && <div className="folder-tree-children">
+                        {currentMacroTargets.map(target => {
+                          const selected = openSubcategoryId === target.id || openPokemonRegionId === target.id;
+                          return <button
+                            type="button"
+                            key={target.id}
+                            className={`folder-tree-node folder-tree-child ${selected ? 'is-active' : ''}`}
+                            aria-current={selected ? 'location' : undefined}
+                            onDragOver={event => event.preventDefault()}
+                            onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, target.id); }}
+                            onClick={() => {
+                              if (folder.id === 'pokemon' && inventory.includes('direct-region') && selectedCardId) {
+                                placeCard(selectedCardId, target.id);
+                              }
+                              if (folder.id === 'pokemon') { setOpenPokemonRegionId(target.id); setOpenSubcategoryId(null); }
+                              else { setOpenSubcategoryId(target.id); setOpenPokemonRegionId(null); }
+                              setFolderPage(0);
+                              setMobileFolderTreeOpen(false);
+                            }}
+                          >
+                            <span aria-hidden="true">{selected ? '📂' : '📁'}</span><strong>{target.name}</strong><small>{target.solved}/{target.total}</small>
+                          </button>;
+                        })}
+                      </div>}
                     </div>
-                  </>
-                )}
-                {lessonReady && lessonDeck.length === 0 && <div className="empty-service lesson-empty"><h3>Catalogo completato</h3><p>Hai già classificato tutte le entità disponibili.</p></div>}
-              </section>
-              <div className={`feedback-bar game-feedback ${message.startsWith('Corretto') ? 'feedback-success' : message && wrongTargetId !== null ? 'feedback-error' : ''}`} role="status">{message}</div>
-              <section className="game-zone game-pokemon-zone" aria-label="Carte da classificare">
-                <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
-                <div className="ability-toolbar">{inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}{inventory.includes('research') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => useAbility('research')}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Pronto'}</small></button>}</div>
-                {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
+                  ))}
+                </div>
+              </aside>
+
+              <section className="game-zone folder-context-zone" aria-label="Area di lavoro delle entità">
+                <div className="game-zone-heading">
+                  <strong>{!openMacroId ? 'TUTTE LE ENTITÀ' : openSubcategoryId && currentSubcategory ? currentSubcategory.name.toLocaleUpperCase('it') : openPokemonRegionId && currentPokemonRegion ? currentPokemonRegion.name.toLocaleUpperCase('it') : currentMacro ? currentMacro.name.toLocaleUpperCase('it') : 'CARTELLA'}</strong>
+                  <span>{!activeFolderId ? `${remainingLessonCards.length} disponibili` : `${folderAssignedCards.length} qui · ${activeFolderSolvedCount} completate`}</span>
+                </div>
+                <div className="folder-context-toolbar">
+                  <button type="button" className="folder-mobile-toggle" onClick={() => setMobileFolderTreeOpen(true)}>☰ Cartelle</button>
+                  <button type="button" className={`folder-all-button ${!activeFolderId ? 'is-active' : ''}`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>← Tutte le entità</button>
+                  {activeFolderId && selectedCardIds.length > 0 && <button type="button" className="folder-move-selected" onClick={() => {
+                    selectedCardIds.forEach(cardId => moveCardToFolder(cardId, activeFolderId));
+                    setSelectedCardIds([]);
+                    setSelectedCardId(null);
+                  }}>Sposta qui {selectedCardIds.length > 1 ? `le ${selectedCardIds.length} selezionate` : 'la selezionata'}</button>}
+                </div>
+
+                {!activeFolderId ? (
+                  loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
                   : visibleGameCards.length > 0 ? <>
-                    <div className="game-pagination game-pagination-cards">
-                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
-                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
-                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
-                    </div>
-                    <div className="pokemon-cards mixed-card-grid">
-                      {visibleGameCards.map(card => <button
-                        key={card.id}
-                        type="button"
-                        aria-label={selectedCardId === card.id ? 'Carta selezionata' : 'Seleziona carta da classificare'}
-                        title="Seleziona carta"
-                        className={`pokemon-card mixed-card ${selectedCardId === card.id ? 'chosen' : ''}`}
-                        draggable
-                        onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}
-                        onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.'); }}
-                      >
+                    <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
+                    <div className="pokemon-cards mixed-card-grid folder-entity-grid">
+                      {visibleGameCards.map(card => <button key={card.id} type="button" aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'} title="Seleziona carta" className={`pokemon-card mixed-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)} onClick={() => toggleCardSelection(card.id)}>
+                        {card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                        {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
+                        {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
                       </button>)}
                     </div>
-                    <div className="game-pagination game-pagination-cards">
-                      <button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button>
-                      <span>Pagina {safeGamePage + 1} / {gamePageCount}</span>
-                      <button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button>
-                    </div>
+                    <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
+                  </> : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>
+                ) : (
+                  <>
+                    {folderAssignedCards.length > 0 && <div className="folder-assigned-section">
+                      <div className="folder-section-caption"><strong>Entità provvisorie in questa cartella</strong><span>Puoi spostarle ancora o riprenderle</span></div>
+                      <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
+                        {visibleFolderCards.map(card => <div key={card.id} className={`folder-entity-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
+                          <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}>{card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}<img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}</button>
+                          <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
+                        </div>)}
+                      </div>
+                      {folderAssignedCards.length > folderPageSize && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
+                    </div>}
+
+                    {openMacroId && !openSubcategoryId && !openPokemonRegionId && <div className="folder-subfolder-shortcuts">
+                      <p>Apri una sottocartella per consultare le posizioni corrette. Puoi anche spostare qui le entità selezionate.</p>
+                      {currentMacroTargets.map(target => <button type="button" key={target.id} onClick={() => { if (openMacroId === 'pokemon') setOpenPokemonRegionId(target.id); else setOpenSubcategoryId(target.id); setFolderPage(0); }}><span aria-hidden="true">📂</span><strong>{target.name}</strong><small>{target.solved}/{target.total}</small></button>)}
+                    </div>}
+
+                    {openSubcategoryId && currentSubcategory && <div className="folder-correct-slots">
+                      <div className="folder-section-caption"><strong>Posizioni corrette</strong><span>Seleziona un'entità e poi la posizione</span></div>
+                      <div className="category-entity-grid folder-slot-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
+                        {currentSubcategoryCards.map((_, index) => {
+                          const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
+                          const placed = Object.entries(categoryPlacements).find(([cardId, placedTarget]) => placedTarget === slotId && !misplacedCards[cardId]);
+                          const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
+                          const isComplete = Boolean(placedCard && lessonSolved.includes(placedCard.id));
+                          return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isComplete ? 'pokemon-number-complete' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
+                            if (placedCard && isComplete) return;
+                            if (placedCard) {
+                              setCategoryPlacements(old => { const next = { ...old }; delete next[placedCard.id]; return next; });
+                              setMisplacedCards(old => { const next = { ...old }; delete next[placedCard.id]; return next; });
+                              return;
+                            }
+                            if (selectedCardId) placeCard(selectedCardId, slotId);
+                          }}>
+                            {placedCard ? <><img className="category-entity-image" src={placedCard.imageUrl} alt="" />{(inventory.includes('reveal-name') || revealedMacroCategories[placedCard.id]) && <span className="revealed-card-name placed-entity-name">{displayName(placedCard.name)}</span>}{revealedMacroCategories[placedCard.id] && <span className="scanner-revealed-category placed-entity-category">{revealedMacroCategories[placedCard.id]}</span>}</> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
+                          </button>;
+                        })}
+                      </div>
+                    </div>}
+
+                    {openPokemonRegionId && currentPokemonRegion && <div className="folder-correct-slots">
+                      <div className="folder-section-caption"><strong>Numeri regionali</strong><span>Seleziona un Pokémon e poi il numero corretto</span></div>
+                      <div className="pokemon-number-grid folder-pokemon-number-grid" aria-label={'Posizioni Pokémon di ' + currentPokemonRegion.name}>
+                        {Array.from({ length: currentPokemonRegion.end - currentPokemonRegion.start + 1 }, (_, index) => {
+                          const nationalId = currentPokemonRegion.start + index;
+                          const regionalNumber = index + 1;
+                          const isCompleted = progress.completedIds.includes(nationalId);
+                          const slotId = 'pokemon-slot:' + nationalId;
+                          return <button type="button" key={nationalId} className={'pokemon-number-slot pokemon-number-entity-slot ' + (isCompleted ? 'pokemon-number-complete ' : '') + (wrongTargetId === slotId ? 'pokemon-number-wrong' : '')} aria-label={currentPokemonRegion.name + ', posizione regionale ' + regionalNumber + ', numero nazionale ' + nationalId + (isCompleted ? ', già completato' : '')} disabled={isCompleted} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) placeCard(cardId, slotId); }} onClick={() => { if (selectedCardId) placeCard(selectedCardId, slotId); }}><strong>#{String(regionalNumber).padStart(3, '0')}</strong><small>N. {String(nationalId).padStart(4, '0')}</small>{isCompleted && (() => { const pokemon = lessonDeck.find(entry => entry.kind === 'pokemon' && entry.pokemonId === nationalId); return pokemon ? <><img className="category-entity-image" src={pokemon.imageUrl} alt="" />{(inventory.includes('reveal-name') || revealedMacroCategories[pokemon.id]) && <span className="revealed-card-name placed-entity-name">{displayName(pokemon.name)}</span>}{revealedMacroCategories[pokemon.id] && <span className="scanner-revealed-category placed-entity-category">{revealedMacroCategories[pokemon.id]}</span>}</> : <span aria-hidden="true">✓</span>; })()}</button>;
+                        })}
+                      </div>
+                    </div>}
+
+                    {folderAssignedCards.length === 0 && !openSubcategoryId && !openPokemonRegionId && <div className="folder-empty-hint">Questa cartella non contiene ancora entità provvisorie. Seleziona una o più entità da <strong>Tutte le entità</strong>, poi torna qui e premi <strong>Sposta qui</strong>; oppure trascina una carta direttamente sulla cartella.</div>}
                   </>
-                  : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>}
+                )}
               </section>
             </section>
           </>}
-                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} onReset={resetProgress} />}
+                    {view === 'registro' && <PersonalRegister progress={progress} species={species} items={itemCatalog} loading={loading || itemCatalogLoading} configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} academy={academy} typeCatalog={typeCatalog} typeLoading={typeLoading} online={online} onReset={resetProgress} />}
           {view === 'shop' && <Cartoleria
             academy={academy}
             progress={progress}
@@ -1322,14 +1604,10 @@ export default function App() {
             shopProducts={shopProducts}
             inventory={inventory}
             shopPricingReady={shopPricingReady}
-            shopTab={shopTab}
-            setShopTab={setShopTab}
             productUnlocked={productUnlocked}
             buyItem={buyItem}
             notice={notice}
           />}
-
-          {view === 'esami' && <><div className="breadcrumb">Home / Area didattica / <b>Esami</b></div><div className="page-heading"><div><div className="eyebrow">DIPARTIMENTO DIDATTICO</div><h1>Esami e prove speciali</h1><p>Completa le regioni, approfondisci i tipi Pokémon e affronta obiettivi speciali. I risultati vengono salvati sul tuo account e sincronizzati con il database quando sei online.</p></div></div>{notice && <div className="notice-inline" role="status">{notice}</div>}<section className="archive-search"><h2>Esami regionali</h2><p>Completare una regione assegna automaticamente 1 Punto esame.</p><div className="exam-grid">{regions.map(region => {const count=progress.completedIds.filter(id=>id>=region.start&&id<=region.end).length;const total=region.end-region.start+1;const done=count===total;return <article className="exam-card" key={region.name}><div className="exam-card-mark">{done?'✓':'R'}</div><div><h3>{region.name}</h3><p>{count} di {total} Pokémon catalogati</p><div className="progress-track"><span style={{width:`${count/total*100}%`}}/></div><strong>{done?'Regione completata · Punto esame ottenuto':`${Math.round(count/total*100)}% completato`}</strong></div></article>})}</div></section><section className="archive-search"><h2>Esami per tipo</h2><p>I dati dei tipi provengono dalla PokéAPI e vengono messi in cache dopo il primo caricamento.</p>{typeLoading && <div className="loading-panel"><p>Caricamento dei 18 tipi dalla PokéAPI…</p></div>}{typeCatalog.length===0&&!typeLoading&&<div className="empty-service"><p>{online?'Apri nuovamente questa sezione per caricare i tipi.':'I tipi non sono ancora stati salvati in cache: serve una connessione al primo accesso.'}</p></div>}<div className="exam-grid">{typeCatalog.map(type=>{const ids=type.ids;const count=ids.filter(id=>completedSet.has(id)).length;const done=ids.length>0&&count===ids.length;const key=`type-${type.name}`;const claimed=completedExams.includes(key);return <article className="exam-card" key={type.name}><div className="exam-card-mark type-mark">{type.name.slice(0,2).toUpperCase()}</div><div><h3>{titleCase(type.name)}</h3><p>{count} di {ids.length} specie catalogate</p><div className="progress-track"><span style={{width:`${ids.length?count/ids.length*100:0}%`}}/></div>{done?<button className="secondary-button" disabled={claimed} onClick={()=>claimExam(key)}>{claimed?'Ricompensa riscossa':'Completa prova · +1 Punto esame'}</button>:<strong>{ids.length?Math.round(count/ids.length*100):0}% completato</strong>}</div></article>})}</div></section><section className="archive-search"><h2>Prove speciali</h2><p>Obiettivi progressivi di catalogazione. Ogni ricompensa può essere riscossa una sola volta.</p><div className="exam-grid">{[{id:'special-10',title:'Primo studio',target:10,reward:1},{id:'special-50',title:'Ricercatore in erba',target:50,reward:1},{id:'special-150',title:'Archivista Pokémon',target:150,reward:2},{id:'special-500',title:'Esperto Nazionale',target:500,reward:3},{id:'special-1025',title:'Maestro dell’Archivio',target:1025,reward:10}].map(exam=>{const done=progress.completedIds.length>=exam.target;const claimed=completedExams.includes(exam.id);return <article className="exam-card" key={exam.id}><div className="exam-card-mark special-mark">★</div><div><h3>{exam.title}</h3><p>Cataloga {exam.target} Pokémon · {Math.min(progress.completedIds.length,exam.target)} / {exam.target}</p><div className="progress-track"><span style={{width:`${Math.min(100,progress.completedIds.length/exam.target*100)}%`}}/></div><strong>{exam.reward} {exam.reward===1?'Punto esame':'Punti esame'}</strong><button className="secondary-button" disabled={!done||claimed} onClick={()=>claimExam(exam.id,exam.reward)}>{claimed?'Ricompensa riscossa':done?'Riscatta ricompensa':'Prova in corso'}</button></div></article>})}</div></section></>}
 
           {view === 'classifica' && <Leaderboard
             academy={academy}
@@ -1338,93 +1616,119 @@ export default function App() {
             communityConfigured={communityConfigured}
             progress={progress}
             onConnect={() => navTo('profilo')}
+            onOpenPublicProfile={setPublicProfileId}
           />}
 
-          {view === 'profilo' && <><div className="breadcrumb">Home / Area allievo / <b>Profilo</b></div><div className="page-heading"><div><div className="eyebrow">IDENTITÀ STUDENTE</div><h1>Il tuo profilo</h1><p>Scegli il tuo Pokémon starter preferito: tutti i nove gruppi regionali sono disponibili in formato ritratto.</p></div></div><section className="archive-search profile-panel"><div className="profile-hero"><div className="profile-academy-crest"><AcademyCrest academy={academy} className="profile-academy-crest-image" /></div><div className="profile-avatar-large">{currentProfileAvatarId?<img src={avatarPortraitUrl(currentProfileAvatarId)} alt="Avatar scelto"/>:'★'}</div><div><span className="section-label">{communityIdentity ? 'NICKNAME UFFICIALE' : 'NICKNAME LOCALE'}</span><h2>{displayNickname}</h2><p>{student.matricola}</p><p>{academyName(academy)}</p><small>{communityIdentity ? 'Nickname ufficiale verificato online.' : online ? 'Identità online non verificata: importa i metadati dell’account per recuperarla.' : 'Modalità offline: viene usato il nickname salvato su questo dispositivo.'}</small></div></div><section className="community-account-panel" aria-labelledby="community-account-title">
-              <div className="community-account-heading"><div><span className="section-label">SINCRONIZZAZIONE ACCOUNT</span><h3 id="community-account-title">Identità community</h3></div><span className={communityIdentity ? 'community-status community-status-active' : 'community-status'}>{communityIdentity ? 'VERIFICATA' : communityConfigured ? 'NON COLLEGATA' : 'NON CONFIGURATA'}</span></div>
-              <p className="community-account-description">Il nickname dell’identità online verificata viene usato in tutto il portale quando sei connesso. Offline viene mostrato il nickname locale. Esporta e conserva i metadati: se perdi la sessione, solo quel file permette di recuperare la stessa identità.</p>
-              {communityIdentity ? <div className="community-identity-summary"><AcademyCrest academy={communityIdentity.academy} className="community-identity-crest" /><strong>{communityIdentity.nickname}</strong><span>{academyName(communityIdentity.academy)}</span><small>Identità verificata dal server · {communityIdentity.id.slice(0, 8)}</small></div> : <div className="community-account-actions"><label className="community-import-button">Importa metadati account<input type="file" accept="application/json,.json" disabled={!communityConfigured || communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
-              {communityIdentity && <div className="community-account-actions"><button type="button" className="secondary-button" disabled={communityBusy} onClick={() => void downloadCommunityAccount()}>{communityBusy ? 'Attendere…' : 'Esporta metadati account'}</button><label className="community-import-button">Sostituisci/importa account<input type="file" accept="application/json,.json" disabled={communityBusy} onChange={event => void importCommunityAccount(event)} /></label></div>}
-              {!communityConfigured && <p className="community-account-hint">Servizio in attesa di configurazione: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nell'ambiente di build.</p>}
-              {communityNotice && <p className="community-account-success" role="status">{communityNotice}</p>}
-              {communityError && <p className="community-account-error" role="alert">{communityError}</p>}
-              <p className="community-account-warning">Il file esportato contiene una credenziale privata: chi lo possiede può usare questa identità. Non condividerlo e non pubblicarlo.</p>
-            </section>
-            <div className="avatar-picker-heading"><div><span className="section-label">SCEGLI IL TUO STARTER</span><p>27 Pokémon iniziali · 3 per regione</p></div><span className="avatar-picker-count">{visibleAvatars.length} disponibili</span></div><div className="avatar-grid">{visibleAvatars.map(pokemon=><button type="button" className={currentProfileAvatarId===pokemon.id?'avatar-option selected':'avatar-option'} key={pokemon.id} onClick={()=>saveAvatar(pokemon.id)} aria-label={`Scegli ${titleCase(pokemon.name)} come avatar`}><span className="avatar-portrait-frame"><img src={avatarPortraitUrl(pokemon.id)} alt="" loading="lazy" onError={event=>{event.currentTarget.style.visibility='hidden';}}/></span><span className="avatar-option-name">{titleCase(pokemon.name)}</span><small className="avatar-option-region">{regions.find(region=>pokemon.id>=region.start&&pokemon.id<=region.end)?.name}</small></button>)}</div></section></>}
+          {view === 'profilo' && <StudentProfilePage
+            academy={academy}
+            student={student}
+            progress={progress}
+            species={species}
+            communityIdentity={communityIdentity}
+            online={online}
+            configured={communityConfigured}
+            communityBusy={communityBusy}
+            communityNotice={communityNotice}
+            communityError={communityError}
+            onUpdateProfile={updateStudentProfile}
+            onChooseAvatar={saveAvatar}
+            onImportAccount={importCommunityAccount}
+            onExportAccount={() => void downloadCommunityAccount()}
+          />}
+
+          {view === 'academia' && <Academy configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} onOpenProfile={() => navTo('profilo')} />}
+
+          {view === 'amministrazione' && <AdminPanel identity={communityIdentity} />}
 
           {view === 'forum' && <>
-            <div className="breadcrumb">Home / Comunità / <b>Bacheca studenti</b></div>
-            <div className="page-heading forum-heading forum-hero">
-              <div className="forum-hero-copy">
-                <div className="eyebrow"><span className="forum-live-dot" /> COMUNITÀ SCOLASTICA · POKÉ STUDY</div>
-                <h1>Bacheca studenti</h1>
-                <p>Confrontati con gli altri allievi, condividi strategie e trova risposte per il tuo percorso.</p>
-                <div className="forum-hero-tags"><span><MessageSquare size={13}/> Discussioni</span><span><GraduationCap size={13}/> Comunità d’Accademia</span></div>
+            <div className="breadcrumb">Home / Comunità / <b>Bacheca</b></div>
+            <header className="forum-v2-hero">
+              <div className="forum-v2-hero-copy">
+                <span className="forum-v2-eyebrow"><GraduationCap size={14}/> PORTALE STUDENTI · POKÉ STUDY</span>
+                <h1>Bacheca</h1>
+                <p>Domande, idee e avvisi della comunità scolastica.</p>
+                <div className="forum-v2-hero-meta"><span><MessageSquare size={14}/>{communityThreads.length} discussioni</span><span><MessageCircle size={14}/>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)} risposte</span></div>
               </div>
-              <div className="forum-heading-mark forum-hero-emblem"><GraduationCap size={28}/><span>AREA<br/>STUDENTI</span></div>
-            </div>
+              <div className="forum-v2-crest" aria-hidden="true"><GraduationCap size={28}/><span>AREA<br/>STUDENTI</span></div>
+            </header>
 
-            <section className="forum-featured forum-featured-notice">
-              <div className="forum-featured-top"><span className="forum-pin"><Bell size={12}/> AVVISO IN EVIDENZA</span><span className="forum-date">SEGRETERIA DIDATTICA</span></div>
-              <div className="forum-featured-body"><div className="forum-featured-icon"><GraduationCap size={25}/></div><div><h2>Benvenuto nell’Archivio Nazionale</h2><p>Tutte le specie e tutti i numeri sono disponibili fin dall’inizio. Ogni collocazione corretta assegna un Punto Poké; gli errori non sottraggono punti. Completando una regione ottieni un Punto esame.</p></div><span className="forum-notice-check"><CheckCircle2 size={16}/> UFFICIALE</span></div>
+            <section className="forum-v2-announcement" aria-label="Avviso della segreteria">
+              <div className="forum-v2-announcement-ribbon"><Megaphone size={14}/> AVVISO DEL PORTALE <span>SEGRETERIA DIDATTICA</span></div>
+              <div className="forum-v2-announcement-body"><span className="forum-v2-announcement-icon"><BookOpen size={23}/></span><div><h2>Benvenuto nella Bacheca</h2><p>Condividi dubbi e strategie, rispondi agli altri allievi e consulta gli annunci. Mantieni le conversazioni pertinenti e rispettose.</p></div><span className="forum-v2-official"><CheckCircle2 size={15}/> UFFICIALE</span></div>
             </section>
 
-            <section className="community-forum-panel forum-workspace">
-              <div className="forum-workspace-heading">
-                <div><span className="section-label">SPAZIO CONDIVISO</span><h2>Discussioni</h2><p>Le novità e le conversazioni della comunità.</p></div>
-                <div className="forum-workspace-actions">
-                  <button type="button" className="forum-refresh-button" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}><Clock3 size={15}/> Aggiorna</button>
-                  {communityIdentity && <button type="button" className="secondary-button forum-new-thread-button" onClick={() => setShowThreadComposer(open => !open)}>{showThreadComposer ? <X size={15}/> : <Plus size={16}/>} {showThreadComposer ? 'Chiudi' : 'Nuova discussione'}</button>}
+            <section className="forum-v2-workspace" aria-labelledby="forum-v2-discussions-title">
+              <div className="forum-v2-section-heading">
+                <div><span className="section-label">SPAZIO CONDIVISO</span><h2 id="forum-v2-discussions-title">Conversazioni</h2><p>Trova una discussione o aprine una nuova.</p></div>
+                <div className="forum-v2-actions">
+                  <button type="button" className="forum-v2-quiet-action" disabled={!communityIdentity || communityForumLoading} onClick={() => { if (communityIdentity) { setCommunityForumLoading(true); setCommunityForumError(''); listCommunityThreads().then(setCommunityThreads).catch(error => setCommunityForumError(error instanceof Error ? error.message : 'Impossibile aggiornare la Bacheca.')).finally(() => setCommunityForumLoading(false)); } }}><RefreshCw size={15}/> Aggiorna</button>
+                  {communityIdentity && <button type="button" className="forum-v2-primary-action" onClick={() => setShowThreadComposer(open => !open)}>{showThreadComposer ? <X size={15}/> : <Plus size={16}/>} {showThreadComposer ? 'Chiudi' : 'Nuova discussione'}</button>}
                 </div>
               </div>
 
-              {!communityConfigured ? <div className="community-forum-empty"><strong>Bacheca in configurazione</strong><p>Il servizio online non è disponibile in questa versione. Riprova dopo il rilascio della build aggiornata.</p></div> : !communityIdentity ? <div className="forum-login-prompt"><div className="forum-prompt-icon"><GraduationCap size={24}/></div><div><strong>Accedi alla comunità</strong><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p></div><button type="button" className="secondary-button" onClick={() => navTo('profilo')}>Vai al Profilo <ChevronRight size={15}/></button></div> : <>
-                <div className="forum-community-stats">
-                  <div><span>DISCUSSIONI</span><strong>{communityThreads.length}</strong></div>
-                  <div><span>RISPOSTE</span><strong>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)}</strong></div>
-                  <div><span>LA TUA ACCADEMIA</span><strong>{communityIdentity.academy === 'arancia' ? 'Arancia' : communityIdentity.academy === 'uva' ? 'Uva' : 'Mirtillo'}</strong></div>
+              {!communityConfigured ? <div className="forum-v2-state-card"><Database size={24}/><div><strong>Bacheca in configurazione</strong><p>Il servizio online non è disponibile. Riprova dopo il rilascio della configurazione aggiornata.</p></div></div> : !communityIdentity ? <div className="forum-v2-state-card"><ShieldCheck size={24}/><div><strong>Accedi alla comunità</strong><p>Per leggere e pubblicare discussioni serve un’identità online verificata.</p></div><button type="button" className="forum-v2-primary-action" onClick={() => navTo('profilo')}>Vai al Profilo <ChevronRight size={15}/></button></div> : <>
+                <div className="forum-v2-stat-grid">
+                  <div><span>DISCUSSIONI</span><strong>{communityThreads.length}</strong><small>nella Bacheca</small></div>
+                  <div><span>RISPOSTE</span><strong>{communityThreads.reduce((sum, thread) => sum + (thread.posts?.length ?? 0), 0)}</strong><small>contributi degli allievi</small></div>
+                  <div><span>PREFERITI</span><strong>{forumFavorites.length}</strong><small>salvati per il tuo account</small></div>
                 </div>
-                {showThreadComposer && <form className="community-thread-form forum-composer" onSubmit={event => void submitCommunityThread(event)}>
-                  <div className="forum-composer-heading"><div><span className="section-label">CONTRIBUISCI ALLA BACHECA</span><h3>Apri una discussione</h3></div><button type="button" className="forum-icon-button" aria-label="Chiudi composizione" onClick={() => setShowThreadComposer(false)}><X size={17}/></button></div>
-                  <label>Titolo <input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Es. Consigli per completare Paldea"/></label>
-                  <div className="forum-form-row"><label>Area tematica <select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Generale</option><option value="domande">Domande</option><option value="strategie">Strategie</option><option value="annunci">Annunci</option></select></label><div className="forum-compose-hint"><Sparkles size={15}/><span>Scrivi un titolo chiaro e resta in tema con l’Accademia.</span></div></div>
-                  <label>Messaggio <textarea required maxLength={5000} rows={4} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Condividi la tua domanda o esperienza…"/></label>
-                  <div className="forum-composer-footer"><span>{communityThreadBody.length}/5000 caratteri</span><button type="submit" className="secondary-button" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>{communityForumLoading ? 'Pubblicazione…' : <><Plus size={15}/> Pubblica discussione</>}</button></div>
+
+                {showThreadComposer && <form className="forum-v2-composer" onSubmit={event => void submitCommunityThread(event)}>
+                  <div className="forum-v2-composer-heading"><div><span className="section-label">CONTRIBUISCI ALLA COMUNITÀ</span><h3>Nuova discussione</h3><p>Scrivi un titolo chiaro e aggiungi il contesto necessario.</p></div><button type="button" className="forum-v2-icon-button" aria-label="Chiudi composizione" onClick={() => setShowThreadComposer(false)}><X size={17}/></button></div>
+                  <label>Titolo della discussione<input required minLength={5} maxLength={120} value={communityThreadTitle} onChange={event => setCommunityThreadTitle(event.target.value)} placeholder="Es. Come completare il Pokédex di Paldea"/></label>
+                  <div className="forum-v2-form-row"><label>Sezione<select value={communityThreadCategory} onChange={event => setCommunityThreadCategory(event.target.value as CommunityCategory)}><option value="generale">Discussioni</option><option value="domande">Domande</option><option value="annunci">Annunci</option></select></label><span className="forum-v2-draft-status"><CheckCircle2 size={14}/>{forumDraftSaved ? 'Bozza salvata su questo dispositivo' : 'Bozza in preparazione'}</span></div>
+                  <label>Messaggio<textarea required maxLength={5000} rows={5} value={communityThreadBody} onChange={event => setCommunityThreadBody(event.target.value)} placeholder="Condividi la tua domanda, esperienza o strategia…"/></label>
+                  <div className="forum-v2-composer-footer"><span>{communityThreadBody.length.toLocaleString('it-IT')} / 5.000 caratteri · La bozza viene salvata automaticamente.</span><button type="submit" className="forum-v2-primary-action" disabled={communityForumLoading || communityThreadTitle.trim().length < 5 || !communityThreadBody.trim()}>{communityForumLoading ? <><RefreshCw size={15} className="forum-v2-spinning"/> Pubblicazione…</> : <><Plus size={15}/> Pubblica discussione</>}</button></div>
                 </form>}
 
-                <div className="forum-discovery">
-                  <div className="forum-search-box"><Search size={17}/><input aria-label="Cerca nella Bacheca" type="search" value={forumSearch} onChange={event => setForumSearch(event.target.value)} placeholder="Cerca titoli, messaggi o studenti…"/>{forumSearch && <button type="button" aria-label="Cancella ricerca" onClick={() => setForumSearch('')}><X size={15}/></button>}</div>
-                  <label className="forum-sort-control"><SlidersHorizontal size={15}/><span>Ordina</span><select aria-label="Ordina discussioni" value={forumSort} onChange={event => setForumSort(event.target.value as 'recenti' | 'attive')}><option value="recenti">Più recenti</option><option value="attive">Ultima attività</option></select></label>
+                <div className="forum-v2-discovery">
+                  <label className="forum-v2-search"><Search size={18}/><input aria-label="Cerca nella Bacheca" type="search" value={forumSearch} onChange={event => setForumSearch(event.target.value)} placeholder="Cerca titoli, messaggi, risposte o matricole…"/>{forumSearch && <button type="button" aria-label="Cancella ricerca" onClick={() => setForumSearch('')}><X size={15}/></button>}</label>
+                  <label className="forum-v2-sort"><SlidersHorizontal size={15}/><span>Ordina per</span><select aria-label="Ordina discussioni" value={forumSort} onChange={event => setForumSort(event.target.value as 'recenti' | 'attive')}><option value="recenti">Più recenti</option><option value="attive">Ultima attività</option></select></label>
                 </div>
-                <div className="forum-category-tabs" aria-label="Filtra per area tematica">
-                  {([{id:'tutte',label:'Tutte',icon:<Sparkles size={14}/>},{id:'generale',label:'Generale',icon:<MessageSquare size={14}/>},{id:'domande',label:'Domande',icon:<CircleHelp size={14}/>},{id:'strategie',label:'Strategie',icon:<Trophy size={14}/>},{id:'annunci',label:'Annunci',icon:<Bell size={14}/>} ] as {id:'tutte'|CommunityCategory;label:string;icon:ReactNode}[]).map(category => <button type="button" key={category.id} className={forumCategoryFilter===category.id?'active':''} aria-pressed={forumCategoryFilter===category.id} onClick={() => setForumCategoryFilter(category.id)}>{category.icon}{category.label}{category.id!=='tutte' && <span>{communityThreads.filter(thread=>thread.category===category.id).length}</span>}</button>)}
+
+                <div className="forum-v2-filters" aria-label="Filtra le discussioni">
+                  {([
+                    {id:'tutte',label:'Tutte',count:communityThreads.length,icon:<Sparkles size={15}/>},
+                    {id:'discussioni',label:'Discussioni',count:communityThreads.filter(thread => thread.category === 'generale' || thread.category === 'strategie').length,icon:<MessageSquare size={15}/>},
+                    {id:'domande',label:'Domande',count:communityThreads.filter(thread => thread.category === 'domande').length,icon:<CircleHelp size={15}/>},
+                    {id:'annunci',label:'Annunci',count:communityThreads.filter(thread => thread.category === 'annunci').length,icon:<Bell size={15}/>},
+                    {id:'preferiti',label:'Preferiti',count:forumFavorites.length,icon:<Bookmark size={15}/>}
+                  ] as {id:'tutte'|'discussioni'|'domande'|'annunci'|'preferiti';label:string;count:number;icon:ReactNode}[]).map(category => <button type="button" key={category.id} className={forumCategoryFilter === category.id ? 'is-active' : ''} aria-pressed={forumCategoryFilter === category.id} onClick={() => setForumCategoryFilter(category.id)}>{category.icon}<span>{category.label}</span><small>{category.count}</small></button>)}
                 </div>
-                {communityForumError && <p className="community-account-error" role="alert">{communityForumError}</p>}
-                {communityForumLoading && <p className="forum-loading" role="status"><span className="forum-loading-pulse"/> Aggiornamento della Bacheca…</p>}
-                {!communityForumLoading && visibleCommunityThreads.length===0 && <div className="forum-empty-state"><div className="forum-empty-icon"><Search size={22}/></div><strong>{communityThreads.length===0?'La Bacheca è pronta per la prima discussione':'Nessun risultato'}</strong><p>{communityThreads.length===0?'Avvia una conversazione e dai il via alla comunità.':'Prova a modificare la ricerca o selezionare un’altra area tematica.'}</p>{communityThreads.length===0 ? <button type="button" className="secondary-button" onClick={() => setShowThreadComposer(true)}><Plus size={15}/> Crea la prima discussione</button> : <button type="button" className="forum-clear-filters" onClick={() => {setForumSearch('');setForumCategoryFilter('tutte');}}>Azzera filtri</button>}</div>}
-                <div className="community-thread-list forum-thread-list">{visibleCommunityThreads.map(thread => <article className="community-thread-card forum-thread-card" key={thread.id}>
-                  <div className="community-thread-meta"><span>{({ generale: 'Generale', domande: 'Domande', strategie: 'Strategie', annunci: 'Annunci' } as Record<CommunityCategory, string>)[thread.category]}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleString('it-IT')}</time></div>
-                  <h3>{thread.title}</h3><p className="community-thread-author"><span className={thread.author?.academy==='uva'?'forum-author-avatar forum-avatar-grape':thread.author?.academy==='mirtillo'?'forum-author-avatar forum-avatar-blueberry':'forum-author-avatar'}>{(thread.author?.nickname??'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><strong>{thread.author?.nickname ?? 'Studente'}</strong><span className="forum-author-separator">·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span></p>
-                  <p className="community-thread-body">{thread.body}</p>
-                  <div className="forum-thread-footer"><span><MessageSquare size={14}/>{thread.posts?.length ?? 0} {(thread.posts?.length ?? 0)===1?'risposta':'risposte'}</span><button type="button" onClick={() => setCommunityReplyOpen(old => ({...old,[thread.id]:!old[thread.id]}))} className="forum-reply-action" aria-expanded={Boolean(communityReplyOpen[thread.id])} aria-label={`Rispondi a ${thread.title}`}>{communityReplyOpen[thread.id]?<X size={14}/>:<MessageSquare size={14}/>} {communityReplyOpen[thread.id]?'Annulla':'Rispondi'}</button></div>
-                  {(thread.posts ?? []).map(post => <div className="community-reply" key={post.id}><p>{post.body}</p><small>{post.author?.nickname ?? 'Studente'} · {new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
-                  {communityReplyOpen[thread.id] && <form className="community-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>La tua risposta</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={2} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({ ...old, [thread.id]: event.target.value }))} placeholder="Aggiungi un contributo…"/><div className="forum-reply-form-footer"><span>Max 2.000 caratteri</span><button type="submit" className="secondary-button" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>{communityForumLoading?'Invio…':'Invia risposta'}</button></div></form>}
-                </article>)}</div>
+
+                {communityForumError && <div className="forum-v2-error" role="alert"><CircleHelp size={18}/><div><strong>Operazione non riuscita</strong><p>{communityForumError}</p></div><button type="button" onClick={() => setCommunityForumError('')} aria-label="Chiudi messaggio"><X size={16}/></button></div>}
+                {communityForumLoading && <div className="forum-v2-loading" role="status"><span className="forum-v2-loading-pulse"/><span>Aggiornamento delle conversazioni…</span></div>}
+                {!communityForumLoading && visibleCommunityThreads.length === 0 && <div className="forum-v2-empty"><span><Search size={24}/></span><h3>{forumCategoryFilter === 'preferiti' ? 'Nessun preferito salvato' : communityThreads.length === 0 ? 'La Bacheca è pronta' : 'Nessuna discussione trovata'}</h3><p>{forumCategoryFilter === 'preferiti' ? 'Salva una discussione con il segnalibro per ritrovarla rapidamente.' : communityThreads.length === 0 ? 'Apri la prima conversazione e avvia lo scambio con gli altri allievi.' : 'Prova a cambiare ricerca o sezione.'}</p>{communityThreads.length === 0 && <button type="button" className="forum-v2-primary-action" onClick={() => setShowThreadComposer(true)}><Plus size={15}/> Crea la prima discussione</button>}{communityThreads.length > 0 && <button type="button" className="forum-v2-quiet-action" onClick={() => {setForumSearch('');setForumCategoryFilter('tutte');}}>Azzera filtri</button>}</div>}
+
+                <div className="forum-v2-thread-list">{visibleCommunityThreads.map(thread => {
+                  const isFavorite = forumFavorites.includes(thread.id);
+                  const categoryLabel = thread.category === 'domande' ? 'Domande' : thread.category === 'annunci' ? 'Annunci' : 'Discussioni';
+                  return <article className="forum-v2-thread-card" id={`discussione-${thread.id}`} key={thread.id}>
+                    <div className="forum-v2-thread-top"><span className={`forum-v2-category-tag category-${thread.category}`}>{thread.category === 'annunci' ? <Megaphone size={13}/> : thread.category === 'domande' ? <CircleHelp size={13}/> : <MessageSquare size={13}/>} {categoryLabel}</span><time dateTime={thread.created_at}>{new Date(thread.created_at).toLocaleDateString('it-IT', {day:'2-digit',month:'short',year:'numeric'})} · {new Date(thread.created_at).toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'})}</time></div>
+                    <h3>{thread.title}</h3>
+                    <div className="forum-v2-author"><span className={`forum-v2-avatar ${thread.author?.academy === 'uva' ? 'academy-uva' : thread.author?.academy === 'mirtillo' ? 'academy-mirtillo' : 'academy-arancia'}`}>{(thread.author?.matricola ?? 'S').slice(0,1).toLocaleUpperCase('it-IT')}</span><button type="button" disabled={!thread.author?.id} onClick={() => {if (thread.author?.id) setPublicProfileId(thread.author.id);}}>{thread.author?.matricola ?? 'Matricola non disponibile'}</button><span>·</span><span>{academyName(thread.author?.academy ?? 'arancia')}</span><span className="forum-v2-author-dot">·</span><span>{thread.posts?.length ?? 0} {(thread.posts?.length ?? 0) === 1 ? 'risposta' : 'risposte'}</span></div>
+                    <p className="forum-v2-thread-body">{thread.body}</p>
+                    <div className="forum-v2-thread-actions"><span><MessageCircle size={15}/>{thread.posts?.length ?? 0} risposte</span><div><button type="button" className={`forum-v2-action-button ${isFavorite ? 'is-saved' : ''}`} aria-pressed={isFavorite} onClick={() => setForumFavorites(current => {const next = current.includes(thread.id) ? current.filter(id => id !== thread.id) : [...current, thread.id]; try {localStorage.setItem(`poke-study-forum-favorites-v1-${communityIdentity.id}`, JSON.stringify(next));} catch {/* local storage is optional */} return next;})}>{isFavorite ? <BookmarkCheck size={15}/> : <Bookmark size={15}/>} {isFavorite ? 'Salvata' : 'Salva'}</button><a className="forum-v2-action-button" href={`#discussione-${thread.id}`} aria-label={`Link diretto a: ${thread.title}`}><Link2 size={15}/> Link diretto</a><button type="button" className="forum-v2-action-button forum-v2-reply-button" onClick={() => setCommunityReplyOpen(old => ({...old,[thread.id]:!old[thread.id]}))} aria-expanded={Boolean(communityReplyOpen[thread.id])}>{communityReplyOpen[thread.id] ? <X size={15}/> : <MessageSquare size={15}/>} {communityReplyOpen[thread.id] ? 'Chiudi risposte' : 'Rispondi'}</button></div></div>
+                    {(thread.posts ?? []).map(post => <div className="forum-v2-reply" key={post.id}><p>{post.body}</p><small><button type="button" disabled={!post.author?.id} onClick={() => {if (post.author?.id) setPublicProfileId(post.author.id);}}>{post.author?.matricola ?? 'Matricola non disponibile'}</button><span>·</span>{new Date(post.created_at).toLocaleString('it-IT')}</small></div>)}
+                    {communityReplyOpen[thread.id] && <form className="forum-v2-reply-form" onSubmit={event => void submitCommunityReply(event, thread.id)}><label htmlFor={`reply-${thread.id}`}>La tua risposta</label><textarea id={`reply-${thread.id}`} required maxLength={2000} rows={3} value={communityReplyDrafts[thread.id] ?? ''} onChange={event => setCommunityReplyDrafts(old => ({...old,[thread.id]:event.target.value}))} placeholder="Aggiungi un contributo utile…"/><div><span>Massimo 2.000 caratteri</span><button type="submit" className="forum-v2-primary-action" disabled={communityForumLoading || !(communityReplyDrafts[thread.id] ?? '').trim()}>{communityForumLoading ? 'Invio…' : 'Invia risposta'}</button></div></form>}
+                  </article>;
+                })}</div>
               </>}
             </section>
-
           </>}<footer className="site-footer"><div>© 2026 POKÉ STUDY · PORTALE DIDATTICO FAN-MADE</div><div>PROGETTO NON UFFICIALE · TUTTI I MARCHI AI RISPETTIVI PROPRIETARI</div></footer>
         </section>
       </main>
+      {publicProfileId && <PublicStudentProfile identityId={publicProfileId} species={species} onClose={() => setPublicProfileId(null)} />}
       {mobileMoreOpen && <div className="mobile-more-backdrop" onClick={() => setMobileMoreOpen(false)}>
         <section className="mobile-more-sheet" role="dialog" aria-modal="true" aria-label="Altre sezioni" onClick={event => event.stopPropagation()}>
           <div className="mobile-more-heading"><div><span>AREA ALLIEVO</span><strong>Altre sezioni</strong></div><button type="button" aria-label="Chiudi menu" onClick={() => setMobileMoreOpen(false)}><X size={19}/></button></div>
           <div className="mobile-more-grid">
-            <button type="button" onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio Nazionale</span>{!inventory.includes('national-catalog') && <small>Bloccato</small>}</button>
-            <button type="button" onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Cartoleria</span>{availableShopCount > 0 && <small>{availableShopCount} disponibili</small>}</button>
-            <button type="button" onClick={() => navTo('classifica')}><Trophy size={20}/><span>Classifica</span></button>
-            <button type="button" onClick={() => navTo('profilo')}><GraduationCap size={20}/><span>Profilo allievo</span></button>
-            <button type="button" onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
+            <button type="button" className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={20}/><span>Archivio Nazionale</span>{!inventory.includes('national-catalog') && <small>Bloccato</small>}</button>
+            <button type="button" className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Cartoleria</span>{availableShopCount > 0 && <small>{availableShopCount} disponibili</small>}</button>
+            <button type="button" className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={20}/><span>Classifica</span></button>
+            <button type="button" className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
+            {communityIdentity?.role === 'amministratore' && <button type="button" className={view === 'amministrazione' ? 'active' : ''} aria-current={view === 'amministrazione' ? 'page' : undefined} onClick={() => navTo('amministrazione')}><ShieldCheck size={20}/><span>Amministrazione</span></button>}
+            <button type="button" className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={20}/><span>Accademia</span></button>
           </div>
         </section>
       </div>}
@@ -1432,8 +1736,8 @@ export default function App() {
         <button className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => navTo('home')}><GraduationCap size={21}/><span>Portale</span></button>
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={21}/><span>Gioca</span></button>
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={21}/><span>Registro</span></button>
-        <button className={view === 'esami' ? 'active' : ''} aria-current={view === 'esami' ? 'page' : undefined} onClick={() => navTo('esami')}><GraduationCap size={21}/><span>Esami</span></button>
-        <button className={['pokedex','shop','classifica','profilo','forum'].includes(view) ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
+        <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={21}/><span>Accademia</span></button>
+        <button className={mobileMoreOpen ? 'active' : ''} aria-expanded={mobileMoreOpen} aria-haspopup="dialog" onClick={() => setMobileMoreOpen(open => !open)}><Menu size={21}/><span>Altro</span></button>
       </nav>
     </div>
   );

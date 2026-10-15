@@ -1,0 +1,34 @@
+{
+  "id": 334,
+  "name": "pokemon-tower-1f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pokemon-tower",
+    "url": "/api/v2/location/160/"
+  },
+  "names": [
+    {
+      "name": "Pokemon Tower (1F)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Pokémon-Turm (EG)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Tour Pokémon (RdC)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,202 @@
+{
+  "id": 912,
+  "name": "postwick-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "postwick",
+    "url": "/api/v2/location/924/"
+  },
+  "names": [
+    {
+      "name": "Postwick",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Paddoxton",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "grookey",
+        "url": "/api/v2/pokemon/810/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "scorbunny",
+        "url": "/api/v2/pokemon/813/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "sobble",
+        "url": "/api/v2/pokemon/816/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

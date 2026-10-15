@@ -1,0 +1,24 @@
+{
+  "id": 70,
+  "name": "story-progress-returned-machine-part",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Returned Machine Part to Power Plant",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir rapporté la pièce de machine à la centrale",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

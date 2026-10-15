@@ -1,0 +1,83 @@
+{
+  "id": 678,
+  "name": "chamber-of-emptiness",
+  "region": {
+    "name": "kalos",
+    "url": "/api/v2/region/6/"
+  },
+  "names": [
+    {
+      "name": "うつろのま",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "공허의 방",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Chambre Néant",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Kammer der Leere",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Estancia Vacua",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Stanza Vacua",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Chamber of Emptiness",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "空ろの間",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Estancia Vacua",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 144,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": []
+}

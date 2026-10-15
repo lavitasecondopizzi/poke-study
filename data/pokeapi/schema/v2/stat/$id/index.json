@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "game_index": {
+      "type": "integer"
+    },
+    "is_battle_only": {
+      "type": "boolean"
+    },
+    "affecting_moves": {
+      "type": "object",
+      "properties": {
+        "increase": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "change": {
+                "type": "integer"
+              },
+              "move": {
+                "$ref": "/schema/v2/named_api_resource.json"
+              }
+            },
+            "required": [
+              "change",
+              "move"
+            ]
+          }
+        },
+        "decrease": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "change": {
+                "type": "integer"
+              },
+              "move": {
+                "$ref": "/schema/v2/named_api_resource.json"
+              }
+            },
+            "required": [
+              "change",
+              "move"
+            ]
+          }
+        }
+      },
+      "required": [
+        "decrease",
+        "increase"
+      ]
+    },
+    "affecting_natures": {
+      "type": "object",
+      "properties": {
+        "increase": {
+          "type": "array",
+          "items": {
+            "$ref": "/schema/v2/named_api_resource.json"
+          }
+        },
+        "decrease": {
+          "type": "array",
+          "items": {
+            "$ref": "/schema/v2/named_api_resource.json"
+          }
+        }
+      },
+      "required": [
+        "decrease",
+        "increase"
+      ]
+    },
+    "affecting_items": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/named_api_resource.json"
+      }
+    },
+    "characteristics": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/api_resource.json"
+      }
+    },
+    "move_damage_class": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "/schema/v2/named_api_resource.json"
+        }
+      ]
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/name.json"
+      }
+    }
+  },
+  "required": [
+    "affecting_items",
+    "affecting_moves",
+    "affecting_natures",
+    "characteristics",
+    "game_index",
+    "id",
+    "is_battle_only",
+    "move_damage_class",
+    "name",
+    "names"
+  ]
+}

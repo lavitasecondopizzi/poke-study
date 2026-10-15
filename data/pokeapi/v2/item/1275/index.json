@@ -1,0 +1,247 @@
+{
+  "id": 1275,
+  "name": "tr87",
+  "fling_power": 80,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "all-machines",
+    "url": "/api/v2/item-category/37/"
+  },
+  "effect_entries": [],
+  "flavor_text_entries": [
+    {
+      "text": "ドリルのように　からだを　かいてん\nしながら　あいてに　たいあたりする。\nきゅうしょに　あたりやすい。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "text": "드릴처럼 몸을 회전시켜서\n상대에게 몸통박치기한다.\n급소에 맞기 쉽다.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "text": "像鑽頭一樣旋轉身體，\n猛烈地撞擊對手。\n容易擊中要害。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "text": "Le lanceur tourne sur lui-même comme une perceuse\net se jette sur l’ennemi. Taux de critiques élevé.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "text": "Anwender rammt das Ziel, während er seinen Körper\nwie einen Bohrer dreht. Hohe Volltrefferquote.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "text": "El usuario golpea usando su cuerpo como un taladro.\nSuele ser crítico.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "text": "Chi la usa si scaglia sul bersaglio ruotando su se stesso\ncome un trapano perforante. Probabile brutto colpo.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "text": "The user crashes into its target while rotating its\nbody like a drill. Critical hits land more easily.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "ドリルのように　体を　回転しながら\n相手に　体当たりする。\n急所に　当たりやすい。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "text": "像钢钻一样，\n一边旋转身体一边撞击对手。\n容易击中要害。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "text": "El usuario golpea usando su cuerpo como un taladro.\nSuele ser crítico.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 1217,
+      "generation": {
+        "name": "generation-viii",
+        "url": "/api/v2/generation/8/"
+      }
+    },
+    {
+      "game_index": 1217,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "わざレコード８７",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "기술레코드87",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "招式紀錄８７",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "DT87",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "TP87",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "DT87",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "DT87",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "TR87",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "わざレコード８７",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "招式记录８７",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "DT87",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": null
+  },
+  "baby_trigger_for": null,
+  "machines": [
+    {
+      "machine": {
+        "url": "/api/v2/machine/1786/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ]
+}

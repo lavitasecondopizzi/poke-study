@@ -1,0 +1,41 @@
+{
+  "id": 815,
+  "name": "cabo-poco",
+  "region": {
+    "name": "paldea",
+    "url": "/api/v2/region/10/"
+  },
+  "names": [
+    {
+      "name": "Cuchalaga",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Cucharico",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cabo Poco",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 80,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "areas": []
+}

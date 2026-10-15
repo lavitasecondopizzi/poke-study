@@ -1,0 +1,12 @@
+{
+  "id": 960,
+  "name": "clamberclaw-cliffs-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "clamberclaw-cliffs",
+    "url": "/api/v2/location/966/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

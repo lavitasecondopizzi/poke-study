@@ -1,0 +1,38 @@
+{
+  "id": 328,
+  "name": "pokemon-event-08",
+  "region": null,
+  "names": [
+    {
+      "name": "Evén. Pokémon 08",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pokémon Event 08",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 3063,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": 158,
+  "name": "trade-golduck",
+  "condition": {
+    "name": "trade",
+    "url": "/api/v2/encounter-condition/15/"
+  },
+  "names": [
+    {
+      "name": "Give Golduck in a Trade",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

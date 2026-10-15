@@ -1,0 +1,160 @@
+{
+  "id": 301,
+  "name": "hospitality",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "おもてなし",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "대접",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "款待",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Aux Petits Soins",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Gastlichkeit",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Hospitalidad",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Ospitalità",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Hospitality",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "おもてなし",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "款待",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Hospitalidad",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Quand le Pokémon entre au combat, il comble son allié d'hospitalité, rendant une petite quantité des PV des alliés.",
+      "short_effect": "Quand un Pokémon avec Aux Petits Soins entre au combat, il restaure les PV d’un allié de 25%.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "When the Pokémon enters a battle, it showers its ally with hospitality, restoring a small amount of the ally's HP.",
+      "short_effect": "When a Pokémon with Hospitality enters a battle, it restores HP for an ally by 25%.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Quand il rejoint le combat, ce Pokémon est aux petits\\nsoins avec son allié et restaure quelques PV.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "When the Pokémon enters a battle, it showers its ally with hospitality, restoring a small amount of the ally's HP",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    },
+    {
+      "flavor_text": "登場したとき　味方を　もてなして\nHPを　少しだけ　回復してあげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "poltchageist",
+        "url": "/api/v2/pokemon/1012/"
+      }
+    },
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "sinistcha",
+        "url": "/api/v2/pokemon/1013/"
+      }
+    }
+  ]
+}

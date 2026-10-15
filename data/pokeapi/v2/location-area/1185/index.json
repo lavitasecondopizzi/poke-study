@@ -1,0 +1,34 @@
+{
+  "id": 1185,
+  "name": "scorched-slab-1f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "scorched-slab",
+    "url": "/api/v2/location/580/"
+  },
+  "names": [
+    {
+      "name": "Scorched Slab (1F)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Sonnengrotte (EG)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Grotte Zénith (RdC)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

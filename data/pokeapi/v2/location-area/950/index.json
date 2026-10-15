@@ -1,0 +1,12 @@
+{
+  "id": 950,
+  "name": "avalanche-slopes-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "avalanche-slopes",
+    "url": "/api/v2/location/956/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

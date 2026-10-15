@@ -1,0 +1,719 @@
+{
+  "id": 715,
+  "name": "kalos-route-4-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "kalos-route-4",
+    "url": "/api/v2/location/597/"
+  },
+  "names": [
+    {
+      "name": "Road 4",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 4",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Route 4",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "ledyba",
+        "url": "/api/v2/pokemon/165/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "ralts",
+        "url": "/api/v2/pokemon/280/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 5,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "skitty",
+        "url": "/api/v2/pokemon/300/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "budew",
+        "url": "/api/v2/pokemon/406/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "combee",
+        "url": "/api/v2/pokemon/415/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "flabebe",
+        "url": "/api/v2/pokemon/669/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 4,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 1,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 4,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 1,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 4,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 1,
+              "method": {
+                "name": "yellow-flowers",
+                "url": "/api/v2/encounter-method/14/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 6,
+              "max_level": 6,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 10,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 7,
+              "max_level": 7,
+              "chance": 4,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 8,
+              "max_level": 8,
+              "chance": 1,
+              "method": {
+                "name": "red-flowers",
+                "url": "/api/v2/encounter-method/16/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

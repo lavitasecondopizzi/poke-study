@@ -1,0 +1,12 @@
+{
+  "id": 952,
+  "name": "bathers-lagoon-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "bathers-lagoon",
+    "url": "/api/v2/location/958/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

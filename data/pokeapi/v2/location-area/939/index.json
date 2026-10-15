@@ -1,0 +1,76 @@
+{
+  "id": 939,
+  "name": "turffield-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "turffield",
+    "url": "/api/v2/location/945/"
+  },
+  "names": [
+    {
+      "name": "Turffield",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Greenbury",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "crawdaunt",
+        "url": "/api/v2/pokemon/342/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

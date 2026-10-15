@@ -51,7 +51,7 @@ export function pokemonCard(pokemon: PokemonSpecies): CatalogCard {
   const region = regions.find(candidate => pokemon.id >= candidate.start && pokemon.id <= candidate.end) ?? regions[0];
   return {
     id: `pokemon:${pokemon.id}`,
-    name: pokemon.name,
+    name: pokemon.localizedName ?? pokemon.name,
     kind: 'pokemon',
     imageUrl: `${import.meta.env.BASE_URL}images/pokemon/${pokemon.id}.png`,
     macroId: 'pokemon',
@@ -107,7 +107,7 @@ export function itemCard(item: ApiNamedResource): CatalogCard {
 
   return {
     id: `item:${name}`,
-    name,
+    name: item.localizedName ?? titleCase(name.replace(/-/g, ' ')),
     kind: 'item',
     imageUrl: `${import.meta.env.BASE_URL}images/items/${name}.png`,
     macroId,

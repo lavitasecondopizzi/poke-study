@@ -1,0 +1,12 @@
+{
+  "id": 989,
+  "name": "icepeak-arena-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "icepeak-arena",
+    "url": "/api/v2/location/995/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

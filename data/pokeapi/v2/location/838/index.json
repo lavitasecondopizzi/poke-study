@@ -1,0 +1,41 @@
+{
+  "id": 838,
+  "name": "alfornada-cavern",
+  "region": {
+    "name": "paldea",
+    "url": "/api/v2/region/10/"
+  },
+  "names": [
+    {
+      "name": "Grotte d'Alforneira",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Asarilla-Grotte",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Alfornada Cavern",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 67,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "areas": []
+}

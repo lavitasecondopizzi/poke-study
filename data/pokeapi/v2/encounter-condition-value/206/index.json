@@ -1,0 +1,17 @@
+{
+  "id": 206,
+  "name": "save-data-from-lets-go-pikachu",
+  "condition": {
+    "name": "save-data",
+    "url": "/api/v2/encounter-condition/23/"
+  },
+  "names": [
+    {
+      "name": "Have save data from Let's Go Pikachu",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

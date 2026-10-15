@@ -1,0 +1,102 @@
+{
+  "id": 771,
+  "name": "blush-mountain",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "ホテリやま",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "화끈산",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "火特力山",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Mont Ardent",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Glühberg",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Monte Rubor",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Monte Tepore",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Blush Mountain",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ホテリ山",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "火特力山",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Monte Rubor",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 138,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "blush-mountain-area",
+      "url": "/api/v2/location-area/1073/"
+    }
+  ]
+}

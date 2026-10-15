@@ -1,0 +1,274 @@
+{
+  "id": 769,
+  "name": "max-mindstorm",
+  "accuracy": null,
+  "effect_chance": 100,
+  "pp": 10,
+  "priority": 0,
+  "power": 10,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Change le terrain en Champ Psychique pendant 5 tours.  Écrase Champ Électrifié, Champ Herbu, et Champ Brumeux.\n\nTous les Pokémon au sol sont immunisés contre les capacités avec une priorité supérieure à 0.  (Les capacités qui ciblent le terrain plutôt qu'un Pokémon individuel, telles que Picots, ne sont pas affectées.)  De plus, quand un Pokémon au sol utilise une capacité de type Psy, la puissance de cette capacité est augmentée de 1.5×.\n\nSi un Pokémon tient un Champ'Duit en créant le Champ Psychique (par n'importe quel moyen), l'effet durera 8 tours au lieu de 5.",
+      "short_effect": "Protège les Pokémon au sol des capacités prioritaires et augmente la puissance de leurs capacités Psy de 50%.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Changes the terrain to Psychic Terrain for 5 turns.  Overrides Electric Terrain, Grassy Terrain, and Misty Terrain.\n\nAll Pokémon on the ground are immune to moves with priority greater than 0.  (Moves that target the field rather than individual Pokémon, such as Spikes, are not affected.)  Additionally, when a Pokémon on the ground uses a Psychic-type move, that move’s power is increased to 1.5×.\n\nIf a Pokémon is holding a Terrain Extender when creating Psychic Terrain (by any means), the effect lasts for 8 turns instead of 5.",
+      "short_effect": "Protects Pokémon on the ground from priority moves and increases the power of their  Psychic moves by 50%.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-viii",
+    "url": "/api/v2/generation/8/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage",
+      "url": "/api/v2/move-category/0/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ダイサイコ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "다이사이코",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "極巨超能",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Psychomax",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Dyna-Kinese",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Maxionda",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Dynapsiche",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Max Mindstorm",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ダイサイコ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "极巨超能",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Maxionda",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon-me-first",
+    "url": "/api/v2/move-target/2/"
+  },
+  "type": {
+    "name": "psychic",
+    "url": "/api/v2/type/14/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\nくりだす　エスパータイプの　こうげき。\n５ターンのあいだ　サイコフィールドにする。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "다이맥스한 포켓몬이 날리는\n에스퍼타입의 공격.\n5턴 동안 사이코필드로 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "極巨化寶可夢\n所使出的超能力屬性攻擊。\n可在５回合內將腳下變成精神場地。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Une attaque de type Psy que seuls\nles Pokémon Dynamax peuvent utiliser.\nCrée un Champ Psychique qui dure cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Eine Psycho-Attacke, die nur Dynamax-Pokémon\neinsetzen können. Erzeugt fünf Runden lang ein\nPsychofeld.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Psíquico ejecutado por un Pokémon\nDinamax. Crea un campo psíquico durante cinco turnos.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Un attacco di tipo Psico che può essere eseguito\ndai Pokémon dynamaxizzati. Per cinque turni il terreno\nentra nello stato di Campo Psichico.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This is a Psychic-type attack Dynamax Pokémon use.\nThe user turns the ground into Psychic Terrain for\nfive turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\n繰りだす　エスパータイプの　攻撃。\n５ターンの　間　サイコフィールドにする。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "极巨化宝可梦使出的超能力属性攻击。\n可在５回合内将脚下变成精神场地。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Psíquico ejecutado por un Pokémon\nDinamax. Crea un campo psíquico durante cinco turnos.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "learned_by_pokemon": []
+}

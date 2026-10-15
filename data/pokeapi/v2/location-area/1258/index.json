@@ -1,0 +1,112 @@
+{
+  "id": 1258,
+  "name": "snagem-hideout-2f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "snagem-hideout",
+    "url": "/api/v2/location/1097/"
+  },
+  "names": [
+    {
+      "name": "Snagem Hideout 2F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Repaire Team Snatch (1e ét.)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "ursaring",
+        "url": "/api/v2/pokemon/217/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 45,
+              "max_level": 45,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "skarmory",
+        "url": "/api/v2/pokemon/227/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "smeargle",
+        "url": "/api/v2/pokemon/235/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 45,
+              "max_level": 45,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

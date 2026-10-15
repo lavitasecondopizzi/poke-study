@@ -1,0 +1,93 @@
+{
+  "id": 790,
+  "name": "violet-city-poke-mart",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "violet-city",
+    "url": "/api/v2/location/153/"
+  },
+  "names": [
+    {
+      "name": "Violet City (Poke Mart)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Viola City (Pokémon-Markt)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Mauville (Boutique Pokémon)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "togepi",
+        "url": "/api/v2/pokemon/175/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-zephyr-badge",
+                  "url": "/api/v2/encounter-condition-value/54/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-zephyr-badge",
+                  "url": "/api/v2/encounter-condition-value/54/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

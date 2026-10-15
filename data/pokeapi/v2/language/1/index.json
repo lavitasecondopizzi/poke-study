@@ -1,0 +1,72 @@
+{
+  "id": 1,
+  "name": "ja-hrkt",
+  "official": true,
+  "iso639": "ja",
+  "iso3166": "jp",
+  "names": [
+    {
+      "name": "日本語 (仮名)",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "일본어 히라가나와 가타카나",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Japonais Hiragana et Katakana",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Japanisch Hiragana und Katakana",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Japonés Hiragana y Katakana",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Giapponese Hiragana e Katakana",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Japanese Hiragana and Katakana",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Japonês em Hiragana e Katakana",
+      "language": {
+        "name": "pt-br",
+        "url": "/api/v2/language/13/"
+      }
+    },
+    {
+      "name": "Japonés Hiragana y Katakana",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

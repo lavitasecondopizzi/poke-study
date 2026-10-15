@@ -1,0 +1,12 @@
+{
+  "id": 961,
+  "name": "cloudcap-pass-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cloudcap-pass",
+    "url": "/api/v2/location/967/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

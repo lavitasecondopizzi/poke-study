@@ -1,0 +1,24 @@
+{
+  "id": 1118,
+  "name": "roaming-isle-of-armor",
+  "region": {
+    "name": "galar",
+    "url": "/api/v2/region/8/"
+  },
+  "names": [
+    {
+      "name": "Roaming the Isle of Armor",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "roaming-isle-of-armor-area",
+      "url": "/api/v2/location-area/1381/"
+    }
+  ]
+}

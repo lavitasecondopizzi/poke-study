@@ -1,0 +1,4714 @@
+{
+  "id": 870,
+  "name": "courageous-cavern-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "courageous-cavern",
+    "url": "/api/v2/location/887/"
+  },
+  "names": [
+    {
+      "name": "Courageous Cavern",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Caverne Pugnacité",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "tentacool",
+        "url": "/api/v2/pokemon/72/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 120,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 45,
+              "chance": 60,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 60,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 120,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 45,
+              "chance": 60,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 60,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "tentacruel",
+        "url": "/api/v2/pokemon/73/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "shellder",
+        "url": "/api/v2/pokemon/90/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 80,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 80,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "cloyster",
+        "url": "/api/v2/pokemon/91/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "chansey",
+        "url": "/api/v2/pokemon/113/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 24,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 24,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "magikarp",
+        "url": "/api/v2/pokemon/129/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 21,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "blissey",
+        "url": "/api/v2/pokemon/242/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 4,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 4,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 2,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "whiscash",
+        "url": "/api/v2/pokemon/340/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer-water",
+                "url": "/api/v2/encounter-method/58/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "woobat",
+        "url": "/api/v2/pokemon/527/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 224,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 224,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "swoobat",
+        "url": "/api/v2/pokemon/528/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "dwebble",
+        "url": "/api/v2/pokemon/557/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "crustle",
+        "url": "/api/v2/pokemon/558/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "druddigon",
+        "url": "/api/v2/pokemon/621/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 42,
+              "max_level": 42,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "wimpod",
+        "url": "/api/v2/pokemon/767/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 224,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 224,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 16,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "golisopod",
+        "url": "/api/v2/pokemon/768/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 32,
+              "max_level": 32,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 32,
+              "max_level": 32,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "chewtle",
+        "url": "/api/v2/pokemon/833/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 984,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 16,
+              "chance": 100,
+              "method": {
+                "name": "overworld-dirt",
+                "url": "/api/v2/encounter-method/56/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "overworld-dirt",
+                "url": "/api/v2/encounter-method/56/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 984,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 16,
+              "chance": 100,
+              "method": {
+                "name": "overworld-dirt",
+                "url": "/api/v2/encounter-method/56/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "overworld-dirt",
+                "url": "/api/v2/encounter-method/56/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 56,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "drednaw",
+        "url": "/api/v2/pokemon/834/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 200,
+          "encounter_details": [
+            {
+              "min_level": 28,
+              "max_level": 28,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "clobbopus",
+        "url": "/api/v2/pokemon/852/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 80,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 45,
+              "chance": 40,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 40,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 80,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 45,
+              "chance": 40,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 40,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "pincurchin",
+        "url": "/api/v2/pokemon/871/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-isle-of-armor-sword",
+            "url": "/api/v2/version/35/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-isle-of-armor-shield",
+            "url": "/api/v2/version/50/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-normal",
+                  "url": "/api/v2/encounter-condition-value/247/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-overcast",
+                  "url": "/api/v2/encounter-condition-value/248/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-raining",
+                  "url": "/api/v2/encounter-condition-value/249/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-thunderstorm",
+                  "url": "/api/v2/encounter-condition-value/250/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-intense-sun",
+                  "url": "/api/v2/encounter-condition-value/254/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-sandstorm",
+                  "url": "/api/v2/encounter-condition-value/253/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 13,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-before-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/256/"
+                }
+              ],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [
+                {
+                  "name": "weather-fog",
+                  "url": "/api/v2/encounter-condition-value/255/"
+                },
+                {
+                  "name": "story-progress-hall-of-fame",
+                  "url": "/api/v2/encounter-condition-value/35/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": 1093,
+  "name": "lake-of-the-sunne-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "lake-of-the-sunne",
+    "url": "/api/v2/location/773/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "cosmog",
+        "url": "/api/v2/pokemon/789/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sun",
+            "url": "/api/v2/version/27/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": 149,
+  "name": "unknown-all-rattata",
+  "region": {
+    "name": "johto",
+    "url": "/api/v2/region/2/"
+  },
+  "names": [
+    {
+      "name": "Inconnu; que des Rattata",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Unbekannt; nur Rattfratz",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Unknown; all Rattata",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "unknown-all-rattata-area",
+      "url": "/api/v2/location-area/275/"
+    }
+  ]
+}

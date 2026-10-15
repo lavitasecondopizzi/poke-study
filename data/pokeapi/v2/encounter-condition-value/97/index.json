@@ -1,0 +1,24 @@
+{
+  "id": 97,
+  "name": "other-tornadus-thundurus-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have Tornadus and Thundurus in party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir Boréas et Fulguris dans l'équipe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

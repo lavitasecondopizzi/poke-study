@@ -6,6 +6,31 @@
 import type { SavedProgress, StudentProfile } from "./types";
 export type CommunityAcademy = "arancia" | "uva" | "mirtillo";
 export type CommunityCategory = "generale" | "domande" | "strategie" | "annunci";
+export type CommunityRole = "utente" | "collaboratore_autorizzato" | "moderatore" | "amministratore";
+export const COMMUNITY_ROLE_LABELS: Record<CommunityRole, string> = {
+  utente: "Utente",
+  collaboratore_autorizzato: "Collaboratore autorizzato",
+  moderatore: "Moderatore",
+  amministratore: "Amministratore",
+};
+
+export interface CommunityAdminUser {
+  id: string;
+  nickname: string;
+  matricola: string;
+  academy: CommunityAcademy;
+  role: CommunityRole;
+  created_at: string;
+}
+
+export interface CommunityAdminAuditEntry {
+  id: number;
+  actor_id: string;
+  target_id: string;
+  old_role: CommunityRole;
+  new_role: CommunityRole;
+  created_at: string;
+}
 
 export interface CommunityIdentity {
   id: string;
@@ -13,10 +38,12 @@ export interface CommunityIdentity {
   academy: CommunityAcademy;
   matricola: string;
   created_at: string;
+  role: CommunityRole;
 }
 
 export interface CommunityAuthor {
-  nickname: string;
+  id?: string;
+  matricola: string;
   academy: CommunityAcademy;
 }
 
@@ -48,10 +75,31 @@ const TOKEN_KEY = "poke-study-community-token-v1";
 const METADATA_FORMAT = "poke-study-community-account";
 const METADATA_VERSION = 1;
 
+export interface PublicStudentProfile {
+  id: string;
+  matricola: string;
+  academy: CommunityAcademy;
+  avatarId: number | null;
+  bio?: string;
+  favoritePokemon?: string;
+  motto?: string;
+  activeTitle?: string;
+  badges?: string[];
+  frame: string;
+  catalogStats?: { completedPokemon: number; completedEntries: number; points: number };
+  communityStats?: { discussions: number; replies: number };
+  academicGrade?: number;
+}
+
+export interface CommunityPublicActivity {
+  discussions: number;
+  replies: number;
+}
+
 export interface CommunityRankingEntry {
   id: string;
   rank: number;
-  nickname: string;
+  matricola: string;
   academy: CommunityAcademy;
   avatarId: number | null;
   points: number;
@@ -67,7 +115,7 @@ export interface CommunityRankingResponse {
 }
 
 export interface CommunityPlayerState {
-  profile: Pick<StudentProfile, "matricola" | "avatarId"> | null;
+  profile: Pick<StudentProfile, "matricola" | "avatarId" | "profileSettings"> | null;
   progress: SavedProgress | null;
   updatedAt: string | null;
 }
@@ -152,7 +200,7 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   const token = readToken();
   if (!token) throw new Error("Nessuna identità community disponibile per salvare i progressi.");
   const snapshot = {
-    profile: { avatarId: profile.avatarId ?? null },
+    profile: { avatarId: profile.avatarId ?? null, ...(profile.profileSettings ? { profileSettings: profile.profileSettings } : {}) },
     progress,
   };
   const write = pendingPlayerStateWrite.then(async () => {
@@ -160,6 +208,18 @@ export async function saveCommunityPlayerState(profile: StudentProfile, progress
   });
   pendingPlayerStateWrite = write.catch(() => undefined);
   await write;
+}
+
+export async function getPublicStudentProfile(identityId: string): Promise<PublicStudentProfile> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  return await call<PublicStudentProfile>("get_public_profile", { identityId }, token);
+}
+
+export async function getCommunityPublicActivity(): Promise<CommunityPublicActivity> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  return await call<CommunityPublicActivity>("get_my_public_activity", {}, token);
 }
 
 export async function listCommunityThreads(): Promise<CommunityThread[]> {
@@ -237,4 +297,48 @@ export async function listCommunityRanking(): Promise<CommunityRankingResponse> 
   const token = readToken();
   if (!token) throw new Error("Registra o importa prima la tua identità community per consultare la classifica.");
   return await call<CommunityRankingResponse>("list_leaderboard", {}, token);
+}
+
+
+/** Calls the academic Edge Function with the existing verified private account token. */
+export async function callAcademyService<T>(
+  action: string,
+  payload: Record<string, unknown> = {},
+): Promise<T> {
+  const config = configuration();
+  if (!config) throw new Error("Servizio accademico non configurato: imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.");
+  const token = readToken();
+  if (!token) throw new Error("Importa o verifica prima la tua identità online dal Profilo.");
+  const response = await fetch(`${config.url}/functions/v1/academy`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: config.anonKey,
+      Authorization: `Bearer ${config.anonKey}`,
+    },
+    body: JSON.stringify({ action, ...payload, token }),
+  });
+  const result = await response.json().catch(() => ({})) as CommunityResponse<T>;
+  if (!response.ok) throw new Error(result.error || `Errore accademico (${response.status}).`);
+  return result as T;
+}
+
+export async function listCommunityAdminUsers(): Promise<CommunityAdminUser[]> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  const result = await call<{ users: CommunityAdminUser[] }>("admin_list_users", {}, token);
+  return result.users;
+}
+
+export async function listCommunityAdminAudit(): Promise<CommunityAdminAuditEntry[]> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  const result = await call<{ entries: CommunityAdminAuditEntry[] }>("admin_list_audit", {}, token);
+  return result.entries;
+}
+
+export async function setCommunityUserRole(targetId: string, role: CommunityRole): Promise<void> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  await call<{ updated: boolean }>("admin_set_role", { targetId, role }, token);
 }

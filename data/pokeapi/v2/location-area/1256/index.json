@@ -1,0 +1,56 @@
+{
+  "id": 1256,
+  "name": "the-under-tv-studio",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "the-under",
+    "url": "/api/v2/location/1104/"
+  },
+  "names": [
+    {
+      "name": "The Under (TV Studio)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Suerebe (Studio TV)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "suicune",
+        "url": "/api/v2/pokemon/245/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

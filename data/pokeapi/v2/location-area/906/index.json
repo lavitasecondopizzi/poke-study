@@ -1,0 +1,172 @@
+{
+  "id": 906,
+  "name": "motostoke-main",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "motostoke",
+    "url": "/api/v2/location/918/"
+  },
+  "names": [
+    {
+      "name": "Motostoke",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Motorby",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "magikarp",
+        "url": "/api/v2/pokemon/129/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 50,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 50,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 50,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "barboach",
+        "url": "/api/v2/pokemon/339/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "chewtle",
+        "url": "/api/v2/pokemon/833/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 7,
+              "max_level": 11,
+              "chance": 40,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

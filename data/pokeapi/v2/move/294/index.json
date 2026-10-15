@@ -1,0 +1,1025 @@
+{
+  "id": 294,
+  "name": "tail-glow",
+  "accuracy": null,
+  "effect_chance": null,
+  "pp": 20,
+  "priority": 0,
+  "power": null,
+  "contest_combos": null,
+  "contest_type": {
+    "name": "beauty",
+    "url": "/api/v2/contest-type/2/"
+  },
+  "contest_effect": {
+    "url": "/api/v2/contest-effect/32/"
+  },
+  "damage_class": {
+    "name": "status",
+    "url": "/api/v2/move-damage-class/1/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Augmente l'Attaque spéciale du lanceur de trois niveaux.",
+      "short_effect": "Augmente l'Attaque Spéciale du lanceur de trois niveaux.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Raises the user’s Special Attack by three stages.",
+      "short_effect": "Raises the user’s Special Attack by three stages.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-iii",
+    "url": "/api/v2/generation/3/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "net-good-stats",
+      "url": "/api/v2/move-category/2/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ほたるび",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "반딧불",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "螢火",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Lumi-Queue",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Schweifglanz",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Luminicola",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Codadiluce",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Tail Glow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ほたるび",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "萤火",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Luminicola",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [
+    {
+      "accuracy": null,
+      "power": null,
+      "pp": null,
+      "effect_chance": null,
+      "effect_entries": [
+        {
+          "effect": "Augmente l'Attaque Spéciale du lanceur de deux niveaux.",
+          "short_effect": "Augmente l'Attaque Spéciale du lanceur de deux niveaux.",
+          "language": {
+            "name": "fr",
+            "url": "/api/v2/language/5/"
+          }
+        },
+        {
+          "effect": "Raises the user’s Special Attack by two stages.",
+          "short_effect": "Raises the user’s Special Attack by two stages.",
+          "language": {
+            "name": "en",
+            "url": "/api/v2/language/9/"
+          }
+        }
+      ],
+      "type": null,
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    }
+  ],
+  "stat_changes": [
+    {
+      "change": 3,
+      "stat": {
+        "name": "special-attack",
+        "url": "/api/v2/stat/4/"
+      }
+    }
+  ],
+  "super_contest_effect": {
+    "url": "/api/v2/super-contest-effect/11/"
+  },
+  "target": {
+    "name": "user",
+    "url": "/api/v2/move-target/7/"
+  },
+  "type": {
+    "name": "bug",
+    "url": "/api/v2/type/7/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Flashes a light that sharply\nraises SP. ATK.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ruby-sapphire",
+        "url": "/api/v2/version-group/5/"
+      }
+    },
+    {
+      "flavor_text": "Flashes a light that sharply\nraises SP. ATK.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      }
+    },
+    {
+      "flavor_text": "The user flashes a\nlight that sharply\nraises its SP. ATK\nstat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at\nflashing lights to\nfocus its mind,\nsharply raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "diamond-pearl",
+        "url": "/api/v2/version-group/8/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at\nflashing lights to\nfocus its mind,\nsharply raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "platinum",
+        "url": "/api/v2/version-group/9/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at\nflashing lights to\nfocus its mind,\nsharply raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "heartgold-soulsilver",
+        "url": "/api/v2/version-group/10/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux\nfixement. Augmente considérablement\nson Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to\nfocus its mind, drastically raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-white",
+        "url": "/api/v2/version-group/11/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to\nfocus its mind, drastically raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "black-2-white-2",
+        "url": "/api/v2/version-group/14/"
+      }
+    },
+    {
+      "flavor_text": "てんめつする　ひかりを　ながめて\nじぶんの　せいしんを　とういつし\nとくこうを　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "깜빡거리는 빛을 바라보고\n자신의 정신을 통일하여\n특수공격을 매우 크게 올린다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux fixement.\nAugmente considérablement son Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Ein blinkendes Licht, das den Spezial-Angriff\ndrastisch erhöht.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa fissa una luce forte per concentrarsi\ne aumentare moltissimo l’Attacco Speciale.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to\nfocus its mind, drastically raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "点滅する　光を　眺めて\n自分の　精神を　統一し\n特攻を　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "x-y",
+        "url": "/api/v2/version-group/15/"
+      }
+    },
+    {
+      "flavor_text": "てんめつする　ひかりを　ながめて\nじぶんの　せいしんを　とういつし\nとくこうを　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "깜빡거리는 빛을 바라보고\n자신의 정신을 통일하여\n특수공격을 매우 크게 올린다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux fixement.\nAugmente considérablement son Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Ein blinkendes Licht, das den Spezial-Angriff\ndrastisch erhöht.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa fissa una luce forte per concentrarsi\ne aumentare moltissimo l’Attacco Speciale.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to\nfocus its mind, drastically raising its\nSp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "点滅する　光を　眺めて\n自分の　精神を　統一し\n特攻を　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "てんめつする　ひかりを　ながめて\nじぶんの　せいしんを　とういつし\nとくこうを　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "깜빡거리는 빛을 바라보고\n자신의 정신을 통일하여\n특수공격을 매우 크게 올린다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "凝視閃爍的光芒，\n集中精神，\n極大幅提高自己的特攻。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux fixement.\nAugmente énormément son Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ein blinkendes Licht, das den Spezial-Angriff\ndrastisch erhöht.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa fissa una luce forte per concentrarsi\ne aumentare moltissimo l’Attacco Speciale.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to focus its mind,\ndrastically raising its Sp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "点滅する　光を　眺めて\n自分の　精神を　統一し\n特攻を　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "凝视闪烁的光芒，\n集中自己的精神，\n从而巨幅提高特攻。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "てんめつする　ひかりを　ながめて\nじぶんの　せいしんを　とういつし\nとくこうを　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "깜빡거리는 빛을 바라보고\n자신의 정신을 통일하여\n특수공격을 매우 크게 올린다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "凝視閃爍的光芒，\n集中精神，\n極大幅提高自己的特攻。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux fixement.\nAugmente énormément son Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ein blinkendes Licht, das den Spezial-Angriff\ndrastisch erhöht.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa fissa una luce forte per concentrarsi\ne aumentare moltissimo l’Attacco Speciale.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to focus its mind,\ndrastically raising its Sp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "点滅する　光を　眺めて\n自分の　精神を　統一し\n特攻を　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "凝视闪烁的光芒，\n集中自己的精神，\n从而巨幅提高特攻。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "てんめつする　ひかりを　ながめて\nじぶんの　せいしんを　とういつし\nとくこうを　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "깜빡거리는 빛을 바라보고\n자신의 정신을 통일하여\n특수공격을 매우 크게 올린다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "凝視閃爍的光芒，\n集中精神，\n極大幅提高自己的特攻。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Le lanceur regarde un flash lumineux fixement.\nAugmente énormément son Attaque Spéciale.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ein blinkendes Licht, das den Spezial-Angriff\ndrastisch erhöht.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Chi la usa fissa una luce forte per concentrarsi\ne aumentare moltissimo l’Attacco Speciale.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to focus its mind,\ndrastically raising its Sp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "点滅する　光を　眺めて\n自分の　精神を　統一し\n特攻を　ぐぐーんと　あげる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "凝视闪烁的光芒，\n集中自己的精神，\n从而巨幅提高特攻。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Se concentra en una ráfaga de luz que sube\nmuchísimo el Ataque Especial.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "このわざは　つかえません\nおもいだすことが　できなくなりますが\nわざを　わすれることを　おすすめします",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "사용할 수 없는 기술입니다.\n다시 배우게 할 수 없지만\n기술을 잊게 하는 것을 권장합니다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "無法使用此招式。\n雖然忘記後將無法再想起來，\n但還是建議忘記此招式。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Cette capacité ne peut pas être utilisée.\nIl est recommandé de l’oublier, même s’il sera\nimpossible de se la remémorer une fois oubliée.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Diese Attacke kann nicht eingesetzt werden. Du solltest\ndein Pokémon sie vergessen lassen. Beachte aber,\ndass es sich danach nicht wieder an sie erinnern kann.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este movimiento no se puede usar, por lo que sería\nmejor olvidarlo, aunque eso implique que no se pueda\nrecordar posteriormente.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Questa mossa non può essere usata.\nÈ consigliabile farla dimenticare al Pokémon. Tuttavia,\nuna volta dimenticata, non potrà più essere ricordata.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This move can’t be used.\nIt’s recommended that this move is forgotten.\nOnce forgotten, this move can’t be remembered.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "この技は　使えません\n思い出すことが　できなくなりますが\n技を　忘れることを　おすすめします",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "无法使用这个招式。\n虽然忘记之后就再也想不起来了，\n但还是建议忘记这个招式。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este movimiento no se puede usar, por lo que sería\nmejor olvidarlo, aunque eso implique que no se pueda\nrecordar posteriormente.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to focus its mind, drastically raising its Sp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "legends-arceus",
+        "url": "/api/v2/version-group/24/"
+      }
+    },
+    {
+      "flavor_text": "This move can't be used. It's recommended that this move is forgotten. Once forgotten, this move can't be remembered.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    },
+    {
+      "flavor_text": "The user stares at flashing lights to focus its mind, drastically boosting its Sp. Atk stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-teal-mask",
+        "url": "/api/v2/version-group/26/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "volbeat",
+      "url": "/api/v2/pokemon/313/"
+    },
+    {
+      "name": "manaphy",
+      "url": "/api/v2/pokemon/490/"
+    },
+    {
+      "name": "xurkitree",
+      "url": "/api/v2/pokemon/796/"
+    }
+  ]
+}

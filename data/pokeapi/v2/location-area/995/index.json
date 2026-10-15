@@ -1,0 +1,12 @@
+{
+  "id": 995,
+  "name": "hisui-lake-verity-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-lake-verity",
+    "url": "/api/v2/location/1001/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,24 @@
+{
+  "id": 67,
+  "name": "story-progress-defeat-mars",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Beat Mars for the first time",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après deux victoires face à Mars",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

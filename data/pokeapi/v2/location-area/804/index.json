@@ -1,0 +1,211 @@
+{
+  "id": 804,
+  "name": "sky-pillar-apex",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sky-pillar",
+    "url": "/api/v2/location/448/"
+  },
+  "names": [
+    {
+      "name": "Sky Pillar Apex",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Himmelsturm Spitze",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pilier Céleste (sommet)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "rayquaza",
+        "url": "/api/v2/pokemon/384/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ruby",
+            "url": "/api/v2/version/7/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "sapphire",
+            "url": "/api/v2/version/8/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "emerald",
+            "url": "/api/v2/version/9/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "deoxys-normal",
+        "url": "/api/v2/pokemon/386/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "omega-ruby",
+            "url": "/api/v2/version/25/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 80,
+              "max_level": 80,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "alpha-sapphire",
+            "url": "/api/v2/version/26/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 80,
+              "max_level": 80,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

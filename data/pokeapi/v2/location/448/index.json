@@ -1,0 +1,107 @@
+{
+  "id": 448,
+  "name": "sky-pillar",
+  "region": {
+    "name": "hoenn",
+    "url": "/api/v2/region/3/"
+  },
+  "names": [
+    {
+      "name": "そらのはしら",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "하늘기둥",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "Pilier Céleste",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Himmelturm",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pilar Celeste",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Torre dei Cieli",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Sky Pillar",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "空の柱",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "Pilar Celeste",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 85,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    },
+    {
+      "game_index": 316,
+      "generation": {
+        "name": "generation-vi",
+        "url": "/api/v2/generation/6/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "sky-pillar-1f",
+      "url": "/api/v2/location-area/390/"
+    },
+    {
+      "name": "sky-pillar-3f",
+      "url": "/api/v2/location-area/391/"
+    },
+    {
+      "name": "sky-pillar-5f",
+      "url": "/api/v2/location-area/392/"
+    },
+    {
+      "name": "sky-pillar-apex",
+      "url": "/api/v2/location-area/804/"
+    }
+  ]
+}

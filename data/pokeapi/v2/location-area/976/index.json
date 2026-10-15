@@ -1,0 +1,12 @@
+{
+  "id": 976,
+  "name": "ginkgo-landing-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ginkgo-landing",
+    "url": "/api/v2/location/982/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

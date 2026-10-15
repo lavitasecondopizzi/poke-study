@@ -1,0 +1,83 @@
+{
+  "id": 836,
+  "name": "cianwood-city-pokemon-center",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cianwood-city",
+    "url": "/api/v2/location/70/"
+  },
+  "names": [
+    {
+      "name": "Pokemon Center (Cianwood City)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Pokémon-Center (Anemonia City)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Centre Pokémon (Irisia)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "tentacool",
+        "url": "/api/v2/pokemon/72/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

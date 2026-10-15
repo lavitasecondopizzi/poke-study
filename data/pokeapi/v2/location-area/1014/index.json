@@ -1,0 +1,12 @@
+{
+  "id": 1014,
+  "name": "snowfall-hot-spring-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "snowfall-hot-spring",
+    "url": "/api/v2/location/1020/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

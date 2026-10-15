@@ -1,0 +1,12 @@
+{
+  "id": 973,
+  "name": "firespit-island-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "firespit-island",
+    "url": "/api/v2/location/979/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

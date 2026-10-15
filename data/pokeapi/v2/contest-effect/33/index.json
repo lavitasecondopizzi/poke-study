@@ -1,0 +1,37 @@
+{
+  "id": 33,
+  "appeal": 3,
+  "jam": 0,
+  "effect_entries": [
+    {
+      "effect": "Supprime toutes les étoiles de tous les Pokémon qui ont déjà fait leur démonstration ce tour.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Removes all stars from all Pokémon that have appealed this turn.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Baisse la condition de ceux ayant déjà fait leur démonstration.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "flavor_text": "Worsens the condition of those that made appeals.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

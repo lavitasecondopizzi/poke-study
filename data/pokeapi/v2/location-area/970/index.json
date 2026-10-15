@@ -1,0 +1,12 @@
+{
+  "id": 970,
+  "name": "diamond-settlement-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "diamond-settlement",
+    "url": "/api/v2/location/976/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

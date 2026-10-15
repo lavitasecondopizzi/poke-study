@@ -1,0 +1,96 @@
+{
+  "id": 1382,
+  "name": "roaming-crown-tundra-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "roaming-crown-tundra",
+    "url": "/api/v2/location/1119/"
+  },
+  "names": [
+    {
+      "name": "The Crown Tundra",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Couronneige",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "articuno-galar",
+        "url": "/api/v2/pokemon/10169/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-crown-tundra-sword",
+            "url": "/api/v2/version/36/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-witness-galarian-bird-fight",
+                  "url": "/api/v2/encounter-condition-value/335/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-crown-tundra-shield",
+            "url": "/api/v2/version/51/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-witness-galarian-bird-fight",
+                  "url": "/api/v2/encounter-condition-value/335/"
+                }
+              ],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

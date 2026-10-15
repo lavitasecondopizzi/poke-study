@@ -1,0 +1,27 @@
+{
+  "id": 935,
+  "name": "tower-of-waters-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "tower-of-waters",
+    "url": "/api/v2/location/942/"
+  },
+  "names": [
+    {
+      "name": "Tower of Waters",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Tour de l'Eau",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,119 @@
+{
+  "id": 770,
+  "name": "littleroot-town-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "littleroot-town",
+    "url": "/api/v2/location/567/"
+  },
+  "names": [
+    {
+      "name": "Littleroot Town",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Wurzelheim",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Bourg-en-Vol",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "chikorita",
+        "url": "/api/v2/pokemon/152/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "emerald",
+            "url": "/api/v2/version/9/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "cyndaquil",
+        "url": "/api/v2/pokemon/155/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "emerald",
+            "url": "/api/v2/version/9/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "totodile",
+        "url": "/api/v2/pokemon/158/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "emerald",
+            "url": "/api/v2/version/9/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

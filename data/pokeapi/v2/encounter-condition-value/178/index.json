@@ -1,0 +1,17 @@
+{
+  "id": 178,
+  "name": "friend-safari-slot-3",
+  "condition": {
+    "name": "friend-safari-slot",
+    "url": "/api/v2/encounter-condition/17/"
+  },
+  "names": [
+    {
+      "name": "Randomly assigned to Friend Safari Slot 3",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

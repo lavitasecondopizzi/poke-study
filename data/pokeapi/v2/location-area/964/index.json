@@ -1,0 +1,12 @@
+{
+  "id": 964,
+  "name": "cottonsedge-prairie-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cottonsedge-prairie",
+    "url": "/api/v2/location/970/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

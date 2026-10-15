@@ -1,0 +1,12 @@
+{
+  "id": 1011,
+  "name": "seaside-hollow-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "seaside-hollow",
+    "url": "/api/v2/location/1017/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

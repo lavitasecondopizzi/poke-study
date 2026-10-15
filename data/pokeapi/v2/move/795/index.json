@@ -1,0 +1,283 @@
+{
+  "id": 795,
+  "name": "eternabeam",
+  "accuracy": 90,
+  "effect_chance": 100,
+  "pp": 5,
+  "priority": 0,
+  "power": 160,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "special",
+    "url": "/api/v2/move-damage-class/3/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Inflige des dégâts réguliers.  Le lanceur passe son prochain tour pour \"se recharger\", et ne peut pas attaquer ou se retirer pendant ce tour.",
+      "short_effect": "Le lanceur passe son prochain tour pour se recharger.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Inflicts regular damage.  User loses its next turn to \"recharge\", and cannot attack or switch out during that turn.",
+      "short_effect": "User foregoes its next turn to recharge.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-viii",
+    "url": "/api/v2/generation/8/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage",
+      "url": "/api/v2/move-category/0/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ムゲンダイビーム",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "무한다이빔",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "無極光束",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Laser Infinimax",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Unendynastrahlen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Rayo Infinito",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Raggio Infinito",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Eternabeam",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ムゲンダイビーム",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "无极光束",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Rayo Infinito",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "dragon",
+    "url": "/api/v2/type/16/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "ほんらいの　すがたと　なった\nムゲンダイナ　さいだいの　こうげき。\nつぎの　ターンは　うごけなくなる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "본래의 모습이 된\n무한다이노 최대의 공격.\n다음 턴은 움직일 수 없다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "無極汰那變回\n本來樣子時的最強攻擊。\n下一回合自己將無法動彈。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "L’attaque la plus puissante d’Éthernatos sous\nsa forme originelle. S’il l’utilise, il devra se reposer\nau tour suivant.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Der mächtigste Angriff, über den Endynalos in seiner\nursprünglichen Form verfügt. In der nächsten Runde\nkann der Anwender nicht handeln.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este es el mayor ataque de Eternatus una vez adquirida\nsu forma original. No puede moverse en el turno\nsiguiente.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "È l’attacco più potente di Eternatus quando assume\nla sua forma originale. Nel turno successivo non può\nagire.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This is Eternatus’s most powerful attack in its original\nform. The user can’t move on the next turn.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "本来の　姿と　なった\nムゲンダイナ　最大の　攻撃。\n次の　ターンは　動けなくなる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "无极汰那变回原来的样子后，\n发动的最强攻击。\n下一回合自己将无法动弹。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Este es el mayor ataque de Eternatus una vez adquirida\nsu forma original. No puede moverse en el turno\nsiguiente.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "eternatus",
+      "url": "/api/v2/pokemon/890/"
+    },
+    {
+      "name": "eternatus-eternamax",
+      "url": "/api/v2/pokemon/10190/"
+    }
+  ]
+}

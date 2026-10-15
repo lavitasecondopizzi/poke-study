@@ -1,0 +1,12 @@
+{
+  "id": 1017,
+  "name": "sonorous-path-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sonorous-path",
+    "url": "/api/v2/location/1023/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

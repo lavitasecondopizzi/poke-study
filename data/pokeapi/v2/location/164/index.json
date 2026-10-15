@@ -1,0 +1,41 @@
+{
+  "id": 164,
+  "name": "floaroma-town",
+  "region": {
+    "name": "sinnoh",
+    "url": "/api/v2/region/4/"
+  },
+  "names": [
+    {
+      "name": "Floraville",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Flori",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Floaroma Town",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 3,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

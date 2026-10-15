@@ -1,0 +1,24 @@
+{
+  "id": 1114,
+  "name": "energy-plant",
+  "region": {
+    "name": "galar",
+    "url": "/api/v2/region/8/"
+  },
+  "names": [
+    {
+      "name": "Energy Plant",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "energy-plant-tower-summit",
+      "url": "/api/v2/location-area/1370/"
+    }
+  ]
+}

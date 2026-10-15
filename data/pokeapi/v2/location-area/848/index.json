@@ -1,0 +1,920 @@
+{
+  "id": 848,
+  "name": "galar-route-5-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "galar-route-5",
+    "url": "/api/v2/location/872/"
+  },
+  "names": [
+    {
+      "name": "Route 5",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 5",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "goldeen",
+        "url": "/api/v2/pokemon/118/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 10,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "magikarp",
+        "url": "/api/v2/pokemon/129/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 70,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 70,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "wobbuffet",
+        "url": "/api/v2/pokemon/202/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 10,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 10,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "lombre",
+        "url": "/api/v2/pokemon/271/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "nuzleaf",
+        "url": "/api/v2/pokemon/274/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "nincada",
+        "url": "/api/v2/pokemon/290/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "drifloon",
+        "url": "/api/v2/pokemon/425/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "minccino",
+        "url": "/api/v2/pokemon/572/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 15,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 15,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 20,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "espurr",
+        "url": "/api/v2/pokemon/677/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "spritzee",
+        "url": "/api/v2/pokemon/682/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 44,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 30,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 14,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "swirlix",
+        "url": "/api/v2/pokemon/684/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 44,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 30,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 14,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "dewpider",
+        "url": "/api/v2/pokemon/751/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 5,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "stufful",
+        "url": "/api/v2/pokemon/759/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 35,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 35,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 35,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 35,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "skwovet",
+        "url": "/api/v2/pokemon/819/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "dottler",
+        "url": "/api/v2/pokemon/825/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 26,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 26,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 26,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 26,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "eldegoss",
+        "url": "/api/v2/pokemon/830/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 22,
+              "max_level": 22,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 22,
+              "max_level": 22,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "chewtle",
+        "url": "/api/v2/pokemon/833/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 20,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 20,
+              "method": {
+                "name": "bubbling-spots",
+                "url": "/api/v2/encounter-method/34/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "applin",
+        "url": "/api/v2/pokemon/840/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 16,
+              "max_level": 18,
+              "chance": 10,
+              "method": {
+                "name": "walk",
+                "url": "/api/v2/encounter-method/1/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "toxel",
+        "url": "/api/v2/pokemon/848/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": {
+                "min_perfect_ivs": null,
+                "always_shiny": false,
+                "never_shiny": true,
+                "is_alpha": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "farfetchd-galar",
+        "url": "/api/v2/pokemon/10166/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 19,
+              "max_level": 21,
+              "chance": 5,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

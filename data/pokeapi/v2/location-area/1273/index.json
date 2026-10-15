@@ -1,0 +1,56 @@
+{
+  "id": 1273,
+  "name": "onbs-roof",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "onbs",
+    "url": "/api/v2/location/1110/"
+  },
+  "names": [
+    {
+      "name": "ONBS Roof",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ONBS (Toit)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "ralts",
+        "url": "/api/v2/pokemon/280/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 20,
+              "max_level": 20,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

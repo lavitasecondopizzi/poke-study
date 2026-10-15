@@ -1,0 +1,771 @@
+{
+  "id": 621,
+  "name": "hyperspace-fury",
+  "accuracy": null,
+  "effect_chance": 100,
+  "pp": 5,
+  "priority": 0,
+  "power": 100,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Inflige des dégâts réguliers.  Outrepasse et supprime n'importe quel effet de protection sur la cible.",
+      "short_effect": "Ignore et détruit les effets de protection.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Inflicts regular damage.  Bypasses and removes any protection effect on the target.",
+      "short_effect": "Ignores and destroys protection effects.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-vi",
+    "url": "/api/v2/generation/6/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage-raise",
+      "url": "/api/v2/move-category/7/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 100
+  },
+  "names": [
+    {
+      "name": "いじげんラッシュ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "이차원러시",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "異次元猛攻",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Furie Dimension",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Dimensionswahn",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Cerco Dimensión",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Urtodimensionale",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Hyperspace Fury",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "いじげんラッシュ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "异次元猛攻",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Cerco Dimensión",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [
+    {
+      "change": -1,
+      "stat": {
+        "name": "defense",
+        "url": "/api/v2/stat/3/"
+      }
+    }
+  ],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon",
+    "url": "/api/v2/move-target/10/"
+  },
+  "type": {
+    "name": "dark",
+    "url": "/api/v2/type/17/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "たくさんの　うでを　つかって　まもるや\n きりを　むしした　れんぞくこうげき。\nじぶんの　ぼうぎょが　さがる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "많은 팔을 사용하여 방어와\n판별을 무시하는 연속 공격이다.\n자신의 방어가 떨어진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Le Pokémon utilise sa multitude de bras pour infliger\nune nuée de coups qui ignorent les capacités telles\nqu’Abri ou Détection. Baisse la Défense du lanceur. ",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Eine Angriffsserie mit vielen Armen, die die Wirkung\nvon Schutzschild und Scanner durchbricht.\nDabei sinkt die Verteidigung des Anwenders.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que pasan\npor alto los efectos de movimientos como Protección\no Detección. Hace que baje la Defensa del usuario.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Permette di attaccare ripetutamente grazie ai molti\narti, ignorando mosse come Protezione o Individua.\nRiduce la Difesa di chi la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of\nattacks that ignore the effects of moves like Protect\nand Detect. This attack lowers the user’s Defense.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　腕を　つかって　まもるや\n きりを　無視した　連続攻撃\n自分の　防御が　さがる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que pasan\npor alto los efectos de movimientos como Protección\no Detección. Hace que baje la Defensa del usuario.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "omega-ruby-alpha-sapphire",
+        "url": "/api/v2/version-group/16/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　うでで　まもるや　みきり\nなどを　むしした　れんぞくこうげき。\nじぶんの　ぼうぎょが　さがる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "많은 팔로 방어와 판별 등을\n무시하는 연속 공격이다.\n자신의 방어가 떨어진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "使用許多手臂，發動可\n不顧守住和看穿的連續攻擊。\n自己的防禦會降低。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Le Pokémon utilise sa multitude de bras pour infliger\nune nuée de coups qui ignorent les capacités telles\nqu’Abri ou Détection. Baisse la Défense du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Eine Angriffsserie mit vielen Armen, die die Wirkung\nvon Attacken wie Schutzschild und Scanner durch-\nbricht. Dabei sinkt die Verteidigung des Anwenders.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Permette di attaccare ripetutamente grazie ai molti\narti, ignorando mosse come Protezione o Individua.\nRiduce la Difesa di chi la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of\nattacks that ignore the effects of moves like Protect\nand Detect. But the user’s Defense stat falls.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　腕で　まもるや　みきり\nなどを　無視した　連続攻撃。\n自分の　防御が　さがる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "用许多手臂，无视对手的\n守住或看穿等招式进行连续攻击，\n自己的防御会降低。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sun-moon",
+        "url": "/api/v2/version-group/17/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　うでで　まもるや　みきり\nなどを　むしした　れんぞくこうげき。\nじぶんの　ぼうぎょが　さがる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "많은 팔로 방어와 판별 등을\n무시하는 연속 공격이다.\n자신의 방어가 떨어진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "使用許多手臂，發動可\n不顧守住和看穿的連續攻擊。\n自己的防禦會降低。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Le Pokémon utilise sa multitude de bras pour infliger\nune nuée de coups qui ignorent les capacités telles\nqu’Abri ou Détection. Baisse la Défense du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Eine Angriffsserie mit vielen Armen, die die Wirkung\nvon Attacken wie Schutzschild und Scanner durch-\nbricht. Dabei sinkt die Verteidigung des Anwenders.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Permette di attaccare ripetutamente grazie ai molti\narti, ignorando mosse come Protezione o Individua.\nRiduce la Difesa di chi la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of\nattacks that ignore the effects of moves like Protect\nand Detect. But the user’s Defense stat falls.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　腕で　まもるや　みきり\nなどを　無視した　連続攻撃。\n自分の　防御が　さがる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "用许多手臂，无视对手的\n守住或看穿等招式进行连续攻击，\n自己的防御会降低。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "ultra-sun-ultra-moon",
+        "url": "/api/v2/version-group/18/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　うでで　まもるや　みきり\nなどを　むしした　れんぞくこうげき。\nじぶんの　ぼうぎょが　さがる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "많은 팔로 방어와 판별 등을\n무시하는 연속 공격이다.\n자신의 방어가 떨어진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "使用許多手臂，發動可\n不顧守住和看穿的連續攻擊。\n自己的防禦會降低。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Le Pokémon utilise sa multitude de bras pour infliger\nune nuée de coups qui ignorent les capacités telles\nqu’Abri ou Détection. Baisse la Défense du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Eine Angriffsserie mit vielen Armen, die die Wirkung\nvon Attacken wie Schutzschild und Scanner durch-\nbricht. Dabei sinkt die Verteidigung des Anwenders.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Permette di attaccare ripetutamente grazie ai molti\narti, ignorando mosse come Protezione o Individua.\nRiduce la Difesa di chi la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of\nattacks that ignore the effects of moves like Protect\nand Detect. But the user’s Defense stat falls.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　腕で　まもるや　みきり\nなどを　無視した　連続攻撃。\n自分の　防御が　さがる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "用许多手臂，无视对手的\n守住或看穿等招式进行连续攻击，\n自己的防御会降低。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que\npasan por alto los efectos de movimientos como\nProtección o Detección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　うでで　まもるや　みきり\nなどを　むしした　れんぞくこうげき。\nじぶんの　ぼうぎょが　さがる。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "많은 팔로 방어와 판별 등을\n무시하는 연속 공격이다.\n자신의 방어가 떨어진다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "使用許多手臂，發動可\n不顧守住和看穿的連續攻擊。\n自己的防禦會降低。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Le Pokémon utilise sa multitude de bras pour infliger\nune nuée de coups qui ignorent les capacités telles\nqu’Abri ou Détection. Baisse la Défense du lanceur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Eine Angriffsserie mit vielen Armen, die die Wirkung\nvon Attacken wie Schutzschild und Scanner durchbricht.\nDabei sinkt die Verteidigung des Anwenders.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que pasan\npor alto los efectos de movimientos como Protección o\nDetección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Permette di attaccare ripetutamente grazie ai molti\narti, ignorando mosse come Protezione o Individua.\nRiduce la Difesa di chi la usa.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of\nattacks that ignore the effects of moves like Protect\nand Detect. But the user’s Defense stat falls.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "たくさんの　腕で　まもるや　みきり\nなどを　無視した　連続攻撃。\n自分の　防御が　さがる。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "用许多手臂，无视对手的\n守住或看穿等招式进行连续攻击，\n自己的防御会降低。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataca al objetivo con una ráfaga de golpes que pasan\npor alto los efectos de movimientos como Protección o\nDetección. Baja la Defensa del usuario.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of attacks that ignore the effects of moves like Protect and Detect. But the user's Defense stat falls.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "legends-arceus",
+        "url": "/api/v2/version-group/24/"
+      }
+    },
+    {
+      "flavor_text": "Using its many arms, the user unleashes a barrage of attacks that ignore the effects of moves like Protect and Detect. This also lowers the user's Defense stat.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "scarlet-violet",
+        "url": "/api/v2/version-group/25/"
+      }
+    }
+  ],
+  "learned_by_pokemon": [
+    {
+      "name": "hoopa-unbound",
+      "url": "/api/v2/pokemon/10086/"
+    }
+  ]
+}

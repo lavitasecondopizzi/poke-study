@@ -1,0 +1,16 @@
+{
+  "id": 1091,
+  "name": "kanto-pokecenter",
+  "region": {
+    "name": "kanto",
+    "url": "/api/v2/region/1/"
+  },
+  "names": [],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "kanto-pokecenter-area",
+      "url": "/api/v2/location-area/1212/"
+    }
+  ]
+}

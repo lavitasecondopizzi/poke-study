@@ -1,0 +1,24 @@
+{
+  "id": 27,
+  "name": "tv-option-blue",
+  "condition": {
+    "name": "tv-option",
+    "url": "/api/v2/encounter-condition/8/"
+  },
+  "names": [
+    {
+      "name": "Chose ‘Blue’ on the TV news report",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Choisi « bleu » à la télé",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

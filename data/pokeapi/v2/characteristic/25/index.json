@@ -1,0 +1,95 @@
+{
+  "id": 25,
+  "gene_modulo": 4,
+  "possible_values": [
+    4,
+    9,
+    14,
+    19,
+    24,
+    29
+  ],
+  "highest_stat": {
+    "name": "hp",
+    "url": "/api/v2/stat/1/"
+  },
+  "descriptions": [
+    {
+      "description": "のんびりするのが　すき",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "description": "유유자적함을 좋아함",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "description": "喜歡悠然自在",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "description": "Il aime se détendre",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Mag es, sich zu entspannen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Le gusta relajarse",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "description": "Adora rilassarsi",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "description": "Likes to relax",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "description": "のんびりするのが　好き",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "description": "喜欢悠然自在",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "description": "Le gusta relajarse",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

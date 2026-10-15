@@ -3,6 +3,15 @@ name: Deploy Poké Study to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'data/pokeapi/**'
+      - 'public/data/**'
+      - 'scripts/prepare-pokedex.mjs'
+      - 'scripts/prepare-items.mjs'
+      - 'scripts/import-pokeapi-database.mjs'
+      - '.github/workflows/deploy.yml'
+      - '.github/workflows/vendor-pokeapi.yml'
+      - 'package.json'
   workflow_dispatch:
 
 permissions:

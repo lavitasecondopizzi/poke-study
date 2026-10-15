@@ -1,0 +1,12 @@
+{
+  "id": 1155,
+  "name": "verdant-cavern-totems-den",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "verdant-cavern",
+    "url": "/api/v2/location/1043/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,61 @@
+{
+  "id": 1138,
+  "name": "ulaula-beach-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ulaula-beach",
+    "url": "/api/v2/location/1049/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "crabrawler",
+        "url": "/api/v2/pokemon/739/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "ultra-sun",
+            "url": "/api/v2/version/29/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 29,
+              "max_level": 32,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "ultra-moon",
+            "url": "/api/v2/version/30/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 29,
+              "max_level": 32,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

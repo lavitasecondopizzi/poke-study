@@ -1,0 +1,168 @@
+{
+  "id": 1260,
+  "name": "the-under-deep-colosseum",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "the-under",
+    "url": "/api/v2/location/1104/"
+  },
+  "names": [
+    {
+      "name": "The Under (Deep Colosseum)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Suerebe (Colosseum de Targare)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "sudowoodo",
+        "url": "/api/v2/pokemon/185/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "shuckle",
+        "url": "/api/v2/pokemon/213/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 45,
+              "max_level": 45,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "raikou",
+        "url": "/api/v2/pokemon/243/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "entei",
+        "url": "/api/v2/pokemon/244/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "suicune",
+        "url": "/api/v2/pokemon/245/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

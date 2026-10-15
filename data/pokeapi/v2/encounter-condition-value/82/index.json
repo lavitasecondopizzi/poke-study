@@ -1,0 +1,24 @@
+{
+  "id": 82,
+  "name": "other-found-11-times-roaming",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Has been unsuccesfully battled 11 times before",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "A été combattu 11 fois avant sans succès",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

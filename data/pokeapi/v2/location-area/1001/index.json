@@ -1,0 +1,12 @@
+{
+  "id": 1001,
+  "name": "obsidian-falls-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "obsidian-falls",
+    "url": "/api/v2/location/1007/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

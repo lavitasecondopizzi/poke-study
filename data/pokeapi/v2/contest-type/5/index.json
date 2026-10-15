@@ -1,0 +1,50 @@
+{
+  "id": 5,
+  "name": "tough",
+  "berry_flavor": {
+    "name": "sour",
+    "url": "/api/v2/berry-flavor/5/"
+  },
+  "names": [
+    {
+      "name": "たくましさ",
+      "color": "",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "強壯",
+      "color": "黃",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Robustesse",
+      "color": "Jaune",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Tough",
+      "color": "Yellow",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "强壮",
+      "color": "黄",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": 1242,
+  "name": "pyrite-cave-mirors-hideout",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pyrite-cave",
+    "url": "/api/v2/location/1101/"
+  },
+  "names": [
+    {
+      "name": "Pyrite Cave (Miror's Hideout)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Cavernes de Pyrite (Salle de Bouledisco)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "sudowoodo",
+        "url": "/api/v2/pokemon/185/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "remoraid",
+        "url": "/api/v2/pokemon/223/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 20,
+              "max_level": 20,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "mantine",
+        "url": "/api/v2/pokemon/226/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 33,
+              "max_level": 33,
+              "chance": 100,
+              "method": {
+                "name": "snag-rematch",
+                "url": "/api/v2/encounter-method/52/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

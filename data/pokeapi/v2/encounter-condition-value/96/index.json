@@ -1,0 +1,24 @@
+{
+  "id": 96,
+  "name": "other-level-100-pokemon-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have a Level 100 Pokémon in party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir un Pokémon Niveau 100 dans l'équipe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

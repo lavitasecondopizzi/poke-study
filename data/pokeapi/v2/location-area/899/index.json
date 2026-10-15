@@ -1,0 +1,76 @@
+{
+  "id": 899,
+  "name": "galar-iron-ruins-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "galar-iron-ruins",
+    "url": "/api/v2/location/912/"
+  },
+  "names": [
+    {
+      "name": "Iron Ruins",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Ruines de Fer",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "registeel",
+        "url": "/api/v2/pokemon/379/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-crown-tundra-sword",
+            "url": "/api/v2/version/36/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-crown-tundra-shield",
+            "url": "/api/v2/version/51/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

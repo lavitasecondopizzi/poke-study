@@ -1,0 +1,12 @@
+{
+  "id": 1030,
+  "name": "wayward-wood-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "wayward-wood",
+    "url": "/api/v2/location/1036/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}
