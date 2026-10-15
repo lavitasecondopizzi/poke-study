@@ -32,6 +32,8 @@ export interface SavedProgress {
     openSubcategoryId?: string | null;
     openPokemonRegionId?: string | null;
     gamePage?: number;
+    /** Pagina corrente delle entità provvisorie dentro una cartella. */
+    folderPage?: number;
     /** Macrocategorie rivelate dallo Scanner, persistenti per ciascuna carta. */
     revealedMacroCategories?: Record<string, string>;
     /** Sottocategorie rivelate da Ricerca, persistenti per ciascuna carta. */
