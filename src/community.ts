@@ -38,6 +38,7 @@ export interface CommunityIdentity {
   academy: CommunityAcademy;
   matricola: string;
   created_at: string;
+  role: CommunityRole;
 }
 
 export interface CommunityAuthor {
