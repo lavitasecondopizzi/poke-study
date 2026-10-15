@@ -762,32 +762,51 @@ export default function App() {
   }
 
   function placeCard(cardId: string, targetId: string) {
+    // Se la carta è nella selezione multipla, applica la destinazione a tutte.
+    const batchIds = selectedCardIds.includes(cardId) && selectedCardIds.length > 1
+      ? [...selectedCardIds]
+      : [cardId];
+    if (batchIds.length > 1) {
+      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\\d+$/)?.[1] ?? targetId;
+      const targetIsSubcategory = lessonTargets.some(target => target.id === targetSubcategoryId);
+      if (targetIsSubcategory) {
+        const capacity = lessonDeck.filter(entry => entry.subcategoryId === targetSubcategoryId).length;
+        const occupied = new Set(Object.entries(categoryPlacements)
+          .filter(([, value]) => value.startsWith('category-slot:' + targetSubcategoryId + ':'))
+          .map(([, value]) => Number(value.split(':').pop())));
+        if (capacity - occupied.size < batchIds.length) {
+          setMessage(`La destinazione non ha abbastanza posizioni libere per tutte le ${batchIds.length} entità selezionate.`);
+          return;
+        }
+      }
+      batchIds.forEach(id => placeSingleCard(id, targetId));
+      return;
+    }
+    placeSingleCard(cardId, targetId);
+  }
+
+  function placeSingleCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\d+)$/);
+    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\\d+)$/);
     const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
     const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
-    if (subcategoryTarget || requestedCategorySlot) {
-      const slots = lessonDeck.filter(entry => entry.subcategoryId === requestedSubcategoryId);
-      const occupied = new Set(Object.entries(categoryPlacements)
-        .filter(([existingCardId, value]) => existingCardId !== cardId && value.startsWith('category-slot:' + requestedSubcategoryId + ':'))
-        .map(([, value]) => Number(value.split(':').pop())));
-      const firstFree = slots.findIndex((_, index) => !occupied.has(index));
-      if (firstFree < 0) {
-        setMessage('Tutte le posizioni di questa sottocartella sono occupate.');
-        return;
-      }
-      targetId = 'category-slot:' + requestedSubcategoryId + ':' + firstFree;
-    }
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
     const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
-    if (categorySlotMatch) setCategoryPlacements(old => {
+    if (subcategoryTarget || categorySlotMatch) setCategoryPlacements(old => {
       const next = { ...old };
-      for (const [existingId, existingTarget] of Object.entries(next)) {
-        if (existingId === cardId || existingTarget === targetId) delete next[existingId];
-      }
-      next[cardId] = targetId;
+      const targetPrefix = 'category-slot:' + requestedSubcategoryId + ':';
+      delete next[cardId];
+      const occupied = new Set(Object.entries(next)
+        .filter(([, value]) => value.startsWith(targetPrefix))
+        .map(([, value]) => Number(value.split(':').pop())));
+      const slots = lessonDeck.filter(entry => entry.subcategoryId === requestedSubcategoryId);
+      const requestedIndex = categorySlotMatch ? Number(categorySlotMatch[2]) : -1;
+      const index = requestedIndex >= 0 && !occupied.has(requestedIndex)
+        ? requestedIndex
+        : slots.findIndex((_, slotIndex) => !occupied.has(slotIndex));
+      if (index >= 0) next[cardId] = targetPrefix + index;
       return next;
     });
     const isCorrect = pokemonSlotMatch
