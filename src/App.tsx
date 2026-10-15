@@ -37,13 +37,15 @@ export type ShopProduct = {
 
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
+const NUMBER_CHECK_LEVELS = 10;
 const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1)))); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'research', name: 'Ricerca', description: 'Rivela la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 900, currency: 'poke', category: 'oggetti', requires: ['scanner'], requiredPokemon: 50, requirementLabel: 'Acquista prima lo Scanner e cataloga 50 Pokémon', kind: 'active' },
   ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(600 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1)))); return { id: `research-upgrade-${level}`, name: `Ricerca · Livello ${level}`, description: `Cooldown della Ricerca: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'research' : `research-upgrade-${level - 1}`], requirementLabel: `Acquista prima Ricerca livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'direct-region', name: 'Inserimento regionale rapido', description: 'Consente di inserire un Pokémon nella sua regione senza scegliere il numero esatto.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'number-check', name: 'Controllo numerazione', description: 'Segnala esclusivamente se un Pokémon è nel numero sbagliato.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'number-check', name: 'Controllo numerazione', description: 'Rivela il numero del Pokédex Nazionale dei Pokémon selezionati. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1)))); return { id: `number-check-upgrade-${level}`, name: `Controllo numerazione · Livello ${level}`, description: `Cooldown del Controllo numerazione: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'number-check' : `number-check-upgrade-${level - 1}`], requirementLabel: `Acquista prima Controllo numerazione livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'auto-sort', name: 'Smistamento automatico', description: 'Inserisci un’entità nella macrocategoria e falla smistare automaticamente nella sottocategoria corretta.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'reveal-name', name: 'Rivelazione del nome', description: 'Mostra il nome dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
@@ -70,6 +72,10 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'direct-region') return 1;
     if (id === 'reveal-name') return 1;
     if (id === 'number-check') return 2;
+    if (id.startsWith('number-check-upgrade-')) {
+      const level = Number(id.slice(id.lastIndexOf('-') + 1));
+      return 1.5 + (level - 2) * 0.7;
+    }
     if (id === 'subcategory-errors') return 2;
     if (id === 'scanner') return 3;
     if (id === 'reveal-subcategory') return 4;
@@ -185,7 +191,7 @@ const regions = [
 function loadProgress(): SavedProgress {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? [...new Set(saved.completedIds.filter(id => Number.isInteger(id) && id > 0 && id <= NATIONAL_DEX_SIZE))] : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? [...new Set(saved.completedExams.filter(id => typeof id === 'string'))] : [], inventory: Array.isArray(saved.inventory) ? [...new Set(saved.inventory.filter(id => typeof id === 'string'))] : [], completedEntries: Array.isArray(saved.completedEntries) ? [...new Set(saved.completedEntries.filter(id => typeof id === 'string'))] : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {}, errors: Math.max(0, Number(saved.errors) || 0), history: Array.isArray(saved.history) ? saved.history.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.timestamp === 'number').slice(-100) : [], gameState: saved.gameState && typeof saved.gameState === 'object' ? { ...saved.gameState, categoryPlacements: saved.gameState.categoryPlacements && typeof saved.gameState.categoryPlacements === 'object' ? saved.gameState.categoryPlacements : {}, misplacedCards: saved.gameState.misplacedCards && typeof saved.gameState.misplacedCards === 'object' ? saved.gameState.misplacedCards : {}, revealedMacroCategories: saved.gameState.revealedMacroCategories && typeof saved.gameState.revealedMacroCategories === 'object' ? saved.gameState.revealedMacroCategories : {}, revealedSubcategories: saved.gameState.revealedSubcategories && typeof saved.gameState.revealedSubcategories === 'object' ? saved.gameState.revealedSubcategories : {} } : undefined }; }
+    if (raw) { const saved = JSON.parse(raw) as Partial<SavedProgress>; return { points: Number(saved.points) || 0, completedIds: Array.isArray(saved.completedIds) ? [...new Set(saved.completedIds.filter(id => Number.isInteger(id) && id > 0 && id <= NATIONAL_DEX_SIZE))] : [], examPoints: Number(saved.examPoints) || 0, completedExams: Array.isArray(saved.completedExams) ? [...new Set(saved.completedExams.filter(id => typeof id === 'string'))] : [], inventory: Array.isArray(saved.inventory) ? [...new Set(saved.inventory.filter(id => typeof id === 'string'))] : [], completedEntries: Array.isArray(saved.completedEntries) ? [...new Set(saved.completedEntries.filter(id => typeof id === 'string'))] : [], abilityCooldowns: saved.abilityCooldowns && typeof saved.abilityCooldowns === 'object' ? saved.abilityCooldowns : {}, errors: Math.max(0, Number(saved.errors) || 0), history: Array.isArray(saved.history) ? saved.history.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.timestamp === 'number').slice(-100) : [], gameState: saved.gameState && typeof saved.gameState === 'object' ? { ...saved.gameState, categoryPlacements: saved.gameState.categoryPlacements && typeof saved.gameState.categoryPlacements === 'object' ? saved.gameState.categoryPlacements : {}, misplacedCards: saved.gameState.misplacedCards && typeof saved.gameState.misplacedCards === 'object' ? saved.gameState.misplacedCards : {}, revealedMacroCategories: saved.gameState.revealedMacroCategories && typeof saved.gameState.revealedMacroCategories === 'object' ? saved.gameState.revealedMacroCategories : {}, revealedSubcategories: saved.gameState.revealedSubcategories && typeof saved.gameState.revealedSubcategories === 'object' ? saved.gameState.revealedSubcategories : {}, revealedPokemonNumbers: saved.gameState.revealedPokemonNumbers && typeof saved.gameState.revealedPokemonNumbers === 'object' ? saved.gameState.revealedPokemonNumbers : {} } : undefined }; }
   } catch { /* storage may be unavailable */ }
   return emptyProgress();
 }
@@ -354,6 +360,7 @@ export default function App() {
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
+  const [revealedPokemonNumbers, setRevealedPokemonNumbers] = useState<Record<string, number>>(() => progress.gameState?.revealedPokemonNumbers ?? {});
   const [researchQuery, setResearchQuery] = useState('');
   const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
   const [researchHasSearched, setResearchHasSearched] = useState(false);
@@ -530,6 +537,7 @@ export default function App() {
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
         setFolderPage(nextProgress.gameState?.folderPage ?? 0);
          setRevealedMacroCategories(old => ({ ...(nextProgress.gameState?.revealedMacroCategories ?? {}), ...old }));
+        setRevealedPokemonNumbers(old => ({ ...(nextProgress.gameState?.revealedPokemonNumbers ?? {}), ...old }));
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -615,11 +623,12 @@ export default function App() {
         gamePage,
         folderPage,
         revealedMacroCategories,
+        revealedPokemonNumbers,
       };
       if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
       return { ...old, gameState: nextGameState };
     });
-  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories]);
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories, revealedPokemonNumbers]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -1049,22 +1058,31 @@ export default function App() {
     setNotice(`Acquisto registrato: ${product.name}.`);
   }
 
-  function useAbility(abilityId: 'scanner') {
+  function useAbility(abilityId: 'scanner' | 'number-check') {
     const selectedIds = selectedCardIds.length > 1 ? selectedCardIds : selectedCardId ? [selectedCardId] : [];
     if (selectedIds.length === 0) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     if (!(progress.inventory ?? []).includes(abilityId)) return;
-    const cards = selectedIds.map(id => lessonDeck.find(entry => entry.id === id))
+    const selectedCards = selectedIds.map(id => lessonDeck.find(entry => entry.id === id))
       .filter((card): card is CatalogCard => card !== undefined && !lessonSolved.includes(card.id));
-    if (cards.length === 0) { setNotice('Seleziona almeno un’entità ancora da classificare.'); return; }
+    const cards = abilityId === 'number-check' ? selectedCards.filter(card => card.kind === 'pokemon' && card.pokemonId !== undefined) : selectedCards;
+    if (cards.length === 0) { setNotice(abilityId === 'number-check' ? 'Seleziona almeno un Pokémon ancora da classificare.' : 'Seleziona almeno un’entità ancora da classificare.'); return; }
     const now = Date.now();
-    const until = progress.abilityCooldowns?.scanner ?? 0;
+    const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > now) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, now)}.`); return; }
     const currentInventory = progress.inventory ?? [];
-    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
-    const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
-    const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.macroName]));
-    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedMacroCategories: { ...(old.gameState?.revealedMacroCategories ?? {}), ...revealedNow } } }));
-    setRevealedMacroCategories(old => ({ ...old, ...revealedNow }));
+    if (abilityId === 'scanner') {
+      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+      const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
+      const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.macroName]));
+      setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), scanner: now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedMacroCategories: { ...(old.gameState?.revealedMacroCategories ?? {}), ...revealedNow } } }));
+      setRevealedMacroCategories(old => ({ ...old, ...revealedNow }));
+      return;
+    }
+    const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('number-check-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+    const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1))));
+    const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.pokemonId as number]));
+    setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'number-check': now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedPokemonNumbers: { ...(old.gameState?.revealedPokemonNumbers ?? {}), ...revealedNow } } }));
+    setRevealedPokemonNumbers(old => ({ ...old, ...revealedNow }));
   }
 
   function handleResearchSearch(event: FormEvent<HTMLFormElement>) {
@@ -1422,9 +1440,10 @@ export default function App() {
           /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon e acquistare con i Punti Poké lo Scanner, tutti i livelli di Ricerca e l’Archivio Nazionale.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
-            {(inventory.includes('scanner') || inventory.includes('research')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
+            {(inventory.includes('scanner') || inventory.includes('research') || inventory.includes('number-check')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
               <div className="ability-toolbar">
                 {inventory.includes('scanner') && <button type="button" className="scanner-ability-button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
+                {inventory.includes('number-check') && <button type="button" className="scanner-ability-button number-check-ability-button" disabled={!selectedCardIds.length && !selectedCardId || (progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow} onClick={() => useAbility('number-check')}><strong>Controllo numerazione</strong><small>{(progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.['number-check'] ?? 0,clockNow) : 'Pronto'}</small></button>}
                 {inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
                   <label htmlFor="research-entity-query">Ricerca</label>
                   <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off" aria-controls="research-search-results" aria-expanded={researchHasSearched}/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
@@ -1504,6 +1523,7 @@ export default function App() {
                     <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
                     <div className="pokemon-cards mixed-card-grid folder-entity-grid">
                       {visibleGameCards.map(card => <button key={card.id} type="button" aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'} title="Seleziona carta" className={`pokemon-card mixed-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)} onClick={() => toggleCardSelection(card.id)}>
+                        {card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
                         {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
@@ -1517,7 +1537,7 @@ export default function App() {
                       <div className="folder-section-caption"><strong>Entità provvisorie in questa cartella</strong><span>Puoi spostarle ancora o riprenderle</span></div>
                       <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
                         {visibleFolderCards.map(card => <div key={card.id} className={`folder-entity-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
-                          <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}><img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}</button>
+                          <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}>{card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}<img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}</button>
                           <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
                         </div>)}
                       </div>
