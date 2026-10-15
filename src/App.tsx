@@ -337,8 +337,12 @@ export default function App() {
   const [lessonSolved, setLessonSolved] = useState<string[]>([]);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
-  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>({});
-  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>({});
+  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>(() => {
+    try { return JSON.parse(localStorage.getItem('poke-study-misplaced-cards-v1') ?? '{}') as Record<string, string>; } catch { return {}; }
+  });
+  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => {
+    try { return JSON.parse(localStorage.getItem('poke-study-category-placements-v1') ?? '{}') as Record<string, string>; } catch { return {}; }
+  });
   const [lessonReady, setLessonReady] = useState(false);
   const [gamePage, setGamePage] = useState(0);
   const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
@@ -579,8 +583,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch { /* storage may be unavailable */ }
-  }, [progress]);
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(progress));
+      localStorage.setItem('poke-study-misplaced-cards-v1', JSON.stringify(misplacedCards));
+      localStorage.setItem('poke-study-category-placements-v1', JSON.stringify(categoryPlacements));
+    } catch { /* storage may be unavailable */ }
+  }, [progress, misplacedCards, categoryPlacements]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -708,15 +716,18 @@ export default function App() {
 
   useEffect(() => {
     if (lessonReady || species.length === 0 || itemCatalog.length === 0) return;
-    setLessonDeck(createFullCatalog(species, itemCatalog, progress.completedIds, progress.completedEntries ?? []));
-    setLessonSolved([]);
+    const fullDeck = createFullCatalog(species, itemCatalog, [], []);
+    setLessonDeck(fullDeck);
+    setLessonSolved(fullDeck.filter(card => card.kind === 'pokemon'
+      ? progress.completedIds.includes(card.pokemonId ?? -1)
+      : (progress.completedEntries ?? []).includes(card.id)).map(card => card.id));
     setLessonReady(true);
   }, [species, itemCatalog, lessonReady, progress.completedIds, progress.completedEntries]);
 
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\\d+)$/);
+    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\d+)$/);
     const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
     const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
     if (subcategoryTarget || requestedCategorySlot) {
@@ -731,8 +742,8 @@ export default function App() {
       }
       targetId = 'category-slot:' + requestedSubcategoryId + ':' + firstFree;
     }
-    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\\d+)$/);
-    const categorySlotMatch = targetId.match(/^category-slot:(.+):(\\d+)$/);
+    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
+    const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
     if (categorySlotMatch) setCategoryPlacements(old => {
       const next = { ...old };
