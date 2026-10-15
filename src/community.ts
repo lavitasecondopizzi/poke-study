@@ -6,6 +6,31 @@
 import type { SavedProgress, StudentProfile } from "./types";
 export type CommunityAcademy = "arancia" | "uva" | "mirtillo";
 export type CommunityCategory = "generale" | "domande" | "strategie" | "annunci";
+export type CommunityRole = "utente" | "collaboratore_autorizzato" | "moderatore" | "amministratore";
+export const COMMUNITY_ROLE_LABELS: Record<CommunityRole, string> = {
+  utente: "Utente",
+  collaboratore_autorizzato: "Collaboratore autorizzato",
+  moderatore: "Moderatore",
+  amministratore: "Amministratore",
+};
+
+export interface CommunityAdminUser {
+  id: string;
+  nickname: string;
+  matricola: string;
+  academy: CommunityAcademy;
+  role: CommunityRole;
+  created_at: string;
+}
+
+export interface CommunityAdminAuditEntry {
+  id: number;
+  actor_id: string;
+  target_id: string;
+  old_role: CommunityRole;
+  new_role: CommunityRole;
+  created_at: string;
+}
 
 export interface CommunityIdentity {
   id: string;
@@ -295,4 +320,24 @@ export async function callAcademyService<T>(
   const result = await response.json().catch(() => ({})) as CommunityResponse<T>;
   if (!response.ok) throw new Error(result.error || `Errore accademico (${response.status}).`);
   return result as T;
+}
+
+export async function listCommunityAdminUsers(): Promise<CommunityAdminUser[]> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  const result = await call<{ users: CommunityAdminUser[] }>("admin_list_users", {}, token);
+  return result.users;
+}
+
+export async function listCommunityAdminAudit(): Promise<CommunityAdminAuditEntry[]> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  const result = await call<{ entries: CommunityAdminAuditEntry[] }>("admin_list_audit", {}, token);
+  return result.entries;
+}
+
+export async function setCommunityUserRole(targetId: string, role: CommunityRole): Promise<void> {
+  const token = readToken();
+  if (!token) throw new Error("Registra o importa prima la tua identità community.");
+  await call<{ updated: boolean }>("admin_set_role", { targetId, role }, token);
 }
