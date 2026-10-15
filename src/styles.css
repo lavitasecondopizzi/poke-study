@@ -3628,17 +3628,24 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
 @media(max-width:560px){.fossil-archive{padding:12px;border-radius:12px}.fossil-archive-hero{align-items:flex-start;gap:9px}.fossil-archive-emblem{flex-basis:42px;width:42px;height:42px}.fossil-archive-emblem svg{width:22px}.fossil-archive-heading h1{font-size:21px}.fossil-archive-heading p{font-size:11px}.fossil-archive-count{flex-basis:48px;min-height:48px}.fossil-archive-count strong{font-size:19px}.fossil-archive-stats{gap:6px}.fossil-archive-stats>div{gap:5px;padding:9px 7px}.fossil-archive-stats span{font-size:9px}.fossil-archive-stats strong{font-size:14px}.fossil-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.fossil-archive-card{flex-direction:column;align-items:flex-start;gap:7px;padding:8px;min-height:0}.fossil-archive-art{align-self:center;width:100%;height:auto;aspect-ratio:1;flex-basis:auto}.fossil-archive-copy strong{font-size:11px}}
 
 
-/* Ricerca: trova le entità e indica la pagina della paginazione. */
-.research-search-panel{display:grid;gap:8px;padding:12px;background:var(--academy-panel,#fff);border-bottom:1px solid var(--academy-border,#dce7ef);color:var(--academy-text,#24384a)}
-.research-search-panel>label{font-size:12px;font-weight:800}
-.research-search-controls{display:flex;gap:8px;min-width:0}
-.research-search-controls input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--academy-border,#cbd9e5);border-radius:8px;background:var(--academy-surface,#fff);color:var(--academy-text,#24384a);font:inherit}
-.research-search-controls button,.research-search-results li button{padding:8px 12px;border:1px solid var(--academy-primary,#4c83b5);border-radius:8px;background:var(--academy-primary,#4c83b5);color:var(--academy-on-primary,#fff);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+/* Strumenti sbloccati: barra persistente sopra entrambe le aree di gioco. */
+.unlocked-abilities-shell{position:relative;z-index:3;flex:0 0 auto;display:grid;gap:6px;margin:0 0 8px;border:1px solid var(--academy-border,#dce7ef);border-radius:9px;background:var(--academy-panel,#fff);box-shadow:0 2px 0 var(--academy-soft,#f1f6fa);overflow:visible}
+.unlocked-abilities-shell .ability-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:5px;padding:6px 8px;border:0;border-radius:9px;background:var(--academy-panel,#fff)}
+.unlocked-abilities-shell .ability-toolbar button{flex:0 0 auto;justify-content:center;gap:7px;min-height:30px;padding:5px 9px;border-color:var(--academy-border,#cbd9e5);background:var(--academy-soft,#f4f8fb);color:var(--academy-accent-dark,#24445d);font:inherit;font-weight:800;font-size:11px}
+.unlocked-abilities-shell .ability-toolbar button small{color:var(--academy-muted,#6f879a);font:700 9px 'DM Mono',monospace}
+.unlocked-abilities-shell .ability-status-chip{display:inline-flex;align-items:center;min-height:28px;padding:5px 8px;border:1px solid var(--academy-border,#dce7ef);border-radius:7px;background:var(--academy-surface,#fff);color:var(--academy-text,#40596d);font-size:10px;font-weight:800;line-height:1.2}
+.research-search-panel{display:flex;align-items:center;gap:8px;max-width:560px;margin:0 8px 8px;padding:0;background:transparent;color:var(--academy-text,#24384a)}
+.research-search-panel>label{flex:0 0 auto;font-size:11px;font-weight:800}
+.research-search-controls{display:flex;flex:1;gap:6px;min-width:0}
+.research-search-controls input{flex:1;min-width:0;width:100%;max-width:280px;padding:7px 9px;border:1px solid var(--academy-border,#cbd9e5);border-radius:7px;background:var(--academy-surface,#fff);color:var(--academy-text,#24384a);font:inherit;font-size:12px}
+.research-search-controls button,.research-search-results li button{padding:6px 9px;border:1px solid var(--academy-primary,#4c83b5);border-radius:7px;background:var(--academy-primary,#4c83b5);color:var(--academy-on-primary,#fff);font:inherit;font-weight:700;font-size:11px;cursor:pointer}
 .research-search-controls button:disabled{opacity:.5;cursor:not-allowed}
-.research-search-results{display:grid;gap:6px;margin:0;padding:0;list-style:none}
-.research-search-results li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border:1px solid var(--academy-border,#dce7ef);border-radius:8px;background:var(--academy-surface,#fff)}
-.research-search-results li>span{display:grid;gap:3px;min-width:0}
-.research-search-results li strong{overflow-wrap:anywhere;font-size:12px}
-.research-search-results li small{color:var(--academy-muted,#6f879a);font-size:11px;font-weight:800}
-.research-search-hint{margin:0;color:var(--academy-muted,#6f879a);font-size:12px}
-@media(max-width:520px){.research-search-controls{align-items:stretch}.research-search-controls button{padding:8px}.research-search-results li{align-items:flex-start;flex-direction:column}.research-search-results li button{width:100%}}
+.research-result-strip{position:relative;display:flex;align-items:flex-start;gap:7px;max-width:100%;padding:0 34px 8px 8px}
+.research-search-results{display:flex;flex-wrap:wrap;gap:5px;min-width:0;max-height:92px;overflow:auto;margin:0;padding:0;list-style:none}
+.research-search-results li{display:flex;align-items:center;gap:8px;max-width:100%;padding:5px 7px;border:1px solid var(--academy-border,#dce7ef);border-radius:7px;background:var(--academy-surface,#fff)}
+.research-search-results li>span{display:grid;gap:2px;min-width:0}
+.research-search-results li strong{overflow-wrap:anywhere;font-size:11px}
+.research-search-results li small{color:var(--academy-muted,#6f879a);font-size:10px;font-weight:800}
+.research-search-hint{margin:3px 0;color:var(--academy-muted,#6f879a);font-size:11px}
+.research-results-close{position:absolute;top:0;right:8px;width:24px;height:24px;border:1px solid var(--academy-border,#dce7ef);border-radius:6px;background:var(--academy-soft,#f4f8fb);color:var(--academy-text,#40596d);font-size:16px;line-height:1;cursor:pointer}
+@media(max-width:650px){.unlocked-abilities-shell{margin-bottom:5px}.unlocked-abilities-shell .ability-toolbar{gap:4px;padding:5px}.unlocked-abilities-shell .ability-toolbar button{min-height:27px;padding:4px 6px;font-size:10px}.unlocked-abilities-shell .ability-status-chip{min-height:25px;padding:4px 6px;font-size:9px}.research-search-panel{align-items:stretch;flex-direction:column;gap:5px;margin:0 7px 7px}.research-search-controls input{max-width:none}.research-result-strip{padding-left:7px}.research-search-results{max-height:75px}.research-search-results li{gap:5px;padding:4px 5px}.research-search-results li button{padding:5px 7px}.research-search-hint{font-size:10px}}
