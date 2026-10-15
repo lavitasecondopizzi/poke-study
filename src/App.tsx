@@ -13,7 +13,7 @@ import { Bell, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, Ci
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
-import { createFullCatalog, MACRO_CATEGORIES } from './catalog';
+import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
 
 const NATIONAL_DEX_SIZE = 1025;
@@ -1465,6 +1465,7 @@ export default function App() {
                         onClick={() => { setSelectedCardId(card.id); setMessage('Carta selezionata. Apri una macrocategoria e poi la sottocategoria corretta.'); }}
                       >
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
+                        {inventory.includes('reveal-name') && <span className="revealed-card-name">{displayName(card.name)}</span>}
                       </button>)}
                     </div>
                     <div className="game-pagination game-pagination-cards">
