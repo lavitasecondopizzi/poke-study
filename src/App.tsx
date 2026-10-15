@@ -351,6 +351,7 @@ export default function App() {
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [abilityHint, setAbilityHint] = useState('');
+  const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
   const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -522,6 +523,7 @@ export default function App() {
         setOpenSubcategoryId(nextProgress.gameState?.openSubcategoryId ?? null);
         setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
+         setRevealedMacroCategories(nextProgress.gameState?.revealedMacroCategories ?? {});
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -605,11 +607,12 @@ export default function App() {
         openSubcategoryId,
         openPokemonRegionId,
         gamePage,
+        revealedMacroCategories,
       };
       if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
       return { ...old, gameState: nextGameState };
     });
-  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage]);
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, revealedMacroCategories]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -1022,6 +1025,12 @@ export default function App() {
       ...old,
       abilityCooldowns: { ...(old.abilityCooldowns ?? {}), [abilityId]: usedAt + cooldownMs },
     }));
+    if (abilityId === 'scanner') {
+      setRevealedMacroCategories(old => ({
+        ...old,
+        ...Object.fromEntries(cards.map(card => [card.id, card.macroName])),
+      }));
+    }
     setAbilityHint(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} · ${cards.length} entità analizzate\n${hints.join('\n')}`);
     setNotice(`${abilityId === 'scanner' ? 'Scanner' : 'Ricerca'} utilizzato su ${cards.length} entità. Cooldown: ${cooldownLabel(usedAt + cooldownMs, usedAt)}.`);
   }
@@ -1527,7 +1536,8 @@ export default function App() {
                         onClick={() => toggleCardSelection(card.id)}
                       >
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
-                        {inventory.includes('reveal-name') && <span className="revealed-card-name">{displayName(card.name)}</span>}
+                        {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
+                         {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
                       </button>)}
                     </div>
                     <div className="game-pagination game-pagination-cards">
