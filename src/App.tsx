@@ -11,7 +11,7 @@ import PublicStudentProfile from './PublicStudentProfile';
 import AdminPanel from './AdminPanel';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
-import { Bell, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GitBranch, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
+import { Bell, Bone, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GitBranch, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
