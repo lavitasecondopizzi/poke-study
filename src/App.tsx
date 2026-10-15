@@ -1379,13 +1379,12 @@ export default function App() {
                 {inventory.includes('scanner') && <button type="button" className="scanner-ability-button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
                 {inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
                   <label htmlFor="research-entity-query">Ricerca</label>
-                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
+                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off" aria-controls="research-search-results" aria-expanded={researchHasSearched}/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
+                  {researchHasSearched && <div className="research-autocomplete-overlay" role="status">
+                    {researchResults.length > 0 ? <ul id="research-search-results" className="research-search-results">{researchResults.map(result => <li key={result.id}><strong>{result.name}</strong><span>Pagina {result.page}</span></li>)}</ul> : <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p>}
+                  </div>}
                 </form>}
               </div>
-              {researchHasSearched && inventory.includes('research') && <div className="research-result-strip" role="status">
-                {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchResults([]); setResearchHasSearched(false); }}>Vai</button></li>)}</ul> : <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p>}
-                <button type="button" className="research-results-close" aria-label="Chiudi risultati" onClick={() => { setResearchResults([]); setResearchHasSearched(false); }}>×</button>
-              </div>}
             </section>}
             <section className="challenge-board game-board mixed-lesson-board">
               <section className="game-zone game-slots-zone lesson-target-zone" aria-label="Cartelle di classificazione">
