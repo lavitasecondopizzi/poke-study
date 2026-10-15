@@ -40,6 +40,8 @@ export type ShopProduct = {
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
 const NUMBER_CHECK_LEVELS = 10;
+const REVEAL_SUBCATEGORY_LEVELS = 12;
+const AUTO_SORT_LEVELS = 10;
 const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'scanner', name: 'Scanner', description: 'Rivela la macrocategoria corretta. Livello 1: cooldown di 5 minuti.', cost: 150, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1)))); return { id: `scanner-upgrade-${level}`, name: `Scanner · Livello ${level}`, description: `Cooldown dello Scanner: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'scanner' : `scanner-upgrade-${level - 1}`], requirementLabel: `Acquista prima Scanner livello ${level - 1}`, kind: 'upgrade' as const }; }),
@@ -48,9 +50,11 @@ const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'direct-region', name: 'Inserimento regionale rapido', description: 'Consente di inserire un Pokémon nella sua regione senza scegliere il numero esatto.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'number-check', name: 'Controllo numerazione', description: 'Rivela il numero del Pokédex Nazionale dei Pokémon selezionati. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (NUMBER_CHECK_LEVELS - 1)))); return { id: `number-check-upgrade-${level}`, name: `Controllo numerazione · Livello ${level}`, description: `Cooldown del Controllo numerazione: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'number-check' : `number-check-upgrade-${level - 1}`], requirementLabel: `Acquista prima Controllo numerazione livello ${level - 1}`, kind: 'upgrade' as const }; }),
-  { id: 'auto-sort', name: 'Smistamento automatico', description: 'Inserisci un’entità nella macrocategoria e falla smistare automaticamente nella sottocategoria corretta.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta. Livello 1: cooldown di 10 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: REVEAL_SUBCATEGORY_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(600 * Math.pow(10 / 600, (level - 1) / (REVEAL_SUBCATEGORY_LEVELS - 1)))); return { id: `reveal-subcategory-upgrade-${level}`, name: `Rivelazione sottocategoria · Livello ${level}`, description: `Cooldown: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'reveal-subcategory' : `reveal-subcategory-upgrade-${level - 1}`], requirementLabel: `Acquista prima Rivelazione sottocategoria livello ${level - 1}`, kind: 'upgrade' as const }; }),
+  { id: 'auto-sort', name: 'Smistamento automatico', description: 'Sposta le entità selezionate direttamente nelle rispettive sottocategorie corrette, senza completare la catalogazione. Livello 1: cooldown di 5 minuti.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
+  ...Array.from({ length: AUTO_SORT_LEVELS - 1 }, (_, i) => { const level = i + 2; const seconds = Math.max(10, Math.round(300 * Math.pow(10 / 300, (level - 1) / (AUTO_SORT_LEVELS - 1)))); return { id: `auto-sort-upgrade-${level}`, name: `Smistamento automatico · Livello ${level}`, description: `Cooldown: ${seconds} secondi.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: [level === 2 ? 'auto-sort' : `auto-sort-upgrade-${level - 1}`], requirementLabel: `Acquista prima Smistamento automatico livello ${level - 1}`, kind: 'upgrade' as const }; }),
   { id: 'reveal-name', name: 'Rivelazione del nome', description: 'Mostra il nome dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
-  { id: 'reveal-subcategory', name: 'Rivelazione sottocategoria', description: 'Mostra la sottocategoria corretta dell’entità selezionata.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   ...Array.from({ length: 8 }, (_, i) => { const level = i + 1; return { id: `multi-select-${level}`, name: `Selezione multipla · Livello ${level}`, description: `Consente di selezionare fino a ${level + 2} entità contemporaneamente, anche tra pagine diverse.`, cost: 0, currency: 'poke' as const, category: 'oggetti' as const, requires: level === 1 ? [] : [`multi-select-${level - 1}`], requirementLabel: level === 1 ? 'Nessun requisito aggiuntivo' : `Acquista prima Selezione multipla livello ${level - 1}`, kind: (level === 1 ? 'active' : 'upgrade') as 'active' | 'upgrade' }; }),
   { id: 'subcategory-errors', name: 'Evidenziazione errori', description: 'Evidenzia in rosso solo le entità nella sottocategoria sbagliata. Non controlla la numerazione.', cost: 0, currency: 'poke', category: 'oggetti', kind: 'active' },
   { id: 'evolution-archive', name: 'Archivio delle evoluzioni', description: 'Sblocca l’accesso permanente alle informazioni sulle evoluzioni.', cost: 3, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
@@ -79,8 +83,10 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'subcategory-errors') return 2;
     if (id === 'scanner') return 3;
     if (id === 'reveal-subcategory') return 4;
+    if (id.startsWith('reveal-subcategory-upgrade-')) { const level = Number(id.slice(id.lastIndexOf('-') + 1)); return 2 + (level - 2) * 0.75; }
     if (id === 'research') return 7;
     if (id === 'auto-sort') return 12;
+    if (id.startsWith('auto-sort-upgrade-')) { const level = Number(id.slice(id.lastIndexOf('-') + 1)); return 4 + (level - 2) * 1.1; }
     if (id.startsWith('scanner-upgrade-')) {
       const level = Number(id.slice(id.lastIndexOf('-') + 1));
       return 1.5 + (level - 2) * 0.55;
@@ -361,6 +367,7 @@ export default function App() {
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [revealedMacroCategories, setRevealedMacroCategories] = useState<Record<string, string>>(() => progress.gameState?.revealedMacroCategories ?? {});
+  const [revealedSubcategories, setRevealedSubcategories] = useState<Record<string, string>>(() => progress.gameState?.revealedSubcategories ?? {});
   const [revealedPokemonNumbers, setRevealedPokemonNumbers] = useState<Record<string, number>>(() => progress.gameState?.revealedPokemonNumbers ?? {});
   const [researchQuery, setResearchQuery] = useState('');
   const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
@@ -538,6 +545,7 @@ export default function App() {
         setGamePage(nextProgress.gameState?.gamePage ?? 0);
         setFolderPage(nextProgress.gameState?.folderPage ?? 0);
          setRevealedMacroCategories(old => ({ ...(nextProgress.gameState?.revealedMacroCategories ?? {}), ...old }));
+         setRevealedSubcategories(old => ({ ...(nextProgress.gameState?.revealedSubcategories ?? {}), ...old }));
         setRevealedPokemonNumbers(old => ({ ...(nextProgress.gameState?.revealedPokemonNumbers ?? {}), ...old }));
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
@@ -629,7 +637,7 @@ export default function App() {
       if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
       return { ...old, gameState: nextGameState };
     });
-  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories, revealedPokemonNumbers]);
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage, folderPage, revealedMacroCategories, revealedSubcategories, revealedPokemonNumbers]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
@@ -1059,7 +1067,7 @@ export default function App() {
     setNotice(`Acquisto registrato: ${product.name}.`);
   }
 
-  function useAbility(abilityId: 'scanner' | 'number-check') {
+  function useAbility(abilityId: 'scanner' | 'number-check' | 'reveal-subcategory' | 'auto-sort') {
     const selectedIds = selectedCardIds.length > 1 ? selectedCardIds : selectedCardId ? [selectedCardId] : [];
     if (selectedIds.length === 0) { setNotice('Seleziona prima una carta da analizzare.'); return; }
     if (!(progress.inventory ?? []).includes(abilityId)) return;
@@ -1071,6 +1079,25 @@ export default function App() {
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > now) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, now)}.`); return; }
     const currentInventory = progress.inventory ?? [];
+    if (abilityId === 'auto-sort') {
+      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('auto-sort-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+      const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (AUTO_SORT_LEVELS - 1))));
+      setMisplacedCards(old => { const next = { ...old }; cards.forEach(card => { next[card.id] = card.subcategoryId; }); return next; });
+      setCategoryPlacements(old => { const next = { ...old }; cards.forEach(card => { delete next[card.id]; }); return next; });
+      setSelectedCardIds(old => old.filter(id => !cards.some(card => card.id === id)));
+      setSelectedCardId(old => cards.some(card => card.id === old) ? null : old);
+      setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'auto-sort': now + cooldownMs } }));
+      setNotice(`Smistamento completato per ${cards.length} entità. La catalogazione non è stata completata e non sono stati assegnati PP.`);
+      return;
+    }
+    if (abilityId === 'reveal-subcategory') {
+      const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('reveal-subcategory-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
+      const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (REVEAL_SUBCATEGORY_LEVELS - 1))));
+      const revealedNow = Object.fromEntries(cards.map(card => [card.id, card.subcategoryName]));
+      setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'reveal-subcategory': now + cooldownMs }, gameState: { ...(old.gameState ?? { categoryPlacements: {}, misplacedCards: {} }), revealedSubcategories: { ...(old.gameState?.revealedSubcategories ?? {}), ...revealedNow } } }));
+      setRevealedSubcategories(old => ({ ...old, ...revealedNow }));
+      return;
+    }
     if (abilityId === 'scanner') {
       const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('scanner-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
       const cooldownMs = Math.max(10_000, Math.round(300_000 * Math.pow(10 / 300, (level - 1) / (SCANNER_LEVELS - 1))));
@@ -1450,10 +1477,12 @@ export default function App() {
           /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio Nazionale bloccato</h1><p>Per consultare le informazioni devi catalogare tutti i 1.025 Pokémon e acquistare con i Punti Poké lo Scanner, tutti i livelli di Ricerca e l’Archivio Nazionale.</p><p>Pokémon catalogati: <strong>{progress.completedIds.length} / {NATIONAL_DEX_SIZE}</strong></p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'game' && <>
             {loadError && <div className="error-panel"><p>{loadError}</p><button className="primary-button" onClick={() => window.location.reload()}>Riprova</button></div>}
-            {(inventory.includes('scanner') || inventory.includes('research') || inventory.includes('number-check')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
+            {(inventory.includes('scanner') || inventory.includes('research') || inventory.includes('number-check') || inventory.includes('reveal-subcategory') || inventory.includes('auto-sort')) && <section className="unlocked-abilities-shell" aria-label="Strumenti attivi">
               <div className="ability-toolbar">
                 {inventory.includes('scanner') && <button type="button" className="scanner-ability-button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
                 {inventory.includes('number-check') && <button type="button" className="scanner-ability-button number-check-ability-button" disabled={!selectedCardIds.length && !selectedCardId || (progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow} onClick={() => useAbility('number-check')}><strong>Controllo numerazione</strong><small>{(progress.abilityCooldowns?.['number-check'] ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.['number-check'] ?? 0,clockNow) : 'Pronto'}</small></button>}
+                 {inventory.includes('reveal-subcategory') && <button type="button" className="scanner-ability-button" disabled={!selectedCardIds.length && !selectedCardId || (progress.abilityCooldowns?.['reveal-subcategory'] ?? 0) > clockNow} onClick={() => useAbility('reveal-subcategory')}><strong>Rivelazione sottocategoria</strong><small>{(progress.abilityCooldowns?.['reveal-subcategory'] ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.['reveal-subcategory'] ?? 0,clockNow) : 'Pronto'}</small></button>}
+                 {inventory.includes('auto-sort') && <button type="button" className="scanner-ability-button" disabled={!selectedCardIds.length && !selectedCardId || (progress.abilityCooldowns?.['auto-sort'] ?? 0) > clockNow} onClick={() => useAbility('auto-sort')}><strong>Smistamento automatico</strong><small>{(progress.abilityCooldowns?.['auto-sort'] ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.['auto-sort'] ?? 0,clockNow) : 'Pronto'}</small></button>}
                 {inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
                   <label htmlFor="research-entity-query">Ricerca</label>
                   <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Cerca entità…" autoComplete="off" aria-controls="research-search-results" aria-expanded={researchHasSearched}/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : 'Cerca'}</button></div>
@@ -1536,7 +1565,7 @@ export default function App() {
                         {card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
-                        {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
+                        {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}{revealedSubcategories[card.id] && <span className="scanner-revealed-category revealed-subcategory-label">{revealedSubcategories[card.id]}</span>}
                       </button>)}
                     </div>
                     <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
@@ -1576,7 +1605,7 @@ export default function App() {
                             }
                             if (selectedCardId) placeCard(selectedCardId, slotId);
                           }}>
-                            {placedCard ? <><img className="category-entity-image" src={placedCard.imageUrl} alt="" />{(inventory.includes('reveal-name') || revealedMacroCategories[placedCard.id]) && <span className="revealed-card-name placed-entity-name">{displayName(placedCard.name)}</span>}{revealedMacroCategories[placedCard.id] && <span className="scanner-revealed-category placed-entity-category">{revealedMacroCategories[placedCard.id]}</span>}</> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
+                            {placedCard ? <><img className="category-entity-image" src={placedCard.imageUrl} alt="" />{(inventory.includes('reveal-name') || revealedMacroCategories[placedCard.id]) && <span className="revealed-card-name placed-entity-name">{displayName(placedCard.name)}</span>}{revealedMacroCategories[placedCard.id] && <span className="scanner-revealed-category placed-entity-category">{revealedMacroCategories[placedCard.id]}</span>}{revealedSubcategories[placedCard.id] && <span className="scanner-revealed-category placed-entity-category revealed-subcategory-label">{revealedSubcategories[placedCard.id]}</span>}</> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
                           </button>;
                         })}
                       </div>
