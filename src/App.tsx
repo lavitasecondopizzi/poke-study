@@ -337,17 +337,16 @@ export default function App() {
   const [lessonSolved, setLessonSolved] = useState<string[]>([]);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [wrongTargetId, setWrongTargetId] = useState<string | null>(null);
-  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>(() => {
-    try { return JSON.parse(localStorage.getItem('poke-study-misplaced-cards-v1') ?? '{}') as Record<string, string>; } catch { return {}; }
-  });
-  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => {
-    try { return JSON.parse(localStorage.getItem('poke-study-category-placements-v1') ?? '{}') as Record<string, string>; } catch { return {}; }
-  });
+  const [misplacedCards, setMisplacedCards] = useState<Record<string, string>>(() => progress.gameState?.misplacedCards ?? {});
+  const [categoryPlacements, setCategoryPlacements] = useState<Record<string, string>>(() => progress.gameState?.categoryPlacements ?? {});
   const [lessonReady, setLessonReady] = useState(false);
-  const [gamePage, setGamePage] = useState(0);
-  const [openMacroId, setOpenMacroId] = useState<MacroId | null>(null);
-  const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(null);
-  const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(null);
+  const [gamePage, setGamePage] = useState(() => progress.gameState?.gamePage ?? 0);
+  const [openMacroId, setOpenMacroId] = useState<MacroId | null>(() => {
+    const value = progress.gameState?.openMacroId;
+    return value === 'pokemon' || value === 'items' || value === 'berries' || value === 'machines' || value === 'special' ? value : null;
+  });
+  const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
+  const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
   const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -513,6 +512,12 @@ export default function App() {
         setAcademy(communityIdentity.academy);
         setStudent(nextStudent);
         setProgress(nextProgress);
+        setCategoryPlacements(nextProgress.gameState?.categoryPlacements ?? {});
+        setMisplacedCards(nextProgress.gameState?.misplacedCards ?? {});
+        setOpenMacroId((nextProgress.gameState?.openMacroId as MacroId | null | undefined) ?? null);
+        setOpenSubcategoryId(nextProgress.gameState?.openSubcategoryId ?? null);
+        setOpenPokemonRegionId(nextProgress.gameState?.openPokemonRegionId ?? null);
+        setGamePage(nextProgress.gameState?.gamePage ?? 0);
         try {
           localStorage.setItem(ACADEMY_KEY, communityIdentity.academy);
           localStorage.setItem(STUDENT_KEY, JSON.stringify(nextStudent));
@@ -583,12 +588,24 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify(progress));
-      localStorage.setItem('poke-study-misplaced-cards-v1', JSON.stringify(misplacedCards));
-      localStorage.setItem('poke-study-category-placements-v1', JSON.stringify(categoryPlacements));
-    } catch { /* storage may be unavailable */ }
-  }, [progress, misplacedCards, categoryPlacements]);
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch { /* storage may be unavailable */ }
+  }, [progress]);
+
+  useEffect(() => {
+    if (!lessonReady) return;
+    setProgress(old => {
+      const nextGameState = {
+        categoryPlacements,
+        misplacedCards,
+        openMacroId,
+        openSubcategoryId,
+        openPokemonRegionId,
+        gamePage,
+      };
+      if (JSON.stringify(old.gameState) === JSON.stringify(nextGameState)) return old;
+      return { ...old, gameState: nextGameState };
+    });
+  }, [lessonReady, categoryPlacements, misplacedCards, openMacroId, openSubcategoryId, openPokemonRegionId, gamePage]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClockNow(Date.now()), 1000);
