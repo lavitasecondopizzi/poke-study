@@ -98,11 +98,12 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
     if (id === 'custom-challenges') return 8;
     return 1;
   };
-  // Mantiene invariati i prezzi storici degli strumenti; i nuovi aiuti usano la stessa scala PP.
-  const purchasable = SHOP_PRODUCTS.filter(product => product.category === 'oggetti');
-  const weights = purchasable.map(weightFor);
+  // Il negozio è ora un catalogo unico: il budget dei PP viene ripartito
+  // fra tutti gli articoli, inclusi aiuti, archivi, cosmetici e potenziamenti.
+  // La somma dei prezzi dell'intero catalogo coincide con i PP ottenibili.
+  const weights = SHOP_PRODUCTS.map(weightFor);
   const weightTotal = weights.reduce((sum, weight) => sum + weight, 0);
-  const exactShares = purchasable.map((product, index) => ({
+  const exactShares = SHOP_PRODUCTS.map((product, index) => ({
     id: product.id,
     raw: totalEarnablePoints * weights[index] / weightTotal,
     cost: Math.floor(totalEarnablePoints * weights[index] / weightTotal),
@@ -117,10 +118,9 @@ function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
       if (target) target.cost += 1;
     });
   const prices = new Map(exactShares.map(item => [item.id, item.cost]));
-  const pointsPerWeight = totalEarnablePoints / weightTotal;
   return SHOP_PRODUCTS.map(product => ({
     ...product,
-    cost: prices.get(product.id) ?? Math.ceil(pointsPerWeight * weightFor(product)),
+    cost: prices.get(product.id) ?? 1,
   }));
 }
 
