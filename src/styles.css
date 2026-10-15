@@ -4105,3 +4105,91 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .game-layout .folder-correct-slots .pokemon-number-slot{min-height:64px}
   .game-layout .folder-subfolder-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+
+/* Let the game document grow with its content instead of fitting the viewport. */
+.game-layout{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.game-layout .content{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.game-layout .challenge-board.game-board.folder-workspace{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  flex:0 0 auto!important;
+  align-items:start;
+  grid-template-rows:auto!important;
+  overflow:visible!important;
+}
+.game-layout .folder-tree-zone,
+.game-layout .folder-context-zone{
+  height:auto!important;
+  min-height:600px;
+  max-height:none!important;
+  align-self:stretch;
+  overflow:visible!important;
+}
+.game-layout .folder-tree-scroll{
+  max-height:none!important;
+  overflow:visible!important;
+}
+.game-layout .folder-context-zone>.pokemon-cards,
+.game-layout .folder-context-zone>.folder-correct-slots,
+.game-layout .folder-context-zone>.folder-assigned-section,
+.game-layout .folder-context-zone>.folder-subfolder-shortcuts{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.game-layout .folder-context-zone .folder-entity-grid{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  grid-auto-rows:minmax(112px,auto);
+}
+.game-layout .folder-context-zone .folder-entity-grid .mixed-card{
+  height:auto!important;
+  max-height:none!important;
+  min-height:112px!important;
+}
+.game-layout .folder-correct-slots{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.game-layout .folder-correct-slots .folder-slot-grid,
+.game-layout .folder-correct-slots .folder-pokemon-number-grid{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  align-content:start;
+}
+.game-layout .folder-assigned-section{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+@media(max-width:650px){
+  .game-layout{height:auto!important;min-height:0!important;max-height:none!important}
+  .game-layout .content{height:auto!important;min-height:0!important;max-height:none!important}
+  .game-layout .challenge-board.game-board.folder-workspace{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    grid-template-rows:auto!important;
+  }
+  .game-layout .folder-tree-zone,
+  .game-layout .folder-context-zone{height:auto!important;min-height:520px;max-height:none!important}
+  .game-layout .folder-tree-scroll{max-height:none!important}
+  .game-layout .folder-context-zone .folder-entity-grid,
+  .game-layout .folder-context-zone>.folder-correct-slots,
+  .game-layout .folder-context-zone>.folder-assigned-section{height:auto!important;max-height:none!important;overflow:visible!important}
+}
