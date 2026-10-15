@@ -1418,18 +1418,18 @@ export default function App() {
                 </form>}
               </div>
             </section>}
-            <section className={\`challenge-board game-board mixed-lesson-board folder-workspace \${mobileFolderTreeOpen ? 'mobile-tree-open' : ''}\`}>
-              <aside className={\`game-zone folder-tree-zone \${mobileFolderTreeOpen ? 'is-mobile-open' : ''}\`} aria-label="Albero delle cartelle">
+            <section className={`challenge-board game-board mixed-lesson-board folder-workspace ${mobileFolderTreeOpen ? 'mobile-tree-open' : ''}`}>
+              <aside className={`game-zone folder-tree-zone ${mobileFolderTreeOpen ? 'is-mobile-open' : ''}`} aria-label="Albero delle cartelle">
                 <div className="game-zone-heading"><strong>CARTELLE E SOTTOCARTELLE</strong><span>{lessonSolved.length} / {lessonDeck.length}</span></div>
                 <div className="folder-tree-scroll">
-                  <button type="button" className={\`folder-tree-all \${!openMacroId ? 'is-active' : ''}\`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>
+                  <button type="button" className={`folder-tree-all ${!openMacroId ? 'is-active' : ''}`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>
                     <span aria-hidden="true">▦</span><strong>Tutte le entità</strong><small>{remainingLessonCards.length}</small>
                   </button>
                   {macroFolderCounts.map(folder => (
                     <div className="folder-tree-group" key={folder.id}>
                       <button
                         type="button"
-                        className={\`folder-tree-node folder-tree-macro \${openMacroId === folder.id ? 'is-active' : ''}\`}
+                        className={`folder-tree-node folder-tree-macro ${openMacroId === folder.id ? 'is-active' : ''}`}
                         aria-expanded={openMacroId === folder.id}
                         onDragOver={event => event.preventDefault()}
                         onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, folder.id); }}
@@ -1443,7 +1443,7 @@ export default function App() {
                           return <button
                             type="button"
                             key={target.id}
-                            className={\`folder-tree-node folder-tree-child \${selected ? 'is-active' : ''}\`}
+                            className={`folder-tree-node folder-tree-child ${selected ? 'is-active' : ''}`}
                             aria-current={selected ? 'location' : undefined}
                             onDragOver={event => event.preventDefault()}
                             onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, target.id); }}
@@ -1466,16 +1466,16 @@ export default function App() {
               <section className="game-zone folder-context-zone" aria-label="Area di lavoro delle entità">
                 <div className="game-zone-heading">
                   <strong>{!openMacroId ? 'TUTTE LE ENTITÀ' : openSubcategoryId && currentSubcategory ? currentSubcategory.name.toLocaleUpperCase('it') : openPokemonRegionId && currentPokemonRegion ? currentPokemonRegion.name.toLocaleUpperCase('it') : currentMacro ? currentMacro.name.toLocaleUpperCase('it') : 'CARTELLA'}</strong>
-                  <span>{!activeFolderId ? \`\${remainingLessonCards.length} disponibili\` : \`\${folderAssignedCards.length} qui · \${lessonSolved.length} completate\`}</span>
+                  <span>{!activeFolderId ? `${remainingLessonCards.length} disponibili` : `${folderAssignedCards.length} qui · ${lessonSolved.length} completate`}</span>
                 </div>
                 <div className="folder-context-toolbar">
                   <button type="button" className="folder-mobile-toggle" onClick={() => setMobileFolderTreeOpen(true)}>☰ Cartelle</button>
-                  <button type="button" className={\`folder-all-button \${!activeFolderId ? 'is-active' : ''}\`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>← Tutte le entità</button>
+                  <button type="button" className={`folder-all-button ${!activeFolderId ? 'is-active' : ''}`} onClick={() => { setOpenMacroId(null); setOpenSubcategoryId(null); setOpenPokemonRegionId(null); setGamePage(0); setMobileFolderTreeOpen(false); }}>← Tutte le entità</button>
                   {activeFolderId && selectedCardIds.length > 0 && <button type="button" className="folder-move-selected" onClick={() => {
                     selectedCardIds.forEach(cardId => moveCardToFolder(cardId, activeFolderId));
                     setSelectedCardIds([]);
                     setSelectedCardId(null);
-                  }}>Sposta qui {selectedCardIds.length > 1 ? \`le \${selectedCardIds.length} selezionate\` : 'la selezionata'}</button>}
+                  }}>Sposta qui {selectedCardIds.length > 1 ? `le ${selectedCardIds.length} selezionate` : 'la selezionata'}</button>}
                 </div>
 
                 {!activeFolderId ? (
@@ -1484,7 +1484,7 @@ export default function App() {
                   : visibleGameCards.length > 0 ? <>
                     <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setGamePage(page => Math.max(0, page - 1))} disabled={safeGamePage === 0}>‹ Indietro</button><span>Pagina {safeGamePage + 1} / {gamePageCount}</span><button type="button" onClick={() => setGamePage(page => Math.min(gamePageCount - 1, page + 1))} disabled={safeGamePage >= gamePageCount - 1}>Avanti ›</button></div>
                     <div className="pokemon-cards mixed-card-grid folder-entity-grid">
-                      {visibleGameCards.map(card => <button key={card.id} type="button" aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'} title="Seleziona carta" className={\`pokemon-card mixed-card \${selectedCardIds.includes(card.id) ? 'chosen' : ''}\`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)} onClick={() => toggleCardSelection(card.id)}>
+                      {visibleGameCards.map(card => <button key={card.id} type="button" aria-label={selectedCardIds.includes(card.id) ? 'Carta selezionata' : 'Seleziona carta da classificare'} title="Seleziona carta" className={`pokemon-card mixed-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)} onClick={() => toggleCardSelection(card.id)}>
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
                         {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
@@ -1538,7 +1538,7 @@ export default function App() {
                     {folderAssignedCards.length > 0 && <div className="folder-assigned-section">
                       <div className="folder-section-caption"><strong>Entità provvisorie in questa cartella</strong><span>Puoi spostarle ancora o riprenderle</span></div>
                       <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
-                        {visibleFolderCards.map(card => <div key={card.id} className={\`folder-entity-card \${selectedCardIds.includes(card.id) ? 'chosen' : ''}\`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
+                        {visibleFolderCards.map(card => <div key={card.id} className={`folder-entity-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
                           <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}><img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}</button>
                           <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
                         </div>)}
