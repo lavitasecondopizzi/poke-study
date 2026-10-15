@@ -4384,3 +4384,27 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .game-layout .folder-correct-slots .placed-entity-name{font-size:8px!important}
   .game-layout .folder-correct-slots .pokemon-number-entity-slot{min-height:84px}
 }
+
+
+/* Il numero rivelato dal Controllo numerazione appare sopra lo sprite, senza sovrapporlo. */
+.game-layout .pokemon-cards .revealed-pokemon-number,
+.game-layout .folder-entity-select .revealed-pokemon-number{
+  display:block;
+  width:100%;
+  flex:0 0 auto;
+  margin:0 0 2px;
+  color:var(--academy-primary,#246ba5);
+  font-size:10px;
+  font-weight:900;
+  line-height:1.15;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.game-layout .pokemon-cards .mixed-card{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px}
+.game-layout .pokemon-cards .mixed-card .revealed-pokemon-number{order:0}
+.game-layout .pokemon-cards .mixed-card img{order:1}
+.game-layout .folder-entity-select .revealed-pokemon-number{font-size:9px}
+@media(max-width:650px){
+  .game-layout .pokemon-cards .revealed-pokemon-number{font-size:8px}
+  .game-layout .folder-entity-select .revealed-pokemon-number{font-size:8px}
+}
