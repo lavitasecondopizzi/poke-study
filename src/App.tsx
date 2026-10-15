@@ -1545,7 +1545,7 @@ export default function App() {
                         <img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }} />
                         {(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}
                          {revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}
-                        {revealedSubcategories[card.id] && <span className="scanner-revealed-category research-revealed-subcategory">{revealedSubcategories[card.id]}</span>}
+                        {revealedSubcategories[card.id] && <span className="scanner-revealed-category research-revealed-subcategory">Sottocategoria: {revealedSubcategories[card.id]}</span>}
                       </button>)}
                     </div>
                     <div className="game-pagination game-pagination-cards">
