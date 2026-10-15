@@ -79,8 +79,6 @@ export interface StudentProfileSettings {
   favoritePokemon: string;
   motto: string;
   activeTitle: string;
-  /** Titolo personalizzato disponibile dopo l'acquisto di Titolo esclusivo. */
-  customTitle: string;
   badges: string[];
   frame: string;
   visibility: StudentProfileVisibility;
