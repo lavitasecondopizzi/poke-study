@@ -20,7 +20,7 @@ import { createCommunityIdentity, createCommunityReply, createCommunityThread, e
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
 import { createFullCatalog, displayName, MACRO_CATEGORIES } from './catalog';
 import type { CatalogCard, MacroId } from './catalog';
-import { SCANNER_LEVELS, RESEARCH_LEVELS, NUMBER_CHECK_LEVELS, REVEAL_SUBCATEGORY_LEVELS, AUTO_SORT_LEVELS, abilityLevelFromInventory, abilityCooldownSeconds, abilityCooldownDurationMs } from './abilityCooldowns';
+import { SCANNER_LEVELS, RESEARCH_LEVELS, NUMBER_CHECK_LEVELS, REVEAL_SUBCATEGORY_LEVELS, AUTO_SORT_LEVELS, abilityLevelFromInventory, abilityCooldownDurationMs } from './abilityCooldowns';
 
 const NATIONAL_DEX_SIZE = 1025;
 
