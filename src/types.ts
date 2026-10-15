@@ -1,6 +1,7 @@
 export interface PokemonSpecies {
   id: number;
   name: string;
+  localizedName?: string;
 }
 
 export interface ProgressHistoryEntry {
@@ -37,6 +38,7 @@ export interface SavedProgress {
 export interface ApiNamedResource {
   name: string;
   url: string;
+  localizedName?: string;
 }
 
 export interface PokemonTypeIndex {
