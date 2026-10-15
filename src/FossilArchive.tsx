@@ -117,3 +117,5 @@ export default function FossilArchive({
     </section>
   );
 }
+
+// Trigger a fresh GitHub Pages deployment without changing archive behavior.
