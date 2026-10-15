@@ -6,6 +6,7 @@ import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
 import StudentCard from './StudentCard';
 import PublicStudentProfile from './PublicStudentProfile';
+import AdminPanel from './AdminPanel';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
 import { Bell, BookOpen, Bookmark, BookmarkCheck, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GraduationCap, Link2, Megaphone, Menu, MessageCircle, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
@@ -1204,6 +1205,7 @@ export default function App() {
         <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
         <button className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={16} /> Classifica</button>
         <button className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={16} /> Bacheca</button>
+        {communityIdentity?.role === 'amministratore' && <button className={view === 'amministrazione' ? 'active' : ''} aria-current={view === 'amministrazione' ? 'page' : undefined} onClick={() => navTo('amministrazione')}><ShieldCheck size={16} /> Amministrazione</button>}
         <div className="nav-status">ARCHIVIO NAZIONALE · 1–1025</div>
       </nav>
 
@@ -1438,6 +1440,8 @@ export default function App() {
 
           {view === 'academia' && <Academy configured={isCommunityConfigured()} identityReady={Boolean(communityIdentity)} onOpenProfile={() => navTo('profilo')} />}
 
+          {view === 'amministrazione' && <AdminPanel identity={communityIdentity} />}
+
           {view === 'forum' && <>
             <div className="breadcrumb">Home / Comunità / <b>Bacheca</b></div>
             <header className="forum-v2-hero">
@@ -1525,6 +1529,7 @@ export default function App() {
             <button type="button" className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={20}/><span>Cartoleria</span>{availableShopCount > 0 && <small>{availableShopCount} disponibili</small>}</button>
             <button type="button" className={view === 'classifica' ? 'active' : ''} aria-current={view === 'classifica' ? 'page' : undefined} onClick={() => navTo('classifica')}><Trophy size={20}/><span>Classifica</span></button>
             <button type="button" className={view === 'forum' ? 'active' : ''} aria-current={view === 'forum' ? 'page' : undefined} onClick={() => navTo('forum')}><CircleHelp size={20}/><span>Bacheca</span></button>
+            {communityIdentity?.role === 'amministratore' && <button type="button" className={view === 'amministrazione' ? 'active' : ''} aria-current={view === 'amministrazione' ? 'page' : undefined} onClick={() => navTo('amministrazione')}><ShieldCheck size={20}/><span>Amministrazione</span></button>}
             <button type="button" className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={20}/><span>Accademia</span></button>
           </div>
         </section>
