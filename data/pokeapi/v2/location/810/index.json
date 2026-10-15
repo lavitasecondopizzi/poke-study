@@ -1,0 +1,46 @@
+{
+  "id": 810,
+  "name": "birth-island",
+  "region": {
+    "name": "kanto",
+    "url": "/api/v2/region/1/"
+  },
+  "names": [
+    {
+      "name": "Île Aurore",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Entstehungsinsel",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Birth Island",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 187,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "birth-island-area",
+      "url": "/api/v2/location-area/806/"
+    }
+  ]
+}

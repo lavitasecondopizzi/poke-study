@@ -1,0 +1,12 @@
+{
+  "id": 1010,
+  "name": "seagrass-haven-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "seagrass-haven",
+    "url": "/api/v2/location/1016/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

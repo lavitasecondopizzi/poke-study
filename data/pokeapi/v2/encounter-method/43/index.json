@@ -1,0 +1,21 @@
+{
+  "id": 43,
+  "name": "overworld-water-special",
+  "order": 43,
+  "names": [
+    {
+      "name": "Apparition rare dans l'eau avec un parfum ou un combo capture",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Rare spawn in water with lure or catch combo",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

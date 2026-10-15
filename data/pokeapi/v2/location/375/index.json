@@ -1,0 +1,69 @@
+{
+  "id": 375,
+  "name": "pinwheel-forest",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "ヤグルマの森",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Forêt d'Empoigne",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Ewigenwald",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pinwheel Forest",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 33,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "pinwheel-forest-outside",
+      "url": "/api/v2/location-area/581/"
+    },
+    {
+      "name": "pinwheel-forest-inside",
+      "url": "/api/v2/location-area/582/"
+    },
+    {
+      "name": "pinwheel-forest-rumination-field",
+      "url": "/api/v2/location-area/1168/"
+    },
+    {
+      "name": "pinwheel-forest-hidden-grotto-outer-area",
+      "url": "/api/v2/location-area/1358/"
+    },
+    {
+      "name": "pinwheel-forest-hidden-grotto-inner-area",
+      "url": "/api/v2/location-area/1359/"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": 2,
+  "name": "burn",
+  "effect_entries": [
+    {
+      "effect": "Brûle la cible.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Burns the target.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "items": [
+    {
+      "name": "flame-orb",
+      "url": "/api/v2/item/250/"
+    }
+  ]
+}

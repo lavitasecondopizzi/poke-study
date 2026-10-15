@@ -1,0 +1,38 @@
+{
+  "id": 272,
+  "name": "pokemon-movie-09",
+  "region": null,
+  "names": [
+    {
+      "name": "Film Pokémon 09",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Pokémon Film 09",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pokémon Movie 09",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 3007,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

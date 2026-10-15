@@ -1,0 +1,172 @@
+{
+  "id": 1367,
+  "name": "motostoke-gym",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "motostoke",
+    "url": "/api/v2/location/918/"
+  },
+  "names": [
+    {
+      "name": "Motostoke (Gym)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Motorby (Arène)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "vulpix",
+        "url": "/api/v2/pokemon/37/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 24,
+              "max_level": 24,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 24,
+              "max_level": 24,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "litwick",
+        "url": "/api/v2/pokemon/607/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "sizzlipede",
+        "url": "/api/v2/pokemon/850/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

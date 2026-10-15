@@ -1,0 +1,37 @@
+{
+  "id": 13,
+  "appeal": 1,
+  "jam": 0,
+  "effect_entries": [
+    {
+      "effect": "Ajoute toujours un point à la jauge d’applaudissements, peu importe si la capacité correspond au concours ou non, et peut également bénéficier du bonus d’applaudissements.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Always adds a point to the applause meter, regardless of whether the move matches the contest, and can likewise gain the applause bonus.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Fait monter le voltage, peu importe le type de la démonstration.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "flavor_text": "An appeal that excites the audience in any contest.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

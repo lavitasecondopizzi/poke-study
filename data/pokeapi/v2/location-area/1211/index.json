@@ -1,0 +1,12 @@
+{
+  "id": 1211,
+  "name": "kanto-pokemart-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "kanto-pokemart",
+    "url": "/api/v2/location/1090/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

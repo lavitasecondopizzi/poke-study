@@ -1,0 +1,38 @@
+{
+  "id": 961,
+  "name": "bonechill-wastes",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Étendue Polaire",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Eisige Ödnis",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Bonechill Wastes",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "bonechill-wastes-area",
+      "url": "/api/v2/location-area/955/"
+    }
+  ]
+}

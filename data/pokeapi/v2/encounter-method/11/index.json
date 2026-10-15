@@ -1,0 +1,28 @@
+{
+  "id": 11,
+  "name": "bridge-spots",
+  "order": 4,
+  "names": [
+    {
+      "name": "Im Schatten einer Brücke laufen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Walking in bridge shadows",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En marchant à l’ombre d’un pont",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

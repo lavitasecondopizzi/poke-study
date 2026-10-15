@@ -1,0 +1,124 @@
+{
+  "id": 1368,
+  "name": "galar-route-3-west",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "galar-route-3",
+    "url": "/api/v2/location/870/"
+  },
+  "names": [
+    {
+      "name": "Route 3 (West)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 3 (Ouest)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "trubbish",
+        "url": "/api/v2/pokemon/568/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 1,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 13,
+              "chance": 1,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 1,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 13,
+              "chance": 1,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "rolycoly",
+        "url": "/api/v2/pokemon/837/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 99,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 13,
+              "chance": 99,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 99,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 13,
+              "chance": 99,
+              "method": {
+                "name": "overworld",
+                "url": "/api/v2/encounter-method/38/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": 260,
+  "name": "johto-safari-blocks-plains-min-4",
+  "condition": {
+    "name": "johto-safari-blocks",
+    "url": "/api/v2/encounter-condition/26/"
+  },
+  "names": [
+    {
+      "name": "At least 4 Plains block points placed",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

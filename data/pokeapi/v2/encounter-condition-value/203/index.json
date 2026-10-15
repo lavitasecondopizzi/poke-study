@@ -1,0 +1,17 @@
+{
+  "id": 203,
+  "name": "backlot-mentioned",
+  "condition": {
+    "name": "backlot",
+    "url": "/api/v2/encounter-condition/21/"
+  },
+  "names": [
+    {
+      "name": "Mr. Backlot has mentioned seeing this Pokemon in the garden",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

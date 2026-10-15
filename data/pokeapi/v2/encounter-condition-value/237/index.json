@@ -1,0 +1,17 @@
+{
+  "id": 237,
+  "name": "trade-farfetchd-galar",
+  "condition": {
+    "name": "trade",
+    "url": "/api/v2/encounter-condition/15/"
+  },
+  "names": [
+    {
+      "name": "Give Galarian Farfetch'd in a Trade",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

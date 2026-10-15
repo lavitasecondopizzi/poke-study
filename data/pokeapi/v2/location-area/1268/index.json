@@ -1,0 +1,56 @@
+{
+  "id": 1268,
+  "name": "cipher-lab-bf2",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cipher-lab",
+    "url": "/api/v2/location/1108/"
+  },
+  "names": [
+    {
+      "name": "Cipher Lab B2F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Laboratoire de Pokémon Obscurs (2e sous-sol)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "spinarak",
+        "url": "/api/v2/pokemon/167/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 14,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

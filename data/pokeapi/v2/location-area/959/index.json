@@ -1,0 +1,12 @@
+{
+  "id": 959,
+  "name": "celestica-trail-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "celestica-trail",
+    "url": "/api/v2/location/965/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

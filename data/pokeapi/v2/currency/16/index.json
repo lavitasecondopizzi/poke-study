@@ -1,0 +1,13 @@
+{
+  "id": 16,
+  "name": "home-point",
+  "names": [
+    {
+      "name": "Pokémon HOME Point",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

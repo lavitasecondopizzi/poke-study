@@ -1,0 +1,12 @@
+{
+  "id": 997,
+  "name": "lunkers-lair-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "lunkers-lair",
+    "url": "/api/v2/location/1003/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

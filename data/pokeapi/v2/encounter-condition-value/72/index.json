@@ -1,0 +1,24 @@
+{
+  "id": 72,
+  "name": "special-encounter-couldnt-capture-before",
+  "condition": {
+    "name": "special-encounter",
+    "url": "/api/v2/encounter-condition/14/"
+  },
+  "names": [
+    {
+      "name": "This special Pokémon couldn’t be captured in previous encounters (either fainted or ran from battle)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Ce Pokémon spécial ne pouvait pas être capturé auparavant (doit avoir été vaincu ou avoir fui le combat)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

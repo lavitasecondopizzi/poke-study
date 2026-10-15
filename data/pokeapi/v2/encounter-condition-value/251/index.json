@@ -1,0 +1,17 @@
+{
+  "id": 251,
+  "name": "weather-snowing",
+  "condition": {
+    "name": "max-den-rating",
+    "url": "/api/v2/encounter-condition/28/"
+  },
+  "names": [
+    {
+      "name": "During snowy weather",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

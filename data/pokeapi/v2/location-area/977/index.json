@@ -1,0 +1,12 @@
+{
+  "id": 977,
+  "name": "glacier-terrace-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "glacier-terrace",
+    "url": "/api/v2/location/983/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

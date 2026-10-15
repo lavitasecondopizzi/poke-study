@@ -1,0 +1,96 @@
+{
+  "id": 8,
+  "gene_modulo": 1,
+  "possible_values": [
+    1,
+    6,
+    11,
+    16,
+    21,
+    26,
+    31
+  ],
+  "highest_stat": {
+    "name": "attack",
+    "url": "/api/v2/stat/2/"
+  },
+  "descriptions": [
+    {
+      "description": "あばれることが　すき",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "description": "난동부리기를 좋아함",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "description": "喜歡胡鬧",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "description": "Il aime se démener",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Prügelt sich gern",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Le gusta revolverse",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "description": "Adora dimenarsi",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "description": "Likes to thrash about",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "description": "暴れることが　好き",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "description": "喜欢胡闹",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "description": "Le gusta revolverse",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

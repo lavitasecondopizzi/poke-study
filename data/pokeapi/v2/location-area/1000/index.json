@@ -1,0 +1,12 @@
+{
+  "id": 1000,
+  "name": "natures-pantry-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "natures-pantry",
+    "url": "/api/v2/location/1006/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

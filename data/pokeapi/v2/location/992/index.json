@@ -1,0 +1,38 @@
+{
+  "id": 992,
+  "name": "horseshoe-plains",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Val Ferrache",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Hufeisenwiesen",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Horseshoe Plains",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "horseshoe-plains-area",
+      "url": "/api/v2/location-area/986/"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "id": 307,
+  "name": "poison-puppeteer",
+  "is_main_series": true,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "names": [
+    {
+      "name": "どくくぐつ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "독조종",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "毒傀儡",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Emprise Toxique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Giftpuppenspiel",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Títere Tóxico",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Malia Tossica",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Poison Puppeteer",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "どくくぐつ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "毒傀儡",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Títere Tóxico",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "effect_entries": [
+    {
+      "effect": "Quand un Pokémon est empoisonné par n'importe quelle capacité de Pêchaminus, il sera aussi confus.",
+      "short_effect": "Un Pokémon empoisonné par les capacités de Pêchaminus sera aussi confus.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "When a Pokémon is poisoned by any of Pecharunt's moves, it will also become confused.",
+      "short_effect": "Pokémon poisoned by Pecharunt's moves will also become confused.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "Lorsque Pêchaminus empoisonne un Pokémon grâce\\nà l’une de ses capacités, ce dernier devient également\\nconfus.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "the-indigo-disk",
+        "url": "/api/v2/version-group/27/"
+      }
+    },
+    {
+      "flavor_text": "Pokémon poisoned by Pecharunt's moves will also become confused.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "the-indigo-disk",
+        "url": "/api/v2/version-group/27/"
+      }
+    },
+    {
+      "flavor_text": "モモワロウの　技によって\nどく状態に　なった　相手は\nこんらん状態にも　なってしまう。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "the-indigo-disk",
+        "url": "/api/v2/version-group/27/"
+      }
+    }
+  ],
+  "pokemon": [
+    {
+      "is_hidden": false,
+      "slot": 1,
+      "pokemon": {
+        "name": "pecharunt",
+        "url": "/api/v2/pokemon/1025/"
+      }
+    }
+  ]
+}

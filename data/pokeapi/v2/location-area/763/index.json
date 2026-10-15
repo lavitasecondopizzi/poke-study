@@ -1,0 +1,183 @@
+{
+  "id": 763,
+  "name": "celadon-city-celadon-mansion",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "celadon-city",
+    "url": "/api/v2/location/67/"
+  },
+  "names": [
+    {
+      "name": "Celadon Mansion rooftop",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Prismania-Villa Dach",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Toit du manoir Céladon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "eevee",
+        "url": "/api/v2/pokemon/133/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "red",
+            "url": "/api/v2/version/1/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "blue",
+            "url": "/api/v2/version/2/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "yellow",
+            "url": "/api/v2/version/3/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "red-japan",
+            "url": "/api/v2/version/44/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "green-japan",
+            "url": "/api/v2/version/45/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

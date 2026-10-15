@@ -1,0 +1,24 @@
+{
+  "id": 39,
+  "name": "other-snorlax-11-beat-league",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Beat the Pokémon league after knocking out Snorlax at Route 11",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir mis Ronflex KO sur la route 11, puis avoir battu la Ligue",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

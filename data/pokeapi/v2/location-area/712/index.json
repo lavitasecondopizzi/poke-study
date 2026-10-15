@@ -1,0 +1,337 @@
+{
+  "id": 712,
+  "name": "laverre-city-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "laverre-city",
+    "url": "/api/v2/location/633/"
+  },
+  "names": [
+    {
+      "name": "Laverre City",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Romantia City",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Romant-sous-Bois",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "poliwag",
+        "url": "/api/v2/pokemon/60/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 60,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 35,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 60,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 35,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 5,
+              "method": {
+                "name": "old-rod",
+                "url": "/api/v2/encounter-method/2/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "poliwhirl",
+        "url": "/api/v2/pokemon/61/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 35,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 60,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 5,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 35,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 60,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 5,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "basculin-red-striped",
+        "url": "/api/v2/pokemon/550/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 35,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 35,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 65,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 60,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 5,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "basculin-blue-striped",
+        "url": "/api/v2/pokemon/10016/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 65,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 60,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 5,
+              "method": {
+                "name": "good-rod",
+                "url": "/api/v2/encounter-method/3/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 35,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 35,
+              "chance": 35,
+              "method": {
+                "name": "super-rod",
+                "url": "/api/v2/encounter-method/4/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

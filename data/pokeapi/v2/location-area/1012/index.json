@@ -1,0 +1,12 @@
+{
+  "id": 1012,
+  "name": "shrouded-ruins-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "shrouded-ruins",
+    "url": "/api/v2/location/1018/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

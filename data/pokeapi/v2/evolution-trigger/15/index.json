@@ -1,0 +1,26 @@
+{
+  "id": 15,
+  "name": "three-defeated-bisharp",
+  "names": [
+    {
+      "name": "Vaincre trois Scalproie en tenant un Emblème du Général",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Defeat three Bisharp that hold a Leader's Crest",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "pokemon_species": [
+    {
+      "name": "kingambit",
+      "url": "/api/v2/pokemon-species/983/"
+    }
+  ]
+}

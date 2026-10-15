@@ -1,0 +1,141 @@
+{
+  "id": 17,
+  "name": "naughty",
+  "decreased_stat": {
+    "name": "special-defense",
+    "url": "/api/v2/stat/5/"
+  },
+  "increased_stat": {
+    "name": "attack",
+    "url": "/api/v2/stat/2/"
+  },
+  "likes_flavor": {
+    "name": "spicy",
+    "url": "/api/v2/berry-flavor/1/"
+  },
+  "hates_flavor": {
+    "name": "bitter",
+    "url": "/api/v2/berry-flavor/4/"
+  },
+  "pokeathlon_stat_changes": [
+    {
+      "max_change": 2,
+      "pokeathlon_stat": {
+        "name": "speed",
+        "url": "/api/v2/pokeathlon-stat/1/"
+      }
+    },
+    {
+      "max_change": -2,
+      "pokeathlon_stat": {
+        "name": "power",
+        "url": "/api/v2/pokeathlon-stat/2/"
+      }
+    }
+  ],
+  "move_battle_style_preferences": [
+    {
+      "low_hp_preference": 70,
+      "high_hp_preference": 20,
+      "move_battle_style": {
+        "name": "attack",
+        "url": "/api/v2/move-battle-style/1/"
+      }
+    },
+    {
+      "low_hp_preference": 22,
+      "high_hp_preference": 70,
+      "move_battle_style": {
+        "name": "defense",
+        "url": "/api/v2/move-battle-style/2/"
+      }
+    },
+    {
+      "low_hp_preference": 8,
+      "high_hp_preference": 10,
+      "move_battle_style": {
+        "name": "support",
+        "url": "/api/v2/move-battle-style/3/"
+      }
+    }
+  ],
+  "names": [
+    {
+      "name": "やんちゃ",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "개구쟁이",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "頑皮",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Mauvais",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Frech",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pícara",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Birbona",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Naughty",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "やんちゃ",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "顽皮",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Pícara",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": 1214,
+  "name": "johto-pokemart-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "johto-pokemart",
+    "url": "/api/v2/location/1093/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "manaphy",
+        "url": "/api/v2/pokemon/490/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "pokemon-ranger",
+                "url": "/api/v2/encounter-method/48/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "pokemon-ranger",
+                "url": "/api/v2/encounter-method/48/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

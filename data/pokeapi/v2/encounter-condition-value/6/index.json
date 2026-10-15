@@ -1,0 +1,31 @@
+{
+  "id": 6,
+  "name": "radar-on",
+  "condition": {
+    "name": "radar",
+    "url": "/api/v2/encounter-condition/3/"
+  },
+  "names": [
+    {
+      "name": "Durch Benutzung des Pokéradars",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Using PokéRadar",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En utilisant le PokéRadar",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

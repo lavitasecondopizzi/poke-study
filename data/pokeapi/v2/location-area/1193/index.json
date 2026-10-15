@@ -1,0 +1,74 @@
+{
+  "id": 1193,
+  "name": "verdant-cavern--trial-site-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "verdant-cavern--trial-site",
+    "url": "/api/v2/location/729/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "pheromosa",
+        "url": "/api/v2/pokemon/795/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "moon",
+            "url": "/api/v2/version/28/"
+          },
+          "max_chance": 400,
+          "encounter_details": [
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 60,
+              "max_level": 60,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

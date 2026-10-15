@@ -1,0 +1,38 @@
+{
+  "id": 981,
+  "name": "gapejaw-bog",
+  "region": {
+    "name": "hisui",
+    "url": "/api/v2/region/9/"
+  },
+  "names": [
+    {
+      "name": "Marais Bouchebée",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Großmaulmoor",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Gapejaw Bog",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "gapejaw-bog-area",
+      "url": "/api/v2/location-area/975/"
+    }
+  ]
+}

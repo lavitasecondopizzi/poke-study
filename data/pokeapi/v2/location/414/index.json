@@ -1,0 +1,57 @@
+{
+  "id": 414,
+  "name": "lostlorn-forest",
+  "region": {
+    "name": "unova",
+    "url": "/api/v2/region/5/"
+  },
+  "names": [
+    {
+      "name": "迷いの森",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "Bois des Illusions",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Hain der Täuschung",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Lostlorn Forest",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 72,
+      "generation": {
+        "name": "generation-v",
+        "url": "/api/v2/generation/5/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "lostlorn-forest-area",
+      "url": "/api/v2/location-area/652/"
+    },
+    {
+      "name": "lostlorn-forest-hidden-grotto",
+      "url": "/api/v2/location-area/1354/"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": 103,
+  "name": "other-groudon-kyogre-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have Groudon and Kyogre in party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir Groudon et Kyogre dans l'équipe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

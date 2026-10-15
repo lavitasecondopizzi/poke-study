@@ -1,0 +1,24 @@
+{
+  "id": 44,
+  "name": "item-adamant-orb",
+  "condition": {
+    "name": "item",
+    "url": "/api/v2/encounter-condition/11/"
+  },
+  "names": [
+    {
+      "name": "Have Adamant Orb in bag",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En ayant un Orbe Adamant dans le sac",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

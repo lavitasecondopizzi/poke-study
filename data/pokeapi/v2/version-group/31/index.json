@@ -1,0 +1,23 @@
+{
+  "id": 31,
+  "name": "mega-dimension",
+  "order": 31,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "move_learn_methods": [],
+  "pokedexes": [
+    {
+      "name": "hyperspace",
+      "url": "/api/v2/pokedex/35/"
+    }
+  ],
+  "regions": [],
+  "versions": [
+    {
+      "name": "mega-dimension",
+      "url": "/api/v2/version/48/"
+    }
+  ]
+}

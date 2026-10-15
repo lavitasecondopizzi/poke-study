@@ -1,0 +1,56 @@
+{
+  "id": 1237,
+  "name": "phenac-city-east-exit",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "phenac-city",
+    "url": "/api/v2/location/1096/"
+  },
+  "names": [
+    {
+      "name": "Phenac City (East Exit)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Phénacit (Sortie Est)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "quilava",
+        "url": "/api/v2/pokemon/156/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

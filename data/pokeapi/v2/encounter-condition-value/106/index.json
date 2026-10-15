@@ -1,0 +1,9 @@
+{
+  "id": 106,
+  "name": "other-caught-articuno",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": []
+}

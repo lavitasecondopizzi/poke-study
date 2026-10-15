@@ -1,0 +1,753 @@
+{
+  "id": 622,
+  "name": "marvelous-bridge-area",
+  "game_index": 76,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "marvelous-bridge",
+    "url": "/api/v2/location/410/"
+  },
+  "names": [
+    {
+      "name": "Marvelous Bridge",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Wunderbrücke",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pont de l'Inconnu",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "magikarp",
+        "url": "/api/v2/pokemon/129/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black",
+            "url": "/api/v2/version/17/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white",
+            "url": "/api/v2/version/18/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 5,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "cresselia",
+        "url": "/api/v2/pokemon/488/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 68,
+              "max_level": 68,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "item-lunar-wing",
+                  "url": "/api/v2/encounter-condition-value/76/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 68,
+              "max_level": 68,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "item-lunar-wing",
+                  "url": "/api/v2/encounter-condition-value/76/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "swanna",
+        "url": "/api/v2/pokemon/581/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black",
+            "url": "/api/v2/version/17/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 48,
+              "max_level": 48,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 48,
+              "max_level": 48,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 49,
+              "max_level": 49,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 49,
+              "max_level": 49,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white",
+            "url": "/api/v2/version/18/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 47,
+              "max_level": 47,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 48,
+              "max_level": 48,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 48,
+              "max_level": 48,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 49,
+              "max_level": 49,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 49,
+              "max_level": 49,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 54,
+              "max_level": 54,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 54,
+              "max_level": 54,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 56,
+              "max_level": 56,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 56,
+              "max_level": 56,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 54,
+              "max_level": 54,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 54,
+              "max_level": 54,
+              "chance": 20,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 56,
+              "max_level": 56,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 56,
+              "max_level": 56,
+              "chance": 10,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 5,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 4,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 57,
+              "max_level": 57,
+              "chance": 1,
+              "method": {
+                "name": "bridge-spots",
+                "url": "/api/v2/encounter-method/11/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

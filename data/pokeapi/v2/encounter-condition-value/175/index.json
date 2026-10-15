@@ -1,0 +1,17 @@
+{
+  "id": 175,
+  "name": "trade-skitty",
+  "condition": {
+    "name": "trade",
+    "url": "/api/v2/encounter-condition/15/"
+  },
+  "names": [
+    {
+      "name": "Give Skitty in a Trade",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

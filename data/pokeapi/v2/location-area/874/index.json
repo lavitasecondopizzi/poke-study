@@ -1,0 +1,76 @@
+{
+  "id": 874,
+  "name": "dyna-tree-hill-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "dyna-tree-hill",
+    "url": "/api/v2/location/891/"
+  },
+  "names": [
+    {
+      "name": "Dyna Tree Hill",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Butte du Dynarbre",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "greedent",
+        "url": "/api/v2/pokemon/820/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-crown-tundra-sword",
+            "url": "/api/v2/version/36/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 68,
+              "max_level": 68,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-crown-tundra-shield",
+            "url": "/api/v2/version/51/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 68,
+              "max_level": 68,
+              "chance": 100,
+              "method": {
+                "name": "wanderer",
+                "url": "/api/v2/encounter-method/57/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

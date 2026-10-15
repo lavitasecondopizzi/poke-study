@@ -1,0 +1,17 @@
+{
+  "id": 222,
+  "name": "alolan-diglett-found-150",
+  "condition": {
+    "name": "alolan-diglett-found",
+    "url": "/api/v2/encounter-condition/24/"
+  },
+  "names": [
+    {
+      "name": "Find 150 Alolan Diglett in Isle of Armor",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

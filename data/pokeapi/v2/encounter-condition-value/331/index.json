@@ -1,0 +1,17 @@
+{
+  "id": 331,
+  "name": "other-grow-shaderoot-carrot",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Grow a Shaderoot Carrot while helping Calyrex.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

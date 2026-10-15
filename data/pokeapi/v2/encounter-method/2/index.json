@@ -1,0 +1,28 @@
+{
+  "id": 2,
+  "name": "old-rod",
+  "order": 10,
+  "names": [
+    {
+      "name": "Mit einer normalen Angel angeln",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Fishing with an Old Rod",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En pêchant avec une Canne",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

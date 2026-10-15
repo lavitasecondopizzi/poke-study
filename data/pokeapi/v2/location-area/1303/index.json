@@ -1,0 +1,111 @@
+{
+  "id": 1303,
+  "name": "violet-city-southwest-house",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "violet-city",
+    "url": "/api/v2/location/153/"
+  },
+  "names": [
+    {
+      "name": "Violet City (Southwest House)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Mauville (Maison au Sud-Ouest)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "onix",
+        "url": "/api/v2/pokemon/95/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "gold",
+            "url": "/api/v2/version/4/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 3,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-bellsprout",
+                  "url": "/api/v2/encounter-condition-value/161/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "silver",
+            "url": "/api/v2/version/5/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 3,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-bellsprout",
+                  "url": "/api/v2/encounter-condition-value/161/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "crystal",
+            "url": "/api/v2/version/6/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 5,
+              "max_level": 100,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-bellsprout",
+                  "url": "/api/v2/encounter-condition-value/161/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

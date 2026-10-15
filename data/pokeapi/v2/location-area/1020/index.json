@@ -1,0 +1,12 @@
+{
+  "id": 1020,
+  "name": "stonetooth-rows-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "stonetooth-rows",
+    "url": "/api/v2/location/1026/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,21 @@
+{
+  "id": 58,
+  "name": "wanderer-water",
+  "order": 58,
+  "names": [
+    {
+      "name": "Special overworld spawn in a fixed location in the water.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Apparition sur un emplacement fixe sur l'eau dans le monde extérieur",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

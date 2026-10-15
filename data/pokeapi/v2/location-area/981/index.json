@@ -1,0 +1,12 @@
+{
+  "id": 981,
+  "name": "hearts-crag-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hearts-crag",
+    "url": "/api/v2/location/987/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

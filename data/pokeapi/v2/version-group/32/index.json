@@ -1,0 +1,23 @@
+{
+  "id": 32,
+  "name": "champions",
+  "order": 32,
+  "generation": {
+    "name": "generation-ix",
+    "url": "/api/v2/generation/9/"
+  },
+  "move_learn_methods": [],
+  "pokedexes": [
+    {
+      "name": "champions",
+      "url": "/api/v2/pokedex/36/"
+    }
+  ],
+  "regions": [],
+  "versions": [
+    {
+      "name": "champions",
+      "url": "/api/v2/version/49/"
+    }
+  ]
+}

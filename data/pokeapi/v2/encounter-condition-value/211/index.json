@@ -1,0 +1,17 @@
+{
+  "id": 211,
+  "name": "item-fossilized-fish",
+  "condition": {
+    "name": "item",
+    "url": "/api/v2/encounter-condition/11/"
+  },
+  "names": [
+    {
+      "name": "Have Fossilized Fish in bag",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

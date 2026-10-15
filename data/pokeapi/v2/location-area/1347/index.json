@@ -1,0 +1,243 @@
+{
+  "id": 1347,
+  "name": "unova-route-9-hidden-grotto",
+  "game_index": 97,
+  "encounter_method_rates": [
+    {
+      "encounter_method": {
+        "name": "hidden-grotto",
+        "url": "/api/v2/encounter-method/54/"
+      },
+      "version_details": [
+        {
+          "rate": 20,
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          }
+        },
+        {
+          "rate": 20,
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          }
+        }
+      ]
+    }
+  ],
+  "location": {
+    "name": "unova-route-9",
+    "url": "/api/v2/location/364/"
+  },
+  "names": [
+    {
+      "name": "Route 9 (Hidden Grotto)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 9 (Trouée Cachée)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "muk",
+        "url": "/api/v2/pokemon/89/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "liepard",
+        "url": "/api/v2/pokemon/510/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 75,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 75,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 75,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 75,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "garbodor",
+        "url": "/api/v2/pokemon/569/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 10,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "bouffalant",
+        "url": "/api/v2/pokemon/626/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "black-2",
+            "url": "/api/v2/version/21/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 5,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "white-2",
+            "url": "/api/v2/version/22/"
+          },
+          "max_chance": 5,
+          "encounter_details": [
+            {
+              "min_level": 35,
+              "max_level": 39,
+              "chance": 5,
+              "method": {
+                "name": "hidden-grotto",
+                "url": "/api/v2/encounter-method/54/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": 1236,
+  "name": "phenac-city-west-exit",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "phenac-city",
+    "url": "/api/v2/location/1096/"
+  },
+  "names": [
+    {
+      "name": "Phenac City (West Exit)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Phénacit (Sortie Ouest)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "bayleef",
+        "url": "/api/v2/pokemon/153/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 30,
+              "max_level": 30,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

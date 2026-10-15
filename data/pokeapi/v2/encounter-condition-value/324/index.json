@@ -1,0 +1,17 @@
+{
+  "id": 324,
+  "name": "other-find-50-cavern-footprints",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Find 50 sets of Cavern Footprints in The Crown Tundra",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": 92,
+  "name": "other-uxie-mesprit-azelf-in-party",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Have Uxie, Mesprit, and Azelf in the party",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Avoir Créhelf, Créfollet et Créfadet dans l'équipe",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "id": 1483,
+  "name": "kalos-berry-fields-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "kalos-berry-fields",
+    "url": "/api/v2/location/1121/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "ledyba",
+        "url": "/api/v2/pokemon/165/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-red",
+                  "url": "/api/v2/encounter-condition-value/344/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-red",
+                  "url": "/api/v2/encounter-condition-value/344/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "volbeat",
+        "url": "/api/v2/pokemon/313/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-blue",
+                  "url": "/api/v2/encounter-condition-value/345/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-blue",
+                  "url": "/api/v2/encounter-condition-value/345/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "illumise",
+        "url": "/api/v2/pokemon/314/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-purple",
+                  "url": "/api/v2/encounter-condition-value/346/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-purple",
+                  "url": "/api/v2/encounter-condition-value/346/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "burmy",
+        "url": "/api/v2/pokemon/412/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-green",
+                  "url": "/api/v2/encounter-condition-value/347/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-green",
+                  "url": "/api/v2/encounter-condition-value/347/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "combee",
+        "url": "/api/v2/pokemon/415/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-yellow",
+                  "url": "/api/v2/encounter-condition-value/348/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-yellow",
+                  "url": "/api/v2/encounter-condition-value/348/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "spewpa",
+        "url": "/api/v2/pokemon/665/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-pink",
+                  "url": "/api/v2/encounter-condition-value/349/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 14,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "berry-trees",
+                "url": "/api/v2/encounter-method/35/"
+              },
+              "condition_values": [
+                {
+                  "name": "berry-tree-type-pink",
+                  "url": "/api/v2/encounter-condition-value/349/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

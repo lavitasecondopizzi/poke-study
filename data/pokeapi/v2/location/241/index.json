@@ -1,0 +1,41 @@
+{
+  "id": 241,
+  "name": "pokeathlon-dome",
+  "region": {
+    "name": "johto",
+    "url": "/api/v2/region/2/"
+  },
+  "names": [
+    {
+      "name": "Dôme Pokéathlon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Pokéathlon",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pokéathlon Dome",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 225,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

@@ -1,0 +1,12 @@
+{
+  "id": 965,
+  "name": "crossing-slope-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "crossing-slope",
+    "url": "/api/v2/location/971/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,24 @@
+{
+  "id": 57,
+  "name": "story-progress-receive-tm-from-claire",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Received TM59 From Claire",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir reçu la CT59 de Claire",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

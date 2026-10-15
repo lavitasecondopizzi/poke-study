@@ -1,0 +1,56 @@
+{
+  "id": 1241,
+  "name": "pyrite-bldg-1f",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pyrite-bldg",
+    "url": "/api/v2/location/1100/"
+  },
+  "names": [
+    {
+      "name": "Pyrite Bldg 1F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Immeuble de Pyrite (RdC)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "yanma",
+        "url": "/api/v2/pokemon/193/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 33,
+              "max_level": 33,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

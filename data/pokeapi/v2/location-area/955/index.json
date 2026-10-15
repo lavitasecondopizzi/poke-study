@@ -1,0 +1,12 @@
+{
+  "id": 955,
+  "name": "bonechill-wastes-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "bonechill-wastes",
+    "url": "/api/v2/location/961/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

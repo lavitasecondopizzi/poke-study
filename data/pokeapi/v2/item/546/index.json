@@ -1,0 +1,418 @@
+{
+  "id": 546,
+  "name": "gold-teeth",
+  "fling_power": null,
+  "fling_effect": null,
+  "attributes": [],
+  "category": {
+    "name": "plot-advancement",
+    "url": "/api/v2/item-category/22/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Les dents du gardien du Parc Safari, à lui redonner contre la CS04.",
+      "short_effect": "Le dentier du Gardien du Parc Safari. À échanger contre la CS04 (Force).",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "The Safari Zone warden’s teeth, to be returned to him for HM04.",
+      "short_effect": "The Safari Zone Warden’s dentures. Trade for HM04 (Strength).",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "flavor_text_entries": [
+    {
+      "text": "Gold dentures lost\nby the SAFARI\nZONE’s WARDEN.",
+      "version_group": {
+        "name": "emerald",
+        "url": "/api/v2/version-group/6/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "A set of false teeth lost by the\nSAFARI ZONE’S WARDEN. It makes his\nsmile sparkle.",
+      "version_group": {
+        "name": "firered-leafgreen",
+        "url": "/api/v2/version-group/7/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "サファリゾーンの　えんちょうが\nおとした　きんいろの　いれば。\nわらうと　とても　まぶしい。",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "text": "사파리존의 원장이\n떨어뜨린 금색 틀니.\n웃으면 매우 눈부시다.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "text": "狩獵地帶的園長\n遺失的金色假牙。\n裝上它之後笑起來非常耀眼。",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "text": "Un dentier en or perdu par le directeur du Parc Safari.\nIl lui donne un sourire étincelant.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "text": "Ein vergoldeter Zahnersatz, den der Direktor der\nSafari-Zone verlegt hat. Setzt er ihn ein, verleiht\ner ihm buchstäblich ein goldiges Lächeln.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "text": "Unos dientes de oro que perdió el Guarda de la Zona\nSafari con los que tiene una sonrisa deslumbrante.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "text": "Dentiera dorata persa dal guardiano della Zona Safari.\nRende il suo sorriso davvero scintillante.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "text": "A set of golden false teeth lost by the Safari Zone’s\nwarden. They make his smile sparkle.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "サファリゾーンの　園長が\n落とした　金色の　入れ歯。\n笑うと　とても　まぶしい。",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "text": "狩猎地带的园长遗失的金假牙。\n装上它后，笑起来十分耀眼。",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "text": "Unos dientes de oro que perdió el Guarda de la Zona\nSafari con los que tiene una sonrisa deslumbrante.",
+      "version_group": {
+        "name": "lets-go-pikachu-lets-go-eevee",
+        "url": "/api/v2/version-group/19/"
+      },
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    },
+    {
+      "text": "サファリゾーンの　えんちょうが\nおとした　きんいろの　いれば。\nわらうと　とても　まぶしい。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "text": "사파리존의 원장이\n떨어뜨린 금색 틀니.\n웃으면 매우 눈부시다.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "text": "狩獵地帶的園長\n遺失的金色假牙。\n裝上它之後笑起來非常耀眼。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "text": "Un dentier en or perdu par le directeur du Parc Safari.\nIl lui donne un sourire étincelant.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "text": "Ein vergoldeter Zahnersatz, den der Direktor der\nSafari-Zone verlegt hat. Setzt er ihn ein, verleiht er ihm\nbuchstäblich ein goldiges Lächeln.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "text": "Unos dientes de oro que perdió el Guarda de la Zona\nSafari con los que tiene una sonrisa deslumbrante.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "text": "Dentiera dorata persa dal guardiano della Zona Safari.\nRende il suo sorriso davvero scintillante.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "text": "A set of golden false teeth lost by the Safari Zone’s\nwarden. They make his smile sparkle.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "text": "サファリゾーンの　園長が\n落とした　金色の　入れ歯。\n笑うと　とても　まぶしい。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "text": "狩猎地带的园长遗失的金假牙。\n装上它后，笑起来十分耀眼。",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "text": "Unos dientes de oro que perdió el Guarda de la Zona\nSafari con los que tiene una sonrisa deslumbrante.",
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      },
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 64,
+      "generation": {
+        "name": "generation-i",
+        "url": "/api/v2/generation/1/"
+      }
+    },
+    {
+      "game_index": 353,
+      "generation": {
+        "name": "generation-iii",
+        "url": "/api/v2/generation/3/"
+      }
+    },
+    {
+      "game_index": 877,
+      "generation": {
+        "name": "generation-vii",
+        "url": "/api/v2/generation/7/"
+      }
+    },
+    {
+      "game_index": 877,
+      "generation": {
+        "name": "generation-viii",
+        "url": "/api/v2/generation/8/"
+      }
+    },
+    {
+      "game_index": 877,
+      "generation": {
+        "name": "generation-ix",
+        "url": "/api/v2/generation/9/"
+      }
+    }
+  ],
+  "prices": [],
+  "names": [
+    {
+      "name": "きんのいれば",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "금틀니",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "金假牙",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Dentier en Or",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Goldenes Gebiss",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Dentadura de Oro",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Denti d’oro",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Gold Teeth",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "きんのいれば",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "金假牙",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Dentadura de Oro",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "held_by_pokemon": [],
+  "sprites": {
+    "default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/gold-teeth.png"
+  },
+  "baby_trigger_for": null,
+  "machines": []
+}

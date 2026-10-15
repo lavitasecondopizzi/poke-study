@@ -1,0 +1,12 @@
+{
+  "id": 1021,
+  "name": "temple-of-sinnoh-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "temple-of-sinnoh",
+    "url": "/api/v2/location/1027/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

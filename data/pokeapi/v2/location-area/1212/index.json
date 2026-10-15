@@ -1,0 +1,109 @@
+{
+  "id": 1212,
+  "name": "kanto-pokecenter-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "kanto-pokecenter",
+    "url": "/api/v2/location/1091/"
+  },
+  "names": [],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "pikachu",
+        "url": "/api/v2/pokemon/25/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 10,
+              "chance": 100,
+              "method": {
+                "name": "colosseum-bonus-disc-jpn",
+                "url": "/api/v2/encounter-method/46/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 10,
+              "chance": 100,
+              "method": {
+                "name": "colosseum-bonus-disc-jpn",
+                "url": "/api/v2/encounter-method/46/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "celebi",
+        "url": "/api/v2/pokemon/251/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "firered",
+            "url": "/api/v2/version/10/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 10,
+              "chance": 100,
+              "method": {
+                "name": "colosseum-bonus-disc-jpn",
+                "url": "/api/v2/encounter-method/46/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "leafgreen",
+            "url": "/api/v2/version/11/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 10,
+              "max_level": 10,
+              "chance": 100,
+              "method": {
+                "name": "colosseum-bonus-disc-jpn",
+                "url": "/api/v2/encounter-method/46/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

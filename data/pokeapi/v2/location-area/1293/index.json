@@ -1,0 +1,27 @@
+{
+  "id": 1293,
+  "name": "gateon-port-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "gateon-port",
+    "url": "/api/v2/location/1107/"
+  },
+  "names": [
+    {
+      "name": "Gateon Port",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Port Amarrée",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,21 @@
+{
+  "id": 56,
+  "name": "overworld-dirt",
+  "order": 56,
+  "names": [
+    {
+      "name": "Overworld spawn coming from underground or within a swamp.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Apparition dans le monde extérieur depuis sous-terre ou un marais",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

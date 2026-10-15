@@ -1,0 +1,46 @@
+{
+  "id": 29,
+  "name": "valor-lakefront",
+  "region": {
+    "name": "sinnoh",
+    "url": "/api/v2/region/4/"
+  },
+  "names": [
+    {
+      "name": "Rive Lac Courage",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Kühnheitsufer",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Valor Lakefront",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 73,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "name": "valor-lakefront-area",
+      "url": "/api/v2/location-area/139/"
+    }
+  ]
+}

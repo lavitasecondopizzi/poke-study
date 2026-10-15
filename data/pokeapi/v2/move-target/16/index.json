@@ -1,0 +1,12 @@
+{
+  "id": 16,
+  "name": "fainting-pokemon",
+  "descriptions": [],
+  "moves": [
+    {
+      "name": "revival-blessing",
+      "url": "/api/v2/move/863/"
+    }
+  ],
+  "names": []
+}

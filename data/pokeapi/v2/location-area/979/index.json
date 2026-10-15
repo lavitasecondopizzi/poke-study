@@ -1,0 +1,12 @@
+{
+  "id": 979,
+  "name": "grandtree-arena-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "grandtree-arena",
+    "url": "/api/v2/location/985/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": 229,
+  "name": "trade-meowth-galar",
+  "condition": {
+    "name": "trade",
+    "url": "/api/v2/encounter-condition/15/"
+  },
+  "names": [
+    {
+      "name": "Give Galarian Meowth in a Trade",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

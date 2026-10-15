@@ -1,0 +1,12 @@
+{
+  "id": 988,
+  "name": "icebound-falls-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "icebound-falls",
+    "url": "/api/v2/location/994/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

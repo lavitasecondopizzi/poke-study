@@ -1,0 +1,21 @@
+{
+  "id": 52,
+  "name": "snag-rematch",
+  "order": 52,
+  "names": [
+    {
+      "name": "Snagging a Pokemon from a trainer in Pokemon Colosseum or Pokemon XD: Gale of Darkness, after you have failed to capture them once.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Snatcher un Pokémon d'un dresseur, après avoir manqué la capture une première fois",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

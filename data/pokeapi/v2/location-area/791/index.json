@@ -1,0 +1,209 @@
+{
+  "id": 791,
+  "name": "violet-city-pokemon-center",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "violet-city",
+    "url": "/api/v2/location/153/"
+  },
+  "names": [
+    {
+      "name": "Violet City (Pokemon Center)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Viola City (Pokémon-Center)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Mauville (Centre Pokémon)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "mareep",
+        "url": "/api/v2/pokemon/179/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "wooper",
+        "url": "/api/v2/pokemon/194/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "slugma",
+        "url": "/api/v2/pokemon/218/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "heartgold",
+            "url": "/api/v2/version/15/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "soulsilver",
+            "url": "/api/v2/version/16/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 1,
+              "max_level": 1,
+              "chance": 100,
+              "method": {
+                "name": "gift-egg",
+                "url": "/api/v2/encounter-method/19/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-correct-password",
+                  "url": "/api/v2/encounter-condition-value/53/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

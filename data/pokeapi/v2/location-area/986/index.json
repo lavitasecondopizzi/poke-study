@@ -1,0 +1,12 @@
+{
+  "id": 986,
+  "name": "horseshoe-plains-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "horseshoe-plains",
+    "url": "/api/v2/location/992/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

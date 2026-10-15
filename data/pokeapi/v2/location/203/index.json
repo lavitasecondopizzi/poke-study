@@ -1,0 +1,41 @@
+{
+  "id": 203,
+  "name": "pokemon-day-care",
+  "region": {
+    "name": "sinnoh",
+    "url": "/api/v2/region/4/"
+  },
+  "names": [
+    {
+      "name": "Pension Pokémon",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Pokémon-Pension",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Pokémon Day Care",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [
+    {
+      "game_index": 100,
+      "generation": {
+        "name": "generation-iv",
+        "url": "/api/v2/generation/4/"
+      }
+    }
+  ],
+  "areas": []
+}

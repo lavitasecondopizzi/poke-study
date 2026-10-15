@@ -1,0 +1,12 @@
+{
+  "id": 1157,
+  "name": "wela-volcano-park-totems-den",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "wela-volcano-park",
+    "url": "/api/v2/location/746/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

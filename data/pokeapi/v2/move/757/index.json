@@ -1,0 +1,274 @@
+{
+  "id": 757,
+  "name": "max-flare",
+  "accuracy": null,
+  "effect_chance": 100,
+  "pp": 10,
+  "priority": 0,
+  "power": 100,
+  "contest_combos": null,
+  "contest_type": null,
+  "contest_effect": null,
+  "damage_class": {
+    "name": "physical",
+    "url": "/api/v2/move-damage-class/2/"
+  },
+  "effect_entries": [
+    {
+      "effect": "Change la météo en soleil pendant cinq tours, pendant lesquesl les capacités Feu infligent 50% de dégâts supplémentaires, et les capacités Eau infligent la moitié des dégâts.\n\nSi le lanceur tient Roche Chaude, cet effet dure pendant huit tours.\n\nLes Pokémon ne peuvent pas geler.\n\nFatal-Foudre a 50% de précision.\n\nLance-Soleil passe son tour de chargement.\n\nRayon Lune, Aurore, et Synthèse soignent 2/3 des PV max du lanceur.\n\nLes Pokémon avec Chlorophylle ont une Vitesse d'origine doublée.\n\nLes Pokémon avec Météo deviennent Feu.\n\nLes Pokémon avec Feuille Garde ne sont pas affectés par les effets majeurs de statut.\n\nLes Pokémon avec Don Floral change de forme; tous les Pokémon de leur côté du terrain ont leur Attaque et Attaque Spéciale d'origine augmentées de 50%.\n\nLes Pokémon avec Peau Sèche perdent 1/8 des PV max à la fin de chaque tour.\n\nLes Pokémon avec Force Soleil ont leur Attaque Spéciale d'origine augmentée de 50% mais perdent 1/8 de leurs PV max à la fin de chaque tour.",
+      "short_effect": "Change la météo en soleil pendant cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "effect": "Changes the weather to sunshine for five turns, during which Fire moves inflict 50% extra damage, and Water moves inflict half damage.\n\nIf the user is holding Heat Rock, this effect lasts for eight turns.\n\nPokémon cannot become frozen.\n\nThunder has 50% accuracy.\n\nSolar Beam skips its charge turn.\n\nMoonlight, Morning Sun, and Synthesis heal 2/3 of the user’s max HP.\n\nPokémon with Chlorophyll have doubled original Speed.\n\nPokémon with Forecast become Fire.\n\nPokémon with Leaf Guard are not affected by major status effects.\n\nPokémon with Flower Gift change form; every Pokémon on their side of the field have their original Attack and Special Attack increased by 50%.\n\nPokémon with Dry Skin lose 1/8 max HP at the end of each turn.\n\nPokémon with Solar Power have their original Special Attack raised by 50% but lose 1/8 their max HP at the end of each turn.",
+      "short_effect": "Changes the weather to sunny for five turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "effect_changes": [],
+  "generation": {
+    "name": "generation-viii",
+    "url": "/api/v2/generation/8/"
+  },
+  "meta": {
+    "ailment": {
+      "name": "none",
+      "url": "/api/v2/move-ailment/0/"
+    },
+    "category": {
+      "name": "damage",
+      "url": "/api/v2/move-category/0/"
+    },
+    "min_hits": null,
+    "max_hits": null,
+    "min_turns": null,
+    "max_turns": null,
+    "drain": 0,
+    "healing": 0,
+    "crit_rate": 0,
+    "ailment_chance": 0,
+    "flinch_chance": 0,
+    "stat_chance": 0
+  },
+  "names": [
+    {
+      "name": "ダイバーン",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "다이번",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "極巨火爆",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Pyromax",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Dyna-Brand",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Maxignición",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Dynafiammata",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Max Flare",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "ダイバーン",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      }
+    },
+    {
+      "name": "极巨火爆",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Maxignición",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "past_values": [],
+  "stat_changes": [],
+  "super_contest_effect": null,
+  "target": {
+    "name": "selected-pokemon-me-first",
+    "url": "/api/v2/move-target/2/"
+  },
+  "type": {
+    "name": "fire",
+    "url": "/api/v2/type/10/"
+  },
+  "machines": [],
+  "flavor_text_entries": [
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\nくりだす　ほのおタイプの　こうげき。\n５ターンの　あいだ　ひざしを　つよくする。",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "다이맥스한 포켓몬이 날리는\n불꽃타입의 공격.\n5턴 동안 햇살을 강하게 만든다.",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "極巨化寶可夢\n所使出的火屬性攻擊。\n可在５回合內讓日照增強。",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Une attaque de type Feu que seuls\nles Pokémon Dynamax peuvent utiliser.\nFait briller le soleil pendant cinq tours.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Eine Feuer-Attacke, die nur Dynamax-Pokémon\neinsetzen können. Die Sonne brennt unbarmherzig\nfünf Runden lang.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Fuego ejecutado por un Pokémon\nDinamax. Hace que se intensifique el efecto del sol\ndurante cinco turnos.",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Un attacco di tipo Fuoco che può essere eseguito\ndai Pokémon dynamaxizzati. Intensifica i raggi solari\nper cinque turni.",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "This is a Fire-type attack Dynamax Pokémon use.\nThe user intensifies the sun for five turns.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "ダイマックスした　ポケモンが\n繰りだす　ほのおタイプの　攻撃。\n５ターンの　間　日差しを　強くする。",
+      "language": {
+        "name": "ja",
+        "url": "/api/v2/language/11/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "极巨化宝可梦使出的火属性攻击。\n可在５回合内让日照变得强烈。",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    },
+    {
+      "flavor_text": "Ataque de tipo Fuego ejecutado por un Pokémon\nDinamax. Hace que se intensifique el efecto del sol\ndurante cinco turnos.",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      },
+      "version_group": {
+        "name": "sword-shield",
+        "url": "/api/v2/version-group/20/"
+      }
+    }
+  ],
+  "learned_by_pokemon": []
+}

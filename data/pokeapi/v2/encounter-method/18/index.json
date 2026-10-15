@@ -1,0 +1,21 @@
+{
+  "id": 18,
+  "name": "gift",
+  "order": 18,
+  "names": [
+    {
+      "name": "Receive as a gift",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Reçu en cadeau",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

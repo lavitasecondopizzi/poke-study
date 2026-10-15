@@ -1,0 +1,12 @@
+{
+  "id": 987,
+  "name": "ice-column-chamber-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "ice-column-chamber",
+    "url": "/api/v2/location/993/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

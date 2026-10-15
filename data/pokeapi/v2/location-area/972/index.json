@@ -1,0 +1,12 @@
+{
+  "id": 972,
+  "name": "fabled-spring-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "fabled-spring",
+    "url": "/api/v2/location/978/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

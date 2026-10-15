@@ -1,0 +1,28 @@
+{
+  "id": 12,
+  "name": "super-rod-spots",
+  "order": 13,
+  "names": [
+    {
+      "name": "An dunklen stellen angeln",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Fishing in dark spots",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En pêchant dans les endroits sombres",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

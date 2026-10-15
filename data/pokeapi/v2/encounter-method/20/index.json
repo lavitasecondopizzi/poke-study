@@ -1,0 +1,21 @@
+{
+  "id": 20,
+  "name": "static",
+  "order": 20,
+  "names": [
+    {
+      "name": "Static encounter",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Rencontre statique",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

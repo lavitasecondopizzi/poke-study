@@ -1,0 +1,12 @@
+{
+  "id": 1178,
+  "name": "sea-mauville-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sea-mauville",
+    "url": "/api/v2/location/693/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

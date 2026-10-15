@@ -1,0 +1,268 @@
+{
+  "id": 1365,
+  "name": "galar-route-2-lake",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "galar-route-2",
+    "url": "/api/v2/location/869/"
+  },
+  "names": [
+    {
+      "name": "Route 2 (Lake)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 2 (Lac)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "gyarados",
+        "url": "/api/v2/pokemon/130/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 2,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 2,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 2,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 2,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "lapras",
+        "url": "/api/v2/pokemon/131/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 55,
+              "max_level": 55,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "drednaw",
+        "url": "/api/v2/pokemon/834/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 50,
+              "max_level": 50,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "arrokuda",
+        "url": "/api/v2/pokemon/846/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 70,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 70,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 70,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "barraskewda",
+        "url": "/api/v2/pokemon/847/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 28,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 28,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 28,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 40,
+              "chance": 28,
+              "method": {
+                "name": "overworld-water",
+                "url": "/api/v2/encounter-method/39/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

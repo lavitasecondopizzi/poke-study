@@ -1,0 +1,31 @@
+{
+  "id": 5,
+  "name": "time-night",
+  "condition": {
+    "name": "time",
+    "url": "/api/v2/encounter-condition/2/"
+  },
+  "names": [
+    {
+      "name": "In der Nacht",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "At night",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "La nuit",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

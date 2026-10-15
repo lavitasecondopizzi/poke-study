@@ -1,0 +1,56 @@
+{
+  "id": 1298,
+  "name": "pyrite-town-colosseum",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pyrite-town",
+    "url": "/api/v2/location/1099/"
+  },
+  "names": [
+    {
+      "name": "Pyrite Town Colosseum",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Colosseum de Pyrite",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "nosepass",
+        "url": "/api/v2/pokemon/299/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "xd",
+            "url": "/api/v2/version/20/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 26,
+              "max_level": 26,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

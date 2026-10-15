@@ -1,0 +1,17 @@
+{
+  "id": 332,
+  "name": "other-talked-to-32-people",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Talk to at least 32 people after interacting with the tombstone in Ballimere Lake.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

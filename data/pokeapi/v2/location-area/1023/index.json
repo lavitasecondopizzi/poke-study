@@ -1,0 +1,12 @@
+{
+  "id": 1023,
+  "name": "tidewater-dam-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "tidewater-dam",
+    "url": "/api/v2/location/1029/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

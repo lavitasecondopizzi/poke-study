@@ -1,0 +1,118 @@
+[
+  {
+    "location_area": {
+      "name": "max-lair-area",
+      "url": "/api/v2/location-area/905/"
+    },
+    "version_details": [
+      {
+        "version": {
+          "name": "the-crown-tundra-sword",
+          "url": "/api/v2/version/36/"
+        },
+        "max_chance": 100,
+        "encounter_details": [
+          {
+            "min_level": 20,
+            "max_level": 20,
+            "chance": 100,
+            "method": {
+              "name": "gift",
+              "url": "/api/v2/encounter-method/18/"
+            },
+            "condition_values": [
+              {
+                "name": "story-progress-catch-five-ultra-beasts",
+                "url": "/api/v2/encounter-condition-value/227/"
+              }
+            ],
+            "pokemon_details": {
+              "min_perfect_ivs": null,
+              "always_shiny": false,
+              "never_shiny": true,
+              "is_alpha": false
+            }
+          }
+        ]
+      },
+      {
+        "version": {
+          "name": "the-crown-tundra-shield",
+          "url": "/api/v2/version/51/"
+        },
+        "max_chance": 100,
+        "encounter_details": [
+          {
+            "min_level": 20,
+            "max_level": 20,
+            "chance": 100,
+            "method": {
+              "name": "gift",
+              "url": "/api/v2/encounter-method/18/"
+            },
+            "condition_values": [
+              {
+                "name": "story-progress-catch-five-ultra-beasts",
+                "url": "/api/v2/encounter-condition-value/227/"
+              }
+            ],
+            "pokemon_details": {
+              "min_perfect_ivs": null,
+              "always_shiny": false,
+              "never_shiny": true,
+              "is_alpha": false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "location_area": {
+      "name": "ultra-megalopolis-area",
+      "url": "/api/v2/location-area/1162/"
+    },
+    "version_details": [
+      {
+        "version": {
+          "name": "ultra-sun",
+          "url": "/api/v2/version/29/"
+        },
+        "max_chance": 100,
+        "encounter_details": [
+          {
+            "min_level": 40,
+            "max_level": 40,
+            "chance": 100,
+            "method": {
+              "name": "gift",
+              "url": "/api/v2/encounter-method/18/"
+            },
+            "condition_values": [],
+            "pokemon_details": null
+          }
+        ]
+      },
+      {
+        "version": {
+          "name": "ultra-moon",
+          "url": "/api/v2/version/30/"
+        },
+        "max_chance": 100,
+        "encounter_details": [
+          {
+            "min_level": 40,
+            "max_level": 40,
+            "chance": 100,
+            "method": {
+              "name": "gift",
+              "url": "/api/v2/encounter-method/18/"
+            },
+            "condition_values": [],
+            "pokemon_details": null
+          }
+        ]
+      }
+    ]
+  }
+]

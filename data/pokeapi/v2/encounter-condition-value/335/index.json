@@ -1,0 +1,17 @@
+{
+  "id": 335,
+  "name": "other-witness-galarian-bird-fight",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Witness the Galarian forms of Articuno, Zapdos, and Moltres fight at Dyna Tree Hill.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

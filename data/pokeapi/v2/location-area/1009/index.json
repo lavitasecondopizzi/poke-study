@@ -1,0 +1,12 @@
+{
+  "id": 1009,
+  "name": "scarlet-bog-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "scarlet-bog",
+    "url": "/api/v2/location/1015/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

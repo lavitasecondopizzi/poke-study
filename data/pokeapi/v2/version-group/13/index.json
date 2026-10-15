@@ -1,0 +1,31 @@
+{
+  "id": 13,
+  "name": "xd",
+  "order": 10,
+  "generation": {
+    "name": "generation-iii",
+    "url": "/api/v2/generation/3/"
+  },
+  "move_learn_methods": [
+    {
+      "name": "level-up",
+      "url": "/api/v2/move-learn-method/1/"
+    },
+    {
+      "name": "tutor",
+      "url": "/api/v2/move-learn-method/3/"
+    },
+    {
+      "name": "machine",
+      "url": "/api/v2/move-learn-method/4/"
+    }
+  ],
+  "pokedexes": [],
+  "regions": [],
+  "versions": [
+    {
+      "name": "xd",
+      "url": "/api/v2/version/20/"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "encounter_details": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/encounter.json"
+      }
+    },
+    "max_chance": {
+      "type": "integer"
+    },
+    "version": {
+      "$ref": "/schema/v2/named_api_resource.json"
+    }
+  },
+  "required": [
+    "encounter_details",
+    "max_chance",
+    "version"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": 53,
+  "name": "pokespot",
+  "order": 53,
+  "names": [
+    {
+      "name": "Finding a Wild Pokemon at any of the three Pokespots in Pokemon XD: Gale of Darkness.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Poké Place",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

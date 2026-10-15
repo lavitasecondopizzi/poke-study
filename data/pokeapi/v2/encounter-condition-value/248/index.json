@@ -1,0 +1,17 @@
+{
+  "id": 248,
+  "name": "weather-overcast",
+  "condition": {
+    "name": "max-den-rating",
+    "url": "/api/v2/encounter-condition/28/"
+  },
+  "names": [
+    {
+      "name": "During overcast weather",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

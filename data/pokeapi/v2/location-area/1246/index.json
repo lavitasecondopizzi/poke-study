@@ -1,0 +1,56 @@
+{
+  "id": 1246,
+  "name": "pyrite-cave-bf1",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "pyrite-cave",
+    "url": "/api/v2/location/1101/"
+  },
+  "names": [
+    {
+      "name": "Pyrite Cave B1F",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Cavernes de Pyrite (1e sous-sol)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "meditite",
+        "url": "/api/v2/pokemon/307/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 33,
+              "max_level": 33,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

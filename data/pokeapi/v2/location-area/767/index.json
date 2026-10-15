@@ -1,0 +1,103 @@
+{
+  "id": 767,
+  "name": "cianwood-city-manias-house",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cianwood-city",
+    "url": "/api/v2/location/70/"
+  },
+  "names": [
+    {
+      "name": "Cianwood City (Mania's house)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Anemonia City (Gabrieles Haus)",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Irisia (maison à l'ouest du centre Pokémon)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "shuckle",
+        "url": "/api/v2/pokemon/213/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "gold",
+            "url": "/api/v2/version/4/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "silver",
+            "url": "/api/v2/version/5/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "crystal",
+            "url": "/api/v2/version/6/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 15,
+              "max_level": 15,
+              "chance": 100,
+              "method": {
+                "name": "gift",
+                "url": "/api/v2/encounter-method/18/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

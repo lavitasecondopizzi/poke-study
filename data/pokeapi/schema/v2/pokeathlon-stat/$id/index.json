@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "affecting_natures": {
+      "type": "object",
+      "properties": {
+        "increase": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "max_change": {
+                "type": "integer"
+              },
+              "nature": {
+                "$ref": "/schema/v2/named_api_resource.json"
+              }
+            },
+            "required": [
+              "max_change",
+              "nature"
+            ]
+          }
+        },
+        "decrease": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "max_change": {
+                "type": "integer"
+              },
+              "nature": {
+                "$ref": "/schema/v2/named_api_resource.json"
+              }
+            },
+            "required": [
+              "max_change",
+              "nature"
+            ]
+          }
+        }
+      },
+      "required": [
+        "decrease",
+        "increase"
+      ]
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/name.json"
+      }
+    }
+  },
+  "required": [
+    "affecting_natures",
+    "id",
+    "name",
+    "names"
+  ]
+}

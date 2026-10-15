@@ -1,0 +1,17 @@
+{
+  "id": 173,
+  "name": "trade-volbeat",
+  "condition": {
+    "name": "trade",
+    "url": "/api/v2/encounter-condition/15/"
+  },
+  "names": [
+    {
+      "name": "Give Volbeat in a Trade",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

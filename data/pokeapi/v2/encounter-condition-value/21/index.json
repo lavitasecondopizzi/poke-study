@@ -1,0 +1,24 @@
+{
+  "id": 21,
+  "name": "starter-bulbasaur",
+  "condition": {
+    "name": "starter",
+    "url": "/api/v2/encounter-condition/7/"
+  },
+  "names": [
+    {
+      "name": "Bulbasaur as starter",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Bulbizarre en starter",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

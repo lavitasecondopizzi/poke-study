@@ -1,0 +1,17 @@
+{
+  "id": 328,
+  "name": "other-choose-regieleki-pattern",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Activate the pattern for Regieleki in the Split-Decision Ruins.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

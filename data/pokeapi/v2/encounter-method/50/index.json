@@ -1,0 +1,21 @@
+{
+  "id": 50,
+  "name": "new-york-pokecenter-wish-eggs",
+  "order": 50,
+  "names": [
+    {
+      "name": "Receiving an egg from the Pokemon center in New York City that contains the special move Wish.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Recevoir un œuf du Pokémon Center de New York contenant l'attaque spéciale Vœu",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

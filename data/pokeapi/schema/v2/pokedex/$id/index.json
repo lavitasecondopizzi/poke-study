@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "is_main_series": {
+      "type": "boolean"
+    },
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/description.json"
+      }
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/name.json"
+      }
+    },
+    "pokemon_entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_number": {
+            "type": "integer"
+          },
+          "pokemon_species": {
+            "$ref": "/schema/v2/named_api_resource.json"
+          }
+        },
+        "required": [
+          "entry_number",
+          "pokemon_species"
+        ]
+      }
+    },
+    "region": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "/schema/v2/named_api_resource.json"
+        }
+      ]
+    },
+    "version_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "/schema/v2/named_api_resource.json"
+      }
+    }
+  },
+  "required": [
+    "descriptions",
+    "id",
+    "is_main_series",
+    "name",
+    "names",
+    "pokemon_entries",
+    "region",
+    "version_groups"
+  ]
+}

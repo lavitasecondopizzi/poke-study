@@ -1,0 +1,12 @@
+{
+  "id": 1028,
+  "name": "veilstone-cape-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "veilstone-cape",
+    "url": "/api/v2/location/1034/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

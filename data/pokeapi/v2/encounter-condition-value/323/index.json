@@ -1,0 +1,17 @@
+{
+  "id": 323,
+  "name": "other-giratina-not-caught-in-distortion-world",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Did not catch Giratina in the Distortion World",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1024,
+  "name": "tombolo-walk-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "tombolo-walk",
+    "url": "/api/v2/location/1030/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,21 @@
+{
+  "id": 45,
+  "name": "colosseum-bonus-disc-us",
+  "order": 45,
+  "names": [
+    {
+      "name": "Receiving a Jirachi from the USA Colosseum Bonus Disc",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Recevoir un Jirachi depuis le disque bonus Pokémon Colosseum aux États-Unis",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

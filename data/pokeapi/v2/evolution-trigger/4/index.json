@@ -1,0 +1,33 @@
+{
+  "id": 4,
+  "name": "shed",
+  "names": [
+    {
+      "name": "Place dans l’équipe et une Poké Ball",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Platz im Team und ein Pokéball",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Shed",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "pokemon_species": [
+    {
+      "name": "shedinja",
+      "url": "/api/v2/pokemon-species/292/"
+    }
+  ]
+}

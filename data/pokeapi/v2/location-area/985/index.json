@@ -1,0 +1,12 @@
+{
+  "id": 985,
+  "name": "holm-of-trials-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "holm-of-trials",
+    "url": "/api/v2/location/991/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

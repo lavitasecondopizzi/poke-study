@@ -1,0 +1,20 @@
+{
+  "id": 65,
+  "name": "kee",
+  "growth_time": 72,
+  "max_harvest": 8,
+  "natural_gift_power": 100,
+  "size": null,
+  "smoothness": null,
+  "soil_dryness": null,
+  "firmness": null,
+  "flavors": [],
+  "item": {
+    "name": "kee-berry",
+    "url": "/api/v2/item/724/"
+  },
+  "natural_gift_type": {
+    "name": "fairy",
+    "url": "/api/v2/type/18/"
+  }
+}

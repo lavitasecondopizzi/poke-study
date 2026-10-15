@@ -1,0 +1,80 @@
+{
+  "id": 50,
+  "name": "the-isle-of-armor-shield",
+  "names": [
+    {
+      "name": "シールド: 鎧の孤島",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "실드: 갑옷의 외딴섬",
+      "language": {
+        "name": "ko",
+        "url": "/api/v2/language/3/"
+      }
+    },
+    {
+      "name": "盾: 鎧之孤島",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Bouclier: L’île solitaire de l’Armure",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Schild: Die Insel der Rüstung",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Escudo: La isla de la armadura",
+      "language": {
+        "name": "es",
+        "url": "/api/v2/language/7/"
+      }
+    },
+    {
+      "name": "Scudo: L’isola solitaria dell’armatura",
+      "language": {
+        "name": "it",
+        "url": "/api/v2/language/8/"
+      }
+    },
+    {
+      "name": "Shield: The Isle of Armor",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "盾: 铠之孤岛",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    },
+    {
+      "name": "Escudo: La isla de la armadura",
+      "language": {
+        "name": "es-419",
+        "url": "/api/v2/language/14/"
+      }
+    }
+  ],
+  "version_group": {
+    "name": "the-isle-of-armor",
+    "url": "/api/v2/version-group/21/"
+  }
+}

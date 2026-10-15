@@ -1,0 +1,12 @@
+{
+  "id": 991,
+  "name": "islespy-shore-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "islespy-shore",
+    "url": "/api/v2/location/997/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

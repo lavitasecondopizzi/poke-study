@@ -1,0 +1,24 @@
+{
+  "id": 42,
+  "name": "other-talk-to-cynthias-grandmother",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Talk to Cynthia’s grandmother",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir parlé à la grand-mère de Cynthia",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

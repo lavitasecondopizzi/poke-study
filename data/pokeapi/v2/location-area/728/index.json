@@ -1,0 +1,403 @@
+{
+  "id": 728,
+  "name": "kalos-route-17-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "kalos-route-17",
+    "url": "/api/v2/location/641/"
+  },
+  "names": [
+    {
+      "name": "Road 17",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Route 17",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Route 17",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "sneasel",
+        "url": "/api/v2/pokemon/215/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 29,
+          "encounter_details": [
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 5,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 4,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 29,
+          "encounter_details": [
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 5,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 4,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "delibird",
+        "url": "/api/v2/pokemon/225/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 40,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "snover",
+        "url": "/api/v2/pokemon/459/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 30,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            },
+            {
+              "min_level": 39,
+              "max_level": 39,
+              "chance": 10,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "abomasnow",
+        "url": "/api/v2/pokemon/460/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "x",
+            "url": "/api/v2/version/23/"
+          },
+          "max_chance": 1,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 1,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "y",
+            "url": "/api/v2/version/24/"
+          },
+          "max_chance": 1,
+          "encounter_details": [
+            {
+              "min_level": 40,
+              "max_level": 40,
+              "chance": 1,
+              "method": {
+                "name": "rough-terrain",
+                "url": "/api/v2/encounter-method/17/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": 800,
+  "name": "mahogany-town-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "mahogany-town",
+    "url": "/api/v2/location/230/"
+  },
+  "names": [
+    {
+      "name": "Mahogany City",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Mahagonia City",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Acajou",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": []
+}

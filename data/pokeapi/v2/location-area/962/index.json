@@ -1,0 +1,12 @@
+{
+  "id": 962,
+  "name": "cloudpool-ridge-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "cloudpool-ridge",
+    "url": "/api/v2/location/968/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

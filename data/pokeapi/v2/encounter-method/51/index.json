@@ -1,0 +1,21 @@
+{
+  "id": 51,
+  "name": "snag",
+  "order": 51,
+  "names": [
+    {
+      "name": "Snagging a Pokemon from a trainer in Pokemon Colosseum or Pokemon XD: Gale of Darkness.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Snatcher un Pokémon d'un dresseur",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

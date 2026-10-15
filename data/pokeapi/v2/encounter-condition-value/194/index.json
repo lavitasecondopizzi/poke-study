@@ -1,0 +1,17 @@
+{
+  "id": 194,
+  "name": "headbutt-tree-secret",
+  "condition": {
+    "name": "headbutt-tree",
+    "url": "/api/v2/encounter-condition/20/"
+  },
+  "names": [
+    {
+      "name": "Headbutt Tree (Secret)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

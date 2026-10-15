@@ -1,0 +1,31 @@
+{
+  "id": 1,
+  "name": "swarm-yes",
+  "condition": {
+    "name": "swarm",
+    "url": "/api/v2/encounter-condition/1/"
+  },
+  "names": [
+    {
+      "name": "Während eines Schwarms",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "During a swarm",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Pendant une tempête",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1006,
+  "name": "sacred-plaza-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "sacred-plaza",
+    "url": "/api/v2/location/1012/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

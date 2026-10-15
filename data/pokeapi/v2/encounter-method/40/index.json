@@ -1,0 +1,21 @@
+{
+  "id": 40,
+  "name": "overworld-flying",
+  "order": 40,
+  "names": [
+    {
+      "name": "Flying Pokemon in the sky",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Pokemon volant dans le ciel",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

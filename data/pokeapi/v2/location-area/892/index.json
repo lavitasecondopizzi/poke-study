@@ -1,0 +1,86 @@
+{
+  "id": 892,
+  "name": "hammerlocke-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hammerlocke",
+    "url": "/api/v2/location/905/"
+  },
+  "names": [
+    {
+      "name": "Hammerlocke",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Kickenham",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "togepi",
+        "url": "/api/v2/pokemon/175/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "sword",
+            "url": "/api/v2/version/33/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-toxel",
+                  "url": "/api/v2/encounter-condition-value/231/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "shield",
+            "url": "/api/v2/version/34/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 25,
+              "max_level": 25,
+              "chance": 100,
+              "method": {
+                "name": "npc-trade",
+                "url": "/api/v2/encounter-method/36/"
+              },
+              "condition_values": [
+                {
+                  "name": "trade-toxel",
+                  "url": "/api/v2/encounter-condition-value/231/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

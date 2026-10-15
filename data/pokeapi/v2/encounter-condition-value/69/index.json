@@ -1,0 +1,24 @@
+{
+  "id": 69,
+  "name": "other-talked-to-32-people-underground",
+  "condition": {
+    "name": "other",
+    "url": "/api/v2/encounter-condition/10/"
+  },
+  "names": [
+    {
+      "name": "Has talked to at least 32 people in the underground",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir parlé à 32 personnes dans les souterrains",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

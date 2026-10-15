@@ -1,0 +1,12 @@
+{
+  "id": 969,
+  "name": "diamond-heath-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "diamond-heath",
+    "url": "/api/v2/location/975/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,144 @@
+{
+  "id": 925,
+  "name": "split-decision-ruins-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "split-decision-ruins",
+    "url": "/api/v2/location/935/"
+  },
+  "names": [
+    {
+      "name": "Split-Decision Ruins",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Ruines du Choix",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "regieleki",
+        "url": "/api/v2/pokemon/894/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-crown-tundra-sword",
+            "url": "/api/v2/version/36/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-choose-regieleki-pattern",
+                  "url": "/api/v2/encounter-condition-value/328/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-crown-tundra-shield",
+            "url": "/api/v2/version/51/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-choose-regieleki-pattern",
+                  "url": "/api/v2/encounter-condition-value/328/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pokemon": {
+        "name": "regidrago",
+        "url": "/api/v2/pokemon/895/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "the-crown-tundra-sword",
+            "url": "/api/v2/version/36/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-choose-regidrago-pattern",
+                  "url": "/api/v2/encounter-condition-value/329/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        },
+        {
+          "version": {
+            "name": "the-crown-tundra-shield",
+            "url": "/api/v2/version/51/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 70,
+              "max_level": 70,
+              "chance": 100,
+              "method": {
+                "name": "static",
+                "url": "/api/v2/encounter-method/20/"
+              },
+              "condition_values": [
+                {
+                  "name": "other-choose-regidrago-pattern",
+                  "url": "/api/v2/encounter-condition-value/329/"
+                }
+              ],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

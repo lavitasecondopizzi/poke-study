@@ -1,0 +1,12 @@
+{
+  "id": 957,
+  "name": "castaway-shore-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "castaway-shore",
+    "url": "/api/v2/location/963/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

@@ -1,0 +1,21 @@
+{
+  "id": 39,
+  "name": "overworld-water",
+  "order": 39,
+  "names": [
+    {
+      "name": "Surfing in the overworld",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En surfant dans le monde extérieur",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": 29,
+  "name": "story-progress-awakened-beasts",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Awakened the legendary beasts at Burned Tower",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En ayant réveillé les légendaires à la Tour Cendrée",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

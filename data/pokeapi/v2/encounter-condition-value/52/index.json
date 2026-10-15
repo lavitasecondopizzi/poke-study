@@ -1,0 +1,24 @@
+{
+  "id": 52,
+  "name": "story-progress-beat-team-galactic-iron-island",
+  "condition": {
+    "name": "story-progress",
+    "url": "/api/v2/encounter-condition/9/"
+  },
+  "names": [
+    {
+      "name": "Defeat Team Galactic at Iron Island",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Après avoir vaincu la Team Galaxie sur l’Île de Fer",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

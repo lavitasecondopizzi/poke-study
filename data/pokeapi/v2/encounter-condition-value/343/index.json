@@ -1,0 +1,17 @@
+{
+  "id": 343,
+  "name": "max-den-rarity-special",
+  "condition": {
+    "name": "max-den-rarity",
+    "url": "/api/v2/encounter-condition/27/"
+  },
+  "names": [
+    {
+      "name": "Start max raid in a den with a weak, red pillar of light after checking Wild Area News.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

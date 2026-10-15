@@ -1,0 +1,17 @@
+{
+  "id": 289,
+  "name": "johto-safari-blocks-peak-min-8",
+  "condition": {
+    "name": "johto-safari-blocks",
+    "url": "/api/v2/encounter-condition/26/"
+  },
+  "names": [
+    {
+      "name": "At least 8 Peak block points placed",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

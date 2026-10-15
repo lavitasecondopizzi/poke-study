@@ -1,0 +1,56 @@
+{
+  "id": 5,
+  "name": "user-or-ally",
+  "descriptions": [
+    {
+      "description": "Soit le lanceur ou son allié, sélecionné par le dresseur.",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "description": "Entweder der Anwender oder seine Partner. Der Trainer kann es aussuchen.",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "description": "Either the user or its ally, selected by the trainer.",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "moves": [
+    {
+      "name": "acupressure",
+      "url": "/api/v2/move/367/"
+    }
+  ],
+  "names": [
+    {
+      "name": "Lanceur ou allié",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Anwender oder Partner",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "User or ally",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ]
+}

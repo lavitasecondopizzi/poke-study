@@ -1,0 +1,12 @@
+{
+  "id": 1029,
+  "name": "hisui-wayward-cave-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hisui-wayward-cave",
+    "url": "/api/v2/location/1035/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

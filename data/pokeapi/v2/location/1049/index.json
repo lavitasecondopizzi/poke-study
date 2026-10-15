@@ -1,0 +1,38 @@
+{
+  "id": 1049,
+  "name": "ulaula-beach",
+  "region": {
+    "name": "alola",
+    "url": "/api/v2/region/7/"
+  },
+  "names": [
+    {
+      "name": "Plage d'Ula-Ula",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Strand von Ula-Ula",
+      "language": {
+        "name": "de",
+        "url": "/api/v2/language/6/"
+      }
+    },
+    {
+      "name": "Ula'ula Beach",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    }
+  ],
+  "game_indices": [],
+  "areas": [
+    {
+      "name": "ulaula-beach-area",
+      "url": "/api/v2/location-area/1138/"
+    }
+  ]
+}

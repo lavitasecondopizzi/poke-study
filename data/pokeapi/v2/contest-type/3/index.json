@@ -1,0 +1,50 @@
+{
+  "id": 3,
+  "name": "cute",
+  "berry_flavor": {
+    "name": "sweet",
+    "url": "/api/v2/berry-flavor/3/"
+  },
+  "names": [
+    {
+      "name": "かわいさ",
+      "color": "",
+      "language": {
+        "name": "ja-hrkt",
+        "url": "/api/v2/language/1/"
+      }
+    },
+    {
+      "name": "可愛",
+      "color": "粉紅",
+      "language": {
+        "name": "zh-hant",
+        "url": "/api/v2/language/4/"
+      }
+    },
+    {
+      "name": "Grâce",
+      "color": "Rose",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    },
+    {
+      "name": "Cute",
+      "color": "Pink",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "可爱",
+      "color": "粉红",
+      "language": {
+        "name": "zh-hans",
+        "url": "/api/v2/language/12/"
+      }
+    }
+  ]
+}

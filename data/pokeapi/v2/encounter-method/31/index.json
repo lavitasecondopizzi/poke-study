@@ -1,0 +1,21 @@
+{
+  "id": 31,
+  "name": "feebas-tile-fishing",
+  "order": 31,
+  "names": [
+    {
+      "name": "Fishing in a Feebas Tile",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En pêchant sur une tuile à Barpau",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

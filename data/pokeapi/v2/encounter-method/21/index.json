@@ -1,0 +1,21 @@
+{
+  "id": 21,
+  "name": "pokeflute",
+  "order": 21,
+  "names": [
+    {
+      "name": "Playing Pokéflute",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En jouant de la Pokéflûte",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

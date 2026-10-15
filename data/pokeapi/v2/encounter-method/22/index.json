@@ -1,0 +1,21 @@
+{
+  "id": 22,
+  "name": "headbutt-low",
+  "order": 22,
+  "names": [
+    {
+      "name": "Headbutting a low encounter rate tree",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "En utilisant Coup d’Boule sur un arbre à taux bas",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ]
+}

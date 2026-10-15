@@ -1,0 +1,12 @@
+{
+  "id": 984,
+  "name": "hideaway-bay-area",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "hideaway-bay",
+    "url": "/api/v2/location/990/"
+  },
+  "names": [],
+  "pokemon_encounters": []
+}

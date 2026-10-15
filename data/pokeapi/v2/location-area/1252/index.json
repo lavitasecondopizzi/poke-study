@@ -1,0 +1,56 @@
+{
+  "id": 1252,
+  "name": "agate-village-relic-forest",
+  "game_index": 0,
+  "encounter_method_rates": [],
+  "location": {
+    "name": "agate-village",
+    "url": "/api/v2/location/1103/"
+  },
+  "names": [
+    {
+      "name": "Agate Village (Relic Forest)",
+      "language": {
+        "name": "en",
+        "url": "/api/v2/language/9/"
+      }
+    },
+    {
+      "name": "Samaragd (Forêt Sacrée)",
+      "language": {
+        "name": "fr",
+        "url": "/api/v2/language/5/"
+      }
+    }
+  ],
+  "pokemon_encounters": [
+    {
+      "pokemon": {
+        "name": "hitmontop",
+        "url": "/api/v2/pokemon/237/"
+      },
+      "version_details": [
+        {
+          "version": {
+            "name": "colosseum",
+            "url": "/api/v2/version/19/"
+          },
+          "max_chance": 100,
+          "encounter_details": [
+            {
+              "min_level": 38,
+              "max_level": 38,
+              "chance": 100,
+              "method": {
+                "name": "snag",
+                "url": "/api/v2/encounter-method/51/"
+              },
+              "condition_values": [],
+              "pokemon_details": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
