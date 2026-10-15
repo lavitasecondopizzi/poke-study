@@ -701,17 +701,23 @@ export default function App() {
   function placeCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const subcategoryTarget = lessonTargets.find(target => target.id === targetId);
-    if (subcategoryTarget) {
-      const slots = lessonDeck.filter(entry => entry.subcategoryId === targetId);
-      const occupied = new Set(Object.values(categoryPlacements)
-        .filter(value => value.startsWith('category-slot:' + targetId + ':'))
-        .map(value => Number(value.split(':').pop())));
+    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\\d+)$/);
+    const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
+    const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
+    if (subcategoryTarget || requestedCategorySlot) {
+      const slots = lessonDeck.filter(entry => entry.subcategoryId === requestedSubcategoryId);
+      const occupied = new Set(Object.entries(categoryPlacements)
+        .filter(([existingCardId, value]) => existingCardId !== cardId && value.startsWith('category-slot:' + requestedSubcategoryId + ':'))
+        .map(([, value]) => Number(value.split(':').pop())));
       const firstFree = slots.findIndex((_, index) => !occupied.has(index));
-      if (firstFree >= 0) targetId = 'category-slot:' + targetId + ':' + firstFree;
+      if (firstFree < 0) {
+        setMessage('Tutte le posizioni di questa sottocartella sono occupate.');
+        return;
+      }
+      targetId = 'category-slot:' + requestedSubcategoryId + ':' + firstFree;
     }
-    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
-    const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
+    const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\\d+)$/);
+    const categorySlotMatch = targetId.match(/^category-slot:(.+):(\\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
     if (categorySlotMatch) setCategoryPlacements(old => {
       const next = { ...old };
@@ -1272,8 +1278,11 @@ export default function App() {
                         const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
                         const isWrong = Boolean(placedCard && placedCard.subcategoryId !== currentSubcategory.id);
                         return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isWrong && inventory.includes('subcategory-errors') ? 'pokemon-number-wrong' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
-                          if (placed) { setCategoryPlacements(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setMisplacedCards(old => { const next = { ...old }; delete next[placed[0]]; return next; }); setLessonSolved(old => old.filter(id => id !== placed[0])); setWrongTargetId(null); return; }
-                          if (selectedCardId) placeCard(selectedCardId, slotId);
+                          if (placedCard && lessonSolved.includes(placedCard.id)) {
+                            setMessage('Questa entità è corretta e bloccata: non può essere rimossa.');
+                            return;
+                          }
+                          if (selectedCardId) placeCard(selectedCardId, currentSubcategory.id);
                         }}>
                           {placedCard ? <img className="category-entity-image" src={placedCard.imageUrl} alt="" /> : <span className="empty-entity-slot" aria-hidden="true">+</span>}
                         </button>;
