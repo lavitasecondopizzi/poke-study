@@ -1,11 +1,6 @@
 name: Import complete PokéAPI database and deploy
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/vendor-pokeapi.yml'
-      - 'scripts/prepare-items.mjs'
   workflow_dispatch:
 
 permissions:
