@@ -355,6 +355,7 @@ export default function App() {
   const [researchSearchOpen, setResearchSearchOpen] = useState(false);
   const [researchQuery, setResearchQuery] = useState('');
   const [researchResults, setResearchResults] = useState<Array<{ id: string; name: string; page: number }>>([]);
+  const [researchHasSearched, setResearchHasSearched] = useState(false);
   const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -1032,6 +1033,7 @@ export default function App() {
         : [];
     });
     setResearchResults(matches);
+    setResearchHasSearched(true);
     const currentInventory = progress.inventory ?? [];
     const level = Math.max(1, ...currentInventory.filter(id => id.startsWith('research-upgrade-')).map(id => Number(id.slice(id.lastIndexOf('-') + 1))));
     const cooldownMs = Math.max(10_000, Math.round(600_000 * Math.pow(10 / 600, (level - 1) / (RESEARCH_LEVELS - 1))));
@@ -1523,12 +1525,12 @@ export default function App() {
                 <div className="game-zone-heading"><strong>ENTITÀ DA CLASSIFICARE</strong><span>{remainingLessonCards.length} rimanenti</span></div>
                 <div className="ability-toolbar">
                 {inventory.includes('scanner') && <button type="button" disabled={!selectedCardId || (progress.abilityCooldowns?.scanner ?? 0) > clockNow} onClick={() => useAbility('scanner')}><strong>Scanner</strong><small>{(progress.abilityCooldowns?.scanner ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.scanner ?? 0,clockNow) : 'Pronto'}</small></button>}
-                {inventory.includes('research') && <button type="button" disabled={(progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => { setResearchSearchOpen(open => !open); setResearchResults([]); }}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : researchSearchOpen ? 'Chiudi ricerca' : 'Cerca un’entità'}</small></button>}
+                {inventory.includes('research') && <button type="button" disabled={(progress.abilityCooldowns?.research ?? 0) > clockNow} onClick={() => { setResearchSearchOpen(open => !open); setResearchResults([]); setResearchHasSearched(false); setResearchQuery(''); }}><strong>Ricerca</strong><small>{(progress.abilityCooldowns?.research ?? 0) > clockNow ? cooldownLabel(progress.abilityCooldowns?.research ?? 0,clockNow) : researchSearchOpen ? 'Chiudi ricerca' : 'Cerca un’entità'}</small></button>}
                 </div>
                 {researchSearchOpen && inventory.includes('research') && <form className="research-search-panel" onSubmit={handleResearchSearch}>
                   <label htmlFor="research-entity-query">Cerca un’entità per nome</label>
-                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => setResearchQuery(event.target.value)} placeholder="Es. Pikachu, Pozione…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>Cerca</button></div>
-                  {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchSearchOpen(false); }}>Vai alla pagina</button></li>)}</ul> : researchQuery.trim() && (progress.abilityCooldowns?.research ?? 0) > clockNow ? <p className="research-search-hint">Ricerca effettuata. Potrai cercare di nuovo quando il cooldown sarà terminato.</p> : researchQuery.trim() ? <p className="research-search-hint">Invia la ricerca per trovare la pagina dell’entità.</p> : null}
+                  <div className="research-search-controls"><input id="research-entity-query" type="search" value={researchQuery} onChange={event => { setResearchQuery(event.target.value); setResearchResults([]); setResearchHasSearched(false); }} placeholder="Es. Pikachu, Pozione…" autoComplete="off"/><button type="submit" disabled={!researchQuery.trim() || (progress.abilityCooldowns?.research ?? 0) > clockNow}>Cerca</button></div>
+                  {researchResults.length > 0 ? <ul className="research-search-results">{researchResults.map(result => <li key={result.id}><span><strong>{result.name}</strong><small>Pagina {result.page}</small></span><button type="button" onClick={() => { setGamePage(result.page - 1); setResearchSearchOpen(false); }}>Vai alla pagina</button></li>)}</ul> : researchHasSearched ? <p className="research-search-hint">Nessuna entità non ancora classificata corrisponde al nome cercato.</p> : researchQuery.trim() ? <p className="research-search-hint">Invia la ricerca per trovare la pagina dell’entità.</p> : null}
                 </form>}
                 {loading ? <div className="loading-panel"><div className="pokeball-loader" /><h3>Caricamento Pokémon…</h3></div>
                   : itemCatalog.length === 0 ? <div className="loading-panel"><h3>Catalogo in caricamento</h3><p>{online ? 'Caricamento degli oggetti e dei materiali…' : 'Serve una prima connessione per scaricare il catalogo completo.'}</p></div>
