@@ -735,10 +735,6 @@ export default function App() {
       const nationalId = Number(destination.slice('pokemon-slot:'.length));
       return Boolean(currentPokemonRegion && nationalId >= currentPokemonRegion.start && nationalId <= currentPokemonRegion.end);
     }
-    if (openMacroId && !openSubcategoryId && !openPokemonRegionId) {
-      const target = lessonTargets.find(entry => entry.id === destination);
-      return target?.macroId === openMacroId;
-    }
     return false;
   }), [lessonDeck, misplacedCards, lessonSolved, activeFolderId, openSubcategoryId, openPokemonRegionId, openMacroId, currentPokemonRegion, lessonTargets]);
   const folderPageCount = Math.max(1, Math.ceil(folderAssignedCards.length / 15));
@@ -1508,7 +1504,7 @@ export default function App() {
                       <div className="category-entity-grid folder-slot-grid" aria-label={'Posizioni della sottocategoria ' + currentSubcategory.name}>
                         {currentSubcategoryCards.map((_, index) => {
                           const slotId = 'category-slot:' + currentSubcategory.id + ':' + index;
-                          const placed = Object.entries(categoryPlacements).find(([, placedTarget]) => placedTarget === slotId);
+                          const placed = Object.entries(categoryPlacements).find(([cardId, placedTarget]) => placedTarget === slotId && !misplacedCards[cardId]);
                           const placedCard = placed ? lessonDeck.find(entry => entry.id === placed[0]) : undefined;
                           const isComplete = Boolean(placedCard && lessonSolved.includes(placedCard.id));
                           return <button type="button" key={slotId} className={'pokemon-number-slot category-entity-slot ' + (placedCard ? 'category-entity-filled ' : '') + (isComplete ? 'pokemon-number-complete' : '')} aria-label={placedCard ? 'Entità inserita, posizione ' + (index + 1) : 'Posizione vuota ' + (index + 1)} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const id = event.dataTransfer.getData('text/plain'); if (id) placeCard(id, slotId); }} onClick={() => {
