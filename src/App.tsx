@@ -198,7 +198,7 @@ function avatarPortraitUrl(id: number) {
   return `${import.meta.env.BASE_URL}images/portraits/${id}.png`;
 }
 
-const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v1';
+const ITEM_IMAGE_CACHE_KEY = 'poke-study-local-items-v2';
 
 function resourceId(url: string) {
   const parts = url.split('/').filter(Boolean);
@@ -348,7 +348,7 @@ export default function App() {
   });
   const [openPokemonRegionId, setOpenPokemonRegionId] = useState<string | null>(() => progress.gameState?.openPokemonRegionId ?? null);
   const [openSubcategoryId, setOpenSubcategoryId] = useState<string | null>(() => progress.gameState?.openSubcategoryId ?? null);
-  const [message, setMessage] = useState('Seleziona una carta e classificala nella sottocategoria corretta.');
+  const setMessage = (_message: string) => {}; // Il feedback di classificazione resta intenzionalmente nascosto durante il gioco.
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
   const [academy, setAcademy] = useState<string>(() => {
