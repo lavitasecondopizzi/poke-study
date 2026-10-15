@@ -64,8 +64,8 @@ const SHOP_PRODUCTS: ShopProduct[] = [
   { id: 'held-items-archive', name: 'Archivio strumenti tenuti', description: 'Sblocca l’archivio consultabile degli strumenti tenuti dai Pokémon.', cost: 5, currency: 'poke', category: 'super-aiuti', kind: 'archive' },
   { id: 'national-catalog', name: 'Archivio Nazionale completo', description: 'Sblocca il catalogo consultabile. Richiede tutti i 1.025 Pokémon e tutti i livelli di Scanner e Ricerca.', cost: 10, currency: 'poke', category: 'super-aiuti', requires: ['scanner', ...Array.from({ length: SCANNER_LEVELS - 1 }, (_, i) => `scanner-upgrade-${i + 2}`), 'research', ...Array.from({ length: RESEARCH_LEVELS - 1 }, (_, i) => `research-upgrade-${i + 2}`)], requiredPokemon: NATIONAL_DEX_SIZE, requirementLabel: 'Cataloga tutti i 1.025 Pokémon e acquista tutti i livelli di Scanner e Ricerca', kind: 'archive' },
   { id: 'exclusive-title', name: 'Titolo esclusivo', description: 'Sblocca il titolo esclusivo Archivista Pokémon, selezionabile nel profilo.', cost: 5, currency: 'poke', category: 'super-aiuti', kind: 'cosmetic' },
-  { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca la modalità di allenamento a tempo quando disponibile.', cost: 8, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
-  { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Sblocca la modalità per configurare sfide quando disponibile.', cost: 10, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
+  { id: 'timed-training', name: 'Allenamento a tempo', description: 'Sblocca sessioni a tempo con durata configurabile, conteggio degli errori e catalogazione integrata.', cost: 8, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
+  { id: 'custom-challenges', name: 'Sfide personalizzate', description: 'Crea esercitazioni scegliendo le macrocategorie e il numero di entità da classificare.', cost: 10, currency: 'poke', category: 'super-aiuti', kind: 'mode' },
 ];
 function priceShopProducts(totalEarnablePoints: number): ShopProduct[] {
   // Il budget complessivo del negozio coincide con tutti i PP ottenibili:
