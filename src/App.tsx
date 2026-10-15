@@ -355,7 +355,22 @@ export default function App() {
   const [nickname, setNickname] = useState('');
   const [enrollmentBusy, setEnrollmentBusy] = useState(false);
   const [enrollmentError, setEnrollmentError] = useState('');
-  const [view, setView] = useState('home');
+  const [view, setView] = useState(() => {
+    try {
+      const savedView = localStorage.getItem('poke-study-current-view');
+      return savedView || 'home';
+    } catch {
+      return 'home';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('poke-study-current-view', view);
+    } catch {
+      // La navigazione continua a funzionare anche se il browser blocca localStorage.
+    }
+  }, [view]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [online, setOnline] = useState(() => typeof navigator === 'undefined' ? true : navigator.onLine);
