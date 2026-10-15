@@ -34,6 +34,8 @@ export interface SavedProgress {
     gamePage?: number;
     /** Macrocategorie rivelate dallo Scanner, persistenti per ciascuna carta. */
     revealedMacroCategories?: Record<string, string>;
+    /** Sottocategorie rivelate da Ricerca, persistenti per ciascuna carta. */
+    revealedSubcategories?: Record<string, string>;
   };
 }
 
