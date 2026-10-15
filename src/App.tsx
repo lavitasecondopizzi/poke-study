@@ -1448,11 +1448,6 @@ export default function App() {
         {inventory.includes('timed-training') && <button className={view === 'timed-training' ? 'active' : ''} aria-current={view === 'timed-training' ? 'page' : undefined} onClick={() => navTo('timed-training')}><Clock3 size={16}/> Allenamento a tempo</button>}
         {inventory.includes('custom-challenges') && <button className={view === 'custom-challenges' ? 'active' : ''} aria-current={view === 'custom-challenges' ? 'page' : undefined} onClick={() => navTo('custom-challenges')}><Target size={16}/> Sfide personalizzate</button>}
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
-        {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
-        {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}><Sparkles size={16} /> Archivio degli strumenti evolutivi</button>}
-        {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}><Bone size={16} /> Archivio fossili e reperti</button>}
-        {inventory.includes('machines-archive') && <button className={view === 'machines' ? 'active' : ''} aria-current={view === 'machines' ? 'page' : undefined} onClick={() => navTo('machines')}><BookOpen size={16} /> Archivio MT e tecniche</button>}
-        {inventory.includes('held-items-archive') && <button className={view === 'held-items' ? 'active' : ''} aria-current={view === 'held-items' ? 'page' : undefined} onClick={() => navTo('held-items')}><ShieldCheck size={16} /> Archivio strumenti tenuti</button>}
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
@@ -1469,15 +1464,18 @@ export default function App() {
             {inventory.includes('timed-training') && <button className={view === 'timed-training' ? 'side-active' : ''} onClick={() => navTo('timed-training')}>▸ Allenamento a tempo</button>}
             {inventory.includes('custom-challenges') && <button className={view === 'custom-challenges' ? 'side-active' : ''} onClick={() => navTo('custom-challenges')}>▸ Sfide personalizzate</button>}
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
+            <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
+            <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
+            <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
+          </section>
+          {(inventory.includes('evolution-archive') || inventory.includes('evolution-tools-archive') || inventory.includes('fossils-archive') || inventory.includes('machines-archive') || inventory.includes('held-items-archive')) && <section className="side-box specialist-archives-box">
+            <h2>ARCHIVI SPECIALISTICI</h2>
             {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
             {inventory.includes('evolution-tools-archive') && <button className={view === 'evolution-tools' ? 'side-active' : ''} aria-current={view === 'evolution-tools' ? 'page' : undefined} onClick={() => navTo('evolution-tools')}>▸ Archivio degli strumenti evolutivi</button>}
             {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'side-active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}>▸ Archivio fossili e reperti</button>}
             {inventory.includes('machines-archive') && <button className={view === 'machines' ? 'side-active' : ''} aria-current={view === 'machines' ? 'page' : undefined} onClick={() => navTo('machines')}>▸ Archivio MT e tecniche</button>}
             {inventory.includes('held-items-archive') && <button className={view === 'held-items' ? 'side-active' : ''} aria-current={view === 'held-items' ? 'page' : undefined} onClick={() => navTo('held-items')}>▸ Archivio strumenti tenuti</button>}
-            <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
-            <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
-            <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
-          </section>
+          </section>}
           <section className="side-box">
             <h2>LIBRETTO PERSONALE</h2>
             <div className="stat-row"><span>Punti Poké</span><strong>{progress.points}</strong></div>
