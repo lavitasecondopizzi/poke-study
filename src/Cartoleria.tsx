@@ -8,6 +8,7 @@ import type { ShopProduct } from './App';
 
 const SCANNER_LEVELS = 20;
 const RESEARCH_LEVELS = 12;
+const NUMBER_CHECK_LEVELS = 10;
 type ShopFilter = 'all' | 'available' | 'owned' | 'locked';
 
 type CartoleriaProps = {
@@ -57,9 +58,11 @@ function ProductCard({
     ? Array.from({ length: SCANNER_LEVELS - 1 }, (_, index) => 'scanner-upgrade-' + (index + 2))
     : product.id === 'research'
       ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => 'research-upgrade-' + (index + 2))
-      : product.id === 'multi-select-1'
-        ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
-        : [];
+      : product.id === 'number-check'
+        ? Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, index) => 'number-check-upgrade-' + (index + 2))
+        : product.id === 'multi-select-1'
+          ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
+          : [];
   const upgrades = upgradeIds.map(id => products.find(entry => entry.id === id)).filter((entry): entry is ShopProduct => Boolean(entry));
   const purchasedUpgrades = upgrades.filter(upgrade => inventory.includes(upgrade.id)).length;
   const currentLevel = (owned ? 1 : 0) + purchasedUpgrades;
@@ -189,6 +192,8 @@ export default function Cartoleria({
             ? Array.from({ length: SCANNER_LEVELS - 1 }, (_, index) => 'scanner-upgrade-' + (index + 2))
             : product.id === 'research'
               ? Array.from({ length: RESEARCH_LEVELS - 1 }, (_, index) => 'research-upgrade-' + (index + 2))
+              : product.id === 'number-check'
+              ? Array.from({ length: NUMBER_CHECK_LEVELS - 1 }, (_, index) => 'number-check-upgrade-' + (index + 2))
               : product.id === 'multi-select-1'
                 ? Array.from({ length: 7 }, (_, index) => 'multi-select-' + (index + 2))
                 : [];
