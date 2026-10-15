@@ -30,6 +30,7 @@ function titleLabel(id: string) {
   if (labels[id]) return labels[id];
   if (id.startsWith('title-region-')) return 'Custode di ' + id.slice('title-region-'.length).replace(/^\w/, letter => letter.toUpperCase());
   if (id.startsWith('title-grade-')) return 'Allievo di Grado ' + id.slice('title-grade-'.length);
+  if (id.startsWith('custom-title:')) return id.slice('custom-title:'.length);
   return id;
 }
 function badgeLabel(id: string) {
