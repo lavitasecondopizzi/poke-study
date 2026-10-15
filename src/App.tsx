@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import Archive from './Archive';
 import EvolutionArchive from './EvolutionArchive';
+import FossilArchive from './FossilArchive';
 import Leaderboard from './Leaderboard';
 import PersonalRegister from './PersonalRegister';
 import StudentProfilePage from './StudentProfilePage';
@@ -626,7 +627,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if ((view !== 'shop' && view !== 'pokedex' && view !== 'evolutions' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
+    if ((view !== 'shop' && view !== 'pokedex' && view !== 'evolutions' && view !== 'fossils' && view !== 'game' && view !== 'registro') || itemCatalog.length) return;
     let active = true;
     const cacheKey = ITEM_IMAGE_CACHE_KEY;
     setItemCatalogLoading(true);
@@ -1307,6 +1308,7 @@ export default function App() {
         <button className={view === 'game' ? 'active' : ''} aria-current={view === 'game' ? 'page' : undefined} onClick={() => navTo('game')}><FlaskConical size={16} /> Gioca</button>
         <button className={view === 'pokedex' ? 'active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}><BookOpen size={16} /> Archivio Nazionale {!inventory.includes('national-catalog') && <span className="nav-lock-label">Bloccato</span>}</button>
         {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}><GitBranch size={16} /> Archivio delle evoluzioni</button>}
+        {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}><Bone size={16} /> Archivio fossili e reperti</button>}
         <button className={view === 'registro' ? 'active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}><Trophy size={16} /> Registro personale</button>
         <button className={view === 'shop' ? 'active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}><ShoppingBag size={16} /> Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
         <button className={view === 'academia' ? 'active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}><GraduationCap size={16} /> Accademia</button>
@@ -1322,6 +1324,7 @@ export default function App() {
             <h2>AREA ALLIEVO</h2>
             <button className={view === 'pokedex' ? 'side-active' : ''} aria-current={view === 'pokedex' ? 'page' : undefined} onClick={() => navTo('pokedex')}>▸ Archivio Nazionale</button>
             {inventory.includes('evolution-archive') && <button className={view === 'evolutions' ? 'side-active' : ''} aria-current={view === 'evolutions' ? 'page' : undefined} onClick={() => navTo('evolutions')}>▸ Archivio delle evoluzioni</button>}
+            {inventory.includes('fossils-archive') && <button className={view === 'fossils' ? 'side-active' : ''} aria-current={view === 'fossils' ? 'page' : undefined} onClick={() => navTo('fossils')}>▸ Archivio fossili e reperti</button>}
             <button className={view === 'registro' ? 'side-active' : ''} aria-current={view === 'registro' ? 'page' : undefined} onClick={() => navTo('registro')}>▸ Registro personale</button>
             <button className={view === 'shop' ? 'side-active' : ''} aria-current={view === 'shop' ? 'page' : undefined} onClick={() => navTo('shop')}>▸ Cartoleria {availableShopCount > 0 && <span className="shop-notification-badge" aria-label={`${availableShopCount} acquisti disponibili`}>{availableShopCount}</span>}</button>
             <button className={view === 'academia' ? 'side-active' : ''} aria-current={view === 'academia' ? 'page' : undefined} onClick={() => navTo('academia')}>▸ Accademia</button>
@@ -1351,6 +1354,7 @@ export default function App() {
             onNavigate={navTo}
           />}
           {view === 'evolutions' && (inventory.includes('evolution-archive') ? <EvolutionArchive species={species} items={itemCatalog} online={online} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio delle evoluzioni bloccato</h1><p>Acquista l’Archivio delle evoluzioni nella Cartoleria per consultare le linee evolutive.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
+          {view === 'fossils' && (inventory.includes('fossils-archive') ? <FossilArchive species={species} items={itemCatalog} loadingSpecies={loading} loadingItems={itemCatalogLoading} completedPokemon={progress.completedIds} completedEntries={progress.completedEntries ?? []} /> : <section className="archive-search"><div className="eyebrow">ACCESSO RISERVATO</div><h1>Archivio fossili e reperti bloccato</h1><p>Acquista l’Archivio fossili e reperti nella Cartoleria per consultare Pokémon fossili e reperti paleontologici.</p><button className="primary-button" onClick={() => navTo('shop')}>Vai alla Cartoleria</button></section>)}
           {view === 'pokedex' && (inventory.includes('national-catalog') ? <Archive
             species={species}
             items={itemCatalog}
