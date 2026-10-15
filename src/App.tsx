@@ -767,7 +767,7 @@ export default function App() {
       ? [...selectedCardIds]
       : [cardId];
     if (batchIds.length > 1) {
-      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\\d+$/)?.[1] ?? targetId;
+      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\d+$/)?.[1] ?? targetId;
       const targetIsSubcategory = lessonTargets.some(target => target.id === targetSubcategoryId);
       if (targetIsSubcategory) {
         const capacity = lessonDeck.filter(entry => entry.subcategoryId === targetSubcategoryId).length;
@@ -788,7 +788,7 @@ export default function App() {
   function placeSingleCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
-    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\\d+)$/);
+    const requestedCategorySlot = targetId.match(/^category-slot:(.+):(\d+)$/);
     const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
     const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
