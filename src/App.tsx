@@ -1007,7 +1007,7 @@ export default function App() {
     if (!(progress.inventory ?? []).includes(abilityId)) return;
     const cards = selectedIds
       .map(id => lessonDeck.find(entry => entry.id === id))
-      .filter((card): card is CatalogCard => Boolean(card) && !lessonSolved.includes(card.id));
+      .filter((card): card is CatalogCard => card !== undefined && !lessonSolved.includes(card.id));
     if (cards.length === 0) { setNotice('Seleziona almeno un’entità ancora da classificare.'); return; }
     const until = progress.abilityCooldowns?.[abilityId] ?? 0;
     if (until > Date.now()) { setNotice(`Abilità in ricarica: ${cooldownLabel(until, Date.now())}.`); return; }
