@@ -23,6 +23,15 @@ export interface SavedProgress {
   abilityCooldowns?: Record<string, number>;
   errors?: number;
   history?: ProgressHistoryEntry[];
+  /** Persistent in-progress catalog placements, synchronized with Supabase. */
+  gameState?: {
+    categoryPlacements: Record<string, string>;
+    misplacedCards: Record<string, string>;
+    openMacroId?: string | null;
+    openSubcategoryId?: string | null;
+    openPokemonRegionId?: string | null;
+    gamePage?: number;
+  };
 }
 
 export interface ApiNamedResource {
