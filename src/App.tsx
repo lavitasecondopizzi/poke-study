@@ -8,7 +8,7 @@ import StudentCard from './StudentCard';
 import PublicStudentProfile from './PublicStudentProfile';
 import Cartoleria from './Cartoleria';
 import Academy from './Academy';
-import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, Search, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
+import { Bell, BookOpen, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, Database, FlaskConical, GraduationCap, Menu, MessageSquare, Plus, RefreshCw, Search, ShieldCheck, ShoppingBag, SlidersHorizontal, Sparkles, Trophy, X } from 'lucide-react';
 import type { ApiNamedResource, PokemonSpecies, PokemonTypeIndex, SavedProgress, StudentProfile } from './types';
 import { createCommunityIdentity, createCommunityReply, createCommunityThread, exportCommunityMetadata, getCommunityIdentity, hasCommunityToken, importCommunityMetadata, isCommunityConfigured, listCommunityThreads, loadCommunityPlayerState, saveCommunityPlayerState } from './community';
 import type { CommunityAcademy, CommunityCategory, CommunityIdentity, CommunityThread } from './community';
@@ -966,24 +966,62 @@ export default function App() {
   }
 
   if (!identityCheckComplete || (communityIdentity && cloudStateIdentityId !== communityIdentity.id) || (Boolean(communityError) && hasCommunityToken() && !communityIdentity)) {
+    const recoveryFailed = Boolean(communityError);
+    const identityVerified = identityCheckComplete && Boolean(communityIdentity) && !recoveryFailed;
+
     return (
-      <main className="academy-choice-shell enrollment-shell">
-        <div className="academy-choice-topline"><span>POKÉ STUDY</span><span>PORTALE DELLO STUDENTE</span></div>
-        <header className="academy-choice-brand">
-          <div className="pokeball-mark" aria-hidden="true"><span /></div>
-          <div><span className="academy-choice-kicker">ISTITUTO DI RICERCA POKÉMON</span><h1>{communityError ? 'Caricamento non riuscito' : 'Portale dello studente'}</h1><p>{communityError ? 'Dati non disponibili.' : 'Caricamento…'}</p></div>
-        </header>
-        <section className="academy-choice-intro enrollment-intro" role={communityError ? 'alert' : 'status'}>
-          <span className="academy-choice-label">{communityError ? 'ATTENZIONE' : 'SINCRONIZZAZIONE ACCOUNT'}</span>
-          <h2>{communityError ? 'Impossibile caricare il profilo' : 'Recupero dei dati in corso'}</h2>
-          <p>{communityError || 'Recupero del profilo…'}</p>
-          {communityError && <div className="enrollment-recovery-panel">
-            <div className="enrollment-recovery-icon"><CheckCircle2 size={20}/></div>
-            <div className="enrollment-recovery-copy"><strong>Hai già un account?</strong><p>Importa il file di recupero.</p></div>
-            <label className="community-import-button enrollment-import-button">Importa salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
-            <button type="button" className="enrollment-back" onClick={() => window.location.reload()}>Riprova caricamento</button>
-          </div>}
-        </section>
+      <main className="recovery-screen">
+        <div className="recovery-topbar">
+          <a className="recovery-wordmark" href={import.meta.env.BASE_URL} aria-label="Poké Study, pagina iniziale">
+            <span className="recovery-wordmark-mark"><span /></span>
+            <span><strong>Poké Study</strong><small>PORTALE DELLO STUDENTE</small></span>
+          </a>
+          <span className="recovery-topbar-label">AREA RISERVATA</span>
+        </div>
+
+        <div className="recovery-layout">
+          <section className={'recovery-card' + (recoveryFailed ? ' is-error' : '')} aria-labelledby="recovery-title" role={recoveryFailed ? 'alert' : 'status'} aria-live="polite">
+            <div className="recovery-card-header">
+              <span className="recovery-kicker">{recoveryFailed ? 'SINCRONIZZAZIONE INTERROTTA' : 'ACCESSO SICURO'}</span>
+              <span className={'recovery-state-pill' + (recoveryFailed ? ' is-error' : '')}>
+                <span aria-hidden="true" />
+                {recoveryFailed ? 'Richiesto intervento' : 'Connessione in corso'}
+              </span>
+            </div>
+
+            <div className="recovery-illustration" aria-hidden="true">
+              {recoveryFailed ? <CloudDownload size={32} strokeWidth={1.7} /> : <div className="recovery-spinner"><span /></div>}
+            </div>
+
+            <h1 id="recovery-title">{recoveryFailed ? 'Non siamo riusciti a recuperare i dati' : 'Bentornato in Poké Study'}</h1>
+            <p className="recovery-lead">
+              {recoveryFailed
+                ? 'Il portale non è riuscito a verificare il tuo account. I dati non vengono sovrascritti: puoi riprovare o importare un salvataggio.'
+                : 'Stiamo verificando la tua identità e sincronizzando il profilo prima di aprire il portale.'}
+            </p>
+
+            {!recoveryFailed && <ol className="recovery-steps" aria-label="Fasi del recupero dati">
+              <li className="is-complete"><span className="recovery-step-icon"><ShieldCheck size={17}/></span><span><strong>Verifica dell’account</strong><small>{identityCheckComplete ? 'Verifica completata' : 'Controllo delle credenziali'}</small></span><span className="recovery-step-status">{identityCheckComplete ? <CheckCircle2 size={17}/> : <span className="recovery-step-pulse"/>}</span></li>
+              <li className={identityVerified ? 'is-complete' : 'is-current'}><span className="recovery-step-icon"><Database size={17}/></span><span><strong>Profilo e progressi</strong><small>{identityVerified ? 'Identità verificata' : 'Recupero dei dati salvati'}</small></span><span className="recovery-step-status">{identityVerified ? <CheckCircle2 size={17}/> : <span className="recovery-step-pulse"/>}</span></li>
+              <li className="is-pending"><span className="recovery-step-icon"><GraduationCap size={17}/></span><span><strong>Preparazione del portale</strong><small>Ultimo passaggio prima dell’accesso</small></span><span className="recovery-step-status"><Clock3 size={16}/></span></li>
+            </ol>}
+
+            {recoveryFailed && <div className="recovery-error-detail">
+              <strong>Dettaglio</strong>
+              <p>{communityError}</p>
+            </div>}
+
+            {recoveryFailed && <div className="recovery-actions">
+              <button type="button" className="recovery-primary-action" onClick={() => window.location.reload()}><RefreshCw size={16}/> Riprova il recupero</button>
+              <div className="recovery-divider"><span>oppure</span></div>
+              <label className="recovery-import-action">Importa un salvataggio<input type="file" accept="application/json,.json" disabled={enrollmentBusy || communityBusy || !communityConfigured} onChange={event => void recoverEnrollmentAccount(event)} /></label>
+              {!communityConfigured && <small className="recovery-import-note">Importazione non disponibile: il servizio account non è configurato.</small>}
+            </div>}
+
+            <footer className="recovery-card-footer"><ShieldCheck size={15}/><span>{recoveryFailed ? 'Il recupero non modifica automaticamente il salvataggio locale.' : 'I tuoi dati vengono caricati prima di mostrare l’area personale.'}</span></footer>
+          </section>
+          <p className="recovery-page-footnote">POKÉ STUDY <span>·</span> PORTALE DIDATTICO FAN-MADE</p>
+        </div>
       </main>
     );
   }
