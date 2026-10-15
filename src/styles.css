@@ -3481,3 +3481,76 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   .evolution-no-chain-art{width:70px;height:70px;flex-basis:70px}
   .evolution-no-chain-art img{width:66px;height:66px}
 }
+
+
+/* Archivio evoluzioni: identità cromatica ereditata dall'accademia dello studente. */
+.site-shell[class*="academy-theme-"] .evolution-archive-hero,
+.site-shell[class*="academy-theme-"] .evolution-chain-panel,
+.site-shell[class*="academy-theme-"] .evolution-no-chain {
+  border-color:var(--academy-border);
+  box-shadow:inset 0 1px #fff,0 3px 0 color-mix(in srgb,var(--academy-accent) 15%,white);
+}
+.site-shell[class*="academy-theme-"] .evolution-archive-hero {
+  background:linear-gradient(125deg,#fff 0%,color-mix(in srgb,var(--academy-soft) 52%,white) 58%,var(--academy-soft) 100%);
+}
+.site-shell[class*="academy-theme-"] .evolution-archive-hero-icon,
+.site-shell[class*="academy-theme-"] .evolution-pokemon-art,
+.site-shell[class*="academy-theme-"] .evolution-no-chain-art {
+  border:1px solid var(--academy-border);
+  background:linear-gradient(#fff,var(--academy-soft));
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .evolution-archive-hero .eyebrow,
+.site-shell[class*="academy-theme-"] .evolution-archive-hero h1,
+.site-shell[class*="academy-theme-"] .evolution-chain-heading h2,
+.site-shell[class*="academy-theme-"] .evolution-no-chain h2 {
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .evolution-search {
+  border-color:var(--academy-border);
+  box-shadow:inset 0 1px #fff,0 2px 0 color-mix(in srgb,var(--academy-accent) 10%,white);
+}
+.site-shell[class*="academy-theme-"] .evolution-search:focus-within {
+  outline:3px solid color-mix(in srgb,var(--academy-accent) 22%,transparent);
+  border-color:var(--academy-accent);
+}
+.site-shell[class*="academy-theme-"] .evolution-result,
+.site-shell[class*="academy-theme-"] .evolution-pokemon-card,
+.site-shell[class*="academy-theme-"] .evolution-branch {
+  border-color:var(--academy-border);
+  box-shadow:inset 0 1px #fff,0 2px 0 color-mix(in srgb,var(--academy-accent) 9%,white);
+}
+.site-shell[class*="academy-theme-"] .evolution-result:hover {
+  border-color:var(--academy-accent);
+  background:linear-gradient(#fff,var(--academy-soft));
+}
+.site-shell[class*="academy-theme-"] .evolution-result.is-active,
+.site-shell[class*="academy-theme-"] .evolution-pokemon-card.is-selected {
+  border-color:var(--academy-accent);
+  background:linear-gradient(#fff,var(--academy-soft));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--academy-accent) 25%,transparent),0 3px 0 color-mix(in srgb,var(--academy-accent) 17%,white);
+}
+.site-shell[class*="academy-theme-"] .evolution-result small,
+.site-shell[class*="academy-theme-"] .evolution-chain-heading span {
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .evolution-current-tag {
+  border:1px solid var(--academy-border);
+  background:var(--academy-soft);
+  color:var(--academy-accent-dark);
+}
+.site-shell[class*="academy-theme-"] .evolution-condition svg,
+.site-shell[class*="academy-theme-"] .evolution-status:not(.is-error) svg {
+  color:var(--academy-accent);
+}
+.site-shell[class*="academy-theme-"] .evolution-chain-heading {
+  border-bottom-color:var(--academy-border);
+}
+.site-shell[class*="academy-theme-"] .evolution-chain-panel {
+  background:linear-gradient(145deg,#fff 0%,color-mix(in srgb,var(--academy-soft) 32%,white) 100%);
+}
+@media(max-width:650px) {
+  .site-shell[class*="academy-theme-"] .evolution-archive-hero {
+    background:linear-gradient(145deg,#fff,var(--academy-soft));
+  }
+}
