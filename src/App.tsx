@@ -840,6 +840,11 @@ export default function App() {
     const requestedSubcategoryId = requestedCategorySlot ? requestedCategorySlot[1] : targetId;
     const subcategoryTarget = lessonTargets.find(target => target.id === requestedSubcategoryId);
     const pokemonSlotMatch = targetId.match(/^pokemon-slot:(\d+)$/);
+    const rapidRegion = inventory.includes('direct-region')
+      ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === targetId)
+      : undefined;
+    const rapidRegionMatch = rapidRegion && card.kind === 'pokemon' && card.pokemonId !== undefined
+      && card.pokemonId >= rapidRegion.start && card.pokemonId <= rapidRegion.end;
     const categorySlotMatch = targetId.match(/^category-slot:(.+):(\d+)$/);
     const targetSubcategoryId = categorySlotMatch ? categorySlotMatch[1] : targetId;
     if (subcategoryTarget || categorySlotMatch) setCategoryPlacements(old => {
@@ -859,11 +864,13 @@ export default function App() {
     });
     const isCorrect = pokemonSlotMatch
       ? card.kind === 'pokemon' && card.pokemonId === Number(pokemonSlotMatch[1])
-      : card.subcategoryId === targetSubcategoryId;
+      : rapidRegionMatch
+        ? true
+        : card.subcategoryId === targetSubcategoryId;
     if (!isCorrect) {
       setCategoryPlacements(old => { const next = { ...old }; delete next[cardId]; return next; });
       setMisplacedCards(old => ({ ...old, [cardId]: targetId }));
-      const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
+      const errorTarget = pokemonSlotMatch ? `Pokédex nazionale #${pokemonSlotMatch[1]}` : rapidRegion ? rapidRegion.name : (lessonTargets.find(target => target.id === targetSubcategoryId)?.name ?? targetSubcategoryId);
       const errorTimestamp = Date.now();
       setProgress(old => ({ ...old, errors: (old.errors ?? 0) + 1, history: [...(old.history ?? []), { id: `error-${errorTimestamp}-${card.id}`, timestamp: errorTimestamp, kind: 'error' as const, title: 'Tentativo non corretto', detail: `${card.name} · destinazione: ${errorTarget}` }].slice(-100) }));
       setSelectedCardId(cardId);
@@ -901,7 +908,7 @@ export default function App() {
       return next;
     });
     setWrongTargetId(null);
-    setMessage(pokemonSlotMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
+    setMessage(pokemonSlotMatch || rapidRegionMatch ? 'Pokémon collocato correttamente. +1 Punto Poké.' : 'Classificazione corretta. +1 Punto Poké. Le informazioni restano riservate: sbloccale con gli strumenti acquistati.');
   }
 
   function chooseAcademy(next: string) {
@@ -1456,6 +1463,9 @@ export default function App() {
                             onDragOver={event => event.preventDefault()}
                             onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, target.id); }}
                             onClick={() => {
+                              if (folder.id === 'pokemon' && inventory.includes('direct-region') && selectedCardId) {
+                                placeCard(selectedCardId, target.id);
+                              }
                               if (folder.id === 'pokemon') { setOpenPokemonRegionId(target.id); setOpenSubcategoryId(null); }
                               else { setOpenSubcategoryId(target.id); setOpenPokemonRegionId(null); }
                               setFolderPage(0);
