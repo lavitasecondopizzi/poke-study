@@ -3416,3 +3416,7 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
     background:linear-gradient(145deg,#fff,var(--academy-soft));
   }
 }
+
+/* Rivelazione del nome: etichetta fissa sotto l'immagine della carta. */
+.revealed-card-name{display:block;width:100%;padding:3px 2px 1px;color:#244766;font-size:10px;font-weight:800;line-height:1.2;text-align:center;overflow-wrap:anywhere;}
+.mixed-card:has(.revealed-card-name){height:auto;min-height:88px!important;gap:3px;padding-bottom:5px;}
