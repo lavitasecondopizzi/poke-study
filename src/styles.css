@@ -3582,3 +3582,8 @@ body{background:linear-gradient(180deg,#bfe5ff 0,#e5f4ff 190px,#f1f9ff 100%);col
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
+
+/* Ogni entità analizzata dallo Scanner/Ricerca occupa una riga distinta. */
+.ability-hint {
+  white-space: pre-line;
+}
