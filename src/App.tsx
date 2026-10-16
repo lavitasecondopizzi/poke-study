@@ -1621,7 +1621,7 @@ export default function App() {
                           </div>)}
                         </div>
                         {folderAssignedCards.length > folderPageSize && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
-                      </> : <p className="folder-empty-hint">Non ci sono entità provvisorie in questa cartella. Seleziona una o più entità da <strong>Tutte le entità</strong> e usa <strong>Sposta qui</strong>, oppure trascina una carta direttamente sulla cartella.</p>}
+                      </> : <p className="folder-empty-hint">{selectedCardIds.length > 0 ? <>Hai {selectedCardIds.length} entità selezionate da spostare qui. Premi <strong>Sposta qui le {selectedCardIds.length} selezionate</strong> per aggiungerle a questa cartella.</> : <>Non ci sono entità provvisorie in questa cartella. Seleziona una o più entità da <strong>Tutte le entità</strong> e usa <strong>Sposta qui</strong>, oppure trascina una carta direttamente sulla cartella.</>}</p>}
                     </div>
 
                     {openMacroId && !openSubcategoryId && !openPokemonRegionId && <div className="folder-subfolder-shortcuts">
