@@ -1144,11 +1144,33 @@ export default function App() {
     if (abilityId === 'auto-sort') {
       const level = abilityLevelFromInventory('auto-sort', currentInventory);
       const cooldownMs = abilityCooldownDurationMs('auto-sort', level);
-      setMisplacedCards(old => { const next = { ...old }; cards.forEach(card => { next[card.id] = card.subcategoryId; }); return next; });
-      setCategoryPlacements(old => { const next = { ...old }; cards.forEach(card => { delete next[card.id]; }); return next; });
+      const nextMisplacedCards = { ...misplacedCards };
+      cards.forEach(card => { nextMisplacedCards[card.id] = card.subcategoryId; });
+      const nextCategoryPlacements = { ...categoryPlacements };
+      cards.forEach(card => { delete nextCategoryPlacements[card.id]; });
+      setMisplacedCards(nextMisplacedCards);
+      setCategoryPlacements(nextCategoryPlacements);
       setSelectedCardIds(old => old.filter(id => !cards.some(card => card.id === id)));
       setSelectedCardId(old => cards.some(card => card.id === old) ? null : old);
-      setProgress(old => ({ ...old, abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'auto-sort': now + cooldownMs } }));
+      // Scrivi subito lo stato di gioco persistente insieme al cooldown:
+      // non dipendere soltanto dall'effetto che sincronizza gli stati React.
+      setProgress(old => ({
+        ...old,
+        abilityCooldowns: { ...(old.abilityCooldowns ?? {}), 'auto-sort': now + cooldownMs },
+        gameState: {
+          ...(old.gameState ?? {}),
+          categoryPlacements: nextCategoryPlacements,
+          misplacedCards: nextMisplacedCards,
+          openMacroId,
+          openSubcategoryId,
+          openPokemonRegionId,
+          gamePage,
+          folderPage,
+          revealedMacroCategories,
+          revealedSubcategories,
+          revealedPokemonNumbers,
+        },
+      }));
       setNotice(`Smistamento completato per ${cards.length} entità. La catalogazione non è stata completata e non sono stati assegnati PP.`);
       return;
     }
