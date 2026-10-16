@@ -835,36 +835,54 @@ export default function App() {
   }
 
   function placeCard(cardId: string, targetId: string) {
-    // Se la carta è nella selezione multipla, applica la destinazione a tutte.
-    const batchIds = selectedCardIds.includes(cardId) && selectedCardIds.length > 1
+    // Lo smistamento regionale rapido instrada ogni Pokémon selezionato nella
+    // propria regione, invece di tentare di collocare l'intera selezione nella
+    // regione cliccata. Le carte non-Pokémon restano fuori da questa modalità.
+    const selectedIds = selectedCardIds.includes(cardId) && selectedCardIds.length > 1
       ? [...selectedCardIds]
       : [cardId];
-    if (batchIds.length > 1) {
-      // Una posizione del Pokédex nazionale accetta un solo Pokémon: applicare
-      // lo stesso numero a tutta la selezione genera falsi errori rossi anche
-      // quando uno dei Pokémon selezionati è quello corretto.
-      if (/^pokemon-slot:\d+$/.test(targetId)) {
-        setMessage('Per controllare un numero del Pokédex, seleziona un solo Pokémon alla volta.');
+    const targetRegion = inventory.includes('direct-region')
+      ? regions.find(region => 'pokemon-' + region.name.toLowerCase() === targetId)
+      : undefined;
+
+    if (targetRegion) {
+      const cards = selectedIds
+        .map(id => lessonDeck.find(entry => entry.id === id))
+        .filter((card): card is CatalogCard => Boolean(card) && !lessonSolved.includes(card.id));
+      const pokemonCards = cards.filter(card => card.kind === 'pokemon' && card.pokemonId !== undefined);
+      if (pokemonCards.length === 0) {
+        setMessage('Seleziona almeno un Pokémon non ancora classificato per usare l’inserimento regionale rapido.');
         return;
       }
-      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\d+$/)?.[1] ?? targetId;
+      pokemonCards.forEach(card => {
+        const correctRegion = regions.find(region =>
+          card.pokemonId !== undefined && card.pokemonId >= region.start && card.pokemonId <= region.end,
+        );
+        if (correctRegion) placeSingleCard(card.id, 'pokemon-' + correctRegion.name.toLowerCase());
+      });
+      const skipped = cards.length - pokemonCards.length;
+      if (skipped > 0) setMessage(`Smistamento regionale eseguito per ${pokemonCards.length} Pokémon. ${skipped} entità non Pokémon sono rimaste selezionate.`);
+      return;
+    }
+
+    if (selectedIds.length > 1) {
+      const targetSubcategoryId = targetId.match(/^category-slot:(.+):\\d+$/)?.[1] ?? targetId;
       const targetIsSubcategory = lessonTargets.some(target => target.id === targetSubcategoryId);
       if (targetIsSubcategory) {
         const capacity = lessonDeck.filter(entry => entry.subcategoryId === targetSubcategoryId).length;
         const occupied = new Set(Object.entries(categoryPlacements)
           .filter(([, value]) => value.startsWith('category-slot:' + targetSubcategoryId + ':'))
           .map(([, value]) => Number(value.split(':').pop())));
-        if (capacity - occupied.size < batchIds.length) {
-          setMessage(`La destinazione non ha abbastanza posizioni libere per tutte le ${batchIds.length} entità selezionate.`);
+        if (capacity - occupied.size < selectedIds.length) {
+          setMessage(`La destinazione non ha abbastanza posizioni libere per tutte le ${selectedIds.length} entità selezionate.`);
           return;
         }
       }
-      batchIds.forEach(id => placeSingleCard(id, targetId));
+      selectedIds.forEach(id => placeSingleCard(id, targetId));
       return;
     }
     placeSingleCard(cardId, targetId);
   }
-
   function placeSingleCard(cardId: string, targetId: string) {
     const card = lessonDeck.find(entry => entry.id === cardId);
     if (!card || lessonSolved.includes(cardId)) return;
