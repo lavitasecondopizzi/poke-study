@@ -840,6 +840,13 @@ export default function App() {
       ? [...selectedCardIds]
       : [cardId];
     if (batchIds.length > 1) {
+      // Una posizione del Pokédex nazionale accetta un solo Pokémon: applicare
+      // lo stesso numero a tutta la selezione genera falsi errori rossi anche
+      // quando uno dei Pokémon selezionati è quello corretto.
+      if (/^pokemon-slot:\d+$/.test(targetId)) {
+        setMessage('Per controllare un numero del Pokédex, seleziona un solo Pokémon alla volta.');
+        return;
+      }
       const targetSubcategoryId = targetId.match(/^category-slot:(.+):\d+$/)?.[1] ?? targetId;
       const targetIsSubcategory = lessonTargets.some(target => target.id === targetSubcategoryId);
       if (targetIsSubcategory) {
