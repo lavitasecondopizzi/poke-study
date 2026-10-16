@@ -1561,8 +1561,11 @@ export default function App() {
                             onDragOver={event => event.preventDefault()}
                             onDrop={event => { event.preventDefault(); const cardId = event.dataTransfer.getData('text/plain'); if (cardId) moveCardToFolder(cardId, target.id); }}
                             onClick={() => {
-                              if (folder.id === 'pokemon' && inventory.includes('direct-region') && selectedCardId) {
-                                placeCard(selectedCardId, target.id);
+                              if (folder.id === 'pokemon' && inventory.includes('direct-region') && (selectedCardIds.length > 0 || selectedCardId)) {
+                                // La selezione multipla può restare valida anche quando non c'è una carta principale.
+                                // Usa quindi la prima carta selezionata come riferimento per applicare la regione a tutto il gruppo.
+                                const cardToPlace = selectedCardIds[0] ?? selectedCardId;
+                                if (cardToPlace) placeCard(cardToPlace, target.id);
                               }
                               if (folder.id === 'pokemon') { setOpenPokemonRegionId(target.id); setOpenSubcategoryId(null); }
                               else { setOpenSubcategoryId(target.id); setOpenPokemonRegionId(null); }
