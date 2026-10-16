@@ -31,35 +31,67 @@ function normalizePlayerProgress(value: unknown) {
   const inventory = strings(raw.inventory ?? [], 120);
   const completedEntries = strings(raw.completedEntries ?? [], 180);
   if (points === null || examPoints === null || !completedExams || !inventory || !completedEntries) return null;
+
+  // Keep cooldowns for every ability, including newly added shop upgrades.
   const cooldowns: Record<string, number> = {};
   if (raw.abilityCooldowns !== undefined) {
     if (!raw.abilityCooldowns || typeof raw.abilityCooldowns !== "object" || Array.isArray(raw.abilityCooldowns)) return null;
     for (const [key, until] of Object.entries(raw.abilityCooldowns as Record<string, unknown>)) {
-      if ((key !== "scanner" && key !== "research") || typeof until !== "number" || !Number.isSafeInteger(until) || until < 0) return null;
+      if (!/^[a-z][a-z0-9-]{0,119}$/.test(key) || typeof until !== "number" || !Number.isSafeInteger(until) || until < 0) return null;
       cooldowns[key] = until;
     }
   }
+
   let gameState: Record<string, unknown> | undefined;
   if (raw.gameState !== undefined) {
     if (!raw.gameState || typeof raw.gameState !== "object" || Array.isArray(raw.gameState)) return null;
     const candidate = raw.gameState as Record<string, unknown>;
-    const validMap = (value: unknown) => value && typeof value === "object" && !Array.isArray(value)
-      && Object.entries(value as Record<string, unknown>).length <= 5000
-      && Object.entries(value as Record<string, unknown>).every(([key, target]) => key.length > 0 && key.length <= 180 && typeof target === "string" && target.length <= 240);
-    if (!validMap(candidate.categoryPlacements) || !validMap(candidate.misplacedCards)) return null;
+    const validMap = (map: unknown, valueType: "string" | "number") => map !== null && typeof map === "object" && !Array.isArray(map)
+      && Object.entries(map as Record<string, unknown>).length <= 5000
+      && Object.entries(map as Record<string, unknown>).every(([key, target]) => key.length > 0 && key.length <= 180
+        && (valueType === "string" ? typeof target === "string" && target.length <= 240
+          : typeof target === "number" && Number.isSafeInteger(target) && target >= 0 && target <= 100000));
+    if (!validMap(candidate.categoryPlacements, "string") || !validMap(candidate.misplacedCards, "string")) return null;
+    for (const key of ["revealedMacroCategories", "revealedSubcategories"] as const) {
+      if (candidate[key] !== undefined && !validMap(candidate[key], "string")) return null;
+    }
+    if (candidate.revealedPokemonNumbers !== undefined && !validMap(candidate.revealedPokemonNumbers, "number")) return null;
     const optionalId = (key: string, max = 180) => candidate[key] === undefined || candidate[key] === null
       || (typeof candidate[key] === "string" && (candidate[key] as string).length <= max);
+    const optionalPage = (key: string) => candidate[key] === undefined
+      || (Number.isInteger(candidate[key]) && Number(candidate[key]) >= 0 && Number(candidate[key]) <= 100000);
     if (!optionalId("openMacroId") || !optionalId("openSubcategoryId") || !optionalId("openPokemonRegionId")
-      || (candidate.gamePage !== undefined && (!Number.isInteger(candidate.gamePage) || Number(candidate.gamePage) < 0 || Number(candidate.gamePage) > 100000))) return null;
+      || !optionalPage("gamePage") || !optionalPage("folderPage")) return null;
+
+    // Preserve every currently defined placement/navigation/reveal field, and keep
+    // unknown JSON-compatible gameState fields for forward compatibility.
     gameState = {
+      ...candidate,
       categoryPlacements: candidate.categoryPlacements,
       misplacedCards: candidate.misplacedCards,
       openMacroId: candidate.openMacroId ?? null,
       openSubcategoryId: candidate.openSubcategoryId ?? null,
       openPokemonRegionId: candidate.openPokemonRegionId ?? null,
       gamePage: candidate.gamePage ?? 0,
+      ...(candidate.folderPage !== undefined ? { folderPage: candidate.folderPage } : {}),
+      ...(candidate.revealedMacroCategories !== undefined ? { revealedMacroCategories: candidate.revealedMacroCategories } : {}),
+      ...(candidate.revealedSubcategories !== undefined ? { revealedSubcategories: candidate.revealedSubcategories } : {}),
+      ...(candidate.revealedPokemonNumbers !== undefined ? { revealedPokemonNumbers: candidate.revealedPokemonNumbers } : {}),
     };
   }
+
+  const errors = raw.errors === undefined ? 0 : count(raw.errors);
+  if (errors === null) return null;
+  let history: unknown[] = [];
+  if (raw.history !== undefined) {
+    if (!Array.isArray(raw.history) || raw.history.length > 1000
+      || !raw.history.every(entry => entry && typeof entry === "object" && !Array.isArray(entry)
+        && typeof (entry as Record<string, unknown>).id === "string"
+        && typeof (entry as Record<string, unknown>).title === "string"
+        && typeof (entry as Record<string, unknown>).timestamp === "number")) return null;
+    history = raw.history.slice(-100);
+  }
+
   return {
     points,
     completedIds: [...new Set(raw.completedIds as number[])],
@@ -68,10 +100,11 @@ function normalizePlayerProgress(value: unknown) {
     inventory,
     completedEntries,
     abilityCooldowns: cooldowns,
+    errors,
+    history,
     ...(gameState ? { gameState } : {}),
   };
 }
-
 function response(status: number, body: Record<string, unknown>) {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
 }
