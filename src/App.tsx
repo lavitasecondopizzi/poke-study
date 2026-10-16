@@ -848,7 +848,7 @@ export default function App() {
     if (targetRegion) {
       const cards = selectedIds
         .map(id => lessonDeck.find(entry => entry.id === id))
-        .filter((card): card is CatalogCard => Boolean(card) && !lessonSolved.includes(card.id));
+        .filter((card): card is CatalogCard => card !== undefined && !lessonSolved.includes(card.id));
       const pokemonCards = cards.filter(card => card.kind === 'pokemon' && card.pokemonId !== undefined);
       if (pokemonCards.length === 0) {
         setMessage('Seleziona almeno un Pokémon non ancora classificato per usare l’inserimento regionale rapido.');
