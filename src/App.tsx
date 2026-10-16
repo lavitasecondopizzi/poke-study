@@ -1611,16 +1611,18 @@ export default function App() {
                   </> : <div className="round-complete"><h3>Catalogo completato!</h3><p>Hai classificato tutte le entità disponibili. I progressi sono stati salvati.</p></div>
                 ) : (
                   <>
-                    {folderAssignedCards.length > 0 && <div className="folder-assigned-section">
+                    <div className="folder-assigned-section">
                       <div className="folder-section-caption"><strong>Entità provvisorie in questa cartella</strong><span>Puoi spostarle ancora o riprenderle</span></div>
-                      <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
-                        {visibleFolderCards.map(card => <div key={card.id} className={`folder-entity-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
-                          <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}>{card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}<img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}{revealedSubcategories[card.id] && <span className="scanner-revealed-category revealed-subcategory-label">{revealedSubcategories[card.id]}</span>}</button>
-                          <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
-                        </div>)}
-                      </div>
-                      {folderAssignedCards.length > folderPageSize && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
-                    </div>}
+                      {folderAssignedCards.length > 0 ? <>
+                        <div className="pokemon-cards mixed-card-grid folder-entity-grid folder-assigned-grid">
+                          {visibleFolderCards.map(card => <div key={card.id} className={`folder-entity-card ${selectedCardIds.includes(card.id) ? 'chosen' : ''}`} draggable onDragStart={event => event.dataTransfer.setData('text/plain', card.id)}>
+                            <button type="button" className="folder-entity-select" onClick={() => toggleCardSelection(card.id)} aria-pressed={selectedCardIds.includes(card.id)}>{card.kind === 'pokemon' && revealedPokemonNumbers[card.id] !== undefined && !lessonSolved.includes(card.id) && <span className="revealed-pokemon-number">N. {String(revealedPokemonNumbers[card.id]).padStart(4, '0')}</span>}<img src={card.imageUrl} alt="" loading="lazy" onError={event => { event.currentTarget.style.visibility = 'hidden'; }}/>{(inventory.includes('reveal-name') || revealedMacroCategories[card.id]) && <span className="revealed-card-name">{displayName(card.name)}</span>}{revealedMacroCategories[card.id] && <span className="scanner-revealed-category">{revealedMacroCategories[card.id]}</span>}{revealedSubcategories[card.id] && <span className="scanner-revealed-category revealed-subcategory-label">{revealedSubcategories[card.id]}</span>}</button>
+                            <button type="button" className="folder-entity-recover" onClick={() => { setMisplacedCards(old => { const next = { ...old }; delete next[card.id]; return next; }); setCategoryPlacements(old => { const next = { ...old }; delete next[card.id]; return next; }); setSelectedCardIds(old => old.filter(id => id !== card.id)); setSelectedCardId(old => old === card.id ? null : old); }}>↶ Riprendi</button>
+                          </div>)}
+                        </div>
+                        {folderAssignedCards.length > folderPageSize && <div className="game-pagination game-pagination-cards"><button type="button" onClick={() => setFolderPage(page => Math.max(0, page - 1))} disabled={safeFolderPage === 0}>‹ Indietro</button><span>Pagina {safeFolderPage + 1} / {folderPageCount}</span><button type="button" onClick={() => setFolderPage(page => Math.min(folderPageCount - 1, page + 1))} disabled={safeFolderPage >= folderPageCount - 1}>Avanti ›</button></div>}
+                      </> : <p className="folder-empty-hint">Non ci sono entità provvisorie in questa cartella. Seleziona una o più entità da <strong>Tutte le entità</strong> e usa <strong>Sposta qui</strong>, oppure trascina una carta direttamente sulla cartella.</p>}
+                    </div>
 
                     {openMacroId && !openSubcategoryId && !openPokemonRegionId && <div className="folder-subfolder-shortcuts">
                       <p>Apri una sottocartella per consultare le posizioni corrette. Puoi anche spostare qui le entità selezionate.</p>
@@ -1663,7 +1665,6 @@ export default function App() {
                       </div>
                     </div>}
 
-                    {folderAssignedCards.length === 0 && !openSubcategoryId && !openPokemonRegionId && <div className="folder-empty-hint">Questa cartella non contiene ancora entità provvisorie. Seleziona una o più entità da <strong>Tutte le entità</strong>, poi torna qui e premi <strong>Sposta qui</strong>; oppure trascina una carta direttamente sulla cartella.</div>}
                   </>
                 )}
               </section>
